@@ -4426,7 +4426,7 @@ You return to &lt;&lt;if $origin isnot &quot;somewhere else&quot;&gt;&gt;$origin
 But at least you didn&#39;t die of plague!
 &lt;br&gt;&lt;br&gt;
 [[How typical was your experience of the Great Plague of London? Let&#39;s find out!-&gt;stats]]
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="48" name="stats" tags="" position="2150,750" size="100,100">/* NTS: Here's a debrief passage where we present all the character stats and talk about representativeness. It'll come at some point but isn't done yet! */
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="48" name="stats" tags="" position="2150,750" size="100,100">/* NTS: Here&#39;s a debrief passage where we present all the character stats and talk about representativeness. It&#39;ll come at some point but isn&#39;t done yet! */
 
 In the meantime, we would love some feedback on the Alpha prototype of our game. If you&#39;re willing to give some brief feedback, please go to the Google Form at https://forms.gle/CovY1m4TAbVUK27J6</tw-passagedata><tw-passagedata pid="49" name="transported" tags="" position="1900,525" size="100,100">The local authorities decide to have you bound into &lt;span class=&quot;def&quot; data-def=&quot;A person who has signed a labor contract, such as that of an apprentice or servant, to work for a set number of years in exchange for housing, food, clothing, training in a trade, and/or some other material benefit.&quot;&gt;indentured servitude&lt;/span&gt; and shipped to the colony of Virginia. 
 &lt;br&gt;
@@ -5070,6 +5070,7 @@ Luckily, there are no plague cases in your &lt;span class=&quot;def&quot; data-d
 	&lt;/nav&gt;
 
 &lt;nav id=&quot;social-media&quot;&gt;
+&lt;!-- placeholder in case we want social media later --&gt;
 &lt;!-- Social Media --&gt;
 &lt;!-- &lt;&lt;socialMedia&gt;&gt; --&gt;
 &lt;/nav&gt;
@@ -5146,7 +5147,7 @@ Luckily, there are no plague cases in your &lt;span class=&quot;def&quot; data-d
 
 &lt;!-- IMPORTANT! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP --&gt;</tw-passagedata><tw-passagedata pid="75" name="Stat page 2" tags="" position="175,1250" size="100,100">Your stats go here..
 
-&lt;!-- IMPORTAN! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP --&gt;
+&lt;!-- IMPORTANT! INCLUDE THE CODE BELOW ON ALL STAT PAGES TO MAKE SURE THE LINK RETURNS THE USER TO THE LAST PASSAGE. IF YOU USE A NORMAL RETURN LINK IT WILL SIMPLY LOOP --&gt;
 
 &lt;center&gt;&lt;&lt;link &quot;Return to game&quot; $return&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/center&gt;</tw-passagedata><tw-passagedata pid="76" name="infection-widgets" tags="widget infection-rates" position="150,850" size="100,100">/*Infection Program: determines rate of plague infection based on your location*/ 
 &lt;&lt;widget &quot;infection-program&quot;&gt;&gt;
@@ -5325,7 +5326,9 @@ You have some &lt;span class=&quot;def&quot; data-def=&quot;A medicine or treatm
 &lt;&lt;if $fumes.Fancy.quantity gt 0 or $fumes.Generic.quantity gt 0 or $fumes.Purse.quantity gt 0 or $fumes.Incense.quantity gt 0&gt;&gt;&lt;&lt;set _fumes to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _fumes to 0&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;fumigant&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;
-&lt;&lt;if previous() isnot &quot;Apothecary&quot;&gt;&gt;&lt;&lt;if $fumes.Fancy.quantity gt 0&gt;&gt;&lt;&lt;set $fumes.Fancy.quantity -= 1&gt;&gt;&lt;&lt;elseif $fumes.Generic.quantity gt 0&gt;&gt;&lt;&lt;set $fumes.Generic.quantity -= 1&gt;&gt;&lt;&lt;elseif $fumes.Purse.quantity gt 0&gt;&gt;&lt;&lt;set $fumes.Purse.quantity -= 1&gt;&gt;&lt;&lt;elseif $fumes.Incense.quantity gt 0&gt;&gt;&lt;&lt;set $fumes.Incense.quantity -= 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="81" name="old widgets" tags="" position="100,1375" size="100,100">&lt;&lt;widget &quot;ListNPCs&quot;&gt;&gt;
+&lt;&lt;if previous() isnot &quot;Apothecary&quot;&gt;&gt;&lt;&lt;if $fumes.Fancy.quantity gt 0&gt;&gt;&lt;&lt;set $fumes.Fancy.quantity -= 1&gt;&gt;&lt;&lt;elseif $fumes.Generic.quantity gt 0&gt;&gt;&lt;&lt;set $fumes.Generic.quantity -= 1&gt;&gt;&lt;&lt;elseif $fumes.Purse.quantity gt 0&gt;&gt;&lt;&lt;set $fumes.Purse.quantity -= 1&gt;&gt;&lt;&lt;elseif $fumes.Incense.quantity gt 0&gt;&gt;&lt;&lt;set $fumes.Incense.quantity -= 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="81" name="old widgets" tags="" position="100,1375" size="100,100">/* commenting out all old widgets
+
+&lt;&lt;widget &quot;ListNPCs&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
         &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
             &lt;&lt;capture _i&gt;&gt;
@@ -5335,16 +5338,18 @@ You have some &lt;span class=&quot;def&quot; data-def=&quot;A medicine or treatm
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
-/* Sets the NPC&#39;s pronouns based on relationship status. NEED TO ADDRESS NB RELS */
+/* Sets the NPCs pronouns based on relationship status. NEED TO ADDRESS NB RELS */
 &lt;&lt;widget &quot;NPCpronouns&quot;&gt;&gt;
 &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 &lt;&lt;if $NPCs[_i].relationship is &quot;aunt&quot; or $NPCs[_i].relationship is &quot;mother&quot; or $NPCs[_i].relationship is &quot;sister&quot;&gt;&gt;
     &lt;&lt;set $NPCs[_i].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;she&quot;&gt;&gt;
-    &lt;&lt;elseif $NPCS[_i].relationship is &quot;uncle&quot; or $NPCs[_i].relationship is &quot;father&quot; or $NPCs[_i].relationship is &quot;brother&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;he&quot;&gt;&gt;
+    &lt;&lt;elseif $NPCs[_i].relationship is &quot;uncle&quot; or $NPCs[_i].relationship is &quot;father&quot; or $NPCs[_i].relationship is &quot;brother&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;he&quot;&gt;&gt;
     &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCs[_i].hishers to &quot;their&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;they&quot;&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="82" name="First Plague Day" tags="" position="875,750" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
+
+*/</tw-passagedata><tw-passagedata pid="82" name="First Plague Day" tags="" position="875,750" size="100,100">&lt;&lt;nobr&gt;&gt;
 /* Beggars */
     The first case of &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; has appeared in your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt;, &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;beggar-roles&gt;&gt;&lt;&lt;highway&gt;&gt;
     &lt;&lt;/if&gt;&gt;
@@ -5535,7 +5540,7 @@ Then, in September, disaster strikes. Your first hint is a dark cloud rising int
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-Finally, you receive word that /* NTS: put in results here based on where you live, if your house burned you're in the countryside for the rest of the game, go straight to the end. */&lt;br&gt;&lt;br&gt;
+Finally, you receive word that /* NTS: put in results here based on where you live, if your house burned you&#39;re in the countryside for the rest of the game, go straight to the end. */&lt;br&gt;&lt;br&gt;
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
@@ -5593,7 +5598,7 @@ Then, in September, disaster strikes. Your first hint is a dark cloud rising int
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-Finally, you receive word that /* NTS: put in results here based on where you live, if your house burned you're in the countryside for the rest of the game, go straight to the end. */&lt;br&gt;&lt;br&gt;
+Finally, you receive word that /* NTS: put in results here based on where you live, if your house burned you&#39;re in the countryside for the rest of the game, go straight to the end. */&lt;br&gt;&lt;br&gt;
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
