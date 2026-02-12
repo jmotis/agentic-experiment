@@ -12,10 +12,11 @@ This repository contains **Gaming the Great Plague**, an interactive fiction gam
 ```
 /
 ├── CLAUDE.md                      # This file — guidance for AI assistants
-└── GamingtheGreatPlague.html      # Complete Twine game (single-file, ~1.2 MB)
+├── GamingtheGreatPlague.html      # Complete Twine game (single-file, ~1.2 MB)
+└── README.md                      # Project description and play instructions
 ```
 
-This is a minimal repository with one content file. There is no build system, package manager, test framework, or CI/CD pipeline.
+There is no build system, package manager, test framework, or CI/CD pipeline.
 
 ## Technology Stack
 
