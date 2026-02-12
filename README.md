@@ -30,6 +30,9 @@ This game is authored using the [Twine 2](https://twinery.org/) editor. To make 
 ## Author
 
 Jessica Otis
+Stephanie Grimm
+Alexandra Miller
+Nathan Sleeter
 
 ## License
 
