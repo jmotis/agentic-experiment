@@ -1348,7 +1348,7 @@ NTS: This is also what happened to your family.
   Your neighbors shut up the entrances to your house and paint a red cross with the words //Lord Have Mercy// on the front door.
   &lt;&lt;/if&gt;&gt;
   &lt;br&gt;&lt;br&gt;
-  &lt;&lt;link &quot;You pray that God does have mercy on you as take to your sickbed.&quot; `passage()`&gt;&gt;&lt;&lt;/link&gt;&gt;
+  &lt;&lt;link &quot;You pray that God does have mercy on you as you take to your sickbed.&quot; `passage()`&gt;&gt;&lt;&lt;/link&gt;&gt;
   &lt;&lt;case 2&gt;&gt;
     &lt;&lt;player-treatments&gt;&gt;
   
@@ -1857,7 +1857,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;set $remedies.Celestial = { name: &quot;celestial water&quot;, quantity: 0, cost: 36 }&gt;&gt;
 &lt;&lt;set $remedies.Treacle = { name: &quot;a posset of London Treacle&quot;, quantity: 0, cost: 36 }&gt;&gt;
 &lt;&lt;set $remedies.Suppository = { name: &quot;a suppository of a fig filled with salt&quot;, quantity: 0 }&gt;&gt;
-&lt;&lt;set $remedies.Cordial = { name: &quot;a cordial tincture to be drunk for two days after infection&quot;, quantity: 0, cost: 12 }&gt;&gt;. 
+&lt;&lt;set $remedies.Cordial = { name: &quot;a cordial tincture to be drunk for two days after infection&quot;, quantity: 0, cost: 12 }&gt;&gt; 
 &lt;&lt;set $remedies.Immodium = { name: &quot;an anti-diarrheal posset made of plantain, sorrel, or knot grass&quot;, quantity: 0, cost: 0 }&gt;&gt;
 &lt;&lt;set $quarantine to 0&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="PassageHeader" tags="" position="575,25" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;
@@ -4389,7 +4389,7 @@ Now you just have to figure out how to overcome your disgrace when you return ho
 &lt;&lt;if $money gte 2&gt;&gt;
 &lt;&lt;linkreplace &quot;giving all your money to the poor&quot;&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;
 &lt;&lt;storyline-return&gt;&gt;
-&lt;&lt;br&gt;&gt;
+&lt;br&gt;
 &lt;&lt;/linkreplace&gt;&gt;
 &lt;&lt;linkreplace &quot;giving all your money to the poor //and// performing public penance in church&quot;&gt;&gt;
 &lt;&lt;set $money to 0&gt;&gt;
@@ -5301,7 +5301,7 @@ A member of your family/nurse/household offer you some remedies to help ease you
 &lt;li&gt;&lt;&lt;if $remedies.Cordial.quantity gt 0&gt;&gt;&lt;&lt;linkreplace &quot;drink a cordial tincture for the first two days of your illness&quot;&gt;&gt;&lt;&lt;set $remedies.Cordial.quantity -= 1&gt;&gt;Twice a day, you are given a dose of &lt;span class=&quot;def&quot; data-def=&quot;Literally, a beneficial medicine. In this specific case, a reference to a proprietary medicinal blend advertised by John Belson, Esquire, in 1665 during the London plague outbreak.&quot;&gt;tincture&lt;/span&gt;. After each dose, you are heavily covered for 3 hours to induce sweating, then wiped down with hot napkins.&lt;&lt;/linkreplace&gt;&gt;&lt;&lt;elseif $money gt $remedies.Cordial.cost*4&gt;&gt;&lt;&lt;linkreplace &quot;purchase and drink a cordial tincture for the first two days of your illness&quot;&gt;&gt;Twice a day, you are given a dose of &lt;span class=&quot;def&quot; data-def=&quot;Literally, a beneficial medicine. In this specific case, a reference to a proprietary medicinal blend advertised by John Belson, Esquire, in 1665 during the London plague outbreak.&quot;&gt;tincture&lt;/span&gt;. After each dose, you are heavily covered for 3 hours to induce sweating, then wiped down with hot napkins.&lt;&lt;money `-1 * $remedies.Cordial.cost*4`&gt;&gt;&lt;&lt;/linkreplace&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;if $remedies.Treacle.quantity gt 0&gt;&gt;&lt;&lt;linkreplace &quot;drink a posset of London Treacle for the first few days of illness&quot;&gt;&gt;You are given London Treacle dissolved in spoonfulls of warm vinegar, and drink 1/4 pint of this for the first few days of your illness.&lt;&lt;set $remedies.Treacle.quantity -= 1&gt;&gt;&lt;&lt;/linkreplace&gt;&gt;&lt;&lt;elseif $money gt $remedies.Treacle.cost*16&gt;&gt;&lt;&lt;linkreplace &quot;purchase and drink a posset of London Treacle for the first few days of illness&quot;&gt;&gt;You are given &lt;span class=&quot;def&quot; data-def=&quot;A hot drink made of milk curdled with wine or ale, often including spices, which was often used as a remedy. After the 16th century, the milk was usually curdled using lemon juice rather than wine, and might be thickened with bread crumbs. During the plague outbreak, medical quacks sold London treacle, which could be added to the posset drink to further thicken it. London treacle was a compound of walnut, rue, salt, and fig.&quot;&gt;London Treacle&lt;/span&gt; dissolved in spoonfulls of warm vinegar, and drink 1/4 pint of this for the first few days of your illness.&lt;&lt;money `-1 * $remedies.Treacle.cost*16`&gt;&gt;&lt;&lt;/linkreplace&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;linkreplace &quot;use a suppository&quot;&gt;&gt;You use a homemade &lt;span class=&quot;def&quot; data-def=&quot;A type of medical application which involves inserting a small bundle of medicine into any bodily orifice other than the mouth. The medicine was intended to soften or turn liquid at body temperature, which would help with spreading it throughout the body&quot;&gt;suppository&lt;/span&gt; of a fig filled with salt. It&#39;s unclear how this helps.&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;
-&lt;&lt;if $remedies.Treacle.quantity gt 0&gt;&gt;&lt;&lt;li&gt;&gt;&lt;&lt;linkreplace &quot;take an anti-diarrheal&quot;&gt;&gt;You drink some extra &lt;span class=&quot;def&quot; data-def=&quot;A hot drink made of milk curdled with wine or ale, often including spices, which was often used as a remedy. After the 16th century, the milk was usually curdled using lemon juice rather than wine, and might be thickened with bread crumbs. During the plague outbreak, medical quacks sold London treacle, which could be added to the posset drink to further thicken it.&quot;&gt;posset&lt;/span&gt; mixed with herbs like plantain, sorrel, or knot grass.&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $remedies.Treacle.quantity gt 0&gt;&lt;li&gt;&lt;linkreplace &quot;take an anti-diarrheal&quot;&gt;&gt;You drink some extra &lt;span class=&quot;def&quot; data-def=&quot;A hot drink made of milk curdled with wine or ale, often including spices, which was often used as a remedy. After the 16th century, the milk was usually curdled using lemon juice rather than wine, and might be thickened with bread crumbs. During the plague outbreak, medical quacks sold London treacle, which could be added to the posset drink to further thicken it.&quot;&gt;posset&lt;/span&gt; mixed with herbs like plantain, sorrel, or knot grass.&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;/ul&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
