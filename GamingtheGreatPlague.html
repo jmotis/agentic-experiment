@@ -1125,7 +1125,7 @@ $(document).on(':passagestart', function (ev) {
 &lt;&lt;playerName&gt;&gt;
 &lt;&lt;parish&gt;&gt;
 &lt;&lt;playerAge&gt;&gt;
-&lt;&lt;if $socio is &quot;merchant&quot;&gt;&gt;&lt;&lt;set $role to randomeither($trades)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $role to randomeither($trades)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $religion is &quot;member of a dissident Protestant church&quot;&gt;&gt;
 &lt;&lt;set $religion to &quot;Presbyterian&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
@@ -1323,7 +1323,7 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 
-NTS: This is also what happened to your family.
+/* NTS: This is also what happened to your family. */
 
 [[How typical was your experience of the Great Plague of London? Let&#39;s find out!-&gt;stats]]</tw-passagedata><tw-passagedata pid="6" name="Sickness" tags="infection-rates" position="650,625" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;check-NPCs&gt;&gt;&lt;&lt;set _remedyEffect to 0&gt;&gt;
   &lt;&lt;set $plagueInfection to 2&gt;&gt;&lt;&lt;/silently&gt;&gt;
@@ -2376,7 +2376,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;else&gt;&gt;&#39;&#39;You have been &lt;span class=&quot;def&quot; data-def=&quot;The seventeenth-century English Navy (and other militaries) often had labor shortages and had to force men to serve in its ranks. This mostly meant kidnapping, either by force, trickery, or coercion. After being impressed, sailors who were not British could petition to be let back out, but British subjects had to serve their term. Though the Navy typically impressed merchant seamen or fishermen, they sometimes abducted non-sailors. The practice was very unpopular and provoked much protest.&quot;&gt;impressed&lt;/span&gt; into His Majesty&#39;s Navy!&#39;&#39;&lt;br&gt;&lt;br&gt;
     &lt;&lt;if $age is &quot;child&quot; or $age is &quot;elderly adult&quot;&gt;&gt;Luckily for you, once they realize your age, they release you back onto the streets of London.&lt;br&gt;&lt;br&gt;&lt;&lt;storyline-return&gt;&gt;
     &lt;&lt;elseif $gender isnot &quot;male&quot;&gt;&gt;Luckily for you, once you convince them that you are not a man, they release you back on the streets on London.&lt;br&gt;&lt;br&gt;&lt;&lt;storyline-return&gt;&gt;
-    &lt;&lt;elseif $origin is &quot;France&quot; or $origin is &quot;somewhere else&quot;&gt;&gt;.Luckily for you, you are not a subject of the British monarch and should not have been impressed. You bribe a literate crewmate to write a letter to the Naval Board on your behalf, protesting your impressment.&lt;br&gt;&lt;br&gt;
+    &lt;&lt;elseif $origin is &quot;France&quot; or $origin is &quot;somewhere else&quot;&gt;&gt;Luckily for you, you are not a subject of the British monarch and should not have been impressed. You bribe a literate crewmate to write a letter to the Naval Board on your behalf, protesting your impressment.&lt;br&gt;&lt;br&gt;
         Your captain, on hearing about the letter, sends you back to London where you successfully argue your case and are set at liberty.&lt;br&gt;&lt;br&gt;&lt;&lt;storyline-return&gt;&gt;
     &lt;&lt;elseif $origin is &quot;the Dutch Republic&quot;&gt;&gt;Luckily for you, you are not a subject of the British monarch and should not have been impressed. You bribe a literate crewmate to write a letter to the Naval Board on your behalf, protesting your impressment.
         &lt;br&gt;&lt;br&gt;
@@ -4177,7 +4177,7 @@ The &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spr
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;else&gt;&gt;
 &lt;span id=&quot;decision&quot;&gt;Do you go looking for more information?
 &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;
@@ -4212,8 +4212,7 @@ It feels like the church bells are ringing constantly, with each new death or fu
 The &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; has followed the King&#39;s household to &lt;span class=&quot;def&quot; data-def=&quot;A palace south of London famed for its gardens. Cardinal Wolsey began construction on the palace in the early 16th century and King Henry VIII adopted it as his primary residence. King James I, King Charles I, Lord Protector Oliver Cromwell, King Charles II, and King James II also lived in the palace. After the Glorious Revolution in 1688 the co-monarchs William and Mary commissioned the architect Christopher Wren to build a new baroque-style palace on the site. Later monarchs continued to reside there until the mid-18th century. Queen Victoria opened the palace to the public in 1838 and it remains a popular tourist destination.&quot;&gt;Hampton Court&lt;/span&gt; and one of his guards dies of plague at the end of the month.&lt;&lt;/if&gt;&gt;
 [[Continue to August 1665-&gt;August 1665]]
 &lt;&lt;/if&gt;&gt;
-&lt;/span&gt;
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | 
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; |
 &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;
 &lt;br&gt;&lt;br&gt;
 The graveyards are beginning to overflow and corpses are being flung into the open marshes of &lt;span class=&quot;def&quot; data-def=&quot;Also known as Tothill Fields, it was a marshy area of Westminster on the north bank of the river Thames. The area was home to the prison known as Tothill Fields Bridewell, which operated between 1618 and 1884.&quot;&gt;Tuttle-fields&lt;/span&gt;. There is still room in the &lt;span class=&quot;def&quot; data-def=&quot;A city burial ground, not associated with any church or parish, that was located in northeastern London and used from 1569 to 1739. In that period, it received an estimated 25,000 burials. Over time it became commonly known as Bedlam or Bethlem burial ground because it was located in the precinct of the Priory of St. Mary of Bethlehem, later Bethlem Hospital.&quot;&gt;New Chapel churchyard&lt;/span&gt;, that was walled in during the last &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; at great public expenses, but only the rich whose families can afford to pay are being buried there now.
@@ -4246,9 +4245,9 @@ The &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spr
 [[Continue to August 1665-&gt;August 1665]]
 &lt;&lt;/if&gt;&gt;
 
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
+&lt;/span&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;fumigant&gt;&gt;
 
 &lt;&lt;/if&gt;&gt;
@@ -4410,7 +4409,7 @@ Do you:
 [[go quietly]]</tw-passagedata><tw-passagedata pid="46" name="escape" tags="" position="2025,575" size="100,100">You try to escape 
 &lt;&lt;if random(1,2) == 1&gt;&gt;but are immediately caught. The local authorities decide the safest course of action now is to have you [[transported]] to the New World.
 &lt;&lt;else&gt;&gt;and manage to sneak back into London.
-&lt;&lt;if $reputation gte 3&gt;&gt; Luckily, one of your neighbors takes pity on you and lets you stay with them while you seek work and a new place to stay. &lt;&lt;set $socio=&quot;day labourer&quot;&gt;&gt; NTS: Should regenerate household here?
+&lt;&lt;if $reputation gte 3&gt;&gt; Luckily, one of your neighbors takes pity on you and lets you stay with them while you seek work and a new place to stay. &lt;&lt;set $socio=&quot;day labourers&quot;&gt;&gt;
 &lt;&lt;else&gt;&gt;Unfortunately, now you are now homeless, no longer receiving alms from your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&#39;s&lt;/span&gt; &lt;span class=&quot;def&quot; data-def=&quot;Two parish officials elected to administer to the needs of the poor in their parish. These positions were created by the Poor Relief Act of 1597.&quot;&gt;Overseers for the Poor&lt;/span&gt;, and cannot legally beg anymore. It doesn&#39;t take long before you are caught and thrown in gaol.
 &lt;br&gt;
 Do you:
@@ -4427,7 +4426,7 @@ You return to &lt;&lt;if $origin isnot &quot;somewhere else&quot;&gt;&gt;$origin
 But at least you didn&#39;t die of plague!
 &lt;br&gt;&lt;br&gt;
 [[How typical was your experience of the Great Plague of London? Let&#39;s find out!-&gt;stats]]
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="48" name="stats" tags="" position="2150,750" size="100,100">NTS: Here&#39;s a debrief passage where we present all the character stats and talk about representativeness. It&#39;ll come at some point but isn&#39;t done yet!
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="48" name="stats" tags="" position="2150,750" size="100,100">/* NTS: Here's a debrief passage where we present all the character stats and talk about representativeness. It'll come at some point but isn't done yet! */
 
 In the meantime, we would love some feedback on the Alpha prototype of our game. If you&#39;re willing to give some brief feedback, please go to the Google Form at https://forms.gle/CovY1m4TAbVUK27J6</tw-passagedata><tw-passagedata pid="49" name="transported" tags="" position="1900,525" size="100,100">The local authorities decide to have you bound into &lt;span class=&quot;def&quot; data-def=&quot;A person who has signed a labor contract, such as that of an apprentice or servant, to work for a set number of years in exchange for housing, food, clothing, training in a trade, and/or some other material benefit.&quot;&gt;indentured servitude&lt;/span&gt; and shipped to the colony of Virginia. 
 &lt;br&gt;
@@ -4464,7 +4463,7 @@ Do you:
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="52" name="begging-success" tags="" position="1600,225" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $beggarsluck to random(0,5)&gt;&gt;&lt;&lt;set $money = ($money + $beggarsluck)&gt;&gt;Your begging earned you &lt;&lt;if $beggarsluck eq 0&gt;&gt;0 coins.&lt;&lt;else&gt;&gt;&#39;&#39;$beggarsluck&#39;&#39; coin.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;if $money lte 1&gt;&gt;Unfortunately, with no extra coins... /*NTS: more text here/consequences with no money*/
-&lt;&lt;else&gt;&gt;Your coins allow you to purchase food or secure shelter, but at a cost to your reputation...&lt;br&gt;&lt;br&gt;&lt;&lt;set $reputation =-1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;Your coins allow you to purchase food or secure shelter, but at a cost to your reputation...&lt;br&gt;&lt;br&gt;&lt;&lt;set $reputation -= 1&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;unset $beggarsluck&gt;&gt;
 &lt;&lt;storyline-return&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="53" name="good-neighbors" tags="" position="1725,175" size="100,100">&lt;&lt;set $money = ($money + 1)&gt;&gt;Your neighbors provide &#39;&#39;1 coin&#39;&#39; for you.
@@ -5100,7 +5099,7 @@ Luckily, there are no plague cases in your &lt;span class=&quot;def&quot; data-d
      &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;The &lt;span class=&quot;def&quot; data-def=&quot;Two parish officials elected to administer to the needs of the poor in their parish. These positions were created by the Poor Relief Act of 1597.&quot;&gt;Overseers of the Poor&lt;/span&gt; assign you to your first &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; patient to nurse.
      &lt;&lt;/if&gt;&gt;
 
-&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt; (NTS: work text here)
+&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt; /* NTS: work text here */
 
 &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
 	&lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;Every night, you go round to the locked up houses of your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt; and call for them to bring out their dead, while praying to God that you remain safe.
@@ -5116,9 +5115,9 @@ Luckily, there are no plague cases in your &lt;span class=&quot;def&quot; data-d
    &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;&lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;Parish&lt;/span&gt; officials tell you there is a patient for you to nurse.
 	&lt;&lt;/if&gt;&gt;
     
-&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt; (work text here)
+&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt; /* NTS: work text here */
 
-&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt; (work text here)
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt; /* NTS: work text here */
 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
@@ -5301,7 +5300,7 @@ A member of your family/nurse/household offer you some remedies to help ease you
 &lt;li&gt;&lt;&lt;if $remedies.Cordial.quantity gt 0&gt;&gt;&lt;&lt;linkreplace &quot;drink a cordial tincture for the first two days of your illness&quot;&gt;&gt;&lt;&lt;set $remedies.Cordial.quantity -= 1&gt;&gt;Twice a day, you are given a dose of &lt;span class=&quot;def&quot; data-def=&quot;Literally, a beneficial medicine. In this specific case, a reference to a proprietary medicinal blend advertised by John Belson, Esquire, in 1665 during the London plague outbreak.&quot;&gt;tincture&lt;/span&gt;. After each dose, you are heavily covered for 3 hours to induce sweating, then wiped down with hot napkins.&lt;&lt;/linkreplace&gt;&gt;&lt;&lt;elseif $money gt $remedies.Cordial.cost*4&gt;&gt;&lt;&lt;linkreplace &quot;purchase and drink a cordial tincture for the first two days of your illness&quot;&gt;&gt;Twice a day, you are given a dose of &lt;span class=&quot;def&quot; data-def=&quot;Literally, a beneficial medicine. In this specific case, a reference to a proprietary medicinal blend advertised by John Belson, Esquire, in 1665 during the London plague outbreak.&quot;&gt;tincture&lt;/span&gt;. After each dose, you are heavily covered for 3 hours to induce sweating, then wiped down with hot napkins.&lt;&lt;money `-1 * $remedies.Cordial.cost*4`&gt;&gt;&lt;&lt;/linkreplace&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;if $remedies.Treacle.quantity gt 0&gt;&gt;&lt;&lt;linkreplace &quot;drink a posset of London Treacle for the first few days of illness&quot;&gt;&gt;You are given London Treacle dissolved in spoonfulls of warm vinegar, and drink 1/4 pint of this for the first few days of your illness.&lt;&lt;set $remedies.Treacle.quantity -= 1&gt;&gt;&lt;&lt;/linkreplace&gt;&gt;&lt;&lt;elseif $money gt $remedies.Treacle.cost*16&gt;&gt;&lt;&lt;linkreplace &quot;purchase and drink a posset of London Treacle for the first few days of illness&quot;&gt;&gt;You are given &lt;span class=&quot;def&quot; data-def=&quot;A hot drink made of milk curdled with wine or ale, often including spices, which was often used as a remedy. After the 16th century, the milk was usually curdled using lemon juice rather than wine, and might be thickened with bread crumbs. During the plague outbreak, medical quacks sold London treacle, which could be added to the posset drink to further thicken it. London treacle was a compound of walnut, rue, salt, and fig.&quot;&gt;London Treacle&lt;/span&gt; dissolved in spoonfulls of warm vinegar, and drink 1/4 pint of this for the first few days of your illness.&lt;&lt;money `-1 * $remedies.Treacle.cost*16`&gt;&gt;&lt;&lt;/linkreplace&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;linkreplace &quot;use a suppository&quot;&gt;&gt;You use a homemade &lt;span class=&quot;def&quot; data-def=&quot;A type of medical application which involves inserting a small bundle of medicine into any bodily orifice other than the mouth. The medicine was intended to soften or turn liquid at body temperature, which would help with spreading it throughout the body&quot;&gt;suppository&lt;/span&gt; of a fig filled with salt. It&#39;s unclear how this helps.&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;
-&lt;&lt;if $remedies.Treacle.quantity gt 0&gt;&lt;li&gt;&lt;linkreplace &quot;take an anti-diarrheal&quot;&gt;&gt;You drink some extra &lt;span class=&quot;def&quot; data-def=&quot;A hot drink made of milk curdled with wine or ale, often including spices, which was often used as a remedy. After the 16th century, the milk was usually curdled using lemon juice rather than wine, and might be thickened with bread crumbs. During the plague outbreak, medical quacks sold London treacle, which could be added to the posset drink to further thicken it.&quot;&gt;posset&lt;/span&gt; mixed with herbs like plantain, sorrel, or knot grass.&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $remedies.Treacle.quantity gt 0&gt;&gt;&lt;li&gt;&lt;&lt;linkreplace &quot;take an anti-diarrheal&quot;&gt;&gt;You drink some extra &lt;span class=&quot;def&quot; data-def=&quot;A hot drink made of milk curdled with wine or ale, often including spices, which was often used as a remedy. After the 16th century, the milk was usually curdled using lemon juice rather than wine, and might be thickened with bread crumbs. During the plague outbreak, medical quacks sold London treacle, which could be added to the posset drink to further thicken it.&quot;&gt;posset&lt;/span&gt; mixed with herbs like plantain, sorrel, or knot grass.&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;/ul&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
@@ -5436,7 +5435,7 @@ You decide to:
 &lt;&lt;else&gt;&gt; */
 Lord be praised, your &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;household&lt;/span&gt; has survived the &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt;. You still need to finish  &lt;span class=&quot;def&quot; data-def=&quot;A method of containing disease which involves keeping potentially infected people, animals, or goods contained and away from others for a sufficient period of time for the disease to manifest. The word comes from the Italian “quaranta” meaning 40 as the quarantine period for plague was 40 days.&quot;&gt;quarantine&lt;/span&gt;, but begin reconnecting with the outside world.
 
-In the time you were away.... (nts: add updates based on what big events have happened)
+In the time you were away.... /* nts: add updates based on what big events have happened */
 
 &lt;&lt;storyline-return&gt;&gt;
 /*&lt;&lt;health-update&gt;&gt;*/
@@ -5520,7 +5519,7 @@ But by March, the &lt;span class=&quot;def&quot; data-def=&quot;Weekly publicati
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-As summer dawns over the city, plague deaths reach a height of *NTS: check numbers* a week. It&#39;s nothing compared to 1665, but the risk of death is still high and you are frustrated with all the people who demand your return.&lt;&lt;if $money lte 0&gt;&gt;It is therefore a mixed blessing that you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return early to avoid starving-&gt;June 1666]].&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;
+As summer dawns over the city, plague deaths reach a height of /* NTS: check numbers */ a week. It&#39;s nothing compared to 1665, but the risk of death is still high and you are frustrated with all the people who demand your return.&lt;&lt;if $money lte 0&gt;&gt;It is therefore a mixed blessing that you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return early to avoid starving-&gt;June 1666]].&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
@@ -5536,7 +5535,7 @@ Then, in September, disaster strikes. Your first hint is a dark cloud rising int
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-Finally, you receive word that *NTS: put in results here based on where you live, if your house burned you&#39;re in the countryside for the rest of the game, go straight to the end.*&lt;br&gt;&lt;br&gt;
+Finally, you receive word that /* NTS: put in results here based on where you live, if your house burned you're in the countryside for the rest of the game, go straight to the end. */&lt;br&gt;&lt;br&gt;
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
@@ -5578,7 +5577,7 @@ But by March, the &lt;span class=&quot;def&quot; data-def=&quot;Weekly publicati
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-As summer dawns over the city, plague deaths reach a height of *NTS: check numbers* a week. It&#39;s nothing compared to 1665, but the risk of death is still high and you are frustrated with all the people who demand your return.&lt;&lt;if $money lte 0&gt;&gt;It is therefore a mixed blessing that you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return early to avoid starving-&gt;June 1666]].&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;
+As summer dawns over the city, plague deaths reach a height of /* NTS: check numbers */ a week. It&#39;s nothing compared to 1665, but the risk of death is still high and you are frustrated with all the people who demand your return.&lt;&lt;if $money lte 0&gt;&gt;It is therefore a mixed blessing that you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return early to avoid starving-&gt;June 1666]].&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
@@ -5594,7 +5593,7 @@ Then, in September, disaster strikes. Your first hint is a dark cloud rising int
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-Finally, you receive word that *NTS: put in results here based on where you live, if your house burned you&#39;re in the countryside for the rest of the game, go straight to the end.*&lt;br&gt;&lt;br&gt;
+Finally, you receive word that /* NTS: put in results here based on where you live, if your house burned you're in the countryside for the rest of the game, go straight to the end. */&lt;br&gt;&lt;br&gt;
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
