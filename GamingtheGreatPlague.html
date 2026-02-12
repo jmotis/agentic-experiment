@@ -4485,7 +4485,7 @@ Do you:
     &lt;&lt;/if&gt;&gt;.
     &lt;&lt;if $disability is 1&gt;&gt;Many of your neighbors begin to flee the city and those who remain curse at you to leave when you try begging at their doors.&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="55" name="freeze" tags="" position="1900,925" size="100,100">You quietly freeze to death, but at least it was a [[painless way to go-&gt;stats]].</tw-passagedata><tw-passagedata pid="56" name="StoryCaption" tags="" position="50,1250" size="100,100">&lt;&lt;if $reputation gt 3&gt;&gt;&lt;span style=&quot;Your reputation is &lt;span style=&quot;color:#ffffff;&quot;&gt;good&lt;/span&gt;.&lt;&lt;elseif $reputation lt 3&gt;&gt;Your reputation is &lt;span style=&quot;color:red&quot;&gt;bad&lt;/span&gt;&lt;&lt;/if&gt;&gt;&lt;br&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="55" name="freeze" tags="" position="1900,925" size="100,100">You quietly freeze to death, but at least it was a [[painless way to go-&gt;stats]].</tw-passagedata><tw-passagedata pid="56" name="StoryCaption" tags="" position="50,1250" size="100,100">&lt;&lt;if $reputation gt 3&gt;&gt;Your reputation is &lt;span style=&quot;color:#ffffff;&quot;&gt;good&lt;/span&gt;.&lt;&lt;elseif $reputation lt 3&gt;&gt;Your reputation is &lt;span style=&quot;color:red&quot;&gt;bad&lt;/span&gt;.&lt;&lt;/if&gt;&gt;&lt;br&gt;
 &lt;&lt;income&gt;&gt;
 /* Wealth at beginning of month: $money */
 Income: $income
@@ -4498,8 +4498,8 @@ Monthly spending: $expenses
 &lt;&lt;if _shillings gte 20&gt;&gt;
 &lt;&lt;set $pounds to Math.floor(_shillings/20)&gt;&gt;&lt;&lt;set $shillings to (_shillings- Math.floor($pounds*20))&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-Total wealth: $money (£$pounds, $shillings s., $pence d.) &lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
+Total wealth: $money (£$pounds, $shillings s., $pence d.)
+&lt;&lt;/nobr&gt;&gt;
 
 &lt;&lt;link &quot;Inventory&quot;&gt;&gt;
     &lt;&lt;run Dialog.setup(&quot;Inventory&quot;, &quot;inventory&quot;); Dialog.wiki(Story.get(&quot;Inventory&quot;).text); Dialog.open()&gt;&gt;
