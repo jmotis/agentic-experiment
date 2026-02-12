@@ -5,6 +5,7 @@
 This repository contains **Gaming the Great Plague**, an interactive fiction game built with [Twine 2](https://twinery.org/) using the [SugarCube 2.37.3](https://www.motoslave.net/sugarcube/2/) story format. The project is a single self-contained HTML file that runs directly in a web browser.
 
 **Author:** Jessica Otis
+**Co-authors:** Stephanie Grimm, Alexandra Miller, Nathan Sleeter
 
 ## Repository Structure
 
