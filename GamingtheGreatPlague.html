@@ -1859,7 +1859,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;set $remedies.Suppository = { name: &quot;a suppository of a fig filled with salt&quot;, quantity: 0 }&gt;&gt;
 &lt;&lt;set $remedies.Cordial = { name: &quot;a cordial tincture to be drunk for two days after infection&quot;, quantity: 0, cost: 12 }&gt;&gt; 
 &lt;&lt;set $remedies.Immodium = { name: &quot;an anti-diarrheal posset made of plantain, sorrel, or knot grass&quot;, quantity: 0, cost: 0 }&gt;&gt;
-&lt;&lt;set $quarantine to 0&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="PassageHeader" tags="" position="575,25" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $quarantine to 0&gt;&gt;
+&lt;&lt;set $plagueRevealed to 0&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="PassageHeader" tags="" position="575,25" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;
 &lt;&lt;fumigant-check&gt;&gt;
 	&lt;&lt;if $plagueInfection lt 2&gt;&gt;
@@ -2347,15 +2348,15 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 
 &#39;&#39;Household:&#39;&#39; &lt;&lt;if $fled is 5&gt;&gt;&#39;&#39;fled to $hhlocation&#39;&#39;&lt;&lt;/if&gt;&gt;&lt;br&gt;
         &lt;&lt;for _i, _idx range $FledFamily&gt;&gt;
-        $FledFamily[_i].name, $FledFamily[_i].age $FledFamily[_i].relationship: $FledFamily[_i].health.&lt;br&gt;
+        $FledFamily[_i].name, $FledFamily[_i].age $FledFamily[_i].relationship: &lt;&lt;if $FledFamily[_i].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$FledFamily[_i].health&lt;&lt;/if&gt;&gt;.&lt;br&gt;
         &lt;&lt;/for&gt;&gt;
         &lt;&lt;for _i, _idx range $NPCs&gt;&gt;
-        $NPCs[_i].name, $NPCs[_i].age $NPCs[_i].relationship: $NPCs[_i].health.&lt;br&gt;
+        $NPCs[_i].name, $NPCs[_i].age $NPCs[_i].relationship: &lt;&lt;if $NPCs[_i].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$NPCs[_i].health&lt;&lt;/if&gt;&gt;.&lt;br&gt;
         &lt;&lt;/for&gt;&gt;
 &lt;br&gt;&lt;br&gt;
         &lt;&lt;if $NPCsExtended.length gt 0&gt;&gt;
 &#39;&#39;Extended family:&#39;&#39; &lt;br&gt;&lt;&lt;for _e, _idx range $NPCsExtended&gt;&gt;
-	$NPCsExtended[_e].name, $NPCsExtended[_e].age $NPCsExtended[_e].relationship: $NPCsExtended[_e].health&lt;br&gt;
+	$NPCsExtended[_e].name, $NPCsExtended[_e].age $NPCsExtended[_e].relationship: &lt;&lt;if $NPCsExtended[_e].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$NPCsExtended[_e].health&lt;&lt;/if&gt;&gt;&lt;br&gt;
     &lt;&lt;/for&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
@@ -4387,6 +4388,7 @@ $NPCs[_z].relationship, $NPCs[_z].name, $NPCs[_z].health
 &lt;br&gt;
 //The pest house and plague pit, Moorfields, London. Wood engraving. Wellcome Images.//
 </tw-passagedata><tw-passagedata pid="40" name="sick-fam-widget" tags="widget infection-rates" position="50,375" size="100,100">&lt;&lt;widget &quot;sickFam&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $plagueRevealed to 1&gt;&gt;
 As morning dawns, a terrible realization settles over your &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;household&lt;/span&gt;. Your
  &lt;&lt;silently&gt;&gt;&lt;&lt;set _infectedFamily = []&gt;&gt;
         &lt;&lt;for _idx, _household range $NPCs&gt;&gt;
@@ -4546,6 +4548,7 @@ Good luck! You&#39;ll need it...
 
 [[How typical was your experience of the Great Plague of London? Let&#39;s find out!-&gt;stats]]</tw-passagedata><tw-passagedata pid="50" name="sickPC" tags="widget infection-rates" position="525,725" size="100,100">&lt;&lt;widget &quot;sickPC&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $plagueRevealed to 1&gt;&gt;
 Lord have mercy! A strange lump has appeared on your 
     &lt;&lt;set _x to random(1,3)&gt;&gt;
     	&lt;&lt;if _x == 3&gt;&gt;neck and there&#39;s no hiding that you have caught the dreaded [[plague-&gt;Sickness]].
