@@ -4872,14 +4872,14 @@ After nearly a month in  &lt;span class=&quot;def&quot; data-def=&quot;A method 
         /* NTS: update text here for variety from past weeks */
         &lt;&lt;if _deceased.length gt 0&gt;&gt;Despite your care, your 
             &lt;&lt;for _x, _d range _deceased&gt;&gt;
-                &lt;&lt;if _deceased.length eq 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name has died.&lt;&lt;elseif _x &lt; deceased4.length - 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name,&lt;&lt;else&gt;&gt;and $NPCs[_d].relationship $NPCs[_d].name have died.
+                &lt;&lt;if _deceased.length eq 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name has died.&lt;&lt;elseif _x &lt; _deceased.length - 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name,&lt;&lt;else&gt;&gt;and $NPCs[_d].relationship $NPCs[_d].name have died.
                 &lt;&lt;/if&gt;&gt;       
             &lt;&lt;/for&gt;&gt;
         &lt;br&gt;&lt;br&gt; 
         &lt;&lt;/if&gt;&gt;
         
         /* show which family members recovered */
-        &lt;&lt;if _recovered4.length gt 0&gt;&gt;&lt;&lt;if _deceased4.length gt 0&gt;&gt;There is some good news, though. &lt;&lt;/if&gt;&gt;The treatments seem to be helping, and your
+        &lt;&lt;if _recovered.length gt 0&gt;&gt;&lt;&lt;if _deceased.length gt 0&gt;&gt;There is some good news, though. &lt;&lt;/if&gt;&gt;The treatments seem to be helping, and your
             &lt;&lt;for _r, _d range _recovered&gt;&gt;
                 &lt;&lt;if _recovered.length eq 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name has started to recover from their illness.
                 &lt;&lt;elseif _r &lt; _recovered.length - 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name
@@ -5727,14 +5727,14 @@ You have now been in  &lt;span class=&quot;def&quot; data-def=&quot;A method of 
         /* NTS: update text here for variety from past weeks */
         &lt;&lt;if _deceased.length gt 0&gt;&gt;Despite your care, your 
             &lt;&lt;for _x, _d range _deceased&gt;&gt;
-                &lt;&lt;if _deceased.length eq 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name has died.&lt;&lt;elseif _x &lt; deceased5.length - 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name,&lt;&lt;else&gt;&gt;and $NPCs[_d].relationship $NPCs[_d].name have died.
+                &lt;&lt;if _deceased.length eq 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name has died.&lt;&lt;elseif _x &lt; _deceased.length - 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name,&lt;&lt;else&gt;&gt;and $NPCs[_d].relationship $NPCs[_d].name have died.
                 &lt;&lt;/if&gt;&gt;       
             &lt;&lt;/for&gt;&gt;
         &lt;br&gt;&lt;br&gt; 
         &lt;&lt;/if&gt;&gt;
         
         /* show which family members recovered */
-        &lt;&lt;if _recovered.length gt 0&gt;&gt;&lt;&lt;if _deceased5.length gt 0&gt;&gt;There is some good news, though. &lt;&lt;/if&gt;&gt;The treatments seem to be helping, and your
+        &lt;&lt;if _recovered.length gt 0&gt;&gt;&lt;&lt;if _deceased.length gt 0&gt;&gt;There is some good news, though. &lt;&lt;/if&gt;&gt;The treatments seem to be helping, and your
             &lt;&lt;for _r, _d range _recovered&gt;&gt;
                 &lt;&lt;if _recovered.length eq 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name has started to recover from their illness.
                 &lt;&lt;elseif _r &lt; _recovered.length - 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name
@@ -5829,15 +5829,15 @@ You enter your sixth week of  &lt;span class=&quot;def&quot; data-def=&quot;A me
         /* NTS: update text here for variety from past weeks */
         &lt;&lt;if _deceased.length gt 0&gt;&gt;Despite your care, your 
             &lt;&lt;for _x, _d range _deceased&gt;&gt;
-                &lt;&lt;if _deceased.length eq 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name has died.&lt;&lt;elseif _x &lt; deceased6.length - 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name,&lt;&lt;else&gt;&gt;and $NPCs[_d].relationship $NPCs[_d].name have died.
+                &lt;&lt;if _deceased.length eq 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name has died.&lt;&lt;elseif _x &lt; _deceased.length - 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name,&lt;&lt;else&gt;&gt;and $NPCs[_d].relationship $NPCs[_d].name have died.
                 &lt;&lt;/if&gt;&gt;       
             &lt;&lt;/for&gt;&gt;
         &lt;br&gt;&lt;br&gt; 
         &lt;&lt;/if&gt;&gt;
         
         /* show which family members recovered */
-        &lt;&lt;if _recovered6.length gt 0&gt;&gt;
-            &lt;&lt;if _deceased6.length gt 0&gt;&gt;There is some good news, though.
+        &lt;&lt;if _recovered.length gt 0&gt;&gt;
+            &lt;&lt;if _deceased.length gt 0&gt;&gt;There is some good news, though.
             &lt;&lt;/if&gt;&gt;The treatments seem to be helping, and your
             &lt;&lt;for _r, _d range _recovered&gt;&gt;
                 &lt;&lt;if _recovered.length eq 1&gt;&gt;$NPCs[_d].relationship $NPCs[_d].name has started to recover from their illness.
