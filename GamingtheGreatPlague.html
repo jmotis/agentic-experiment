@@ -2534,6 +2534,7 @@ You
                     &lt;&lt;/if&gt;&gt;&lt;/li&gt;
                     &lt;li&gt;[[refuse to do as you&#39;ve been tasked.-&gt;work-refusal][$reputation to 0]]&lt;/li&gt;
                 &lt;/ul&gt;
+			&lt;&lt;else&gt;&gt;No one has any charity right now for a healthy beggar, but somehow you manage to scrape together enough food to last you to [[July 1665]].
             &lt;&lt;/if&gt;&gt;
         &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
             &lt;&lt;if $role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot; or $role is &quot;nurse&quot;&gt;&gt;
@@ -2547,6 +2548,7 @@ You
                 &lt;&lt;/if&gt;&gt;&lt;/li&gt;
                 	&lt;li&gt;[[decide to quit and look for other work.-&gt;July 1665][$reputation to Math.clamp($reputation - 3, 0, 10); $role to &quot;quit&quot;]]&lt;/li&gt;
                 &lt;/ul&gt;
+			&lt;&lt;else&gt;&gt;So many people are fleeing the city, there&#39;s plenty of work hauling their belongings to and fro... for now anyway. It&#39;s enough to get you through to [[July 1665]].
             &lt;&lt;/if&gt;&gt;
         &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;&lt;br&gt;
                 /* NTS: include text about option to flee? */
@@ -2595,70 +2597,7 @@ You
 /* If not in city walls or western suburbs */
     &lt;&lt;elseif $location isnot &quot;in another part of the western suburbs&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/linkappend&gt;&gt;
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
- | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt; You don&#39;t listen to the gossip, but it&#39;s hard to ignore the shouts when news finally arrives of a great battle that killed many important men.
-   &lt;br&gt;&lt;br&gt;
-   
- &lt;&lt;if $age isnot &quot;child&quot; and $gender isnot &quot;female&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to be there for the next battle?
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
-   &lt;&lt;linkappend &quot;That is the last good day of the month, though.&quot;&gt;&gt; The &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; grows worse and the streets are soon filled with coaches and wagons full of people fleeing with their goods to the countryside. The &lt;span class=&quot;def&quot; data-def=&quot;The mother of the current monarch. In 1665-7, this was Queen Henrietta Maria, the wife of the executed King Charles I.&quot;&gt;Queen Mother&lt;/span&gt; &lt;span class=&quot;def&quot; data-def=&quot;The mother of King Charles II. Born a French princess, she became the wife of King Charles I of England until his execution in 1649. She then served as an advisor to her son, but her Catholicism and repeated attempts to convert people at court made her unpopular among the Protestant people of England. Charles I ordered that she be referred to in public as Queen Mary, but she disliked this title and signed her name as Henriette.&quot;&gt;Henrietta Maria&lt;/span&gt; moves back to France&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, much to your dismay, and that of your fellow Catholics who flock to her chapel each week&lt;&lt;else&gt;&gt;, much to your relief, and that of all your fellow God-fearing &lt;span class=&quot;def&quot; data-def=&quot;Dissidents from the Catholic faith. In England these were most commonly Anglicans (Church of England) or Presbyterians, but there were other smaller groups such as Quakers and Baptists.&quot;&gt;Protestants&lt;/span&gt;&lt;&lt;/if&gt;&gt;. On June 29th, the King packs up his entire &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;household&lt;/span&gt; in 148 carriages and moves 12 miles away, to his palace at &lt;span class=&quot;def&quot; data-def=&quot;A palace south of London famed for its gardens. Cardinal Wolsey began construction on the palace in the early 16th century and King Henry VIII adopted it as his primary residence. King James I, King Charles I, Lord Protector Oliver Cromwell, King Charles II, and King James II also lived in the palace. After the Glorious Revolution in 1688 the co-monarchs William and Mary commissioned the architect Christopher Wren to build a new baroque-style palace on the site. Later monarchs continued to reside there until the mid-18th century. Queen Victoria opened the palace to the public in 1838 and it remains a popular tourist destination.&quot;&gt;Hampton Court&lt;/span&gt;.
-    &lt;br&gt;&lt;br&gt;
     
- &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/4/41/Wilson_%22The_plague...%22%3B_people_fleeing_from_plague_Wellcome_L0016623.jpg&quot; width=&quot;100%&quot;&gt;
-//Runaways fleeing from the plague, a woodcut from &#39;A Looking-glasse for City and Countrey&#39;, printed by H. Gosson in 1630 and sold by E. Wright, c. 1630. Wellcome Images//
- &lt;br&gt;&lt;br&gt;
-    &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt; There are still no plague cases in your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt;, but everyone knows that it is only a matter of time
-    /* Beggars */
-        &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt; and your neighbors are no longer willing to give you food or money when you come begging to their doors.&lt;br&gt;
-            &lt;&lt;highway&gt;&gt;
-    /* Day Labourers, Artisans, Merchants */
-        &lt;&lt;else&gt;&gt;
-            &lt;&lt;if $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;&gt;&gt;. You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; will soon need to decide if you want to flee&lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt; or at least send the rest of your household away&lt;&lt;/if&gt;&gt; before things get worse.
-    /* Servants */
-            &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;. You anxiously await your master&#39;s decision about whether the household will flee or stay.
-    /* Nobles */
-            &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;. Unfortunately, you are not important enough to merit lodgings at &lt;span class=&quot;def&quot; data-def=&quot;A palace south of London famed for its gardens. Cardinal Wolsey began construction on the palace in the early 16th century and King Henry VIII adopted it as his primary residence. King James I, King Charles I, Lord Protector Oliver Cromwell, King Charles II, and King James II also lived in the palace. After the Glorious Revolution in 1688 the co-monarchs William and Mary commissioned the architect Christopher Wren to build a new baroque-style palace on the site. Later monarchs continued to reside there until the mid-18th century. Queen Victoria opened the palace to the public in 1838 and it remains a popular tourist destination.&quot;&gt;Hampton Court&lt;/span&gt; and the surrounding village is already full to bursting. You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; will soon need to decide if it&#39;s worth the risk of staying in London, near enough to visit the Court regularly, or if you &lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt;or your household&lt;&lt;/if&gt;&gt;should flee before things get worse.
-            &lt;&lt;/if&gt;&gt;&lt;br&gt;
-        [[Continue to July 1665-&gt;July 1665]]
-        &lt;&lt;/if&gt;&gt;
-/* If not in city walls or western suburbs */
-    &lt;&lt;elseif $location isnot &quot;in another part of the western suburbs&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
-    &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/linkappend&gt;&gt;
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
-&lt;&lt;else&gt;&gt;
- &lt;&lt;linkappend &quot;That is the last good day of the month, though.&quot;&gt;&gt; The &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; grows worse and the streets are soon filled with coaches and wagons full of people fleeing with their goods to the countryside. The &lt;span class=&quot;def&quot; data-def=&quot;The mother of the current monarch. In 1665-7, this was Queen Henrietta Maria, the wife of the executed King Charles I.&quot;&gt;Queen Mother&lt;/span&gt; &lt;span class=&quot;def&quot; data-def=&quot;The mother of King Charles II. Born a French princess, she became the wife of King Charles I of England until his execution in 1649. She then served as an advisor to her son, but her Catholicism and repeated attempts to convert people at court made her unpopular among the Protestant people of England. Charles I ordered that she be referred to in public as Queen Mary, but she disliked this title and signed her name as Henriette.&quot;&gt;Henrietta Maria&lt;/span&gt; moves back to France&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, much to your dismay, and that of your fellow Catholics who flock to her chapel each week&lt;&lt;else&gt;&gt;, much to your relief, and that of all your fellow God-fearing &lt;span class=&quot;def&quot; data-def=&quot;Dissidents from the Catholic faith. In England these were most commonly Anglicans (Church of England) or Presbyterians, but there were other smaller groups such as Quakers and Baptists.&quot;&gt;Protestants&lt;/span&gt;&lt;&lt;/if&gt;&gt;. On June 29th, the King packs up his entire &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;household&lt;/span&gt; in 148 carriages and moves 12 miles away, to his palace at &lt;span class=&quot;def&quot; data-def=&quot;A palace south of London famed for its gardens. Cardinal Wolsey began construction on the palace in the early 16th century and King Henry VIII adopted it as his primary residence. King James I, King Charles I, Lord Protector Oliver Cromwell, King Charles II, and King James II also lived in the palace. After the Glorious Revolution in 1688 the co-monarchs William and Mary commissioned the architect Christopher Wren to build a new baroque-style palace on the site. Later monarchs continued to reside there until the mid-18th century. Queen Victoria opened the palace to the public in 1838 and it remains a popular tourist destination.&quot;&gt;Hampton Court&lt;/span&gt;.
-    &lt;br&gt;&lt;br&gt;
-    
- &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/4/41/Wilson_%22The_plague...%22%3B_people_fleeing_from_plague_Wellcome_L0016623.jpg&quot; width=&quot;100%&quot;&gt;
-//Runaways fleeing from the plague, a woodcut from &#39;A Looking-glasse for City and Countrey&#39;, printed by H. Gosson in 1630 and sold by E. Wright, c. 1630. Wellcome Images//
- &lt;br&gt;&lt;br&gt;
-    &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt; There are still no plague cases in your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt;, but everyone knows that it is only a matter of time
-    /* Beggars */
-        &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt; and your neighbors are no longer willing to give you food or money when you come begging to their doors.&lt;br&gt;
-            &lt;&lt;highway&gt;&gt;
-    /* Day Labourers, Artisans, Merchants */
-        &lt;&lt;else&gt;&gt;
-            &lt;&lt;if $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;&gt;&gt;. You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; will soon need to decide if you want to flee&lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt; or at least send the rest of your household away&lt;&lt;/if&gt;&gt; before things get worse.
-    /* Servants */
-            &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;. You anxiously await your master&#39;s decision about whether the household will flee or stay.
-    /* Nobles */
-            &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;. Unfortunately, you are not important enough to merit lodgings at &lt;span class=&quot;def&quot; data-def=&quot;A palace south of London famed for its gardens. Cardinal Wolsey began construction on the palace in the early 16th century and King Henry VIII adopted it as his primary residence. King James I, King Charles I, Lord Protector Oliver Cromwell, King Charles II, and King James II also lived in the palace. After the Glorious Revolution in 1688 the co-monarchs William and Mary commissioned the architect Christopher Wren to build a new baroque-style palace on the site. Later monarchs continued to reside there until the mid-18th century. Queen Victoria opened the palace to the public in 1838 and it remains a popular tourist destination.&quot;&gt;Hampton Court&lt;/span&gt; and the surrounding village is already full to bursting. You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; will soon need to decide if it&#39;s worth the risk of staying in London, near enough to visit the Court regularly, or if you &lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt;or your household&lt;&lt;/if&gt;&gt;should flee before things get worse.
-            &lt;&lt;/if&gt;&gt;&lt;br&gt;
-        [[Continue to July 1665-&gt;July 1665]]
-        &lt;&lt;/if&gt;&gt;
-/* If not in city walls or western suburbs */
-    &lt;&lt;elseif $location isnot &quot;in another part of the western suburbs&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
-    &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/linkappend&gt;&gt;
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 /* If location is western suburbs */
     &lt;&lt;if $location is &quot;in another part of the western suburbs&quot;&gt;&gt;
         &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
@@ -2710,6 +2649,175 @@ You
             Otherwise, you can [[remain in the city with your entire household.-&gt;July 1665]]&lt;br&gt;&lt;br&gt;
         &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/linkappend&gt;&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+ | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt; You don&#39;t listen to the gossip, but it&#39;s hard to ignore the shouts when news finally arrives of a great battle that killed many important men.
+   &lt;br&gt;&lt;br&gt;
+   
+ &lt;&lt;if $age isnot &quot;child&quot; and $gender isnot &quot;female&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to be there for the next battle?
+&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
+   &lt;&lt;linkappend &quot;That is the last good day of the month, though.&quot;&gt;&gt; The &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; grows worse and the streets are soon filled with coaches and wagons full of people fleeing with their goods to the countryside. The &lt;span class=&quot;def&quot; data-def=&quot;The mother of the current monarch. In 1665-7, this was Queen Henrietta Maria, the wife of the executed King Charles I.&quot;&gt;Queen Mother&lt;/span&gt; &lt;span class=&quot;def&quot; data-def=&quot;The mother of King Charles II. Born a French princess, she became the wife of King Charles I of England until his execution in 1649. She then served as an advisor to her son, but her Catholicism and repeated attempts to convert people at court made her unpopular among the Protestant people of England. Charles I ordered that she be referred to in public as Queen Mary, but she disliked this title and signed her name as Henriette.&quot;&gt;Henrietta Maria&lt;/span&gt; moves back to France&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, much to your dismay, and that of your fellow Catholics who flock to her chapel each week&lt;&lt;else&gt;&gt;, much to your relief, and that of all your fellow God-fearing &lt;span class=&quot;def&quot; data-def=&quot;Dissidents from the Catholic faith. In England these were most commonly Anglicans (Church of England) or Presbyterians, but there were other smaller groups such as Quakers and Baptists.&quot;&gt;Protestants&lt;/span&gt;&lt;&lt;/if&gt;&gt;. On June 29th, the King packs up his entire &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;household&lt;/span&gt; in 148 carriages and moves 12 miles away, to his palace at &lt;span class=&quot;def&quot; data-def=&quot;A palace south of London famed for its gardens. Cardinal Wolsey began construction on the palace in the early 16th century and King Henry VIII adopted it as his primary residence. King James I, King Charles I, Lord Protector Oliver Cromwell, King Charles II, and King James II also lived in the palace. After the Glorious Revolution in 1688 the co-monarchs William and Mary commissioned the architect Christopher Wren to build a new baroque-style palace on the site. Later monarchs continued to reside there until the mid-18th century. Queen Victoria opened the palace to the public in 1838 and it remains a popular tourist destination.&quot;&gt;Hampton Court&lt;/span&gt;.
+    &lt;br&gt;&lt;br&gt;
+    
+ &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/4/41/Wilson_%22The_plague...%22%3B_people_fleeing_from_plague_Wellcome_L0016623.jpg&quot; width=&quot;100%&quot;&gt;
+//Runaways fleeing from the plague, a woodcut from &#39;A Looking-glasse for City and Countrey&#39;, printed by H. Gosson in 1630 and sold by E. Wright, c. 1630. Wellcome Images//
+ &lt;br&gt;&lt;br&gt;
+    &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt; There are still no plague cases in your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt;, but everyone knows that it is only a matter of time
+    /* Beggars */
+        &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt; and your neighbors are no longer willing to give you food or money when you come begging to their doors.&lt;br&gt;
+            &lt;&lt;highway&gt;&gt;
+    /* Day Labourers, Artisans, Merchants */
+        &lt;&lt;else&gt;&gt;
+            &lt;&lt;if $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;&gt;&gt;. You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; will soon need to decide if you want to flee&lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt; or at least send the rest of your household away&lt;&lt;/if&gt;&gt; before things get worse.
+    /* Servants */
+            &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;. You anxiously await your master&#39;s decision about whether the household will flee or stay.
+    /* Nobles */
+            &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;. Unfortunately, you are not important enough to merit lodgings at &lt;span class=&quot;def&quot; data-def=&quot;A palace south of London famed for its gardens. Cardinal Wolsey began construction on the palace in the early 16th century and King Henry VIII adopted it as his primary residence. King James I, King Charles I, Lord Protector Oliver Cromwell, King Charles II, and King James II also lived in the palace. After the Glorious Revolution in 1688 the co-monarchs William and Mary commissioned the architect Christopher Wren to build a new baroque-style palace on the site. Later monarchs continued to reside there until the mid-18th century. Queen Victoria opened the palace to the public in 1838 and it remains a popular tourist destination.&quot;&gt;Hampton Court&lt;/span&gt; and the surrounding village is already full to bursting. You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; will soon need to decide if it&#39;s worth the risk of staying in London, near enough to visit the Court regularly, or if you &lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt;or your household&lt;&lt;/if&gt;&gt;should flee before things get worse.
+            &lt;&lt;/if&gt;&gt;&lt;br&gt;
+        [[Continue to July 1665-&gt;July 1665]]
+        &lt;&lt;/if&gt;&gt;
+/* If not in city walls or western suburbs */
+    &lt;&lt;elseif $location isnot &quot;in another part of the western suburbs&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
+    &lt;&lt;/if&gt;&gt;
+    
+/* If location is western suburbs */
+    &lt;&lt;if $location is &quot;in another part of the western suburbs&quot;&gt;&gt;
+        &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
+            &lt;&lt;if $role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot; or $role is &quot;nurse&quot;&gt;&gt;
+                &lt;&lt;plague-work&gt;&gt;
+                &lt;br&gt;&lt;br&gt;Do you:
+                &lt;ul&gt;&lt;li&gt;
+                    &lt;&lt;if _fumes gt 0&gt;&gt;
+                        &lt;&lt;if random(1,6) is 1&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665][$plagueInfection to 1]]&lt;&lt;else&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665]]&lt;&lt;/if&gt;&gt;                
+                    &lt;&lt;else&gt;&gt;
+                        &lt;&lt;if random(1,3) eq 1&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665][$plagueInfection to 1]]&lt;&lt;else&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665]]&lt;&lt;/if&gt;&gt;
+                    &lt;&lt;/if&gt;&gt;&lt;/li&gt;
+                    &lt;li&gt;[[refuse to do as you&#39;ve been tasked.-&gt;work-refusal][$reputation to 0]]&lt;/li&gt;
+                &lt;/ul&gt;
+			&lt;&lt;else&gt;&gt;No one has any charity right now for a healthy beggar, but somehow you manage to scrape together enough food to last you to [[July 1665]].
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
+            &lt;&lt;if $role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot; or $role is &quot;nurse&quot;&gt;&gt;
+                &lt;&lt;plague-work&gt;&gt;
+                &lt;br&gt;&lt;br&gt;Do you:
+                &lt;ul&gt;&lt;li&gt;
+                &lt;&lt;if _fumes gt 0&gt;&gt;
+                    &lt;&lt;if random(1,6) is 1&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665][$plagueInfection to 1]]&lt;&lt;else&gt;&gt;[[swallow your fears and go to do your Christian duty-&gt;July 1665]]&lt;&lt;/if&gt;&gt;
+                &lt;&lt;else&gt;&gt;
+                    &lt;&lt;if random(1,3) is 1&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665][$plagueInfection to 1]]&lt;&lt;else&gt;&gt;[[swallow your fears and go to do your Christian duty-&gt;July 1665]] &lt;&lt;/if&gt;&gt;
+                &lt;&lt;/if&gt;&gt;&lt;/li&gt;
+                	&lt;li&gt;[[decide to quit and look for other work.-&gt;July 1665][$reputation to Math.clamp($reputation - 3, 0, 10); $role to &quot;quit&quot;]]&lt;/li&gt;
+                &lt;/ul&gt;
+			&lt;&lt;else&gt;&gt;So many people are fleeing the city, there&#39;s plenty of work hauling their belongings to and fro... for now anyway. It&#39;s enough to get you through to [[July 1665]].
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;&lt;br&gt;
+                /* NTS: include text about option to flee? */
+                &lt;&lt;late-departure&gt;&gt;
+                Otherwise, you can [[remain in the city with your entire household.-&gt;July 1665]]&lt;br&gt;&lt;br&gt;
+
+/* Artisans */
+        &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;br&gt;
+            &lt;&lt;late-departure&gt;&gt;
+            Otherwise, you can [[remain in the city with your entire household.-&gt;July 1665]]&lt;br&gt;&lt;br&gt;
+
+/* Merchants */ 
+        &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;
+            &lt;&lt;late-departure&gt;&gt;
+            Otherwise, you can [[remain in the city with your entire household.-&gt;July 1665]]&lt;br&gt;&lt;br&gt;
+
+/* Nobles */
+        &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;Do you:
+            &lt;&lt;late-departure&gt;&gt;
+            Otherwise, you can [[remain in the city with your entire household.-&gt;July 1665]]&lt;br&gt;&lt;br&gt;
+        &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/linkappend&gt;&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;else&gt;&gt;
+ &lt;&lt;linkappend &quot;That is the last good day of the month, though.&quot;&gt;&gt; The &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; grows worse and the streets are soon filled with coaches and wagons full of people fleeing with their goods to the countryside. The &lt;span class=&quot;def&quot; data-def=&quot;The mother of the current monarch. In 1665-7, this was Queen Henrietta Maria, the wife of the executed King Charles I.&quot;&gt;Queen Mother&lt;/span&gt; &lt;span class=&quot;def&quot; data-def=&quot;The mother of King Charles II. Born a French princess, she became the wife of King Charles I of England until his execution in 1649. She then served as an advisor to her son, but her Catholicism and repeated attempts to convert people at court made her unpopular among the Protestant people of England. Charles I ordered that she be referred to in public as Queen Mary, but she disliked this title and signed her name as Henriette.&quot;&gt;Henrietta Maria&lt;/span&gt; moves back to France&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, much to your dismay, and that of your fellow Catholics who flock to her chapel each week&lt;&lt;else&gt;&gt;, much to your relief, and that of all your fellow God-fearing &lt;span class=&quot;def&quot; data-def=&quot;Dissidents from the Catholic faith. In England these were most commonly Anglicans (Church of England) or Presbyterians, but there were other smaller groups such as Quakers and Baptists.&quot;&gt;Protestants&lt;/span&gt;&lt;&lt;/if&gt;&gt;. On June 29th, the King packs up his entire &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;household&lt;/span&gt; in 148 carriages and moves 12 miles away, to his palace at &lt;span class=&quot;def&quot; data-def=&quot;A palace south of London famed for its gardens. Cardinal Wolsey began construction on the palace in the early 16th century and King Henry VIII adopted it as his primary residence. King James I, King Charles I, Lord Protector Oliver Cromwell, King Charles II, and King James II also lived in the palace. After the Glorious Revolution in 1688 the co-monarchs William and Mary commissioned the architect Christopher Wren to build a new baroque-style palace on the site. Later monarchs continued to reside there until the mid-18th century. Queen Victoria opened the palace to the public in 1838 and it remains a popular tourist destination.&quot;&gt;Hampton Court&lt;/span&gt;.
+    &lt;br&gt;&lt;br&gt;
+    
+ &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/4/41/Wilson_%22The_plague...%22%3B_people_fleeing_from_plague_Wellcome_L0016623.jpg&quot; width=&quot;100%&quot;&gt;
+//Runaways fleeing from the plague, a woodcut from &#39;A Looking-glasse for City and Countrey&#39;, printed by H. Gosson in 1630 and sold by E. Wright, c. 1630. Wellcome Images//
+ &lt;br&gt;&lt;br&gt;
+    &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt; There are still no plague cases in your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt;, but everyone knows that it is only a matter of time
+    /* Beggars */
+        &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt; and your neighbors are no longer willing to give you food or money when you come begging to their doors.&lt;br&gt;
+            &lt;&lt;highway&gt;&gt;
+    /* Day Labourers, Artisans, Merchants */
+        &lt;&lt;else&gt;&gt;
+            &lt;&lt;if $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;&gt;&gt;. You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; will soon need to decide if you want to flee&lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt; or at least send the rest of your household away&lt;&lt;/if&gt;&gt; before things get worse.
+    /* Servants */
+            &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;. You anxiously await your master&#39;s decision about whether the household will flee or stay.
+    /* Nobles */
+            &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;. Unfortunately, you are not important enough to merit lodgings at &lt;span class=&quot;def&quot; data-def=&quot;A palace south of London famed for its gardens. Cardinal Wolsey began construction on the palace in the early 16th century and King Henry VIII adopted it as his primary residence. King James I, King Charles I, Lord Protector Oliver Cromwell, King Charles II, and King James II also lived in the palace. After the Glorious Revolution in 1688 the co-monarchs William and Mary commissioned the architect Christopher Wren to build a new baroque-style palace on the site. Later monarchs continued to reside there until the mid-18th century. Queen Victoria opened the palace to the public in 1838 and it remains a popular tourist destination.&quot;&gt;Hampton Court&lt;/span&gt; and the surrounding village is already full to bursting. You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; will soon need to decide if it&#39;s worth the risk of staying in London, near enough to visit the Court regularly, or if you &lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt;or your household&lt;&lt;/if&gt;&gt;should flee before things get worse.
+            &lt;&lt;/if&gt;&gt;&lt;br&gt;
+        [[Continue to July 1665-&gt;July 1665]]
+        &lt;&lt;/if&gt;&gt;
+/* If not in city walls or western suburbs */
+    &lt;&lt;elseif $location isnot &quot;in another part of the western suburbs&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
+    &lt;&lt;/if&gt;&gt;
+    
+/* If location is western suburbs */
+    &lt;&lt;if $location is &quot;in another part of the western suburbs&quot;&gt;&gt;
+        &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
+            &lt;&lt;if $role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot; or $role is &quot;nurse&quot;&gt;&gt;
+                &lt;&lt;plague-work&gt;&gt;
+                &lt;br&gt;&lt;br&gt;Do you:
+                &lt;ul&gt;&lt;li&gt;
+                    &lt;&lt;if _fumes gt 0&gt;&gt;
+                        &lt;&lt;if random(1,6) is 1&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665][$plagueInfection to 1]]&lt;&lt;else&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665]]&lt;&lt;/if&gt;&gt;                
+                    &lt;&lt;else&gt;&gt;
+                        &lt;&lt;if random(1,3) eq 1&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665][$plagueInfection to 1]]&lt;&lt;else&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665]]&lt;&lt;/if&gt;&gt;
+                    &lt;&lt;/if&gt;&gt;&lt;/li&gt;
+                    &lt;li&gt;[[refuse to do as you&#39;ve been tasked.-&gt;work-refusal][$reputation to 0]]&lt;/li&gt;
+                &lt;/ul&gt;
+			&lt;&lt;else&gt;&gt;No one has any charity right now for a healthy beggar, but somehow you manage to scrape together enough food to last you to [[July 1665]].
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
+            &lt;&lt;if $role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot; or $role is &quot;nurse&quot;&gt;&gt;
+                &lt;&lt;plague-work&gt;&gt;
+                &lt;br&gt;&lt;br&gt;Do you:
+                &lt;ul&gt;&lt;li&gt;
+                &lt;&lt;if _fumes gt 0&gt;&gt;
+                    &lt;&lt;if random(1,6) is 1&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665][$plagueInfection to 1]]&lt;&lt;else&gt;&gt;[[swallow your fears and go to do your Christian duty-&gt;July 1665]]&lt;&lt;/if&gt;&gt;
+                &lt;&lt;else&gt;&gt;
+                    &lt;&lt;if random(1,3) is 1&gt;&gt;[[swallow your fears and go to do your Christian duty.-&gt;July 1665][$plagueInfection to 1]]&lt;&lt;else&gt;&gt;[[swallow your fears and go to do your Christian duty-&gt;July 1665]] &lt;&lt;/if&gt;&gt;
+                &lt;&lt;/if&gt;&gt;&lt;/li&gt;
+                	&lt;li&gt;[[decide to quit and look for other work.-&gt;July 1665][$reputation to Math.clamp($reputation - 3, 0, 10); $role to &quot;quit&quot;]]&lt;/li&gt;
+                &lt;/ul&gt;
+			&lt;&lt;else&gt;&gt;So many people are fleeing the city, there&#39;s plenty of work hauling their belongings to and fro... for now anyway. It&#39;s enough to get you through to [[July 1665]].
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;&lt;br&gt;
+                /* NTS: include text about option to flee? */
+                &lt;&lt;late-departure&gt;&gt;
+                Otherwise, you can [[remain in the city with your entire household.-&gt;July 1665]]&lt;br&gt;&lt;br&gt;
+
+/* Artisans */
+        &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;br&gt;
+            &lt;&lt;late-departure&gt;&gt;
+            Otherwise, you can [[remain in the city with your entire household.-&gt;July 1665]]&lt;br&gt;&lt;br&gt;
+
+/* Merchants */ 
+        &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;
+            &lt;&lt;late-departure&gt;&gt;
+            Otherwise, you can [[remain in the city with your entire household.-&gt;July 1665]]&lt;br&gt;&lt;br&gt;
+
+/* Nobles */
+        &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;Do you:
+            &lt;&lt;late-departure&gt;&gt;
+            Otherwise, you can [[remain in the city with your entire household.-&gt;July 1665]]&lt;br&gt;&lt;br&gt;
+        &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/linkappend&gt;&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+
 &lt;&lt;/if&gt;&gt;
 
 
