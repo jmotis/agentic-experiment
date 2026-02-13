@@ -65,6 +65,27 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
 - **Preserve verbatim encoding.** Passage content in the HTML uses HTML-entity encoding (e.g., `&lt;&lt;nobr&gt;&gt;`). The extract/patch scripts handle this transparently — do not manually re-encode or decode content in `passages.json`.
 - After patching, `passages.json` is a **transient artifact** and should not be committed to the repository. Only the updated HTML file should be committed.
 
+## Version Control (Game Title)
+
+The game title includes a version number in the format **"Gaming the Great Plague 2026 vX.Y"**. The current version is tracked in the game's passage content.
+
+### Mandatory version bump rule
+
+**Whenever you edit the game file** (`GamingtheGreatPlague.html`) — whether through the extract/patch workflow or any other means — you **must** increment the minor version number in the game title (e.g., `v1.1` → `v1.2`, `v1.9` → `v1.10`). This applies to every commit that modifies the game file.
+
+### How to update the version
+
+1. After extracting passages with `node extract.js`, search `passages.json` for the current version string (e.g., `v1.1`).
+2. Increment the minor version number by 1 (the number after the dot).
+3. Update **all occurrences** of the version string in the passage content so the title is consistent throughout the game.
+4. Patch the changes back with `node patch.js` as usual.
+5. Include the new version number in your commit message (e.g., "Update X — bump to v1.2").
+
+### Important notes
+
+- Only increment the **minor** version (the number after the dot). Do not change the major version unless explicitly asked by the user.
+- If multiple passage edits are made in a single session, only bump the version **once** per commit, not once per passage edit.
+
 ## Git Conventions
 
 - **Primary branch:** `master`
