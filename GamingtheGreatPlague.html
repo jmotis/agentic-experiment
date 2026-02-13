@@ -5720,7 +5720,9 @@ The official Thanksgiving Day for the end of the plague is proclaimed in Novembe
 
 Life may go on for the reckless, but it will not be until 1667 that you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; finally make your way [[back to the city-&gt;December 1666]].
 &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="89" name="Stay" tags="" position="725,1100" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;fled-family&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set _fleeBlocked to false&gt;&gt;&lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;for _npc range $NPCs&gt;&gt;&lt;&lt;if _npc.health is &quot;infected&quot;&gt;&gt;&lt;&lt;set _fleeBlocked to true&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;if _fleeBlocked&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;You prepare your household to flee the city, but as you help them pack, you realize something terrible.&lt;br&gt;&lt;br&gt;
+&lt;&lt;sickFam&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;fled-family&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if not _fleeBlocked&gt;&gt;
     /* Beggars */
     &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
         &lt;&lt;if $fled is 3&gt;&gt;
@@ -5767,6 +5769,7 @@ While you remain in the city, you can take measures to protect yourself&lt;&lt;i
 You can also visit the &#39;&#39;&lt;span class=&quot;def&quot; data-def=&quot;A person who prepares and sells drugs for medicinal purposes. Also the shop where such activities take place&quot;&gt;Apothecary&lt;/span&gt;&#39;&#39;, who sells remedies to prevent you from getting sick or to treat those who have fallen ill.
     &lt;&lt;first-plague-day-continue&gt;&gt;
 
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="90" name="Failed-Flight" tags="" position="925,1125" size="100,100">You have attempted to flee the city! Unfortunately, your reputation precedes you, and no one will take you in. You are forced to return to London, shamed, and many shillings poorer.
 
 &lt;&lt;first-plague-day-continue&gt;&gt;</tw-passagedata><tw-passagedata pid="91" name="Quarantine, Week 5" tags="quarantine" position="450,375" size="100,100">&lt;&lt;nobr&gt;&gt;
