@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Gaming the Great Plague 2026 v1.3</title>
+<title>Gaming the Great Plague 2026 v1.4</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -2694,9 +2694,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;/for&gt;&gt;
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;if $NPCsServants.length gt 0&gt;&gt;
-&lt;br&gt;&#39;&#39;Household servants:&#39;&#39; &lt;br&gt;&lt;&lt;for _sv, _idx range $NPCsServants&gt;&gt;
-	$NPCsServants[_sv].name, $NPCsServants[_sv].age $NPCsServants[_sv].relationship: &lt;&lt;if $NPCsServants[_sv].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$NPCsServants[_sv].health&lt;&lt;/if&gt;&gt;&lt;br&gt;
-    &lt;&lt;/for&gt;&gt;
+&lt;br&gt;&#39;&#39;Household servants:&#39;&#39; &lt;br&gt;&lt;&lt;set _svHealthy to 0&gt;&gt;&lt;&lt;set _svInfected to 0&gt;&gt;&lt;&lt;set _svDeceased to 0&gt;&gt;&lt;&lt;set _svRecovered to 0&gt;&gt;&lt;&lt;for _sv, _idx range $NPCsServants&gt;&gt;&lt;&lt;if $NPCsServants[_sv].health is &quot;healthy&quot; or ($NPCsServants[_sv].health is &quot;infected&quot; and $plagueRevealed is 0)&gt;&gt;&lt;&lt;set _svHealthy += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;infected&quot;&gt;&gt;&lt;&lt;set _svInfected += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;deceased&quot;&gt;&gt;&lt;&lt;set _svDeceased += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;recovered&quot;&gt;&gt;&lt;&lt;set _svRecovered += 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;if _svHealthy gt 0&gt;&gt;_svHealthy healthy&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svInfected gt 0&gt;&gt;_svInfected infected&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svDeceased gt 0&gt;&gt;_svDeceased deceased&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svRecovered gt 0&gt;&gt;_svRecovered recovered&lt;br&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;if $FledServants.length gt 0&gt;&gt;
 &#39;&#39;Fled servants:&#39;&#39; &lt;br&gt;&lt;&lt;for _fs, _idx range $FledServants&gt;&gt;
 	$FledServants[_fs].name, $FledServants[_fs].age $FledServants[_fs].relationship: $FledServants[_fs].health&lt;br&gt;
@@ -2704,9 +2702,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;if $NPCsMaster.length gt 0&gt;&gt;
-&lt;br&gt;&#39;&#39;Master&#39;s Household:&#39;&#39; &lt;br&gt;&lt;&lt;for _mh, _idx range $NPCsMaster&gt;&gt;
-	$NPCsMaster[_mh].name, $NPCsMaster[_mh].age $NPCsMaster[_mh].relationship: &lt;&lt;if $NPCsMaster[_mh].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$NPCsMaster[_mh].health&lt;&lt;/if&gt;&gt;&lt;br&gt;
-    &lt;&lt;/for&gt;&gt;
+&lt;br&gt;&#39;&#39;Master&#39;s Household:&#39;&#39; &lt;br&gt;&lt;&lt;set _mhHealthy to 0&gt;&gt;&lt;&lt;set _mhInfected to 0&gt;&gt;&lt;&lt;set _mhDeceased to 0&gt;&gt;&lt;&lt;set _mhRecovered to 0&gt;&gt;&lt;&lt;for _mh, _idx range $NPCsMaster&gt;&gt;&lt;&lt;if $NPCsMaster[_mh].health is &quot;healthy&quot; or ($NPCsMaster[_mh].health is &quot;infected&quot; and $plagueRevealed is 0)&gt;&gt;&lt;&lt;set _mhHealthy += 1&gt;&gt;&lt;&lt;elseif $NPCsMaster[_mh].health is &quot;infected&quot;&gt;&gt;&lt;&lt;set _mhInfected += 1&gt;&gt;&lt;&lt;elseif $NPCsMaster[_mh].health is &quot;deceased&quot;&gt;&gt;&lt;&lt;set _mhDeceased += 1&gt;&gt;&lt;&lt;elseif $NPCsMaster[_mh].health is &quot;recovered&quot;&gt;&gt;&lt;&lt;set _mhRecovered += 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;if _mhHealthy gt 0&gt;&gt;_mhHealthy healthy&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _mhInfected gt 0&gt;&gt;_mhInfected infected&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _mhDeceased gt 0&gt;&gt;_mhDeceased deceased&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _mhRecovered gt 0&gt;&gt;_mhRecovered recovered&lt;br&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="impressed" tags="" position="1900,275" size="100,100">&lt;&lt;nobr&gt;&gt;/* NTS: for those not booted out, need to add reputation/money hits */
