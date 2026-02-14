@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Gaming the Great Plague 2026 v1.5</title>
+<title>Gaming the Great Plague 2026 v1.6</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -6023,12 +6023,12 @@ You &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;try to convince your famil
     &lt;&lt;if _masterflee is 1&gt;&gt;
         &lt;ul&gt;
             &lt;li&gt;[[Follow your master&#39;s lead and leave the city-&gt;Fled][$fled to 1]]&lt;/li&gt;
-            &lt;li&gt;[[Break your contract and remain in the city-&gt;Stay][$fled to 3; $socio to &quot;beggars&quot;; $reputation to 0; $role to &quot;unemployed&quot;]]&lt;/li&gt;
+            &lt;li&gt;[[Break your contract and remain in the city-&gt;Stay][$fled to 3; $socio to &quot;beggars&quot;; $reputation to 0; $role to &quot;unemployed&quot;; $NPCsMaster to []]]&lt;/li&gt;
         &lt;/ul&gt;
     &lt;&lt;else&gt;&gt;
         &lt;ul&gt;
             &lt;li&gt;[[Remain in the city with your master-&gt;Stay][$fled to 0]]&lt;/li&gt;
-            &lt;li&gt;[[Break your contract and flee the city-&gt;Fled][$fled to 2; $socio to &quot;beggars&quot;; $reputation to 0; $role to &quot;unemployed&quot;]]&lt;/li&gt;
+            &lt;li&gt;[[Break your contract and flee the city-&gt;Fled][$fled to 2; $socio to &quot;beggars&quot;; $reputation to 0; $role to &quot;unemployed&quot;; $NPCsMaster to []]]&lt;/li&gt;
         &lt;/ul&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
