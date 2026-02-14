@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.8" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.9" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1125,7 +1125,7 @@ $(document).on(':passagestart', function (ev) {
 &lt;&lt;playerName&gt;&gt;
 &lt;&lt;parish&gt;&gt;
 &lt;&lt;playerAge&gt;&gt;
-&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $role to randomeither($trades)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $role to either($trades)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $religion is &quot;member of a dissident Protestant church&quot;&gt;&gt;
 &lt;&lt;set $religion to &quot;Presbyterian&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
