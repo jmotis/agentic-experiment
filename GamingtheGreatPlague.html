@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.6" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.7" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -2465,39 +2465,117 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 /* add parents */
 &lt;&lt;widget &quot;addParentNPC&quot;&gt;&gt;
   &lt;&lt;if $age is &quot;child&quot;&gt;&gt;
+      &lt;&lt;set _hasMother to false&gt;&gt;&lt;&lt;set _hasFather to false&gt;&gt;
       &lt;&lt;if random(1,4) lte 3&gt;&gt;
         &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;mother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;set _hasMother to true&gt;&gt;
+        /* 1 in 6 chance for step-mother */
+        &lt;&lt;if random(1,6) is 1&gt;&gt;
+          &lt;&lt;set $NPCs[$NPCs.length-1].relationship to &quot;step-mother&quot;&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
       &lt;&lt;if random(1,4) lte 3&gt;&gt;
         &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;father&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;set _hasFather to true&gt;&gt;
+        /* 1 in 6 chance for step-father */
+        &lt;&lt;if random(1,6) is 1&gt;&gt;
+          &lt;&lt;set $NPCs[$NPCs.length-1].relationship to &quot;step-father&quot;&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+      /* Ensure at least one parent exists */
+      &lt;&lt;if not _hasMother and not _hasFather&gt;&gt;
+        &lt;&lt;if random(1,2) is 1&gt;&gt;
+          &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;mother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+          /* 1 in 6 chance for step-mother */
+          &lt;&lt;if random(1,6) is 1&gt;&gt;
+            &lt;&lt;set $NPCs[$NPCs.length-1].relationship to &quot;step-mother&quot;&gt;&gt;
+          &lt;&lt;/if&gt;&gt;
+        &lt;&lt;else&gt;&gt;
+          &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;father&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+          /* 1 in 6 chance for step-father */
+          &lt;&lt;if random(1,6) is 1&gt;&gt;
+            &lt;&lt;set $NPCs[$NPCs.length-1].relationship to &quot;step-father&quot;&gt;&gt;
+          &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
   &lt;&lt;elseif $age is &quot;adolescent&quot;&gt;&gt;
+      &lt;&lt;set _hasMother to false&gt;&gt;&lt;&lt;set _hasFather to false&gt;&gt;
       &lt;&lt;if random(1,4) lte 3&gt;&gt;
         &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), age: &quot;middle-aged adult&quot;, relationship: &quot;mother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;set _hasMother to true&gt;&gt;
+        /* 1 in 6 chance for step-mother */
+        &lt;&lt;if random(1,6) is 1&gt;&gt;
+          &lt;&lt;set $NPCs[$NPCs.length-1].relationship to &quot;step-mother&quot;&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
       &lt;&lt;if random(1,4) lte 2&gt;&gt;
         &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), age: &quot;middle-aged adult&quot;, relationship: &quot;father&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;set _hasFather to true&gt;&gt;
+        /* 1 in 6 chance for step-father */
+        &lt;&lt;if random(1,6) is 1&gt;&gt;
+          &lt;&lt;set $NPCs[$NPCs.length-1].relationship to &quot;step-father&quot;&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+      /* Ensure at least one parent exists */
+      &lt;&lt;if not _hasMother and not _hasFather&gt;&gt;
+        &lt;&lt;if random(1,2) is 1&gt;&gt;
+          &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), age: &quot;middle-aged adult&quot;, relationship: &quot;mother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+          /* 1 in 6 chance for step-mother */
+          &lt;&lt;if random(1,6) is 1&gt;&gt;
+            &lt;&lt;set $NPCs[$NPCs.length-1].relationship to &quot;step-mother&quot;&gt;&gt;
+          &lt;&lt;/if&gt;&gt;
+        &lt;&lt;else&gt;&gt;
+          &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), age: &quot;middle-aged adult&quot;, relationship: &quot;father&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+          /* 1 in 6 chance for step-father */
+          &lt;&lt;if random(1,6) is 1&gt;&gt;
+            &lt;&lt;set $NPCs[$NPCs.length-1].relationship to &quot;step-father&quot;&gt;&gt;
+          &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
   &lt;&lt;elseif $age is &quot;young adult&quot;&gt;&gt;
       &lt;&lt;if random(1,3) lte 2&gt;&gt;
         &lt;&lt;set $NPCsExtended.push({ name: weightedEither($fNames), age: either(&quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: &quot;mother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        /* 1 in 6 chance for step-mother */
+        &lt;&lt;if random(1,6) is 1&gt;&gt;
+          &lt;&lt;set $NPCsExtended[$NPCsExtended.length-1].relationship to &quot;step-mother&quot;&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
       &lt;&lt;if random(1,4) lte 1&gt;&gt;
         &lt;&lt;set $NPCsExtended.push({ name: weightedEither($mNames), age: either(&quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: &quot;father&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        /* 1 in 6 chance for step-father */
+        &lt;&lt;if random(1,6) is 1&gt;&gt;
+          &lt;&lt;set $NPCsExtended[$NPCsExtended.length-1].relationship to &quot;step-father&quot;&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
   &lt;&lt;elseif $age is &quot;middle-aged adult&quot;&gt;&gt;
       &lt;&lt;if random(1,10) lte 2&gt;&gt;
         &lt;&lt;set $NPCsExtended.push({ name: weightedEither($fNames), age: &quot;elderly adult&quot;, relationship: &quot;mother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        /* 1 in 6 chance for step-mother */
+        &lt;&lt;if random(1,6) is 1&gt;&gt;
+          &lt;&lt;set $NPCsExtended[$NPCsExtended.length-1].relationship to &quot;step-mother&quot;&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
       &lt;&lt;if random(1,10) lte 1&gt;&gt;
         &lt;&lt;set $NPCsExtended.push({ name: weightedEither($mNames), age: &quot;elderly adult&quot;, relationship: &quot;father&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        /* 1 in 6 chance for step-father */
+        &lt;&lt;if random(1,6) is 1&gt;&gt;
+          &lt;&lt;set $NPCsExtended[$NPCsExtended.length-1].relationship to &quot;step-father&quot;&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
     &lt;&lt;elseif $age is &quot;elderly adult&quot;&gt;&gt;
       &lt;&lt;if random(1,20) lte 1&gt;&gt;
         &lt;&lt;set $NPCsExtended.push({ name: weightedEither($fNames), age: &quot;elderly adult&quot;, relationship: &quot;mother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        /* 1 in 6 chance for step-mother */
+        &lt;&lt;if random(1,6) is 1&gt;&gt;
+          &lt;&lt;set $NPCsExtended[$NPCsExtended.length-1].relationship to &quot;step-mother&quot;&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
       &lt;&lt;if random(1,20) lte 1&gt;&gt;
         &lt;&lt;set $NPCsExtended.push({ name: weightedEither($mNames), age: &quot;elderly adult&quot;, relationship: &quot;father&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        /* 1 in 6 chance for step-father */
+        &lt;&lt;if random(1,6) is 1&gt;&gt;
+          &lt;&lt;set $NPCsExtended[$NPCsExtended.length-1].relationship to &quot;step-father&quot;&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
@@ -2555,18 +2633,18 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 
 &lt;&lt;widget &quot;NPCpronouns&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
   &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
-    &lt;&lt;if $NPCs[_i].relationship is &quot;niece&quot; or $NPCs[_i].relationship is &quot;daughter&quot; or $NPCs[_i].relationship is &quot;sister&quot; or $NPCs[_i].relationship is &quot;mother&quot;&gt;&gt;
+    &lt;&lt;if $NPCs[_i].relationship is &quot;niece&quot; or $NPCs[_i].relationship is &quot;daughter&quot; or $NPCs[_i].relationship is &quot;sister&quot; or $NPCs[_i].relationship is &quot;mother&quot; or $NPCs[_i].relationship is &quot;step-mother&quot;&gt;&gt;
       &lt;&lt;set $NPCs[_i].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;she&quot;&gt;&gt;
-    &lt;&lt;elseif $NPCs[_i].relationship is &quot;nephew&quot; or $NPCs[_i].relationship is &quot;son&quot; or $NPCs[_i].relationship is &quot;brother&quot; or $NPCs[_i].relationship is &quot;father&quot;&gt;&gt;
-      &lt;&lt;set $NPCs[_i].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;she&quot;&gt;&gt;
+    &lt;&lt;elseif $NPCs[_i].relationship is &quot;nephew&quot; or $NPCs[_i].relationship is &quot;son&quot; or $NPCs[_i].relationship is &quot;brother&quot; or $NPCs[_i].relationship is &quot;father&quot; or $NPCs[_i].relationship is &quot;step-father&quot;&gt;&gt;
+      &lt;&lt;set $NPCs[_i].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;he&quot;&gt;&gt;
       &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCs[_i].hishers to &quot;theirs&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;they&quot;&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
 
 &lt;&lt;for _e = 0; _e &lt; $NPCsExtended.length; _e++&gt;&gt;
-  &lt;&lt;if $NPCsExtended[_e].relationship is &quot;sister&quot; or $NPCsExtended[_e].relationship is &quot;niece&quot; or $NPCsExtended[_e].relationship is &quot;mother&quot; or $NPCsExtended[_e].relationship is &quot;daughter&quot;&gt;&gt;
+  &lt;&lt;if $NPCsExtended[_e].relationship is &quot;sister&quot; or $NPCsExtended[_e].relationship is &quot;niece&quot; or $NPCsExtended[_e].relationship is &quot;mother&quot; or $NPCsExtended[_e].relationship is &quot;daughter&quot; or $NPCsExtended[_e].relationship is &quot;step-mother&quot;&gt;&gt;
     &lt;&lt;set $NPCsExtended[_e].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;she&quot;&gt;&gt;
-  &lt;&lt;elseif $NPCsExtended[_e].relationship is &quot;brother&quot; or $NPCsExtended[_e].relationship is &quot;nephew&quot; or $NPCsExtended[_e].relationship is &quot;father&quot; or $NPCsExtended[_e].relationship is &quot;son&quot;&gt;&gt;
+  &lt;&lt;elseif $NPCsExtended[_e].relationship is &quot;brother&quot; or $NPCsExtended[_e].relationship is &quot;nephew&quot; or $NPCsExtended[_e].relationship is &quot;father&quot; or $NPCsExtended[_e].relationship is &quot;son&quot; or $NPCsExtended[_e].relationship is &quot;step-father&quot;&gt;&gt;
     &lt;&lt;set $NPCsExtended[_e].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;he&quot;&gt;&gt;
     &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_e].hishers to &quot;their&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;they&quot;&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
