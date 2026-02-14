@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Gaming the Great Plague 2026 v1.2</title>
+<title>Gaming the Great Plague 2026 v1.3</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -1214,8 +1214,9 @@ You currently live in the &lt;span class=&quot;def&quot; data-def=&quot;The smal
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;also live&lt;&lt;if $NPCsExtended.length eq 1&gt;&gt;s&lt;&lt;/if&gt;&gt; in London.&lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;silently&gt;&gt;&lt;&lt;addServantNPC&gt;&gt;&lt;&lt;/silently&gt;&gt;
+&lt;&lt;silently&gt;&gt;&lt;&lt;addServantNPC&gt;&gt;&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;addMasterHousehold&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;Your &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;household&lt;/span&gt; also includes $servants servants.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;Your master is &lt;&lt;if $masterStatus is &quot;artisans&quot;&gt;&gt;an artisan&lt;&lt;elseif $masterStatus is &quot;merchants&quot;&gt;&gt;a merchant&lt;&lt;elseif $masterStatus is &quot;nobles&quot;&gt;&gt;a noble&lt;&lt;/if&gt;&gt; with a household of $NPCsMaster.length members.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 If that sounds right, [[click this link to begin our story-&gt;December 1664]].
 &lt;br&gt;&lt;br&gt;
 If that doesn&#39;t sound right, you can refresh the game and start again.
@@ -1461,6 +1462,7 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 /* This adjusts the rate of infection for a specific location depending on how much time has passed in the game, starting at 6 plays (the first passage after the game starts proper). The play number roughly corresponds to our broad time events.
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;
+&lt;&lt;set _infectRate to 1000&gt;&gt;
 &lt;&lt;if hasVisited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;set $plagueInfection to 2&gt;&gt;
 &lt;&lt;elseif passage() is &quot;December 1664&quot; or passage() is &quot;January 1665&quot; or passage() is &quot;May 1665&quot; or passage() is &quot;June 1665&quot;&gt;&gt;
@@ -1468,7 +1470,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,100) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 100&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1478,7 +1481,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,12) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-      &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+      &lt;&lt;set _infectRate to 12&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,12) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1488,7 +1492,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,7) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-      &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+      &lt;&lt;set _infectRate to 7&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,7) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1498,7 +1503,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,10) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-      &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+      &lt;&lt;set _infectRate to 10&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,10) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1508,7 +1514,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,75) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-      &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+      &lt;&lt;set _infectRate to 75&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,75) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1518,7 +1525,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
   	&lt;&lt;if random(1,1000) eq 1&gt;&gt;
   	&lt;&lt;set $plagueInfection to 1&gt;&gt;
   &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 1000&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1533,10 +1541,23 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 
+/* Infect household servants (nobles) and master's household (servants) using same rates */
+&lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
+	&lt;&lt;if $NPCsServants[_si].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
+	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="Westminster-infection" tags="infection-rates" position="75,1000" size="100,100">/* This adjusts the rate of infection for a specific location depending on how much time has passed in the game, starting at 6 plays (the first passage after the game starts proper). The play number roughly corresponds to our broad time events.
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;
+&lt;&lt;set _infectRate to 1000&gt;&gt;
 &lt;&lt;if visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;set $plagueInfection to 2&gt;&gt;
     &lt;&lt;elseif passage() is &quot;December 1664&quot; or passage() is &quot;January 1665&quot; or passage() is &quot;May 1665&quot;&gt;&gt;
@@ -1544,7 +1565,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,100) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 100&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1554,7 +1576,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,20) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 20&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,20) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1564,7 +1587,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,4) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 4&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,4) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1574,7 +1598,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,3) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 3&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,3) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1584,7 +1609,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,5) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 5&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,5) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1594,7 +1620,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,20) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 500&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1604,7 +1631,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,100) lte 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 100&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1614,7 +1642,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     &lt;&lt;if random(1,1000) lte 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 1000&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1627,6 +1656,18 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 	&lt;&lt;if _household.health is &quot;infected&quot;&gt;&gt;
     	&lt;&lt;set _infectedFamily.push(_idx)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+/* Infect household servants (nobles) and master's household (servants) using same rates */
+&lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
+	&lt;&lt;if $NPCsServants[_si].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
+	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 
 &lt;&lt;/silently&gt;&gt;
@@ -1809,6 +1850,10 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;set $NPCs = []&gt;&gt;
 &lt;&lt;set $NPCsExtended = []&gt;&gt;
 &lt;&lt;set $FledFamily = []&gt;&gt;
+&lt;&lt;set $NPCsServants = []&gt;&gt;
+&lt;&lt;set $FledServants = []&gt;&gt;
+&lt;&lt;set $NPCsMaster = []&gt;&gt;
+&lt;&lt;set $masterStatus to &quot;&quot;&gt;&gt;
 &lt;&lt;set $fNames = {
   Elizabeth:  400,
   Anne:       370,
@@ -1886,6 +1931,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="Western-infection" tags="infection-rates" position="300,850" size="100,100">/* This adjusts the rate of infection for a specific location depending on how much time has passed in the game, starting at 5 plays (the first passage after the game starts proper). The play number roughly corresponds to our broad time events. */
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;
+&lt;&lt;set _infectRate to 1000&gt;&gt;
 &lt;&lt;if visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;set $plagueInfection to 2&gt;&gt;
 &lt;&lt;elseif passage() is &quot;December 1664&quot; or passage() is &quot;January 1665&quot; or passage() is &quot;May 1665&quot;&gt;&gt;
@@ -1893,7 +1939,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,100) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 100&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1903,7 +1950,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,13) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 13&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,13) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1913,7 +1961,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,4) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 4&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,4) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1923,7 +1972,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,20) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 20&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,20) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1933,7 +1983,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,10) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 10&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,10) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1943,7 +1994,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,50) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 50&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,50) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1953,7 +2005,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,500) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 500&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1963,7 +2016,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,1000) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 1000&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1978,10 +2032,23 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 
+/* Infect household servants (nobles) and master's household (servants) using same rates */
+&lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
+	&lt;&lt;if $NPCsServants[_si].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
+	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="eastern-infection" tags="infection-rates" position="100,700" size="100,100">/* This adjusts the rate of infection for a specific location depending on how much time has passed in the game, starting at 5 plays (the first passage after the game starts proper). The play number roughly corresponds to our broad time events.
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;
+&lt;&lt;set _infectRate to 1000&gt;&gt;
 &lt;&lt;if visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;set $plagueInfection to 2&gt;&gt;
 &lt;&lt;elseif passage() is &quot;December 1664&quot; or passage() is &quot;January 1665&quot; or passage() is &quot;May 1665&quot;&gt;&gt;
@@ -1989,7 +2056,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,500) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 500&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -1999,7 +2067,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,50) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 50&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,50) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -2009,7 +2078,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,3) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 3&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,3) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -2019,7 +2089,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,2) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 2&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,2) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -2029,7 +2100,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,5) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 5&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,5) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -2039,7 +2111,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,30) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 30&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,30) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -2049,7 +2122,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,100) lte 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 100&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -2059,7 +2133,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if random(1,1000) lte 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 1000&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -2072,6 +2147,18 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 	&lt;&lt;if _household.health is &quot;infected&quot;&gt;&gt;
     	&lt;&lt;set _infectedFamily.push(_idx)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+/* Infect household servants (nobles) and master's household (servants) using same rates */
+&lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
+	&lt;&lt;if $NPCsServants[_si].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
+	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 
 &lt;&lt;/silently&gt;&gt;
@@ -2266,13 +2353,38 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 
 /* add household members for upper class */
 
-&lt;&lt;widget &quot;addServantNPC&quot;&gt;&gt;
+&lt;&lt;widget &quot;addServantNPC&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
   &lt;&lt;set $servants to random(8,12)&gt;&gt;
+  &lt;&lt;for _s to 0; _s lt $servants; _s++&gt;&gt;
+    &lt;&lt;if random(1,2) eq 1&gt;&gt;
+      &lt;&lt;set $NPCsServants.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+      &lt;&lt;set $NPCsServants.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;
   &lt;&lt;set $servants to random(1,3)&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/widget&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;addMasterHousehold&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $masterStatus to either(&quot;artisans&quot;, &quot;merchants&quot;, &quot;nobles&quot;)&gt;&gt;
+&lt;&lt;if $masterStatus is &quot;artisans&quot;&gt;&gt;
+  &lt;&lt;set _masterHHSize to random(2,4)&gt;&gt;
+&lt;&lt;elseif $masterStatus is &quot;merchants&quot;&gt;&gt;
+  &lt;&lt;set _masterHHSize to random(3,6)&gt;&gt;
+&lt;&lt;elseif $masterStatus is &quot;nobles&quot;&gt;&gt;
+  &lt;&lt;set _masterHHSize to random(5,10)&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;for _m to 0; _m lt _masterHHSize; _m++&gt;&gt;
+  &lt;&lt;if random(1,2) eq 1&gt;&gt;
+    &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), age: either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: either(&quot;master&#39;s wife&quot;, &quot;master&#39;s daughter&quot;, &quot;master&#39;s mother&quot;), health: &quot;healthy&quot;, location: $location})&gt;&gt;
+  &lt;&lt;else&gt;&gt;
+    &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), age: either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: either(&quot;master&quot;, &quot;master&#39;s son&quot;, &quot;master&#39;s father&quot;), health: &quot;healthy&quot;, location: $location})&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 /* set player name based on frequency of names in 1665 */
 &lt;&lt;widget &quot;playerName&quot;&gt;&gt;
@@ -2344,7 +2456,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 
 /* list NPCs in sidebar menu */
 &lt;&lt;widget &quot;ListNPCs&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.length&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _hhSize to $NPCs.length&gt;&gt;&lt;&lt;/if&gt;&gt; _hhSize&lt;br&gt;&lt;br&gt;
+&lt;&lt;nobr&gt;&gt;Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.length&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _hhSize to $NPCs.length + $NPCsServants.length + $NPCsMaster.length&gt;&gt;&lt;&lt;/if&gt;&gt; _hhSize&lt;br&gt;&lt;br&gt;
 
 &#39;&#39;Household:&#39;&#39; &lt;&lt;if $fled is 5&gt;&gt;&#39;&#39;fled to $hhlocation&#39;&#39;&lt;&lt;/if&gt;&gt;&lt;br&gt;
         &lt;&lt;for _i, _idx range $FledFamily&gt;&gt;
@@ -2357,6 +2469,21 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
         &lt;&lt;if $NPCsExtended.length gt 0&gt;&gt;
 &#39;&#39;Extended family:&#39;&#39; &lt;br&gt;&lt;&lt;for _e, _idx range $NPCsExtended&gt;&gt;
 	$NPCsExtended[_e].name, $NPCsExtended[_e].age $NPCsExtended[_e].relationship: &lt;&lt;if $NPCsExtended[_e].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$NPCsExtended[_e].health&lt;&lt;/if&gt;&gt;&lt;br&gt;
+    &lt;&lt;/for&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;if $NPCsServants.length gt 0&gt;&gt;
+&lt;br&gt;&#39;&#39;Household servants:&#39;&#39; &lt;br&gt;&lt;&lt;for _sv, _idx range $NPCsServants&gt;&gt;
+	$NPCsServants[_sv].name, $NPCsServants[_sv].age $NPCsServants[_sv].relationship: &lt;&lt;if $NPCsServants[_sv].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$NPCsServants[_sv].health&lt;&lt;/if&gt;&gt;&lt;br&gt;
+    &lt;&lt;/for&gt;&gt;
+    &lt;&lt;if $FledServants.length gt 0&gt;&gt;
+&#39;&#39;Fled servants:&#39;&#39; &lt;br&gt;&lt;&lt;for _fs, _idx range $FledServants&gt;&gt;
+	$FledServants[_fs].name, $FledServants[_fs].age $FledServants[_fs].relationship: $FledServants[_fs].health&lt;br&gt;
+    &lt;&lt;/for&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;if $NPCsMaster.length gt 0&gt;&gt;
+&lt;br&gt;&#39;&#39;Master&#39;s Household:&#39;&#39; &lt;br&gt;&lt;&lt;for _mh, _idx range $NPCsMaster&gt;&gt;
+	$NPCsMaster[_mh].name, $NPCsMaster[_mh].age $NPCsMaster[_mh].relationship: &lt;&lt;if $NPCsMaster[_mh].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$NPCsMaster[_mh].health&lt;&lt;/if&gt;&gt;&lt;br&gt;
     &lt;&lt;/for&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
@@ -3988,6 +4115,7 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="northern-infection" tags="infection-rates" position="225,1000" size="100,100">/* This adjusts the rate of infection for a specific location depending on how much time has passed in the game, starting at 6 plays (the first passage after the game starts proper). The play number roughly corresponds to our broad time events.
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;
+&lt;&lt;set _infectRate to 1000&gt;&gt;
 &lt;&lt;if visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;set $plagueInfection to 2&gt;&gt;
     &lt;&lt;elseif passage() is &quot;December 1664&quot; or passage() is &quot;January 1665&quot; or passage() is &quot;May 1665&quot;&gt;&gt;
@@ -3995,7 +4123,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,500) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-     &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+     &lt;&lt;set _infectRate to 500&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4005,7 +4134,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,18) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-     &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+     &lt;&lt;set _infectRate to 18&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,18) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4015,7 +4145,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,3) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-     &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+     &lt;&lt;set _infectRate to 3&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,3) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4025,7 +4156,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,5) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-     &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+     &lt;&lt;set _infectRate to 5&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,5) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4035,7 +4167,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,15) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-     &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+     &lt;&lt;set _infectRate to 15&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,15) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4045,7 +4178,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,100) lte 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-     &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+     &lt;&lt;set _infectRate to 100&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4055,7 +4189,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,1000) lte 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-     &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+     &lt;&lt;set _infectRate to 1000&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4070,10 +4205,23 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 
+/* Infect household servants (nobles) and master's household (servants) using same rates */
+&lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
+	&lt;&lt;if $NPCsServants[_si].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
+	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="southern-infection" tags="infection-rates" position="250,700" size="100,100">/* This adjusts the rate of infection for a specific location depending on how much time has passed in the game, starting at 6 plays (the first passage after the game starts proper). The play number roughly corresponds to our broad time events.
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;
+&lt;&lt;set _infectRate to 1000&gt;&gt;
 &lt;&lt;if visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;set $plagueInfection to 2&gt;&gt;
     &lt;&lt;elseif passage() is &quot;December 1664&quot; or passage() is &quot;January 1665&quot; or passage() is &quot;May 1665&quot;&gt;&gt;
@@ -4081,7 +4229,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,1000) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 1000&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4091,7 +4240,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,100) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 100&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4101,7 +4251,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,8) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 8&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,8) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4111,7 +4262,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,4) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 4&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,4) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4121,7 +4273,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,6) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 6&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,6) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4131,7 +4284,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,25) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 25&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,25) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4145,7 +4299,8 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;if random(1,1000) eq 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
+    &lt;&lt;set _infectRate to 1000&gt;&gt;
+&lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
 	&lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -4158,6 +4313,18 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 	&lt;&lt;if _household.health is &quot;infected&quot;&gt;&gt;
     	&lt;&lt;set _infectedFamily.push(_idx)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+/* Infect household servants (nobles) and master's household (servants) using same rates */
+&lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
+	&lt;&lt;if $NPCsServants[_si].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
+	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,_infectRate) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 
 &lt;&lt;/silently&gt;&gt;
@@ -4395,11 +4562,35 @@ As morning dawns, a terrible realization settles over your &lt;span class=&quot;
             &lt;&lt;if _household.health is &quot;infected&quot;&gt;&gt;
                 &lt;&lt;set _infectedFamily.push(_idx)&gt;&gt;
             &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+        &lt;&lt;set _infectedServants = []&gt;&gt;
+        &lt;&lt;for _idx, _sv range $NPCsServants&gt;&gt;
+            &lt;&lt;if _sv.health is &quot;infected&quot;&gt;&gt;
+                &lt;&lt;set _infectedServants.push(_idx)&gt;&gt;
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+        &lt;&lt;set _infectedMaster = []&gt;&gt;
+        &lt;&lt;for _idx, _mh range $NPCsMaster&gt;&gt;
+            &lt;&lt;if _mh.health is &quot;infected&quot;&gt;&gt;
+                &lt;&lt;set _infectedMaster.push(_idx)&gt;&gt;
+            &lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;&lt;&lt;/silently&gt;&gt;
         &lt;&lt;for _n, _idx range _infectedFamily&gt;&gt;
             &lt;&lt;if _infectedFamily.length eq 1&gt;&gt;
         $NPCs[_idx].relationship $NPCs[_idx].name is infected with the plague.&lt;br&gt;
         &lt;&lt;elseif _n &lt; _infectedFamily.length - 1&gt;&gt;$NPCs[_idx].relationship, $NPCs[_idx].name,&lt;&lt;else&gt;&gt; and $NPCs[_idx].relationship, $NPCs[_idx].name are infected with the plague.&lt;br&gt;
+        &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+        &lt;&lt;for _n, _idx range _infectedServants&gt;&gt;
+            &lt;&lt;if _infectedServants.length eq 1&gt;&gt;
+        Your $NPCsServants[_idx].relationship $NPCsServants[_idx].name is infected with the plague.&lt;br&gt;
+        &lt;&lt;elseif _n &lt; _infectedServants.length - 1&gt;&gt;$NPCsServants[_idx].relationship, $NPCsServants[_idx].name,&lt;&lt;else&gt;&gt; and $NPCsServants[_idx].relationship, $NPCsServants[_idx].name are infected with the plague.&lt;br&gt;
+        &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+        &lt;&lt;for _n, _idx range _infectedMaster&gt;&gt;
+            &lt;&lt;if _infectedMaster.length eq 1&gt;&gt;
+        Your $NPCsMaster[_idx].relationship $NPCsMaster[_idx].name is infected with the plague.&lt;br&gt;
+        &lt;&lt;elseif _n &lt; _infectedMaster.length - 1&gt;&gt;$NPCsMaster[_idx].relationship, $NPCsMaster[_idx].name,&lt;&lt;else&gt;&gt; and $NPCsMaster[_idx].relationship, $NPCsMaster[_idx].name are infected with the plague.&lt;br&gt;
         &lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;
     &lt;br&gt;
@@ -4428,7 +4619,18 @@ As morning dawns, a terrible realization settles over your &lt;span class=&quot;
     &lt;&lt;for _f range $NPCs&gt;&gt;
             &lt;&lt;set $FledFamily.push(_f)&gt;&gt;
     &lt;&lt;/for&gt;&gt;
-    &lt;&lt;set $NPCs to []&gt;&gt;&lt;&lt;/silently&gt;&gt;
+    &lt;&lt;set $NPCs to []&gt;&gt;
+/* For nobles, keep 1-2 servants while the rest flee with the family */
+&lt;&lt;if $socio is &quot;nobles&quot; and $NPCsServants.length gt 0&gt;&gt;
+    &lt;&lt;set _keepCount to random(1,2)&gt;&gt;
+    &lt;&lt;if _keepCount gt $NPCsServants.length&gt;&gt;&lt;&lt;set _keepCount to $NPCsServants.length&gt;&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;set _totalServants to $NPCsServants.length&gt;&gt;
+    &lt;&lt;for _fs to _keepCount; _fs lt _totalServants; _fs++&gt;&gt;
+        &lt;&lt;set $FledServants.push($NPCsServants[_fs])&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+    &lt;&lt;set $NPCsServants to $NPCsServants.slice(0, _keepCount)&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;health-update&quot;&gt;&gt;
@@ -4437,7 +4639,22 @@ As morning dawns, a terrible realization settles over your &lt;span class=&quot;
         &lt;&lt;/for&gt;&gt;
  &lt;&lt;for _r range _recovered&gt;&gt;
  	&lt;&lt;set $NPCs[_r].health to &quot;recovered&quot;&gt;&gt;
-    &lt;&lt;/for&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="return to the story" tags="widget" position="900,450" size="100,100">&lt;&lt;widget &quot;storyline-return&quot;&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+/* Process servant health updates */
+&lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
+    &lt;&lt;if $NPCsServants[_si].health is &quot;infected&quot;&gt;&gt;
+        &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased&quot;&gt;&gt;
+        &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+/* Process master household health updates */
+&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
+    &lt;&lt;if $NPCsMaster[_mi].health is &quot;infected&quot;&gt;&gt;
+        &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased&quot;&gt;&gt;
+        &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="return to the story" tags="widget" position="900,450" size="100,100">&lt;&lt;widget &quot;storyline-return&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 /* NTS if you were imprisoned or impressed, show a bit of text here that says what happened while you were away. Add code that moves you forward a play equivalent to your imprisonment time. */
 &lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Continue.-&gt;December 1666]]
@@ -5764,7 +5981,7 @@ You&lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt; convince your family&lt;&l
 /* Nobles */
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
     /* NTS: add text about what nobles do immediately after choosing to stay. */
- You help your &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;household&lt;/span&gt; to pack up and leave the city for safety in $hhlocation. You send your family with most of the servants, keeping only a few for yourself. You promise to meet them should the situation grow worse.&lt;&lt;/if&gt;&gt;
+ You help your &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;household&lt;/span&gt; to pack up and leave the city for safety in $hhlocation. You send your family with most of the servants, keeping only $NPCsServants.length for yourself. You promise to meet them should the situation grow worse.&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
 While you remain in the city, you can take measures to protect yourself&lt;&lt;if $NPCs.length gt 1&gt;&gt; and your household&lt;&lt;/if&gt;&gt; from the plague. You can:
