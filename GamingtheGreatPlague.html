@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Gaming the Great Plague 2026 v1.4</title>
+<title>Gaming the Great Plague 2026 v1.5</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -2696,9 +2696,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if $NPCsServants.length gt 0&gt;&gt;
 &lt;br&gt;&#39;&#39;Household servants:&#39;&#39; &lt;br&gt;&lt;&lt;set _svHealthy to 0&gt;&gt;&lt;&lt;set _svInfected to 0&gt;&gt;&lt;&lt;set _svDeceased to 0&gt;&gt;&lt;&lt;set _svRecovered to 0&gt;&gt;&lt;&lt;for _sv, _idx range $NPCsServants&gt;&gt;&lt;&lt;if $NPCsServants[_sv].health is &quot;healthy&quot; or ($NPCsServants[_sv].health is &quot;infected&quot; and $plagueRevealed is 0)&gt;&gt;&lt;&lt;set _svHealthy += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;infected&quot;&gt;&gt;&lt;&lt;set _svInfected += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;deceased&quot;&gt;&gt;&lt;&lt;set _svDeceased += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;recovered&quot;&gt;&gt;&lt;&lt;set _svRecovered += 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;if _svHealthy gt 0&gt;&gt;_svHealthy healthy&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svInfected gt 0&gt;&gt;_svInfected infected&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svDeceased gt 0&gt;&gt;_svDeceased deceased&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svRecovered gt 0&gt;&gt;_svRecovered recovered&lt;br&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;if $FledServants.length gt 0&gt;&gt;
-&#39;&#39;Fled servants:&#39;&#39; &lt;br&gt;&lt;&lt;for _fs, _idx range $FledServants&gt;&gt;
-	$FledServants[_fs].name, $FledServants[_fs].age $FledServants[_fs].relationship: $FledServants[_fs].health&lt;br&gt;
-    &lt;&lt;/for&gt;&gt;
+&#39;&#39;Fled servants:&#39;&#39; &lt;br&gt;$FledServants.length fled to $hhlocation&lt;br&gt;
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;if $NPCsMaster.length gt 0&gt;&gt;
