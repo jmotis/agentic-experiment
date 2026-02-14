@@ -67,7 +67,7 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
 
 ## Version Control (Game Title)
 
-The game title includes a version number in the format **"Gaming the Great Plague 2026 vX.Y"**. The current version is tracked in the game's passage content.
+The game title includes a version number in the format **"Gaming the Great Plague 2026 vX.Y"**. The current version is stored in the `<tw-storydata>` element's `name` attribute in `GamingtheGreatPlague.html` (e.g., `name="Gaming the Great Plague 2026 v1.1"`).
 
 ### Mandatory version bump rule
 
@@ -75,16 +75,20 @@ The game title includes a version number in the format **"Gaming the Great Plagu
 
 ### How to update the version
 
-1. After extracting passages with `node extract.js`, search `passages.json` for the current version string (e.g., `v1.1`).
-2. Increment the minor version number by 1 (the number after the dot).
-3. Update **all occurrences** of the version string in the passage content so the title is consistent throughout the game.
-4. Patch the changes back with `node patch.js` as usual.
-5. Include the new version number in your commit message (e.g., "Update X — bump to v1.2").
+The version string is in the `<tw-storydata name="...">` attribute, **not** in passage content. Since `patch.js` only updates passage content (inner text of `<tw-passagedata>` elements), updating the version requires **direct editing of the HTML file**:
+
+1. Open `GamingtheGreatPlague.html` in a text editor.
+2. Locate the `<tw-storydata>` opening tag (near the beginning of the file).
+3. Find the `name` attribute, which contains the full game title including version (e.g., `name="Gaming the Great Plague 2026 v1.1"`).
+4. Increment the minor version number by 1 (the number after the dot).
+5. Save the file.
+6. Include the new version number in your commit message (e.g., "Update X — bump to v1.2").
 
 ### Important notes
 
 - Only increment the **minor** version (the number after the dot). Do not change the major version unless explicitly asked by the user.
 - If multiple passage edits are made in a single session, only bump the version **once** per commit, not once per passage edit.
+- **This is one of the rare exceptions** where direct HTML editing is necessary, since the `<tw-storydata>` attributes cannot be modified through the extract/patch workflow.
 
 ## Git Conventions
 
