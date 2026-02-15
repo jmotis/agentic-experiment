@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.11" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.11" startnode="3" creator="Twine" creator-version="2.11.1" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1127,12 +1127,12 @@ $(document).on(':passagestart', function (ev) {
 &lt;&lt;playerAge&gt;&gt;
 &lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $role to either($trades)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $religion is &quot;member of a dissident Protestant church&quot;&gt;&gt;
-&lt;&lt;set $religion to &quot;Presbyterian&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set $religion to either(&quot;Presbyterian&quot;, &quot;Baptist&quot;, &quot;Quaker&quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 
-&lt;&lt;if $gender is &quot;non-binary&quot;&gt;&gt;&lt;&lt;set _x to random(1,4)&gt;&gt;&lt;&lt;if _x is 1&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Charles&quot;, &quot;Charlotte&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;elseif _x is 2&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Phillip&quot;, &quot;Phillippa&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;elseif _x is 3&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;John&quot;, &quot;Joan&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;else&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Thomas&quot;, &quot;Thomasina&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;Your name is $name&lt;&lt;/if&gt;&gt;, and you are $agenum years old. You are proud to have been born and raised in &lt;&lt;if $origin eq &quot;London&quot;&gt;&gt;London.&lt;&lt;else&gt;&gt;$origin, though you now make your home in London.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-
-You currently live in the &lt;&lt;defParish &quot;parish&quot;&gt;&gt; of $parish, which is $location.&lt;br&gt;&lt;br&gt;
+&lt;&lt;if $gender is &quot;non-binary&quot;&gt;&gt;&lt;&lt;set _x to random(1,4)&gt;&gt;&lt;&lt;if _x is 1&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Charles&quot;, &quot;Charlotte&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;elseif _x is 2&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Phillip&quot;, &quot;Phillippa&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;elseif _x is 3&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;John&quot;, &quot;Joan&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;else&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Thomas&quot;, &quot;Thomasina&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;Your name is $name&lt;&lt;/if&gt;&gt;, and you are $agenum years old. You are proud to be a $religion, &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;the only true and legal faith&lt;&lt;else&gt;&gt;despite the fact that it is illegal in England.&lt;&lt;/if&gt;&gt;
+&lt;br&gt;&lt;br&gt;
+You were born and raised in &lt;&lt;if $origin eq &quot;London&quot;&gt;&gt;London.&lt;&lt;else&gt;&gt;$origin, though you now make your home in London.&lt;&lt;/if&gt;&gt; You currently live in the &lt;&lt;defParish &quot;parish&quot;&gt;&gt; of $parish, which is $location.&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;It is a good place to be a merchant.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt; /*NTS update with roles for merchants and artisans*/
 
 &lt;&lt;silently&gt;&gt;
 /* add family for young children */
@@ -1227,7 +1227,7 @@ It is December 1664 and you are looking forward to the Christmas holidays. You a
 
 Not everything is perfect, though. Rumors swirl throughout the city about the possibility of a coming war with the Dutch Republic after several Dutch ships were captured and brought into &lt;span class=&quot;def&quot; data-def=&quot;An English port city about 75 miles south of London&quot;&gt;Portsmouth&lt;/span&gt; as prizes. &lt;&lt;if $origin is &quot;the Dutch Republic&quot;&gt;&gt;You make merry with your neighbors even while you fear they will turn against you in the months ahead. &lt;&lt;/if&gt;&gt;Worse, it is common knowledge that &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has been spreading in the Dutch fleet for months, though it hasn&#39;t yet reached English shores.&lt;br&gt;&lt;br&gt;
 
-&lt;&lt;if $age isnot &quot;child&quot;&gt;&gt;&lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to join the English Navy?
+&lt;&lt;if $age isnot &quot;child&quot; and $age isnot &quot;elderly adult&quot;&gt;&gt;&lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to join the English Navy?
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;set $decisions.push(&quot;Dec 1664: Volunteered for the navy&quot;)&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;set $decisions.push(&quot;Dec 1664: Stayed out of the fighting&quot;)&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
 
@@ -2815,7 +2815,7 @@ You
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/9/99/James_II_by_Peter_Lely.jpg&quot; width=&quot;100%&quot;&gt;
 &lt;br&gt;
 //Peter Lely, James II, c. 1650-1675//&lt;br&gt;&lt;br&gt;
-&lt;&lt;if $age isnot &quot;child&quot; and $gender isnot &quot;female&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to be there for the next battle?
+&lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to be there for the next battle?
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;set $decisions.push(&quot;Jun 1665: Volunteered for the navy&quot;)&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;set $decisions.push(&quot;Jun 1665: Stayed out of the fighting&quot;)&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
    &lt;br&gt;&lt;br&gt;&lt;&lt;linkappend &quot;That is the last good day of the month, though.&quot;&gt;&gt;&lt;&lt;june-1665-helper&gt;&gt;
@@ -2830,7 +2830,7 @@ You
  | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $decisions.push(&quot;Jun 1665: Ignored the war gossip&quot;)&gt;&gt; You don&#39;t listen to the gossip, but it&#39;s hard to ignore the shouts when news finally arrives of a great battle that killed many important men.
    &lt;br&gt;&lt;br&gt;
    
- &lt;&lt;if $age isnot &quot;child&quot; and $gender isnot &quot;female&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to be there for the next battle?
+ &lt;&lt;if $gender isnot &quot;female&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to be there for the next battle?
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;set $decisions.push(&quot;Jun 1665: Volunteered for the navy&quot;)&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;set $decisions.push(&quot;Jun 1665: Stayed out of the fighting&quot;)&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
    &lt;&lt;linkappend &quot;That is the last good day of the month, though.&quot;&gt;&gt;&lt;&lt;june-1665-helper&gt;&gt;&lt;&lt;/linkappend&gt;&gt;
@@ -3227,9 +3227,9 @@ Everyone is still reeling from the shock of the Great Fire at the beginning of [
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
 You spend the next several weeks living in a field.  Luckily, there is plenty of work clearing away the debris of the fire and you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; manage to scrape together enough money to afford new lodgings in the eastern suburbs of the city.  It&#39;s just a single room and you&#39;re a little worried that the building will fall down around you one night, but at least it&#39;s better than freezing to death in the fields. You&#39;re grateful to live long enough to see [[November 1666]].
-&lt;&lt;else&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; spend the next several weeks working to clear out the wreckage of your former home.  Even though you work as fast as you can, you won&#39;t be able to rebuild before winter.  &lt;&lt;if $reputation lte 3&gt;&gt;Your poor reputation means that no one is willing to let you stay as a guest with them for long. &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;Luckily, due to your young age, friends of the family allow you to stay with them through the [[winter-&gt;November 1666]].&lt;&lt;else&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt; You end up having to leave the city for the winter&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt; You end up having to sleep in your office all winter&lt;&lt;else&gt;&gt; You end up having to stay in crappy lodgings that are practically a hovel and well beneath your station&lt;&lt;/if&gt;&gt; and are [[very unhappy about it-&gt;November 1666]].&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;Because of your good reputation, friends allow you to stay with them through the [[winter-&gt;November 1666]].&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; spend the next several weeks working to clear out the wreckage of your former home.  Even though you work as fast as you can, you won&#39;t be able to rebuild before winter.  &lt;&lt;if $reputation lte 3&gt;&gt;Your poor reputation means that no one is willing to let you stay as a guest with them for long. &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;Luckily, due to your young age, friends of the family allow you to stay with them through the [[winter-&gt;November 1666]].&lt;&lt;else&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt; You end up having to leave the city for the winter&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt; You end up having to sleep in your office all winter&lt;&lt;else&gt;&gt; You end up having to stay in crappy lodgings that are practically a hovel and well beneath your station&lt;&lt;/if&gt;&gt; and are [[very unhappy about it-&gt;November 1666]].&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;Because of your good reputation, friends allow you to stay with them through the [[winter-&gt;November 1666]].&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;/* NTS regenerate any households here?*/
 &lt;&lt;else&gt;&gt;
-There&#39;s so many people homeless that there&#39;s money to be made for someone who&#39;s willing to rent out a few rooms of their house, especially with such rainy weather and the increasing cold. &lt;&lt;if $age isnot &quot;child&quot; and $age isnot &quot;adolescent&quot;&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;You instruct your man of business to make sure none of your tenants are illegally subletting.&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;Such activity is beneath your social station, of course, but you are envious of all the people profiting off the disaster.&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt; You open up your house and make a lot of money, but take a hit to your reputation because your neighbors accuse you of profiting off the disaster.&lt;&lt;else&gt;&gt; Not that you have room for such a thing, unfortunately.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+There&#39;s so many people homeless that there&#39;s money to be made for someone who&#39;s willing to rent out a few rooms of their house, especially with such rainy weather and the increasing cold. &lt;&lt;if $age isnot &quot;child&quot; and $age isnot &quot;adolescent&quot;&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;You instruct your man of business to make sure none of your tenants are illegally subletting./* NTS insert choices here*/&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;Such activity is beneath your social station, of course, but you are envious of all the people profiting off the disaster.&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt; You open up your house and make a lot of money, but take a hit to your reputation because your neighbors accuse you of profiting off the disaster./*would need to do the money and reputation hits here - add it as a choice?*/&lt;&lt;else&gt;&gt; Not that you have room for such a thing, unfortunately.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 The weather may be miserable, but every disaster has a silver lining. Between the fires that still &lt;&lt;defSmolder &quot;smolder&quot;&gt;&gt; in the city&#39;s cellars and the rainy weather, &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases are plummeting and you&#39;ve heard that the theatres are finally going to reopen! You greatly look forward to [[November 1666]] 
 &lt;&lt;/if&gt;&gt;
@@ -3578,7 +3578,7 @@ Do you:
 &lt;&lt;else&gt;&gt;
 [[stand firm in your refusal to risk your life-&gt;deported][$decisions.push(&quot;Stood firm and was deported&quot;)]]
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $socio to &quot;beggars&quot;&gt;&gt;Because you are no longer working, you quickly run out of money and have to throw yourself on the mercy of your &lt;&lt;defParishs &quot;parish&#39;s&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt;.&lt;br&gt;&lt;br&gt;
+&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $socio to &quot;beggars&quot;&gt;&gt;Because you are no longer working, you quickly run out of money and have to throw yourself on the mercy of your /* NTS remove funds*/&lt;&lt;defParishs &quot;parish&#39;s&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt;.&lt;br&gt;&lt;br&gt;
 They have decided it will be your job to 
 &lt;&lt;if $gender is &quot;male&quot; or $gender is &quot;nonbinary&quot;&gt;&gt;&lt;&lt;set $role to &quot;corpsebearer&quot;&gt;&gt;remove the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; corpses of anyone who dies.
 &lt;br&gt;
@@ -3944,7 +3944,7 @@ Do you:
 [[go quietly]]</tw-passagedata><tw-passagedata pid="46" name="escape" tags="" position="2075,600" size="100,100">You try to escape 
 &lt;&lt;if random(1,2) == 1&gt;&gt;but are immediately caught. The local authorities decide the safest course of action now is to have you [[transported]] to the New World.
 &lt;&lt;else&gt;&gt;and manage to sneak back into London.
-&lt;&lt;if $reputation gte 3&gt;&gt; Luckily, one of your neighbors takes pity on you and lets you stay with them while you seek work and a new place to stay. &lt;&lt;set $socio=&quot;day labourers&quot;&gt;&gt;
+&lt;&lt;if $reputation gte 3&gt;&gt; Luckily, one of your neighbors takes pity on you and lets you stay with them while you seek work and a new place to stay. &lt;&lt;set $socio=&quot;day labourers&quot;&gt;&gt; /* NTS should regenerate household here? */
 &lt;&lt;else&gt;&gt;Unfortunately, now you are now homeless, no longer receiving alms from your &lt;&lt;defParishs &quot;parish&#39;s&quot;&gt;&gt; &lt;span class=&quot;def&quot; data-def=&quot;Two parish officials elected to administer to the needs of the poor in their parish. These positions were created by the Poor Relief Act of 1597.&quot;&gt;Overseers for the Poor&lt;/span&gt;, and cannot legally beg anymore. It doesn&#39;t take long before you are caught and thrown in gaol.
 &lt;br&gt;
 Do you:
@@ -3953,7 +3953,7 @@ Do you:
 &lt;&lt;/link&gt;&gt;
 [[stand firm in your refusal to risk your life-&gt;transported]]
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="47" name="go quietly" tags="" position="1925,800" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="47" name="go quietly" tags="" position="1925,775" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $origin is &quot;London&quot;&gt;&gt;There&#39;s no plague in the New World, so you decide to take a chance and move to the colonies. It&#39;s a rough journey and difficult to start over again somewhere so different. You will always miss London.
 &lt;&lt;else&gt;&gt;
 You return to &lt;&lt;if $origin isnot &quot;somewhere else&quot;&gt;&gt;$origin&lt;&lt;else&gt;&gt;your homeland&lt;&lt;/if&gt;&gt; and never see London again.&lt;&lt;/if&gt;&gt;
@@ -4525,7 +4525,6 @@ In fact, you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quo
 
 &lt;&lt;widget &quot;late-departure&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
-test here!
 /* Day Labourer Choice */
 /* NTS: might need text here or elsewhere about why you&#39;d leave/send away family: work? money? */
 
@@ -4538,6 +4537,15 @@ It&#39;s also not too late to
         &lt;&lt;else&gt;&gt;[[flee the city and return to your homeland.-&gt;Fled][$fled to 6]]
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
+    &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;try and convince your family to [[flee to some other city where they can find work.-&gt;Fled][$fled to 6]]
+    &lt;&lt;elseif $fled is 5&gt;&gt;[[flee London and join your family.-&gt;Fled][$fled to 6]]
+    &lt;&lt;elseif $fled is 4&gt;&gt;
+        &lt;&lt;if $NPCs.length gt 0&gt;&gt;[[send your family to some other city where they can find work-&gt;Stay][$fled to 5]], or [[flee London with your family and find work in another city.-&gt;Fled][$fled to 6]]
+        &lt;&lt;else&gt;&gt;[[flee London to some other city where you can find work.-&gt;Fled][$fled to 6]]
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+
 &lt;&lt;/if&gt;&gt;
 
 /* Servant choice */
@@ -5063,6 +5071,8 @@ You decide to:
 Lord be praised, your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; has survived the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. You still need to finish  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt;, but begin reconnecting with the outside world.
 
 In the time you were away.... /* nts: add updates based on what big events have happened */
+
+/* nts: add conditional here to deal with orphaned characters - will need to move them in with an aunt or uncle or cousin */
 
 &lt;&lt;storyline-return&gt;&gt;
 /*&lt;&lt;health-update&gt;&gt;*/
@@ -5746,6 +5756,13 @@ You died with a good enough reputation that your neighbors say prayers for your 
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="103" name="navy-volunteer" tags="" position="2175,400" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $death to random(1,10)&gt;&gt;
+&lt;&lt;set $discovery to random(1,10)&gt;&gt;
+&lt;&lt;if $discovery is 1&gt;&gt;
+	&lt;&lt;if $age is &quot;child&quot;&gt;&gt;When you show up to board your ship, the captain instantly realizes you are too young to volunteer. You are scolded and [[sent home to your parents-&gt;storyline-return again][$reputation to Math.clamp($reputation - 1, 0, 10)]]
+    &lt;&lt;elseif $age is &quot;elderly adult&quot;&gt;&gt;When you show up to board your ship, the captain instantly realizes you are too old to volunteer. He thanks you for volunteering but firmly refuses to let you board and [[sails away without you-&gt;storyline-return again][$reputation to Math.clamp($reputation + 1, 0, 10)]]
+    &lt;&lt;elseif $gender is &quot;female&quot;&gt;&gt;When you show up to board your ship, the captain instantly realizes you are female and has you cast back onto the dock while everyone [[stops to watch and gossip about you-&gt;storyline-return again][$reputation to Math.clamp($reputation - 3, 0, 10)]].  
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;else&gt;&gt;
 &lt;&lt;if $death is 1&gt;&gt;
 Send not for whom the bell tolls, it tolls for you. Unfortunately, you die in the fighting when &lt;&lt;set $type to random(1,5)&gt;&gt;&lt;&lt;if $type is 1&gt;&gt;you are knocked off deck and into the sea where you drown&lt;&lt;elseif $type is 2&gt;&gt;a cannon ball splinters the deck beneath your feet and the shrapnel cuts open your neck&lt;&lt;elseif $type is 3&gt;&gt;your ship is boarded and a Dutch soldier stabs you in the stomach&lt;&lt;elseif $type is 4&gt;&gt;a keg of gunpowder explodes next to you&lt;&lt;else&gt;&gt;a cannon splits the mast of your ship and the falling rigging crushes you&lt;&lt;/if&gt;&gt;. 
 &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;At your death, your crewmates discovered that you were a woman.&lt;&lt;/if&gt;&gt;
@@ -5761,6 +5778,7 @@ Unfortunately, you are taken prisoner and spend the rest of the war in a Dutch p
 You serve in the Navy through the war against the Dutch, leaving service in 1667. Your ship saw a lot of action and you are left &lt;&lt;set $disability to random(1,5)&gt;&gt;&lt;&lt;if $disability is 1&gt;&gt;with a disfiguring scar across your back which pains you occasionally for the rest of your life&lt;&lt;elseif $disability is 2&gt;&gt;with a gangrenous leg that will later need to be amputated&lt;&lt;elseif $disability is 3&gt;&gt;without the use of your right eye, which was lost to a musket ball&lt;&lt;elseif $disability is 4&gt;&gt;without your right arm, which was crushed by falling rigging and had to be amputated&lt;&lt;else&gt;&gt;without your left hand, which was cut off by a Dutch soldier in battle.&lt;&lt;/if&gt;&gt;. &lt;&lt;if $socio is &quot;day labourers&quot; or &quot;artisans&quot; or &quot;servants&quot;&gt;&gt;Your disability will affect your ability to work when you return home&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;your disability might make your neighbors pity you and earn you more charity when you return home&lt;&lt;else&gt;&gt;It&#39;s not pleasant&lt;&lt;/if&gt;&gt;, but [[at least you didn&#39;t die of plague-&gt;stats]].
 &lt;&lt;else&gt;&gt;
 You serve in the Navy through the war against the Dutch, leaving service in 1667. It was hard work, and not rewarding, but [[at least you didn&#39;t die of plague-&gt;stats]].
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 </tw-passagedata><tw-passagedata pid="104" name="apprentice" tags="widget" position="2300,1200" size="100,100">&lt;&lt;widget &quot;apprentice&quot;&gt;&gt;
@@ -5791,6 +5809,7 @@ Despite everything, business continues. A friend from the countryside writes to 
 &lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Continue.-&gt;July 1665]]
 &lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Continue.-&gt;June 1665]]
 &lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Continue.-&gt;May 1665]]
+&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Continue.-&gt;January 1665]]
 &lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="106" name="worker-kid" tags="widget" position="2500,1200" size="100,100">&lt;&lt;widget &quot;worker-kid&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 Despite everything, you &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;keep finding opportunities for work&lt;&lt;else&gt;&gt;know you are lucky to be steadily employed as a servant&lt;&lt;/if&gt;&gt;. A friend from the countryside writes to you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; and asks if you will take in their child so they can also seek work in London. 
@@ -5804,7 +5823,7 @@ Despite everything, court life proceeds as usual. A friend living the countrysid
 &lt;span id=&quot;ward&quot;&gt;Will you accept them into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You accept them into your home. It will cost a small fortune to outfit a newcomer to court and provide the king the necessary gifts but you will control their purse strings and are glad to [[do a friend a favor-&gt;storyline-return again]].&lt;&lt;addWardNPC&gt;&gt;&lt;&lt;set $ward to 0&gt;&gt;&lt;&lt;set $money -=5600&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You don&#39;t accept them into your home. Your own affairs are not quite in order and you need to focus on setting them right before adding another person to the household. You don&#39;t have the time to teach someone else [[the ways of court-&gt;storyline-return again]].&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
-</tw-passagedata><tw-passagedata pid="108" name="marriage-market" tags="widget" position="2275,150" size="100,100">&lt;&lt;widget &quot;marriage-market&quot;&gt;&gt;
+</tw-passagedata><tw-passagedata pid="108" name="marriage-market" tags="widget" position="2300,200" size="100,100">&lt;&lt;widget &quot;marriage-market&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 As an unmarried adult, you may wish to get married. Marriage brings with it lots of advantages, including a life partner, social connections through their family, (probably) children, and &lt;&lt;if $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot;&gt;&gt;wealth from your &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&#39;s income&lt;&lt;else&gt;&gt;wife&#39;s dowry&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;additional income that will help protect you from &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;starvation&lt;&lt;else&gt;&gt;poverty&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;.&lt;&lt;if $gender is &quot;female&quot;&gt;&gt; The downside is all your property will become your husband&#39;s and you will be legally dependent on him until he dies... or you do.&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
