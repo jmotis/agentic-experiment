@@ -1122,6 +1122,7 @@ $(document).on(':passagestart', function (ev) {
 		State.variables.return = ev.passage.title;
 	}
 });</script><tw-tag name="1665" color="blue"></tw-tag><tw-tag name="1666" color="blue"></tw-tag><tw-tag name="extreme-plague" color="red"></tw-tag><tw-tag name="some-plague" color="yellow"></tw-tag><tw-tag name="less-plague" color="green"></tw-tag><tw-tag name="level-1" color="green"></tw-tag><tw-tag name="play" color="purple"></tw-tag><tw-tag name="infection-rates" color="red"></tw-tag><tw-tag name="fire" color="red"></tw-tag><tw-tag name="menu" color="yellow"></tw-tag><tw-tag name="storyline" color="blue"></tw-tag><tw-tag name="quarantine" color="red"></tw-tag><tw-tag name="fled" color="green"></tw-tag><tw-passagedata pid="1" name="bio" tags="" position="1375,200" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
+&lt;&lt;if $location is 0&gt;&gt;&lt;&lt;random-character&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;playerName&gt;&gt;
 &lt;&lt;parish&gt;&gt;
 &lt;&lt;playerAge&gt;&gt;
@@ -1132,7 +1133,7 @@ $(document).on(':passagestart', function (ev) {
 
 &lt;&lt;if $gender is &quot;non-binary&quot;&gt;&gt;&lt;&lt;set _x to random(1,4)&gt;&gt;&lt;&lt;if _x is 1&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Charles&quot;, &quot;Charlotte&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;elseif _x is 2&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Phillip&quot;, &quot;Phillippa&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;elseif _x is 3&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;John&quot;, &quot;Joan&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;else&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Thomas&quot;, &quot;Thomasina&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;Your name is $name&lt;&lt;/if&gt;&gt;, and you are $agenum years old. You are proud to be a $religion, &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;the only true and legal faith&lt;&lt;else&gt;&gt;despite the fact that it is illegal in England.&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
-You were born and raised in &lt;&lt;if $origin eq &quot;London&quot;&gt;&gt;London.&lt;&lt;else&gt;&gt;$origin, though you now make your home in London.&lt;&lt;/if&gt;&gt; You currently live in the &lt;&lt;defParish &quot;parish&quot;&gt;&gt; of $parish, which is $location.&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;It is a good place to be a merchant.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt; /*NTS update with roles for merchants and artisans*/
+You were born and raised in &lt;&lt;if $origin is &quot;London&quot;&gt;&gt;London&lt;&lt;elseif $origin is &quot;somewhere else&quot;&gt;&gt;a faraway land, though you now make your home in London&lt;&lt;else&gt;&gt;$origin, though you now make your home in London&lt;&lt;/if&gt;&gt;. You currently live in the &lt;&lt;defParish &quot;parish&quot;&gt;&gt; of $parish, which is $location. It is a good place for $socio like you.&lt;br&gt;&lt;br&gt; /*NTS update with roles for merchants and artisans*/
 
 &lt;&lt;silently&gt;&gt;
 /* add family for young children */
@@ -1196,6 +1197,7 @@ You were born and raised in &lt;&lt;if $origin eq &quot;London&quot;&gt;&gt;Lond
 &lt;&lt;NPCpronouns&gt;&gt;
 
 &lt;&lt;/silently&gt;&gt;
+&lt;&lt;if $relationship is &quot;betrothed&quot;&gt;&gt;You are currently betrothed to be married. &lt;&lt;elseif $relationship is &quot;widowed&quot;&gt;&gt;Alas, your &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;wife&lt;&lt;else&gt;&gt;husband&lt;&lt;/if&gt;&gt; died some time ago. &lt;&lt;/if&gt;&gt;
 &lt;&lt;if $NPCs.length gt 0&gt;&gt;You live with your
   &lt;&lt;for _i, _idx range $NPCs&gt;&gt;
     &lt;&lt;if $NPCs.length eq 1&gt;&gt;$NPCs[_i].relationship, $NPCs[_i].name.
@@ -1203,7 +1205,7 @@ You were born and raised in &lt;&lt;if $origin eq &quot;London&quot;&gt;&gt;Lond
     &lt;&lt;else&gt;&gt; and $NPCs[_i].relationship, $NPCs[_i].name.
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
-&lt;&lt;elseif $NPCs.length eq 0&gt;&gt;You have no family.&lt;&lt;set $hoh to 1&gt;&gt;
+&lt;&lt;elseif $NPCs.length eq 0&gt;&gt;You live alone.&lt;&lt;set $hoh to 1&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $NPCsExtended.length gt 0&gt;&gt;Your 
@@ -1289,7 +1291,9 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 
 The year is 1664 and you are a resident of the great city of London in England. After decades of &lt;&lt;defCivilWar &quot;civil war&quot;&gt;&gt; and &lt;span class=&quot;def&quot; data-def=&quot;Refers to the government of Oliver Cromwell, who served as the Lord Protector of England from 1653-1658. This government was referred to as the Commonwealth (1649-1660) and was held together by Cromwell’s strong personality and military control.&quot;&gt;experimental government&lt;/span&gt;, the merry monarch King Charles II was restored to the thrones of England, Scotland, and Ireland just four years ago and (most of) the kingdoms rejoiced.
 
-But enough about the king! [[What about you-&gt;identity]]?
+But enough about the king! What about you?
+[[Create your character-&gt;identity]]
+[[Automatically generate a character-&gt;bio]]
 
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/4/48/Claude_de_Jongh_-_View_of_London_Bridge_-_Google_Art_Project_bridge.jpg&quot; width=&quot;100%&quot;&gt;
 //Claude de Jongh - &quot;View of London Bridge,&quot; 1632.//</tw-passagedata><tw-passagedata pid="4" name="identity" tags="" position="1225,200" size="100,100">&lt;&lt;chunkText&gt;&gt;
@@ -1775,8 +1779,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="January 1665" tags="storyline 1665" position="1075,475" size="100,100">&lt;&lt;nobr&gt;&gt;
 
-/* Pregnancy and marriage tracking */
-&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;
+/* Pregnancy and marriage tracking, betrothal should not trigger pregnancy due to age restrictions in character generation */
+&lt;&lt;if $relationship is &quot;married&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;
 	&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;
 		&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;
 			&lt;&lt;set $pregnant to 0&gt;&gt;
@@ -2749,6 +2753,23 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if $NPCsMaster.length gt 0&gt;&gt;
 &lt;br&gt;&#39;&#39;Master&#39;s Household:&#39;&#39; &lt;br&gt;&lt;&lt;set _mhHealthy to 0&gt;&gt;&lt;&lt;set _mhInfected to 0&gt;&gt;&lt;&lt;set _mhDeceased to 0&gt;&gt;&lt;&lt;set _mhRecovered to 0&gt;&gt;&lt;&lt;for _mh, _idx range $NPCsMaster&gt;&gt;&lt;&lt;if $NPCsMaster[_mh].health is &quot;healthy&quot; or ($NPCsMaster[_mh].health is &quot;infected&quot; and $plagueRevealed is 0)&gt;&gt;&lt;&lt;set _mhHealthy += 1&gt;&gt;&lt;&lt;elseif $NPCsMaster[_mh].health is &quot;infected&quot;&gt;&gt;&lt;&lt;set _mhInfected += 1&gt;&gt;&lt;&lt;elseif $NPCsMaster[_mh].health is &quot;deceased&quot;&gt;&gt;&lt;&lt;set _mhDeceased += 1&gt;&gt;&lt;&lt;elseif $NPCsMaster[_mh].health is &quot;recovered&quot;&gt;&gt;&lt;&lt;set _mhRecovered += 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;if _mhHealthy gt 0&gt;&gt;_mhHealthy healthy&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _mhInfected gt 0&gt;&gt;_mhInfected infected&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _mhDeceased gt 0&gt;&gt;_mhDeceased deceased&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _mhRecovered gt 0&gt;&gt;_mhRecovered recovered&lt;br&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
+
+/* random character generation widget */
+&lt;&lt;widget &quot;random-character&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $gender to either(&quot;male&quot;, &quot;female&quot;)&gt;&gt;
+&lt;&lt;set $age to either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;)&gt;&gt;
+&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;
+&lt;&lt;set $relationship to either(&quot;single&quot;, &quot;betrothed&quot;)&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;set $relationship to either(&quot;single&quot;, &quot;married&quot;, &quot;widowed&quot;)&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;set $religion to either(&quot;member of the Church of England&quot;, &quot;member of a dissident Protestant church&quot;, &quot;Catholic&quot;)&gt;&gt;
+&lt;&lt;set $origin to either(&quot;London&quot;, &quot;the English countryside&quot;, &quot;another English town or city&quot;, &quot;Scotland&quot;, &quot;Ireland&quot;, &quot;the Dutch Republic&quot;, &quot;France&quot;, &quot;somewhere else&quot;)&gt;&gt;
+&lt;&lt;set $socio to either(&quot;day labourers&quot;, &quot;servants&quot;, &quot;artisans&quot;, &quot;merchants&quot;, &quot;nobles&quot;, &quot;beggars&quot;)&gt;&gt;
+&lt;&lt;set $location to either(&quot;inside the City walls&quot;, &quot;in the western suburbs, specifically Westminster&quot;, &quot;in another part of the western suburbs&quot;, &quot;in the northern suburbs&quot;, &quot;in the eastern suburbs&quot;, &quot;across the river in the southern suburbs&quot;)&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="impressed" tags="" position="1900,275" size="100,100">&lt;&lt;nobr&gt;&gt;/* NTS: for those not booted out, need to add reputation/money hits */
 &lt;&lt;if $impressed gte 2&gt;&gt;You&#39;ve been caught again! 
@@ -5823,7 +5844,7 @@ Despite everything, court life proceeds as usual. A friend living the countrysid
 &lt;span id=&quot;ward&quot;&gt;Will you accept them into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You accept them into your home. It will cost a small fortune to outfit a newcomer to court and provide the king the necessary gifts but you will control their purse strings and are glad to [[do a friend a favor-&gt;storyline-return again]].&lt;&lt;addWardNPC&gt;&gt;&lt;&lt;set $ward to 0&gt;&gt;&lt;&lt;set $money -=5600&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You don&#39;t accept them into your home. Your own affairs are not quite in order and you need to focus on setting them right before adding another person to the household. You don&#39;t have the time to teach someone else [[the ways of court-&gt;storyline-return again]].&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
-</tw-passagedata><tw-passagedata pid="108" name="marriage-market" tags="widget" position="2300,200" size="100,100">&lt;&lt;widget &quot;marriage-market&quot;&gt;&gt;
+</tw-passagedata><tw-passagedata pid="108" name="marriage-market" tags="widget" position="2325,200" size="100,100">&lt;&lt;widget &quot;marriage-market&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 As an unmarried adult, you may wish to get married. Marriage brings with it lots of advantages, including a life partner, social connections through their family, (probably) children, and &lt;&lt;if $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot;&gt;&gt;wealth from your &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&#39;s income&lt;&lt;else&gt;&gt;wife&#39;s dowry&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;additional income that will help protect you from &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;starvation&lt;&lt;else&gt;&gt;poverty&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;.&lt;&lt;if $gender is &quot;female&quot;&gt;&gt; The downside is all your property will become your husband&#39;s and you will be legally dependent on him until he dies... or you do.&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
