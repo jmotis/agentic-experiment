@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.11" startnode="3" creator="Twine" creator-version="2.11.1" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.12" startnode="3" creator="Twine" creator-version="2.11.1" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1131,7 +1131,7 @@ $(document).on(':passagestart', function (ev) {
 &lt;&lt;set $religion to either(&quot;Presbyterian&quot;, &quot;Baptist&quot;, &quot;Quaker&quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 
-&lt;&lt;if $gender is &quot;non-binary&quot;&gt;&gt;&lt;&lt;set _x to random(1,4)&gt;&gt;&lt;&lt;if _x is 1&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Charles&quot;, &quot;Charlotte&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;elseif _x is 2&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Phillip&quot;, &quot;Phillippa&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;elseif _x is 3&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;John&quot;, &quot;Joan&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;else&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Thomas&quot;, &quot;Thomasina&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;Your name is $name&lt;&lt;/if&gt;&gt;, and you are $agenum years old. You are proud to be a $religion, &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;the only true and legal faith&lt;&lt;else&gt;&gt;despite the fact that it is illegal in England.&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;nonbinary&quot;&gt;&gt;&lt;&lt;set _x to random(1,4)&gt;&gt;&lt;&lt;if _x is 1&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Charles&quot;, &quot;Charlotte&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;elseif _x is 2&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Phillip&quot;, &quot;Phillippa&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;elseif _x is 3&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;John&quot;, &quot;Joan&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;else&gt;&gt;Your friends and family call you &lt;&lt;set _name = [&quot;Thomas&quot;, &quot;Thomasina&quot;]&gt;&gt;&lt;&lt;listbox &quot;$name&quot;&gt;&gt;&lt;&lt;optionsfrom _name&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;Your name is $name&lt;&lt;/if&gt;&gt;, and you are $agenum years old. You are proud to be a $religion, &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;the only true and legal faith&lt;&lt;else&gt;&gt;despite the fact that it is illegal in England.&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
 You were born and raised in &lt;&lt;if $origin is &quot;London&quot;&gt;&gt;London&lt;&lt;elseif $origin is &quot;somewhere else&quot;&gt;&gt;a faraway land, though you now make your home in London&lt;&lt;else&gt;&gt;$origin, though you now make your home in London&lt;&lt;/if&gt;&gt;. You currently live in the &lt;&lt;defParish &quot;parish&quot;&gt;&gt; of $parish, which is $location. It is a good place for $socio like you.&lt;br&gt;&lt;br&gt; /*NTS update with roles for merchants and artisans*/
 
@@ -1344,8 +1344,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
               &lt;&lt;/if&gt;&gt;, and there&#39;s no hiding that you have caught the dreaded plague.&#39;&#39; &lt;br&gt;&lt;br&gt;
               &lt;&lt;if _infectedFamily.length gt 0&gt;&gt;Worse yet, you learn that your
               &lt;&lt;for _z, _y range _infectedFamily&gt;&gt;
-                &lt;&lt;if _infectedFamily.length eq 1&gt;&gt;$NPCs[_y].relationship, $NPCs[_y].name has also fallen ill.&lt;br&gt;
-                &lt;&lt;elseif _z &lt; _infectedFamily.length - 1&gt;&gt;$NPCs[_y].relationship $NPCs[_y].name, &lt;&lt;else&gt;&gt;and $NPCs[_y].relationship $NPCs[_y].name have also fallen ill.
+                &lt;&lt;if _infectedFamily.length eq 1&gt;&gt;$NPCs[_y].relationship, $NPCs[_g].name has also fallen ill.&lt;br&gt;
+                &lt;&lt;elseif _z &lt; _infectedFamily.length - 1&gt;&gt;$NPCs[_y].relationship $NPCs[_g].name, &lt;&lt;else&gt;&gt;and $NPCs[_y].relationship $NPCs[_g].name have also fallen ill.
                 &lt;&lt;/if&gt;&gt;
             &lt;&lt;/for&gt;&gt;
             &lt;&lt;/if&gt;&gt;
@@ -1387,7 +1387,7 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
       In the meantime, your family has resorted to desperate measures to protect the health of the youngest. One evening, someone manages to smuggle 
         &lt;&lt;for _f, _g range $getaway&gt;&gt;
           &lt;&lt;if $getaway.length eq 1&gt;&gt;your $NPCs[_g].relationship $NPCs[_g].name,
-          &lt;&lt;elseif _f &lt; $getaway.length - 1&gt;&gt;your $NPCs[_g].relationship $NPCs[_g].name, &lt;&lt;else&gt;&gt;and your $NPCs[_g].relationship $NPCs[_y].name
+          &lt;&lt;elseif _f &lt; $getaway.length - 1&gt;&gt;your $NPCs[_g].relationship $NPCs[_g].name, &lt;&lt;else&gt;&gt;and your $NPCs[_g].relationship $NPCs[_g].name
           &lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;out of the house and to a safer location.
       &lt;&lt;/if&gt;&gt;
@@ -1784,8 +1784,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 	&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;
 		&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;
 			&lt;&lt;set $pregnant to 0&gt;&gt;
-			&lt;&lt;set $temp-pregnant to random(1,10)&gt;&gt;
-			&lt;&lt;if $temp-pregnant is 1&gt;&gt;
+			&lt;&lt;set _tempPregnant to random(1,10)&gt;&gt;
+			&lt;&lt;if _tempPregnant is 1&gt;&gt;
 					&lt;&lt;set $pregnant to 1&gt;&gt;
 			&lt;&lt;/if&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -2366,7 +2366,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;
       &lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;if $gender is &quot;non-binary&quot;&gt;&gt;
+    &lt;&lt;if $gender is &quot;nonbinary&quot;&gt;&gt;
       &lt;&lt;set $NPCs.push({name: $nbNames.pluck(), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;spouse&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
   &lt;&lt;/if&gt;&gt;
   &lt;&lt;elseif $age is &quot;middle-aged adult&quot;&gt;&gt;
@@ -2376,7 +2376,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;
       &lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: &quot;wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;if $gender is &quot;non-binary&quot;&gt;&gt;
+    &lt;&lt;if $gender is &quot;nonbinary&quot;&gt;&gt;
       &lt;&lt;set $NPCs.push({name: $nbNames.pluck(), age: either(&quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: &quot;spouse&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;elseif $age is &quot;elderly adult&quot;&gt;&gt;
@@ -2386,7 +2386,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;
       &lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: &quot;wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-  /* &lt;&lt;if $gender is &quot;non-binary&quot;&gt;&gt;
+  /* &lt;&lt;if $gender is &quot;nonbinary&quot;&gt;&gt;
       &lt;&lt;set $NPCs.push({name: $nbNames.pluck(), age: either(&quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: &quot;spouse&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
    &lt;&lt;/if&gt;&gt; */
   &lt;&lt;/if&gt;&gt;
@@ -2827,7 +2827,7 @@ You
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="17" name="June 1665" tags="storyline 1665" position="1325,475" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;random-events&gt;&gt;
 &lt;&lt;if not _randomEventFired&gt;&gt;
-    On June 3rd, everyone throughout the city hears the sound of cannon fire—not the celebratory firing of cannons in ceremony but the sounds of battle. It is obvious that the English and Dutch &lt;span class=&quot;def&quot; data-def=&quot;The English Royal Navy, which was primarily composed of heavily armed warships.&quot;&gt;fleets&lt;/span&gt; have engaged in battle, but where? How close are they to London? Who is winning? No one knows. &lt;&lt;if $origin is &quot;Dutch&quot;&gt;&gt;You keep your head down and hide from your neighbors as much as possible, for fear that they will turn on you.&lt;&lt;/if&gt;&gt;
+    On June 3rd, everyone throughout the city hears the sound of cannon fire—not the celebratory firing of cannons in ceremony but the sounds of battle. It is obvious that the English and Dutch &lt;span class=&quot;def&quot; data-def=&quot;The English Royal Navy, which was primarily composed of heavily armed warships.&quot;&gt;fleets&lt;/span&gt; have engaged in battle, but where? How close are they to London? Who is winning? No one knows. &lt;&lt;if $origin is &quot;the Dutch Republic&quot;&gt;&gt;You keep your head down and hide from your neighbors as much as possible, for fear that they will turn on you.&lt;&lt;/if&gt;&gt;
     &lt;br&gt;&lt;br&gt;
    &lt;span id=&quot;decision&quot;&gt; Do you try to find out more?
     &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $plagueInfection to random(1,50)&gt;&gt;&lt;&lt;set $decisions.push(&quot;Jun 1665: Sought out war news&quot;)&gt;&gt;
@@ -3066,7 +3066,7 @@ So much for the city being safe again.&lt;br&gt;
 //Peter Lely, Catherine of Braganza, 1663-5//
 &lt;br&gt;&lt;br&gt;
 It&#39;s not a great lead up for [[April 1666]].
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $decisions.push(&quot;Mar 1666: Prayed privately instead of lighting a candle&quot;)&gt;&gt;&lt;&lt;replace &quot;candle&quot;&gt;&gt;You don&#39;t light a candle for the queen, but you do pray for her soul. The Court is plunged into mourning&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;. After a month in London, the King moves on to one of his father&#39;s old houses of &lt;&lt;defAudleyEndInEssex &quot;Audley End, in Essex&quot;&gt;&gt;. Once an enormous and grand palace, it is in bad shape after the &lt;&lt;defCivilWar_Civil &quot;Civil War&quot;&gt;&gt; and &lt;&lt;defInterregnum &quot;Interregnum&quot;&gt;&gt;. But the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has proved the wisdom of the King having more royal palaces outside of London and the Court is happy to follow him...&lt;&lt;else&gt;&gt; and the city quiets as well... &lt;&lt;/if&gt;&gt; because &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; numbers are starting to go up again.
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $decisions.push(&quot;Mar 1666: Prayed privately instead of lighting a candle&quot;)&gt;&gt;&lt;&lt;replace &quot;#candle&quot;&gt;&gt;You don&#39;t light a candle for the queen, but you do pray for her soul. The Court is plunged into mourning&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;. After a month in London, the King moves on to one of his father&#39;s old houses of &lt;&lt;defAudleyEndInEssex &quot;Audley End, in Essex&quot;&gt;&gt;. Once an enormous and grand palace, it is in bad shape after the &lt;&lt;defCivilWar_Civil &quot;Civil War&quot;&gt;&gt; and &lt;&lt;defInterregnum &quot;Interregnum&quot;&gt;&gt;. But the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has proved the wisdom of the King having more royal palaces outside of London and the Court is happy to follow him...&lt;&lt;else&gt;&gt; and the city quiets as well... &lt;&lt;/if&gt;&gt; because &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; numbers are starting to go up again.
 
 So much for the city being safe again.&lt;br&gt;
 &lt;br&gt;
@@ -4907,8 +4907,8 @@ Remaining money: $money&lt;br&gt;
 &lt;&lt;/nobr&gt;&gt;
 
 &lt;img src=&quot;https://iiif.wellcomecollection.org/image/L0064305/full/760%2C/0/default.jpg&quot; width=&quot;100%&quot;&gt;</tw-passagedata><tw-passagedata pid="80" name="preventatives-treatments" tags="widget" position="775,150" size="100,100">&lt;&lt;widget &quot;preventative&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;ul&gt;&lt;li&gt;&lt;span id=&quot;church&quot;&gt;&lt;&lt;link &quot;Go to church and pray often&quot;&gt;&gt;&lt;&lt;set $reputation +=1&gt;&gt;&lt;&lt;set $plagueInfection to random(1,10)&gt;&gt;&lt;&lt;replace #church&gt;&gt;You go to church and pray regularly through the month. Others admire your piety in the face of such a grave situation!&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;span id=&quot;eat&quot;&gt;&lt;&lt;link &quot;Avoid eating berries, cabbage, cucumbers, melon, and spinach.&quot;&gt;&gt;&lt;&lt;replace #eat&gt;&gt;You avoid eating berries, cabbage, cucumbers, melons, and spinach. Your neighbors swear by it!&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;ul&gt;&lt;li&gt;&lt;span id=&quot;church&quot;&gt;&lt;&lt;link &quot;Go to church and pray often&quot;&gt;&gt;&lt;&lt;set $reputation +=1&gt;&gt;&lt;&lt;set $plagueInfection to random(1,10)&gt;&gt;&lt;&lt;replace &quot;#church&quot;&gt;&gt;You go to church and pray regularly through the month. Others admire your piety in the face of such a grave situation!&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span id=&quot;eat&quot;&gt;&lt;&lt;link &quot;Avoid eating berries, cabbage, cucumbers, melon, and spinach.&quot;&gt;&gt;&lt;&lt;replace &quot;#eat&quot;&gt;&gt;You avoid eating berries, cabbage, cucumbers, melons, and spinach. Your neighbors swear by it!&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
@@ -5006,7 +5006,7 @@ You have some &lt;span class=&quot;def&quot; data-def=&quot;A medicine or treatm
     &lt;&lt;/if&gt;&gt;
 /* Day Labourers */
 &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;and many of your neighbors have begun to flee the city.&lt;&lt;if $origin isnot &quot;London&quot;&gt;&gt; You still have family back home in $origin and have to consider whether or not to abandon your home and whatever possessions you cannot carry to take refuge with your family.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-    You hear that the local parish officials want to hire you to &lt;&lt;if $gender is &quot;male&quot; or $gender is &quot;non-binary&quot;&gt;&gt;remove the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; corpses if anyone dies&lt;&lt;elseif $gender is &quot;female&quot; and $reputation gte 5&gt;&gt;look at plague corpses and determine if they died of plague or some other cause of death&lt;&lt;else&gt;&gt;nurse the sick and dying, despite the risk to your own life&lt;&lt;/if&gt;&gt;.&lt;br&gt;&lt;br&gt;
+    You hear that the local parish officials want to hire you to &lt;&lt;if $gender is &quot;male&quot; or $gender is &quot;nonbinary&quot;&gt;&gt;remove the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; corpses if anyone dies&lt;&lt;elseif $gender is &quot;female&quot; and $reputation gte 5&gt;&gt;look at plague corpses and determine if they died of plague or some other cause of death&lt;&lt;else&gt;&gt;nurse the sick and dying, despite the risk to your own life&lt;&lt;/if&gt;&gt;.&lt;br&gt;&lt;br&gt;
     You decide to:
     &lt;ul&gt;
         &lt;li&gt;&lt;&lt;link &quot;accept the job&quot; &quot;Stay&quot;&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;&lt;&lt;set $decisions.push(&quot;Accepted a plague work job&quot;)&gt;&gt;&lt;&lt;if $gender is &quot;female&quot; and $reputation gt 5&gt;&gt;&lt;&lt;set $role to &quot;searcher&quot;&gt;&gt;&lt;&lt;elseif $gender is &quot;female&quot; and $reputation lte 5&gt;&gt;&lt;&lt;set $role to &quot;nurse&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $role to &quot;corpsebearer&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
@@ -5995,8 +5995,8 @@ Unfortunately, you have suffered a miscarriage and are no [[longer pregnant.-&gt
 	&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;
 		&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;
 			&lt;&lt;if $pregnant is 0&gt;&gt;
-				&lt;&lt;set $temp-pregnant to random(1,10)&gt;&gt;
-				&lt;&lt;if $temp-pregnant is 1&gt;&gt;
+				&lt;&lt;set _tempPregnant to random(1,10)&gt;&gt;
+				&lt;&lt;if _tempPregnant is 1&gt;&gt;
 					&lt;&lt;set $pregnant to 1&gt;&gt;
 				&lt;&lt;/if&gt;&gt;
 			&lt;&lt;else&gt;&gt;
