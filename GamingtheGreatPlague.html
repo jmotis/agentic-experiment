@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.12" startnode="3" creator="Twine" creator-version="2.11.1" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.13" startnode="3" creator="Twine" creator-version="2.11.1" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1216,9 +1216,9 @@ You were born and raised in &lt;&lt;if $origin is &quot;London&quot;&gt;&gt;Lond
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;also live&lt;&lt;if $NPCsExtended.length eq 1&gt;&gt;s&lt;&lt;/if&gt;&gt; in London.&lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;silently&gt;&gt;&lt;&lt;addServantNPC&gt;&gt;&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;addMasterHousehold&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;
+&lt;&lt;silently&gt;&gt;&lt;&lt;addServantNPC&gt;&gt;&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;addMasterHousehold&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;&lt;&lt;set $NPCsExtended to $NPCsExtended.concat($NPCs)&gt;&gt;&lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;Your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; also includes $servants servants.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;Your master is &lt;&lt;if $masterStatus is &quot;artisans&quot;&gt;&gt;an artisan&lt;&lt;elseif $masterStatus is &quot;merchants&quot;&gt;&gt;a merchant&lt;&lt;elseif $masterStatus is &quot;nobles&quot;&gt;&gt;a noble&lt;&lt;/if&gt;&gt; with a household of $NPCsMaster.length members.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;Your master is &lt;&lt;if $masterStatus is &quot;artisans&quot;&gt;&gt;an artisan&lt;&lt;elseif $masterStatus is &quot;merchants&quot;&gt;&gt;a merchant&lt;&lt;elseif $masterStatus is &quot;nobles&quot;&gt;&gt;a noble&lt;&lt;/if&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;. As an unmarried servant, you live in their household.&lt;&lt;else&gt;&gt; with a household of $NPCsMaster.length members.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 If that sounds right, [[click this link to begin our story-&gt;December 1664]].
 &lt;br&gt;&lt;br&gt;
 If that doesn&#39;t sound right, you can refresh the game and start again.
