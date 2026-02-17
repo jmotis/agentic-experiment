@@ -1344,8 +1344,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
               &lt;&lt;/if&gt;&gt;, and there&#39;s no hiding that you have caught the dreaded plague.&#39;&#39; &lt;br&gt;&lt;br&gt;
               &lt;&lt;if _infectedFamily.length gt 0&gt;&gt;Worse yet, you learn that your
               &lt;&lt;for _z, _y range _infectedFamily&gt;&gt;
-                &lt;&lt;if _infectedFamily.length eq 1&gt;&gt;$NPCs[_y].relationship, $NPCs[_g].name has also fallen ill.&lt;br&gt;
-                &lt;&lt;elseif _z &lt; _infectedFamily.length - 1&gt;&gt;$NPCs[_y].relationship $NPCs[_g].name, &lt;&lt;else&gt;&gt;and $NPCs[_y].relationship $NPCs[_g].name have also fallen ill.
+                &lt;&lt;if _infectedFamily.length eq 1&gt;&gt;$NPCs[_y].relationship, $NPCs[_y].name has also fallen ill.&lt;br&gt;
+                &lt;&lt;elseif _z &lt; _infectedFamily.length - 1&gt;&gt;$NPCs[_y].relationship $NPCs[_y].name, &lt;&lt;else&gt;&gt;and $NPCs[_y].relationship $NPCs[_y].name have also fallen ill.
                 &lt;&lt;/if&gt;&gt;
             &lt;&lt;/for&gt;&gt;
             &lt;&lt;/if&gt;&gt;
@@ -1387,7 +1387,7 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
       In the meantime, your family has resorted to desperate measures to protect the health of the youngest. One evening, someone manages to smuggle 
         &lt;&lt;for _f, _g range $getaway&gt;&gt;
           &lt;&lt;if $getaway.length eq 1&gt;&gt;your $NPCs[_g].relationship $NPCs[_g].name,
-          &lt;&lt;elseif _f &lt; $getaway.length - 1&gt;&gt;your $NPCs[_g].relationship $NPCs[_g].name, &lt;&lt;else&gt;&gt;and your $NPCs[_g].relationship $NPCs[_g].name
+          &lt;&lt;elseif _f &lt; $getaway.length - 1&gt;&gt;your $NPCs[_g].relationship $NPCs[_g].name, &lt;&lt;else&gt;&gt;and your $NPCs[_g].relationship $NPCs[_y].name
           &lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;out of the house and to a safer location.
       &lt;&lt;/if&gt;&gt;
