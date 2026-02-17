@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.13" startnode="3" creator="Twine" creator-version="2.11.1" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.14" startnode="3" creator="Twine" creator-version="2.11.1" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3764,7 +3764,7 @@ The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has followed the King&#39;s hou
 &lt;&lt;fumigant&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="39" name="FamPesthouse" tags="infection-rates" position="25,450" size="100,100">&lt;&lt;nobr&gt;&gt;
-It is a difficult decision, but your family decide it&#39;s for the best to send your sick to the &lt;span class=&quot;def&quot; data-def=&quot;A hospital used for the treatment and isolation of people infected with Bubonic plague or other infectious diseases&quot;&gt;pesthouse&lt;/span&gt;. 
+It is a difficult decision, but your family decide it&#39;s for the best to send your sick to the &lt;span class=&quot;def&quot; data-def=&quot;A hospital used for the treatment and isolation of people infected with Bubonic plague or other infectious diseases&quot;&gt;pesthouse&lt;/span&gt;.
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $reputation lte 3&gt;&gt;To your horror, rumors swirl that your family have actually murdered a member of your household and hidden the body! &lt;&lt;if $murder gte 1&gt;&gt; Remembering the rumors of murder that circulated last time  your family sent someone to the household, you &lt;&lt;/if&gt;&gt;&lt;&lt;if $murder lte 1&gt;&gt;You&lt;&lt;/if&gt;&gt; send to the master of the pesthouse to produce a certificate for you that proves the rumor is a lie.
 &lt;&lt;set $reputation -=2&gt;&gt;&lt;&lt;set $murder =1&gt;&gt;
@@ -3778,6 +3778,7 @@ $NPCs[_z].relationship, $NPCs[_z].name, $NPCs[_z].health
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;silently&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;
 &lt;br&gt;&lt;br&gt;
+&lt;&lt;orphan-check&gt;&gt;
 &lt;&lt;storyline-return&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/5/58/The_pest_house_and_plague_pit%2C_Moorfields%2C_London._Wellcome_V0013229.jpg&quot; width=&quot;100%&quot;&gt;
@@ -3931,7 +3932,7 @@ Now you just have to figure out how to overcome your disgrace and find your way 
 &lt;&lt;/linkreplace&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="44" name="YouPesthouse" tags="infection-rates" position="500,850" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;set $plagueInfection to 2&gt;&gt;&lt;&lt;/silently&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
-The pesthouse is a terrible place to be confined, with countless sick people all crammed in close together so you can hear their every moan. They die terrifyingly fast and their cots refill just as quickly. You toss and turn in your dirty, sweat-soaked sheets, as your fever spikes and you fear for your life. 
+The pesthouse is a terrible place to be confined, with countless sick people all crammed in close together so you can hear their every moan. They die terrifyingly fast and their cots refill just as quickly. You toss and turn in your dirty, sweat-soaked sheets, as your fever spikes and you fear for your life.
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;It occurs to you that perhaps you ought to have written your will, but your reputation is so poor and the pesthouse is so terrifying that no one can be convinced to bring you the writing materials you need.&lt;br&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;It occurs to you that perhaps you ought to have written your will, but your reputation is so poor and the pesthouse is so terrifying that you can&#39;t convince a &lt;&lt;defScrivener &quot;scrivener&quot;&gt;&gt; to come help you.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if random(1,2) is 1&gt;&gt;Luckily, you will grow too delirious to notice how miserable you are in the hours before your [[death]].&lt;&lt;else&gt;&gt;You spend all your remaining energy in prayer that God will spare you from death. Despite the neglect of the overworked pesthouse staff, after a few days you feel your fever break and your &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt; begin to go down. Thanks be to God, you have survived the plague.
@@ -3940,6 +3941,7 @@ The pesthouse is a terrible place to be confined, with countless sick people all
 &lt;br&gt;
 //The pest house and plague pit, Moorfields, London. Wood engraving. Wellcome Images.//
 &lt;br&gt;&lt;br&gt;
+&lt;&lt;orphan-check&gt;&gt;
 Now you just have to figure out how to overcome your disgrace when you return home to your neighborhood. You decide to start by:&lt;br&gt;
 &lt;&lt;if $money gte 2&gt;&gt;
 &lt;&lt;linkreplace &quot;giving all your money to the poor&quot;&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;set $decisions.push(&quot;Gave all money to the poor as penance&quot;)&gt;&gt;
@@ -5093,12 +5095,12 @@ Lord be praised, your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; has sur
 
 In the time you were away.... /* nts: add updates based on what big events have happened */
 
-/* nts: add conditional here to deal with orphaned characters - will need to move them in with an aunt or uncle or cousin */
+&lt;&lt;orphan-check&gt;&gt;
 
 &lt;&lt;storyline-return&gt;&gt;
 /*&lt;&lt;health-update&gt;&gt;*/
-/* &lt;&lt;/if&gt;&gt; */
-&lt;&lt;/nobr&gt;&gt;
+/* &lt;&lt;&lt;/if&gt;&gt; */
+&lt;&lt;&lt;/nobr&gt;&gt;
 </tw-passagedata><tw-passagedata pid="84" name="Summer 1665" tags="fled" position="1025,1275" size="100,100">&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You lose money every day that you&#39;re away from the city, as no one wants to give charity to a beggar from the city&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;You lose money every day that you&#39;re away from the city and the people who normally would be willing to employ you for a day&#39;s labor&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;You dislike being so far from the city&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;You lose money every day that you&#39;re away from the city and unable to practice your trade&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;It&#39;s deeply irritating to have to pay rent on a country house as well as your home back in the city&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;It&#39;s to your great disadvantage to be so far from Court and the centers of power&lt;&lt;/if&gt;&gt;, but luckily it&#39;s a price that you&#39;re able to pay for at least a little while to ensure your safety.
 
 When the death tolls top 7,000 a week in August and September, you&#39;re sure you made the right call. By the beginning of October, death tolls have fallen to half that and you decide to [[return to the city-&gt;October 1665]].</tw-passagedata><tw-passagedata pid="85" name="Winter 1665" tags="fled" position="1075,1450" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city, as no one wants to give charity to a beggar from the city&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and the people who normally would be willing to employ you for a day&#39;s labor&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;You dislike being so far from the city&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and unable to practice your trade&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;It&#39;s deeply irritating to have to pay rent on a country house as well as your home back in the city&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;It&#39;s to your great disadvantage to be so far from Court and the centers of power&lt;&lt;/if&gt;&gt;, but luckily it&#39;s a price that you&#39;re able to pay for at least a little while to ensure your safety.
@@ -6082,7 +6084,119 @@ Unfortunately, you have suffered a miscarriage and are no [[longer pregnant.-&gt
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="115" name="Claude-widgets" tags="widget" position="475,1150" size="100,100">/* all widgets generated via Claude should be temporarily placed here then manually moved to new locations as needed */</tw-passagedata><tw-passagedata pid="116" name="june-1665-helper-widget" tags="widget" position="500,1300" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="115" name="Claude-widgets" tags="widget" position="475,1150" size="100,100">/* all widgets generated via Claude should be temporarily placed here then manually moved to new locations as needed */
+
+/* Orphan-check widget: called at the end of plague/sickness/quarantine sequences.
+   If the player is a child or adolescent and no living adult (young adult,
+   middle-aged adult, or elderly adult) remains in $NPCs, regenerate their
+   household according to their socio status. */
+&lt;&lt;widget &quot;orphan-check&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;
+  &lt;&lt;set _hasLivingAdult to false&gt;&gt;
+  &lt;&lt;for _oi = 0; _oi &lt; $NPCs.length; _oi++&gt;&gt;
+    &lt;&lt;if ($NPCs[_oi].age is &quot;young adult&quot; or $NPCs[_oi].age is &quot;middle-aged adult&quot; or $NPCs[_oi].age is &quot;elderly adult&quot;) and $NPCs[_oi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set _hasLivingAdult to true&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  &lt;&lt;if not _hasLivingAdult&gt;&gt;
+    &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;
+      /* Servant: find a new master&#39;s household */
+      &lt;&lt;set $NPCs to []&gt;&gt;
+      &lt;&lt;set $NPCsMaster to []&gt;&gt;
+      &lt;&lt;addMasterHousehold&gt;&gt;
+      &lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
+      &lt;&lt;set $NPCsMaster to []&gt;&gt;
+      &lt;&lt;NPCpronouns&gt;&gt;
+      &lt;br&gt;&lt;br&gt;Because your master died, you have found a new position in another household.&lt;br&gt;&lt;br&gt;
+    &lt;&lt;elseif $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt;
+      /* Beggar/Day Labourer: become a servant in an artisan household */
+      /* Move surviving child/adolescent NPCs to extended family */
+      &lt;&lt;set _survivingKids to []&gt;&gt;
+      &lt;&lt;for _oi = 0; _oi &lt; $NPCs.length; _oi++&gt;&gt;
+        &lt;&lt;if ($NPCs[_oi].age is &quot;child&quot; or $NPCs[_oi].age is &quot;adolescent&quot;) and $NPCs[_oi].health isnot &quot;deceased&quot;&gt;&gt;
+          &lt;&lt;set _survivingKids.push($NPCs[_oi])&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;/for&gt;&gt;
+      &lt;&lt;set $NPCsExtended to $NPCsExtended.concat(_survivingKids)&gt;&gt;
+      &lt;&lt;set $socio to &quot;servants&quot;&gt;&gt;
+      &lt;&lt;set $masterStatus to &quot;artisans&quot;&gt;&gt;
+      &lt;&lt;set $NPCs to []&gt;&gt;
+      &lt;&lt;set $NPCsMaster to []&gt;&gt;
+      &lt;&lt;set _artisanHHSize to random(2,4)&gt;&gt;
+      &lt;&lt;for _m to 0; _m lt _artisanHHSize; _m++&gt;&gt;
+        &lt;&lt;if random(1,2) eq 1&gt;&gt;
+          &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), age: either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: either(&quot;master&#39;s wife&quot;, &quot;master&#39;s daughter&quot;, &quot;master&#39;s mother&quot;), health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;else&gt;&gt;
+          &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), age: either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: either(&quot;master&quot;, &quot;master&#39;s son&quot;, &quot;master&#39;s father&quot;), health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;/for&gt;&gt;
+      &lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
+      &lt;&lt;set $NPCsMaster to []&gt;&gt;
+      &lt;&lt;NPCpronouns&gt;&gt;
+      &lt;br&gt;&lt;br&gt;Because you have been orphaned, your Parish Overseers of the Poor have found you a position as a servant in a local household.&lt;br&gt;&lt;br&gt;
+    &lt;&lt;else&gt;&gt;
+      /* Artisan/Merchant/Noble: move to new household of same socio status */
+      &lt;&lt;set _newGuardian to either(&quot;uncle&quot;, &quot;widowed aunt&quot;, &quot;cousin&quot;, &quot;family friend&quot;)&gt;&gt;
+      /* Collect surviving child/adolescent NPCs from original household */
+      &lt;&lt;set _survivingKids to []&gt;&gt;
+      &lt;&lt;for _oi = 0; _oi &lt; $NPCs.length; _oi++&gt;&gt;
+        &lt;&lt;if ($NPCs[_oi].age is &quot;child&quot; or $NPCs[_oi].age is &quot;adolescent&quot;) and $NPCs[_oi].health isnot &quot;deceased&quot;&gt;&gt;
+          &lt;&lt;set _survivingKids.push($NPCs[_oi])&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;/for&gt;&gt;
+      &lt;&lt;set $NPCs to []&gt;&gt;
+      /* Build the new household starting with the guardian and their family */
+      &lt;&lt;if _newGuardian is &quot;uncle&quot;&gt;&gt;
+        &lt;&lt;set $NPCs.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;uncle&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;if random(1,2) is 1&gt;&gt;
+          &lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;uncle&#39;s wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+        &lt;&lt;if $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _newHHKids to random(1,2)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _newHHKids to random(1,4)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _newHHKids to random(2,6)&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;for _k to 0; _k lt _newHHKids; _k++&gt;&gt;
+          &lt;&lt;if random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;cousin&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($mNames), age: either(&quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;cousin&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+      &lt;&lt;elseif _newGuardian is &quot;widowed aunt&quot;&gt;&gt;
+        &lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;aunt&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;if $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _newHHKids to random(1,2)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _newHHKids to random(1,4)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _newHHKids to random(2,6)&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;for _k to 0; _k lt _newHHKids; _k++&gt;&gt;
+          &lt;&lt;if random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;cousin&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($mNames), age: either(&quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;cousin&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+      &lt;&lt;elseif _newGuardian is &quot;cousin&quot;&gt;&gt;
+        &lt;&lt;if random(1,2) is 1&gt;&gt;
+          &lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;cousin&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;else&gt;&gt;
+          &lt;&lt;set $NPCs.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;cousin&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+        &lt;&lt;if random(1,2) is 1&gt;&gt;
+          &lt;&lt;if random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;cousin&#39;s wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;cousin&#39;s husband&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+        &lt;&lt;if $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _newHHKids to random(1,2)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _newHHKids to random(1,4)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _newHHKids to random(2,6)&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;for _k to 0; _k lt _newHHKids; _k++&gt;&gt;
+          &lt;&lt;if random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;cousin&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($mNames), age: either(&quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;cousin&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+      &lt;&lt;else&gt;&gt;
+        /* family friend */
+        &lt;&lt;if random(1,2) is 1&gt;&gt;
+          &lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;family friend&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;else&gt;&gt;
+          &lt;&lt;set $NPCs.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;family friend&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+        &lt;&lt;if random(1,2) is 1&gt;&gt;
+          &lt;&lt;if random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;friend&#39;s wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;friend&#39;s husband&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+        &lt;&lt;if $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _newHHKids to random(1,2)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _newHHKids to random(1,4)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _newHHKids to random(2,6)&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;for _k to 0; _k lt _newHHKids; _k++&gt;&gt;
+          &lt;&lt;if random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($fNames), age: either(&quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;friend&#39;s daughter&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCs.push({name: weightedEither($mNames), age: either(&quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;friend&#39;s son&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+      /* Move surviving child/adolescent NPCs from original household into new household */
+      &lt;&lt;set $NPCs to $NPCs.concat(_survivingKids)&gt;&gt;
+      &lt;&lt;NPCpronouns&gt;&gt;
+      &lt;br&gt;&lt;br&gt;Because you have been orphaned, you have moved in with &lt;&lt;if _newGuardian is &quot;family friend&quot;&gt;&gt;a family friend&lt;&lt;else&gt;&gt;your _newGuardian&lt;&lt;/if&gt;&gt;.&lt;br&gt;&lt;br&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="116" name="june-1665-helper-widget" tags="widget" position="500,1300" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; grows worse and the streets are soon filled with coaches and wagons full of people fleeing with their goods to the countryside. The &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMaria &quot;Henrietta Maria&quot;&gt;&gt; moves back to France&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, much to your dismay, and that of your fellow Catholics who flock to her chapel each week&lt;&lt;else&gt;&gt;, much to your relief, and that of all your fellow God-fearing &lt;&lt;defProtestants &quot;Protestants&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;. On June 29th, the King packs up his entire &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; in 148 carriages and moves 12 miles away, to his palace at &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt;.
     &lt;br&gt;&lt;br&gt;
