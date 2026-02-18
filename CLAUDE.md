@@ -90,6 +90,19 @@ The version string is in the `<tw-storydata name="...">` attribute, **not** in p
 - If multiple passage edits are made in a single session, only bump the version **once** per commit, not once per passage edit.
 - **This is one of the rare exceptions** where direct HTML editing is necessary, since the `<tw-storydata>` attributes cannot be modified through the extract/patch workflow.
 
+## SugarCube 2 Macro Reference Notes
+
+Known limitations and gotchas discovered during development:
+
+- **No `<<while>>` macro.** SugarCube 2 does not have a `<<while>>` loop. Use a C-style `<<for>>` with only a condition instead:
+  ```
+  /* Wrong — <<while>> does not exist */
+  <<while _usedNames.includes(_n)>><<set _n to weightedEither($fNames)>><</while>>
+  /* Correct — <<for>> with empty init and post */
+  <<for ; _usedNames.includes(_n); >><<set _n to weightedEither($fNames)>><</for>>
+  ```
+  The body executes as long as the condition is true; if the condition is false on first entry the body is skipped entirely, matching typical while-loop semantics.
+
 ## Git Conventions
 
 - **Primary branch:** `master`
