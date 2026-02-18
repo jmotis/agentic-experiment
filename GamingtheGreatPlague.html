@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.14" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.15" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -2655,7 +2655,13 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
   &lt;&lt;if random(1,2) eq 1&gt;&gt;
     &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), age: either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: either(&quot;master&#39;s wife&quot;, &quot;master&#39;s daughter&quot;, &quot;master&#39;s mother&quot;), health: &quot;healthy&quot;, location: $location})&gt;&gt;
   &lt;&lt;else&gt;&gt;
-    &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), age: either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: either(&quot;master&quot;, &quot;master&#39;s son&quot;, &quot;master&#39;s father&quot;), health: &quot;healthy&quot;, location: $location})&gt;&gt;
+    &lt;&lt;set _mRel to either(&quot;master&quot;, &quot;master&#39;s son&quot;, &quot;master&#39;s father&quot;)&gt;&gt;
+    &lt;&lt;if _mRel is &quot;master&quot;&gt;&gt;
+      &lt;&lt;set _mAge to either(&quot;middle-aged adult&quot;, &quot;elderly adult&quot;)&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+      &lt;&lt;set _mAge to either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), age: _mAge, relationship: _mRel, health: &quot;healthy&quot;, location: $location})&gt;&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
@@ -6130,7 +6136,13 @@ Unfortunately, you have suffered a miscarriage and are no [[longer pregnant.-&gt
         &lt;&lt;if random(1,2) eq 1&gt;&gt;
           &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), age: either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: either(&quot;master&#39;s wife&quot;, &quot;master&#39;s daughter&quot;, &quot;master&#39;s mother&quot;), health: &quot;healthy&quot;, location: $location})&gt;&gt;
         &lt;&lt;else&gt;&gt;
-          &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), age: either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;), relationship: either(&quot;master&quot;, &quot;master&#39;s son&quot;, &quot;master&#39;s father&quot;), health: &quot;healthy&quot;, location: $location})&gt;&gt;
+          &lt;&lt;set _mRel to either(&quot;master&quot;, &quot;master&#39;s son&quot;, &quot;master&#39;s father&quot;)&gt;&gt;
+          &lt;&lt;if _mRel is &quot;master&quot;&gt;&gt;
+            &lt;&lt;set _mAge to either(&quot;middle-aged adult&quot;, &quot;elderly adult&quot;)&gt;&gt;
+          &lt;&lt;else&gt;&gt;
+            &lt;&lt;set _mAge to either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;)&gt;&gt;
+          &lt;&lt;/if&gt;&gt;
+          &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), age: _mAge, relationship: _mRel, health: &quot;healthy&quot;, location: $location})&gt;&gt;
         &lt;&lt;/if&gt;&gt;
       &lt;&lt;/for&gt;&gt;
       &lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
