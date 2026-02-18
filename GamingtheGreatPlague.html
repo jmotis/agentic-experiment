@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.20" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.21" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1139,6 +1139,7 @@ You were born and raised in &lt;&lt;if $origin is &quot;London&quot;&gt;&gt;Lond
 /* add family for young children */
 &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot; or $age is &quot;young adult&quot;&gt;&gt;
   &lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;
+    &lt;&lt;set _usedSibNames to []&gt;&gt;
     &lt;&lt;addParentNPC&gt;&gt;
     &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
       &lt;&lt;set _x to random(0,1)&gt;&gt;&lt;&lt;for _i to 0; _i lt _x; _i++&gt;&gt;&lt;&lt;addSiblingsNPC&gt;&gt;&lt;&lt;/for&gt;&gt;
@@ -1159,6 +1160,7 @@ You were born and raised in &lt;&lt;if $origin is &quot;London&quot;&gt;&gt;Lond
   &lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;
   &lt;&lt;/if&gt;&gt;
   &lt;&lt;if $relationship is &quot;married&quot; or $relationship is &quot;widowed&quot;&gt;&gt;
+  	&lt;&lt;set _usedChildNames to []&gt;&gt;
   	&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
       &lt;&lt;set _x to random(0,1)&gt;&gt;&lt;&lt;for _i to 0; _i lt _x; _i++&gt;&gt;&lt;&lt;addChildNPC&gt;&gt;&lt;&lt;/for&gt;&gt;
     &lt;&lt;elseif $socio is &quot;day labourers&quot; or $socio is &quot;servants&quot;&gt;&gt;
@@ -1172,6 +1174,7 @@ You were born and raised in &lt;&lt;if $origin is &quot;London&quot;&gt;&gt;Lond
     &lt;&lt;/if&gt;&gt;
    &lt;&lt;/if&gt;&gt;
   &lt;&lt;addParentNPC&gt;&gt;
+  &lt;&lt;set _usedSibNames to []&gt;&gt;
   &lt;&lt;set _x to random(0,3)&gt;&gt;&lt;&lt;for _i to 0; _i lt _x; _i++&gt;&gt;&lt;&lt;addSiblingsNPC&gt;&gt;&lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
@@ -2379,9 +2382,9 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
     &lt;&lt;setAge&gt;&gt;
     &lt;&lt;nobr&gt;&gt;
         &lt;&lt;if random(1,2) eq 1&gt;&gt;
-            &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;daughter&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+            &lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;while _usedChildNames.includes(_n)&gt;&gt;&lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;/while&gt;&gt;&lt;&lt;set _usedChildNames.push(_n)&gt;&gt;&lt;&lt;set $NPCs.push({ name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;daughter&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
         &lt;&lt;else&gt;&gt;
-            &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;son&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+            &lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;while _usedChildNames.includes(_n)&gt;&gt;&lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;/while&gt;&gt;&lt;&lt;set _usedChildNames.push(_n)&gt;&gt;&lt;&lt;set $NPCs.push({ name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;son&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
@@ -2476,18 +2479,18 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
     &lt;&lt;setAge&gt;&gt;
     &lt;&lt;if $agenum lte 30 and $relationship is &quot;single&quot; and $NPCAgeNum lte 30&gt;&gt;  
         &lt;&lt;if random(1,2) eq 1&gt;&gt;
-          &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;sister&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+          &lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;while _usedSibNames.includes(_n)&gt;&gt;&lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;/while&gt;&gt;&lt;&lt;set _usedSibNames.push(_n)&gt;&gt;&lt;&lt;set $NPCs.push({ name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;sister&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
         &lt;&lt;else&gt;&gt;
-          &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;brother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+          &lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;while _usedSibNames.includes(_n)&gt;&gt;&lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;/while&gt;&gt;&lt;&lt;set _usedSibNames.push(_n)&gt;&gt;&lt;&lt;set $NPCs.push({ name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;brother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
         &lt;&lt;/if&gt;&gt;
 /*        &lt;&lt;if random(1,20) eq 1&gt;&gt;
           &lt;&lt;set $NPCs.push({ name: $nbNames.pluck(), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;sibling&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
         &lt;&lt;/if&gt;&gt; */
     &lt;&lt;else&gt;&gt;
       &lt;&lt;if random(1,2) eq 1&gt;&gt;
-        &lt;&lt;set $NPCsExtended.push({ name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;sister&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;while _usedSibNames.includes(_n)&gt;&gt;&lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;/while&gt;&gt;&lt;&lt;set _usedSibNames.push(_n)&gt;&gt;&lt;&lt;set $NPCsExtended.push({ name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;sister&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
       &lt;&lt;else&gt;&gt;
-        &lt;&lt;set $NPCsExtended.push({ name: weightedEither($mNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;brother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+        &lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;while _usedSibNames.includes(_n)&gt;&gt;&lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;/while&gt;&gt;&lt;&lt;set _usedSibNames.push(_n)&gt;&gt;&lt;&lt;set $NPCsExtended.push({ name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;brother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
       &lt;&lt;/if&gt;&gt;
  /*     &lt;&lt;if random(1,20) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended.push({ name: $nbNames.pluck(), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;sibling&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt; 
       &lt;&lt;/if&gt;&gt; */
@@ -2537,6 +2540,7 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;set $masterStatus to either(&quot;artisans&quot;, &quot;merchants&quot;, &quot;nobles&quot;)&gt;&gt;
 &lt;&lt;set _nomasterMother to true&gt;&gt;
 &lt;&lt;set _nomasterFather to true&gt;&gt;
+&lt;&lt;set _usedMasterChildNames to []&gt;&gt;
 
 &lt;&lt;if $masterStatus is &quot;artisans&quot;&gt;&gt;
   &lt;&lt;set _masterHHSize to random(2,4)&gt;&gt;
@@ -2592,7 +2596,7 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
             &lt;&lt;set $minAge to 0&gt;&gt;
             &lt;&lt;set $maxAge to _mistressAgenum-16&gt;&gt;
             &lt;&lt;setAge&gt;&gt;
-            &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s daughter&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+            &lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;while _usedMasterChildNames.includes(_n)&gt;&gt;&lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;/while&gt;&gt;&lt;&lt;set _usedMasterChildNames.push(_n)&gt;&gt;&lt;&lt;set $NPCsMaster.push({name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s daughter&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
         &lt;&lt;/if&gt;&gt;
    &lt;&lt;else&gt;&gt;
         &lt;&lt;if _nomasterFather&gt;&gt;
@@ -2618,7 +2622,7 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
             &lt;&lt;set $minAge to 0&gt;&gt;
             &lt;&lt;set $maxAge to _mistressAgenum-16&gt;&gt;
             &lt;&lt;setAge&gt;&gt;
-            &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s son&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+            &lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;while _usedMasterChildNames.includes(_n)&gt;&gt;&lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;/while&gt;&gt;&lt;&lt;set _usedMasterChildNames.push(_n)&gt;&gt;&lt;&lt;set $NPCsMaster.push({name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s son&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;&lt;&lt;/nobr&gt;&gt;
