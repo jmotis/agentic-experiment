@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.17" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.18" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -2653,32 +2653,48 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;set _oldestChildRank to 0&gt;&gt;
 &lt;&lt;set _wifeIdx to -1&gt;&gt;
+/* Always generate the master first */
+&lt;&lt;set _masterAgenum to random(30,76)&gt;&gt;
+&lt;&lt;if _masterAgenum gte 50&gt;&gt;&lt;&lt;set _masterAge to &quot;elderly adult&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _masterAge to &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), age: _masterAge, agenum: _masterAgenum, relationship: &quot;master&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
 &lt;&lt;for _m to 0; _m lt _masterHHSize; _m++&gt;&gt;
   &lt;&lt;if random(1,2) eq 1&gt;&gt;
     &lt;&lt;set _fRel to either(&quot;master&#39;s wife&quot;, &quot;master&#39;s daughter&quot;, &quot;master&#39;s mother&quot;)&gt;&gt;
     &lt;&lt;if _fRel is &quot;master&#39;s mother&quot;&gt;&gt;
-      &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), age: &quot;elderly adult&quot;, relationship: &quot;master&#39;s mother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+      &lt;&lt;set _fAgenum to random(50,76)&gt;&gt;
+      &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), age: &quot;elderly adult&quot;, agenum: _fAgenum, relationship: &quot;master&#39;s mother&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
     &lt;&lt;elseif _fRel is &quot;master&#39;s daughter&quot;&gt;&gt;
-      &lt;&lt;set _fAge to either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;)&gt;&gt;
+      &lt;&lt;set _fAgenum to random(5,76)&gt;&gt;
+      &lt;&lt;if _fAgenum gte 50&gt;&gt;&lt;&lt;set _fAge to &quot;elderly adult&quot;&gt;&gt;
+      &lt;&lt;elseif _fAgenum gte 30&gt;&gt;&lt;&lt;set _fAge to &quot;middle-aged adult&quot;&gt;&gt;
+      &lt;&lt;elseif _fAgenum gte 16&gt;&gt;&lt;&lt;set _fAge to &quot;young adult&quot;&gt;&gt;
+      &lt;&lt;elseif _fAgenum gte 10&gt;&gt;&lt;&lt;set _fAge to &quot;adolescent&quot;&gt;&gt;
+      &lt;&lt;else&gt;&gt;&lt;&lt;set _fAge to &quot;child&quot;&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
       &lt;&lt;if _fAge is &quot;elderly adult&quot; and _oldestChildRank lt 5&gt;&gt;&lt;&lt;set _oldestChildRank to 5&gt;&gt;
       &lt;&lt;elseif _fAge is &quot;middle-aged adult&quot; and _oldestChildRank lt 4&gt;&gt;&lt;&lt;set _oldestChildRank to 4&gt;&gt;
       &lt;&lt;elseif _fAge is &quot;young adult&quot; and _oldestChildRank lt 3&gt;&gt;&lt;&lt;set _oldestChildRank to 3&gt;&gt;
       &lt;&lt;elseif _fAge is &quot;adolescent&quot; and _oldestChildRank lt 2&gt;&gt;&lt;&lt;set _oldestChildRank to 2&gt;&gt;
       &lt;&lt;elseif _fAge is &quot;child&quot; and _oldestChildRank lt 1&gt;&gt;&lt;&lt;set _oldestChildRank to 1&gt;&gt;
       &lt;&lt;/if&gt;&gt;
-      &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), age: _fAge, relationship: &quot;master&#39;s daughter&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+      &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), age: _fAge, agenum: _fAgenum, relationship: &quot;master&#39;s daughter&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
     &lt;&lt;elseif _fRel is &quot;master&#39;s wife&quot;&gt;&gt;
       &lt;&lt;set _wifeIdx to $NPCsMaster.length&gt;&gt;
-      &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), age: &quot;pending&quot;, relationship: &quot;master&#39;s wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+      &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), age: &quot;pending&quot;, agenum: 0, relationship: &quot;master&#39;s wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;else&gt;&gt;
-    &lt;&lt;set _mRel to either(&quot;master&quot;, &quot;master&#39;s son&quot;, &quot;master&#39;s father&quot;)&gt;&gt;
-    &lt;&lt;if _mRel is &quot;master&quot;&gt;&gt;
-      &lt;&lt;set _mAge to either(&quot;middle-aged adult&quot;, &quot;elderly adult&quot;)&gt;&gt;
-    &lt;&lt;elseif _mRel is &quot;master&#39;s father&quot;&gt;&gt;
+    &lt;&lt;set _mRel to either(&quot;master&#39;s son&quot;, &quot;master&#39;s father&quot;)&gt;&gt;
+    &lt;&lt;if _mRel is &quot;master&#39;s father&quot;&gt;&gt;
+      &lt;&lt;set _mAgenum to random(50,76)&gt;&gt;
       &lt;&lt;set _mAge to &quot;elderly adult&quot;&gt;&gt;
     &lt;&lt;else&gt;&gt;
-      &lt;&lt;set _mAge to either(&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;)&gt;&gt;
+      &lt;&lt;set _mAgenum to random(5,76)&gt;&gt;
+      &lt;&lt;if _mAgenum gte 50&gt;&gt;&lt;&lt;set _mAge to &quot;elderly adult&quot;&gt;&gt;
+      &lt;&lt;elseif _mAgenum gte 30&gt;&gt;&lt;&lt;set _mAge to &quot;middle-aged adult&quot;&gt;&gt;
+      &lt;&lt;elseif _mAgenum gte 16&gt;&gt;&lt;&lt;set _mAge to &quot;young adult&quot;&gt;&gt;
+      &lt;&lt;elseif _mAgenum gte 10&gt;&gt;&lt;&lt;set _mAge to &quot;adolescent&quot;&gt;&gt;
+      &lt;&lt;else&gt;&gt;&lt;&lt;set _mAge to &quot;child&quot;&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
       &lt;&lt;if _mAge is &quot;elderly adult&quot; and _oldestChildRank lt 5&gt;&gt;&lt;&lt;set _oldestChildRank to 5&gt;&gt;
       &lt;&lt;elseif _mAge is &quot;middle-aged adult&quot; and _oldestChildRank lt 4&gt;&gt;&lt;&lt;set _oldestChildRank to 4&gt;&gt;
       &lt;&lt;elseif _mAge is &quot;young adult&quot; and _oldestChildRank lt 3&gt;&gt;&lt;&lt;set _oldestChildRank to 3&gt;&gt;
@@ -2686,13 +2702,25 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
       &lt;&lt;elseif _mAge is &quot;child&quot; and _oldestChildRank lt 1&gt;&gt;&lt;&lt;set _oldestChildRank to 1&gt;&gt;
       &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-    &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), age: _mAge, relationship: _mRel, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+    &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), age: _mAge, agenum: _mAgenum, relationship: _mRel, health: &quot;healthy&quot;, location: $location})&gt;&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;if _wifeIdx gte 0&gt;&gt;
-  &lt;&lt;if _oldestChildRank gte 4&gt;&gt;&lt;&lt;set $NPCsMaster[_wifeIdx].age to &quot;elderly adult&quot;&gt;&gt;
-  &lt;&lt;elseif _oldestChildRank is 3&gt;&gt;&lt;&lt;set $NPCsMaster[_wifeIdx].age to either(&quot;middle-aged adult&quot;, &quot;elderly adult&quot;)&gt;&gt;
-  &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_wifeIdx].age to either(&quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;)&gt;&gt;
+  &lt;&lt;if _oldestChildRank gte 4&gt;&gt;
+    &lt;&lt;set _wifeAgenum to random(50,76)&gt;&gt;
+    &lt;&lt;set $NPCsMaster[_wifeIdx].age to &quot;elderly adult&quot;&gt;&gt;
+    &lt;&lt;set $NPCsMaster[_wifeIdx].agenum to _wifeAgenum&gt;&gt;
+  &lt;&lt;elseif _oldestChildRank is 3&gt;&gt;
+    &lt;&lt;set _wifeAgenum to random(30,76)&gt;&gt;
+    &lt;&lt;if _wifeAgenum gte 50&gt;&gt;&lt;&lt;set $NPCsMaster[_wifeIdx].age to &quot;elderly adult&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_wifeIdx].age to &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;set $NPCsMaster[_wifeIdx].agenum to _wifeAgenum&gt;&gt;
+  &lt;&lt;else&gt;&gt;
+    &lt;&lt;set _wifeAgenum to random(16,76)&gt;&gt;
+    &lt;&lt;if _wifeAgenum gte 50&gt;&gt;&lt;&lt;set $NPCsMaster[_wifeIdx].age to &quot;elderly adult&quot;&gt;&gt;
+    &lt;&lt;elseif _wifeAgenum gte 30&gt;&gt;&lt;&lt;set $NPCsMaster[_wifeIdx].age to &quot;middle-aged adult&quot;&gt;&gt;
+    &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_wifeIdx].age to &quot;young adult&quot;&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;set $NPCsMaster[_wifeIdx].agenum to _wifeAgenum&gt;&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
