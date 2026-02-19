@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.29" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.30" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1202,7 +1202,7 @@ You were born and raised in &lt;&lt;if $origin is &quot;London&quot;&gt;&gt;Lond
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;if $relationship is &quot;betrothed&quot;&gt;&gt;You are currently betrothed to be married. &lt;&lt;elseif $relationship is &quot;widowed&quot;&gt;&gt;Alas, your &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;wife&lt;&lt;else&gt;&gt;husband&lt;&lt;/if&gt;&gt; died some time ago. &lt;&lt;/if&gt;&gt;
 
-&lt;&lt;silently&gt;&gt;&lt;&lt;addServantNPC&gt;&gt;&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;addMasterHousehold&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;&lt;&lt;set $NPCsExtended to $NPCsExtended.concat($NPCs)&gt;&gt;&lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;
+&lt;&lt;silently&gt;&gt;&lt;&lt;addServantNPC&gt;&gt;&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;addMasterHousehold&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;&lt;&lt;set $NPCsExtended to $NPCsExtended.concat($NPCs)&gt;&gt;&lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $NPCs to $NPCs.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsMaster to $NPCsMaster.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsExtended to $NPCsExtended.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsServants to $NPCsServants.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;/silently&gt;&gt;
 &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;Your master is &lt;&lt;if $masterStatus is &quot;artisans&quot;&gt;&gt;an artisan&lt;&lt;elseif $masterStatus is &quot;merchants&quot;&gt;&gt;a merchant&lt;&lt;elseif $masterStatus is &quot;nobles&quot;&gt;&gt;a noble&lt;&lt;/if&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;. As an unmarried servant, you live in their household.&lt;&lt;else&gt;&gt; with a household of $NPCsMaster.length members.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $NPCs.length gt 0&gt;&gt;You live with your
   &lt;&lt;for _i, _idx range $NPCs&gt;&gt;
@@ -2797,7 +2797,8 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 
 /* list NPCs in sidebar menu */
 &lt;&lt;widget &quot;ListNPCs&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.length&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _hhSize to $NPCs.length + $NPCsServants.length + $NPCsMaster.length&gt;&gt;&lt;&lt;/if&gt;&gt; _hhSize&lt;br&gt;&lt;br&gt;
+&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;set $NPCs to $NPCs.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsMaster to $NPCsMaster.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsExtended to $NPCsExtended.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsServants to $NPCsServants.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;/silently&gt;&gt;
+Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.length&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _hhSize to $NPCs.length + $NPCsServants.length + $NPCsMaster.length&gt;&gt;&lt;&lt;/if&gt;&gt; _hhSize&lt;br&gt;&lt;br&gt;
 
 &#39;&#39;Household:&#39;&#39; &lt;&lt;if $fled is 5&gt;&gt;&#39;&#39;fled to $hhlocation&#39;&#39;&lt;&lt;/if&gt;&gt;&lt;br&gt;
         &lt;&lt;for _i, _idx range $FledFamily&gt;&gt;
@@ -2813,7 +2814,10 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
     &lt;&lt;/for&gt;&gt;
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;if $NPCsServants.length gt 0&gt;&gt;
-&lt;br&gt;&#39;&#39;Household servants:&#39;&#39; &lt;br&gt;&lt;&lt;set _svHealthy to 0&gt;&gt;&lt;&lt;set _svInfected to 0&gt;&gt;&lt;&lt;set _svDeceased to 0&gt;&gt;&lt;&lt;set _svRecovered to 0&gt;&gt;&lt;&lt;for _sv, _idx range $NPCsServants&gt;&gt;&lt;&lt;if $NPCsServants[_sv].health is &quot;healthy&quot; or ($NPCsServants[_sv].health is &quot;infected&quot; and $plagueRevealed is 0)&gt;&gt;&lt;&lt;set _svHealthy += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;infected&quot;&gt;&gt;&lt;&lt;set _svInfected += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;deceased&quot;&gt;&gt;&lt;&lt;set _svDeceased += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;recovered&quot;&gt;&gt;&lt;&lt;set _svRecovered += 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;if _svHealthy gt 0&gt;&gt;_svHealthy healthy&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svInfected gt 0&gt;&gt;_svInfected infected&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svDeceased gt 0&gt;&gt;_svDeceased deceased&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svRecovered gt 0&gt;&gt;_svRecovered recovered&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;br&gt;&#39;&#39;Household servants:&#39;&#39; &lt;br&gt;/* &lt;&lt;set _svHealthy to 0&gt;&gt;&lt;&lt;set _svInfected to 0&gt;&gt;&lt;&lt;set _svDeceased to 0&gt;&gt;&lt;&lt;set _svRecovered to 0&gt;&gt;&lt;&lt;for _sv, _idx range $NPCsServants&gt;&gt;&lt;&lt;if $NPCsServants[_sv].health is &quot;healthy&quot; or ($NPCsServants[_sv].health is &quot;infected&quot; and $plagueRevealed is 0)&gt;&gt;&lt;&lt;set _svHealthy += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;infected&quot;&gt;&gt;&lt;&lt;set _svInfected += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;deceased&quot;&gt;&gt;&lt;&lt;set _svDeceased += 1&gt;&gt;&lt;&lt;elseif $NPCsServants[_sv].health is &quot;recovered&quot;&gt;&gt;&lt;&lt;set _svRecovered += 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;if _svHealthy gt 0&gt;&gt;_svHealthy healthy&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svInfected gt 0&gt;&gt;_svInfected infected&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svDeceased gt 0&gt;&gt;_svDeceased deceased&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _svRecovered gt 0&gt;&gt;_svRecovered recovered&lt;br&gt;&lt;&lt;/if&gt;&gt; */
+        &lt;&lt;for _sv, _idx range $NPCsServants&gt;&gt;
+        $NPCsServants[_sv].name, $NPCsServants[_sv].age $NPCsServants[_sv].relationship: &lt;&lt;if $NPCsServants[_sv].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$NPCsServants[_sv].health&lt;&lt;/if&gt;&gt;.&lt;br&gt;
+        &lt;&lt;/for&gt;&gt;
     &lt;&lt;if $FledServants.length gt 0&gt;&gt;
 &#39;&#39;Fled servants:&#39;&#39; &lt;br&gt;$FledServants.length fled to $hhlocation&lt;br&gt;
     &lt;&lt;/if&gt;&gt;
