@@ -1993,12 +1993,12 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;if tags().includes(&quot;storyline&quot;)&gt;&gt;&lt;h2&gt;&lt;&lt;print passage()&gt;&gt;, $location&lt;/h2&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if tags().includes(&quot;quarantine&quot;)&gt;&gt;&lt;h2&gt;&lt;&lt;print passage()&gt;&gt;&lt;/h2&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;silently&gt;&gt;
-/*&lt;&lt;if $location is &quot;inside the City walls&quot; and hasVisited(&quot;June 1665&quot;)&gt;&gt;&lt;&lt;set $apothecary to 1&gt;&gt; /*this is OBE since currently apothecary set to always show*/
+&lt;&lt;if $location is &quot;inside the City walls&quot; and hasVisited(&quot;June 1665&quot;)&gt;&gt;&lt;&lt;set $apothecary to 1&gt;&gt; /*this is OBE since currently apothecary set to always show*/
 	&lt;&lt;elseif $location isnot &quot;in another part of the western suburbs&quot;&gt;&gt;
 		&lt;&lt;if $location isnot &quot;inside the City walls&quot; and passage() is &quot;June 1665&quot;&gt;&gt;&lt;&lt;set $apothecary to 1&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
 	&lt;&lt;elseif $location is &quot;in another part of the western suburbs&quot; and passage() is &quot;May 1665&quot;&gt;&gt;&lt;&lt;set $apothecary to 1&gt;&gt;
-	&lt;&lt;/if&gt;&gt;*/
+	&lt;&lt;/if&gt;&gt;
     &lt;&lt;if ndef _infectedFamily&gt;&gt;&lt;&lt;set _infectedFamily = []&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="Western-infection" tags="infection-rates" position="300,850" size="100,100">/* This adjusts the rate of infection for a specific location depending on how much time has passed in the game, starting at 5 plays (the first passage after the game starts proper). The play number roughly corresponds to our broad time events. */
