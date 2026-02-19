@@ -1334,7 +1334,8 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 
 /* NTS: This is also what happened to your family. */
 
-[[How typical was your experience of the Great Plague of London? Let&#39;s find out!-&gt;stats]]</tw-passagedata><tw-passagedata pid="6" name="Sickness" tags="infection-rates" position="625,500" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;check-NPCs&gt;&gt;&lt;&lt;set _remedyEffect to 0&gt;&gt;
+[[How typical was your experience of the Great Plague of London? Let&#39;s find out!-&gt;stats]]</tw-passagedata><tw-passagedata pid="6" name="Sickness" tags="infection-rates" position="625,500" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine +=1&gt;&gt;
+&lt;&lt;silently&gt;&gt;&lt;&lt;check-NPCs&gt;&gt;&lt;&lt;set _remedyEffect to 0&gt;&gt;
   &lt;&lt;set $plagueInfection to 2&gt;&gt;&lt;&lt;/silently&gt;&gt;
 &lt;&lt;if ndef $textGroup&gt;&gt;&lt;&lt;set $textGroup = 1&gt;&gt;&lt;&lt;/if&gt;&gt;
   &lt;&lt;switch $textGroup&gt;&gt;
@@ -3823,7 +3824,7 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
         &lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;
     &lt;br&gt;
-    As a good Christian, it is your duty to look after the poor, sick, and needy. But as a good Christian, you also know it is a sin to needlessly risk your life. Do you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; convince your family to&lt;&lt;/if&gt;&gt;:&lt;ul&gt;
+    As a good Christian, it is your duty to look after the poor, sick, and needy. But as a good Christian, you also know it is a sin to needlessly risk your life. Do you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; convince your household to&lt;&lt;/if&gt;&gt;:&lt;ul&gt;
 &lt;li&gt;[[Quarantine with your household-&gt;Quarantine, Week 1][$reputation to Math.clamp($reputation + 3, 0, 10)]]&lt;/li&gt;
     &lt;li&gt;[[Send the sick to the pesthouse-&gt;FamPesthouse][$reputation to Math.clamp($reputation - 5, 0, 10)]]&lt;/li&gt;
     &lt;/ul&gt;    
@@ -4230,7 +4231,7 @@ You must remain in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for at l
 &lt;&lt;/replace&gt;&gt;
 &lt;&lt;/link&gt;&gt;
 &lt;/span&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="60" name="Quarantine, Week 2" tags="quarantine" position="275,325" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="60" name="Quarantine, Week 2" tags="quarantine" position="275,325" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 2&gt;&gt;
   /* check if any family members were infected the previous week */
       &lt;&lt;silently&gt;&gt;
           &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -4327,7 +4328,7 @@ You must remain in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for at l
        &lt;&lt;fumigant&gt;&gt;
   &lt;&lt;/if&gt;&gt;
   &lt;/span&gt;
-  &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="61" name="Quarantine, Week 3" tags="quarantine" position="400,325" size="100,100">&lt;&lt;nobr&gt;&gt;
+  &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="61" name="Quarantine, Week 3" tags="quarantine" position="400,325" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 3&gt;&gt;
 /* check if any family members were infected the previous week */
     &lt;&lt;silently&gt;&gt;
         &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -4422,7 +4423,7 @@ You must also remain in quarantine for at least two more weeks, and [[only time 
   &lt;&lt;/link&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;/span&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="62" name="Quarantine, Week 4" tags="quarantine" position="150,450" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="62" name="Quarantine, Week 4" tags="quarantine" position="150,450" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 4&gt;&gt;
     /* check if any family members were infected the previous week */
     &lt;&lt;silently&gt;&gt;
         &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -5081,24 +5082,34 @@ You decide to:
         &lt;li&gt;[[Flee the city with your entire household.-&gt;Fled][$reputation to Math.clamp($reputation - 1, 0, 10); $fled to 6; $money -= 10000; $decisions.push(&quot;Fled the city with household&quot;)]]&lt;/li&gt;
     &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="83" name="Reconnecting" tags="quarantine" position="625,375" size="100,100">&lt;&lt;nobr&gt;&gt;
-/*&lt;&lt;check-NPCs&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="83" name="Reconnecting" tags="quarantine" position="650,325" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;check-NPCs&gt;&gt;
 &lt;&lt;if _infectedFamily.length gt 0&gt;&gt;Unfortunately, you&#39;re going to be here a while longer. Your
               &lt;&lt;for _z, _y range _infectedFamily&gt;&gt;
                 &lt;&lt;if _infectedFamily.length eq 1&gt;&gt;$NPCs[_y].relationship, $NPCs[_y].name has also fallen ill.&lt;br&gt;
                 &lt;&lt;elseif _z &lt; _infectedFamily.length - 1&gt;&gt;$NPCs[_y].relationship $NPCs[_y].name, &lt;&lt;else&gt;&gt;and $NPCs[_y].relationship $NPCs[_y].name have also fallen ill.
                 &lt;&lt;/if&gt;&gt;
             &lt;&lt;/for&gt;&gt;
-&lt;&lt;else&gt;&gt; */
+&lt;&lt;if $quarantine is 1&gt;&gt;
+	[[You continue to tend to the sick-&gt;Quarantine, Week 2]] 
+&lt;&lt;elseif $quarantine is 2&gt;&gt;
+	[[You continue to tend to the sick-&gt;Quarantine, Week 3]] 
+&lt;&lt;elseif $quarantine is 3&gt;&gt;
+	[[You continue to tend to the sick-&gt;Quarantine, Week 4]] 
+&lt;&lt;elseif $quarantine is 4&gt;&gt;
+	[[You continue to tend to the sick-&gt;Quarantine, Week 5]] 
+&lt;&lt;else&gt;&gt;
+	[[You continue to tend to the sick-&gt;Quarantine, Week 6]] 
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt; 
 Lord be praised, your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; has survived the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. You still need to finish  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt;, but begin reconnecting with the outside world.
 
-In the time you were away.... /* nts: add updates based on what big events have happened */
-
+/* In the time you were away....  nts: add updates based on what big events have happened */
 &lt;&lt;orphan-check&gt;&gt;
 
 &lt;&lt;storyline-return&gt;&gt;
-/*&lt;&lt;health-update&gt;&gt;*/
-/* &lt;&lt;/if&gt;&gt; */
+&lt;&lt;health-update&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 </tw-passagedata><tw-passagedata pid="84" name="Summer 1665" tags="fled" position="1025,1275" size="100,100">&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You lose money every day that you&#39;re away from the city, as no one wants to give charity to a beggar from the city&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;You lose money every day that you&#39;re away from the city and the people who normally would be willing to employ you for a day&#39;s labor&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;You dislike being so far from the city&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;You lose money every day that you&#39;re away from the city and unable to practice your trade&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;It&#39;s deeply irritating to have to pay rent on a country house as well as your home back in the city&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;It&#39;s to your great disadvantage to be so far from Court and the centers of power&lt;&lt;/if&gt;&gt;, but luckily it&#39;s a price that you&#39;re able to pay for at least a little while to ensure your safety.
 
@@ -5318,7 +5329,7 @@ You can also visit the &#39;&#39;&lt;&lt;defApothecary_Apoth &quot;Apothecary&qu
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="90" name="Failed-Flight" tags="" position="875,1175" size="100,100">You have attempted to flee the city! Unfortunately, your reputation precedes you, and no one will take you in. You are forced to return to London, shamed, and many shillings poorer.
 
-&lt;&lt;first-plague-day-continue&gt;&gt;</tw-passagedata><tw-passagedata pid="91" name="Quarantine, Week 5" tags="quarantine" position="275,450" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;first-plague-day-continue&gt;&gt;</tw-passagedata><tw-passagedata pid="91" name="Quarantine, Week 5" tags="quarantine" position="275,450" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 5&gt;&gt;
     /* check if any family members were infected the previous week */
     &lt;&lt;silently&gt;&gt;
         &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -5421,7 +5432,7 @@ You have now been in  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for o
     &lt;&lt;fumigant&gt;&gt;
     &lt;&lt;health-update&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="92" name="Quarantine, Week 6" tags="quarantine" position="400,450" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="92" name="Quarantine, Week 6" tags="quarantine" position="425,450" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 6&gt;&gt;
     /* check if any family members were infected the previous week */
     &lt;&lt;silently&gt;&gt;
         &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -5451,9 +5462,9 @@ You enter your sixth week of  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&g
         &lt;&lt;silently&gt;&gt;
         /* check if you used a remedy, determine if sick family recovers or dies */
         &lt;&lt;for _s range _infectedFamily&gt;&gt;
-            &lt;&lt;if _remedyEffect is 1 and random(1,3) is 1&gt;&gt;&lt;&lt;set $NPCs[_s].health to &quot;deceased6&quot;&gt;&gt;
-            &lt;&lt;elseif _remedyEffect is 0 and random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCs[_s].health to &quot;deceased6&quot;&gt;&gt;
-            &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCs[_s].health to &quot;recovered6&quot;&gt;&gt;
+            &lt;&lt;if _remedyEffect is 1 and random(1,3) is 1&gt;&gt;&lt;&lt;set $NPCs[_s].health to &quot;deceased&quot;&gt;&gt;
+            &lt;&lt;elseif _remedyEffect is 0 and random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCs[_s].health to &quot;deceased&quot;&gt;&gt;
+            &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCs[_s].health to &quot;recovered&quot;&gt;&gt;
             &lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;
         
@@ -5461,9 +5472,9 @@ You enter your sixth week of  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&g
         &lt;&lt;set _deceased = []&gt;&gt;
         &lt;&lt;set _recovered = []&gt;&gt;
             &lt;&lt;for _d, _household range $NPCs&gt;&gt;
-                &lt;&lt;if _household.health is &quot;deceased6&quot;&gt;&gt;&lt;&lt;set _deceased.push(_d)&gt;&gt;
+                &lt;&lt;if _household.health is &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deceased.push(_d)&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
-                &lt;&lt;if _household.health is &quot;recovered6&quot;&gt;&gt;&lt;&lt;set _recovered.push(_d)&gt;&gt;
+                &lt;&lt;if _household.health is &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recovered.push(_d)&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
             &lt;&lt;/for&gt;&gt;
 
