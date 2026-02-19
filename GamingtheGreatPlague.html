@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.25" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.26" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -4946,7 +4946,7 @@ Luckily, there are no plague cases in your &lt;&lt;defParish &quot;parish&quot;&
 &lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;conversion&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
-&lt;&lt;set _shillings to Math.floor($money/12)&gt;&gt;&lt;&lt;set _pence to ($money - (_shillings*12))&gt;&gt;
+&lt;&lt;set _convertAmt to (_args.length ? _args[0] : $money)&gt;&gt;&lt;&lt;set _shillings to Math.floor(_convertAmt/12)&gt;&gt;&lt;&lt;set _pence to (_convertAmt - (_shillings*12))&gt;&gt;
 &lt;&lt;if _shillings gte 20&gt;&gt;
 &lt;&lt;set _pounds to Math.floor(_shillings/20)&gt;&gt;&lt;&lt;set _shillings to (_shillings - Math.floor(_pounds*20))&gt;&gt;
 &lt;&lt;else&gt;&gt;&lt;&lt;set _pounds to 0&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;
@@ -5015,7 +5015,7 @@ A medicine or treatment meant to promote healing or alleviate symptoms for a dis
 		&lt;&lt;run Dialog.setup(&quot;Celestial Water&quot;); Dialog.wiki(&quot;Take every morning to prevent catching plague, as many drops as desired stirred into broth, posset, or half a glass of white wine. One month&#39;s dose.&quot;); Dialog.open()&gt;&gt;
 		&lt;&lt;/link&gt;&gt;
 	&lt;/td&gt;
-	&lt;td&gt;_celestialPrice&lt;/td&gt;
+	&lt;td&gt;&lt;&lt;conversion _celestialPrice&gt;&gt;&lt;/td&gt;
 	&lt;td&gt;$remedies.Celestial.quantity&lt;/td&gt;
 	&lt;td&gt;
 		&lt;&lt;if $money gte _celestialPrice&gt;&gt;
@@ -5025,18 +5025,18 @@ A medicine or treatment meant to promote healing or alleviate symptoms for a dis
 		&lt;&lt;/if&gt;&gt;
 	&lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;&lt;link &quot;London Treacle&quot;&gt;&gt;&lt;&lt;run Dialog.setup(&quot;London Treacle&quot;); Dialog.wiki(&quot;A restorative drink that may help prevent plague infection&quot;); Dialog.open()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/td&gt;&lt;td&gt;_treaclePrice&lt;/td&gt;&lt;td&gt;$remedies.Treacle.quantity&lt;/td&gt;
+&lt;tr&gt;&lt;td&gt;&lt;&lt;link &quot;London Treacle&quot;&gt;&gt;&lt;&lt;run Dialog.setup(&quot;London Treacle&quot;); Dialog.wiki(&quot;A restorative drink that may help prevent plague infection&quot;); Dialog.open()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;conversion _treaclePrice&gt;&gt;&lt;/td&gt;&lt;td&gt;$remedies.Treacle.quantity&lt;/td&gt;
 &lt;td id=&quot;treacle&quot;&gt;
 &lt;&lt;if $money gte _treaclePrice&gt;&gt;&lt;&lt;link &quot;Buy&quot;&gt;&gt;&lt;&lt;money `-1 * _treaclePrice`&gt;&gt;&lt;&lt;set $remedies.Treacle.quantity += 1&gt;&gt;&lt;&lt;run Engine.show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;You don&#39;t have enough to buy this.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 
 &lt;tr&gt;&lt;h3&gt;Fumigants&lt;/h3&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;&lt;link &quot;A purse of incense&quot;&gt;&gt;&lt;&lt;run Dialog.setup(&quot;Incense Purse&quot;); Dialog.wiki(&quot;A purse of incense to be worn around your neck to prevent catching plague. Must be re-incensed regularly. One month&#39;s supply.&quot;); Dialog.open()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/td&gt;&lt;td&gt;_pursePrice&lt;/td&gt;&lt;td&gt;$fumes.Purse.quantity&lt;/td&gt;&lt;td&gt;&lt;&lt;if $money gte _pursePrice&gt;&gt;&lt;&lt;link &quot;Buy&quot;&gt;&gt;&lt;&lt;money `-1 * _pursePrice`&gt;&gt;&lt;&lt;set $fumes.Purse.quantity +=1&gt;&gt;&lt;&lt;run Engine.show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;You don&#39;t have enough to buy this.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;&lt;link &quot;A purse of incense&quot;&gt;&gt;&lt;&lt;run Dialog.setup(&quot;Incense Purse&quot;); Dialog.wiki(&quot;A purse of incense to be worn around your neck to prevent catching plague. Must be re-incensed regularly. One month&#39;s supply.&quot;); Dialog.open()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;conversion _pursePrice&gt;&gt;&lt;/td&gt;&lt;td&gt;$fumes.Purse.quantity&lt;/td&gt;&lt;td&gt;&lt;&lt;if $money gte _pursePrice&gt;&gt;&lt;&lt;link &quot;Buy&quot;&gt;&gt;&lt;&lt;money `-1 * _pursePrice`&gt;&gt;&lt;&lt;set $fumes.Purse.quantity +=1&gt;&gt;&lt;&lt;run Engine.show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;You don&#39;t have enough to buy this.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 
-&lt;tr&gt;&lt;td&gt;&lt;&lt;link &quot;St. Giles Powder&quot;&gt;&gt;&lt;&lt;run Dialog.setup(&quot;St. Giles Powder&quot;); Dialog.wiki(&quot;Fumigates your home with a pleasant-smelling substance. Burn 1 tsp twice each day as a preventative; burn 1 tsp 4-5 times each day in infected homes. One month&#39;s supply.&quot;); Dialog.open()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/td&gt;&lt;td&gt;_fancyfumesPrice&lt;/td&gt;&lt;td&gt;$fumes.Fancy.quantity&lt;/td&gt;&lt;td id=&quot;fancy&quot;&gt;&lt;&lt;if $money gte _fancyfumesPrice&gt;&gt;&lt;&lt;link &quot;Buy&quot;&gt;&gt;&lt;&lt;money `-1 * _fancyfumesPrice`&gt;&gt;&lt;&lt;set $fumes.Fancy.quantity += 1&gt;&gt;&lt;&lt;run Engine.show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;You don&#39;t have enough to buy this.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;&lt;link &quot;St. Giles Powder&quot;&gt;&gt;&lt;&lt;run Dialog.setup(&quot;St. Giles Powder&quot;); Dialog.wiki(&quot;Fumigates your home with a pleasant-smelling substance. Burn 1 tsp twice each day as a preventative; burn 1 tsp 4-5 times each day in infected homes. One month&#39;s supply.&quot;); Dialog.open()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;conversion _fancyfumesPrice&gt;&gt;&lt;/td&gt;&lt;td&gt;$fumes.Fancy.quantity&lt;/td&gt;&lt;td id=&quot;fancy&quot;&gt;&lt;&lt;if $money gte _fancyfumesPrice&gt;&gt;&lt;&lt;link &quot;Buy&quot;&gt;&gt;&lt;&lt;money `-1 * _fancyfumesPrice`&gt;&gt;&lt;&lt;set $fumes.Fancy.quantity += 1&gt;&gt;&lt;&lt;run Engine.show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;You don&#39;t have enough to buy this.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 
-&lt;tr&gt;&lt;td&gt;&lt;&lt;link &quot;Cheap Fumigants&quot;&gt;&gt;&lt;&lt;run Dialog.setup(&quot;Cheap Fumigation&quot;); Dialog.wiki(&quot;Fumigates your home with brimstone, saltpeter, and a little myrrh. The myrrh does little to cover the sulfuric smell. Burn 1 tsp twice daily as a preventative; burn 1 tsp 4-5 times each day in infected homes. One month&#39;s supply.&quot;); Dialog.open()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/td&gt;&lt;td&gt;_genericfumesPrice&lt;/td&gt;&lt;td&gt;$fumes.Generic.quantity&lt;/td&gt;&lt;td&gt;&lt;&lt;if $money gte _genericfumesPrice&gt;&gt;&lt;&lt;link &quot;Buy&quot;&gt;&gt;&lt;&lt;money `-1 * _genericfumesPrice`&gt;&gt;&lt;&lt;set $fumes.Generic.quantity += 1&gt;&gt;&lt;&lt;run Engine.show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;You don&#39;t have enough to buy this.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;&lt;link &quot;Cheap Fumigants&quot;&gt;&gt;&lt;&lt;run Dialog.setup(&quot;Cheap Fumigation&quot;); Dialog.wiki(&quot;Fumigates your home with brimstone, saltpeter, and a little myrrh. The myrrh does little to cover the sulfuric smell. Burn 1 tsp twice daily as a preventative; burn 1 tsp 4-5 times each day in infected homes. One month&#39;s supply.&quot;); Dialog.open()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;conversion _genericfumesPrice&gt;&gt;&lt;/td&gt;&lt;td&gt;$fumes.Generic.quantity&lt;/td&gt;&lt;td&gt;&lt;&lt;if $money gte _genericfumesPrice&gt;&gt;&lt;&lt;link &quot;Buy&quot;&gt;&gt;&lt;&lt;money `-1 * _genericfumesPrice`&gt;&gt;&lt;&lt;set $fumes.Generic.quantity += 1&gt;&gt;&lt;&lt;run Engine.show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;You don&#39;t have enough to buy this.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;&lt;br&gt;
-Remaining money: $money&lt;br&gt;
+Remaining money: &lt;&lt;conversion&gt;&gt;&lt;br&gt;
 &lt;&lt;return&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 
