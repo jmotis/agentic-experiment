@@ -50,6 +50,7 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
 
 1. **Extract** — Run `node extract.js` to produce `passages.json` from the HTML file. This is your sole working copy of passage data.
 2. **Analyze / Edit** — Perform all reading, searching, and editing against `passages.json`. Never open or modify the HTML file for passage content.
+   - **`passages.json` is large** (generally exceeds 256 KB). Do not attempt to read the entire file at once. Use the `offset` and `limit` parameters to read specific portions, or use the Grep tool to search for specific content by keyword or passage name.
 3. **Patch** — When edits are complete, run `node patch.js` to write changes back into the HTML.
 
 ### Pre-patch safety rules (mandatory before running `node patch.js`)
