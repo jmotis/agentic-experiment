@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.28" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.29" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -4271,7 +4271,7 @@ You have heard and read about different courses of treatment for the sick. &lt;&
 /* Check for fumigants to prevent spread to household */ 
     &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
         &lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
-             &lt;&lt;if $fumes.Fancy.quantity gt 0 or $fumes.Generic.quantity gt 0 or $fumes.Incense.quantity gt 0 or $fumes.Incense.quantity gt 0&gt;&gt;
+             &lt;&lt;if $fumes.Fancy.quantity gt 0 or $fumes.Generic.quantity gt 0 or $fumes.Incense.quantity gt 0 or $fumes.Purse.quantity gt 0&gt;&gt;
                 &lt;&lt;if random(1,4) is 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
             &lt;&lt;else&gt;&gt;
@@ -4283,7 +4283,7 @@ You have heard and read about different courses of treatment for the sick. &lt;&
 /* Check for fumigants to prevent spread to servants */
 &lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
     &lt;&lt;if $NPCsServants[_si].health is &quot;healthy&quot;&gt;&gt;
-         &lt;&lt;if $fumes.Fancy.quantity gt 0 or $fumes.Generic.quantity gt 0 or $fumes.Incense.quantity gt 0 or $fumes.Incense.quantity gt 0&gt;&gt;
+         &lt;&lt;if $fumes.Fancy.quantity gt 0 or $fumes.Generic.quantity gt 0 or $fumes.Incense.quantity gt 0 or $fumes.Purse.quantity gt 0&gt;&gt;
             &lt;&lt;if random(1,4) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
         &lt;&lt;else&gt;&gt;
             &lt;&lt;if random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -4382,7 +4382,7 @@ You must remain in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for at l
          /* Check for fumigants to prevent spread to household */ 
       &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
           &lt;&lt;if $NPCs[_i].health is &quot;healthy&quot;&gt;&gt;
-               &lt;&lt;if $fumes.Fancy.quantity gt 0 or $fumes.Generic.quantity gt 0 or $fumes.Incense.quantity gt 0 or $fumes.Incense.quantity gt 0&gt;&gt;
+               &lt;&lt;if $fumes.Fancy.quantity gt 0 or $fumes.Generic.quantity gt 0 or $fumes.Incense.quantity gt 0 or $fumes.Purse.quantity gt 0&gt;&gt;
                   &lt;&lt;if random(1,4) is 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
               &lt;&lt;else&gt;&gt;
                   &lt;&lt;if random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCs[_i].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -4392,7 +4392,7 @@ You must remain in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for at l
 /* Check for fumigants to prevent spread to servants */
 &lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
     &lt;&lt;if $NPCsServants[_si].health is &quot;healthy&quot;&gt;&gt;
-         &lt;&lt;if $fumes.Fancy.quantity gt 0 or $fumes.Generic.quantity gt 0 or $fumes.Incense.quantity gt 0 or $fumes.Incense.quantity gt 0&gt;&gt;
+         &lt;&lt;if $fumes.Fancy.quantity gt 0 or $fumes.Generic.quantity gt 0 or $fumes.Incense.quantity gt 0 or $fumes.Purse.quantity gt 0&gt;&gt;
             &lt;&lt;if random(1,4) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
         &lt;&lt;else&gt;&gt;
             &lt;&lt;if random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -4474,6 +4474,7 @@ You must also remain in quarantine for at least two more weeks, and [[only time 
     &lt;&lt;link &quot;You tend to the sick and suffering.&quot;&gt;&gt;&lt;&lt;replace &quot;#plague-replace&quot;&gt;&gt;
     
 	&lt;&lt;silently&gt;&gt;
+        &lt;&lt;fumigant-check&gt;&gt;
         /* Check if player has used a helpful remedy to decrease chance of death */
             &lt;&lt;for _s range _infectedFamily&gt;&gt;
                 &lt;&lt;if _remedyEffect is 1 and random(1,3) is 1&gt;&gt;&lt;&lt;set $NPCs[_s].health to &quot;deceased3&quot;&gt;&gt;
@@ -4577,6 +4578,7 @@ After nearly a month in  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt;, y
         &lt;&lt;hh-treatments&gt;&gt;
     &lt;&lt;linkappend &quot;You continue to tend to the sick and suffering.&quot;&gt;&gt;&lt;br&gt;&lt;br&gt;
         &lt;&lt;silently&gt;&gt;
+        &lt;&lt;fumigant-check&gt;&gt;
 
         /* check if you used a remedy, determine if sick family recovers or dies */
         &lt;&lt;for _s range _infectedFamily&gt;&gt;
@@ -5496,6 +5498,7 @@ You have now been in  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for o
         &lt;&lt;hh-treatments&gt;&gt;
     &lt;&lt;linkappend &quot;You continue to tend to the sick and suffering.&quot;&gt;&gt;&lt;br&gt;&lt;br&gt;
         &lt;&lt;silently&gt;&gt;
+        &lt;&lt;fumigant-check&gt;&gt;
 
         /* check if you used a remedy, determine if sick family recovers or dies */
         &lt;&lt;for _s range _infectedFamily&gt;&gt;
@@ -5609,6 +5612,7 @@ You have been in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; so long, y
         &lt;&lt;hh-treatments&gt;&gt;
     &lt;&lt;linkappend &quot;You continue to tend to the sick and suffering.&quot;&gt;&gt;&lt;br&gt;&lt;br&gt;
         &lt;&lt;silently&gt;&gt;
+        &lt;&lt;fumigant-check&gt;&gt;
         /* check if you used a remedy, determine if sick family recovers or dies */
         &lt;&lt;for _s range _infectedFamily&gt;&gt;
             &lt;&lt;if _remedyEffect is 1 and random(1,3) is 1&gt;&gt;&lt;&lt;set $NPCs[_s].health to &quot;deceased&quot;&gt;&gt;
