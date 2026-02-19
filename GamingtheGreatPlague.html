@@ -2381,6 +2381,12 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="14" name="char-gen-widgets" tags="widget" position="1000,25" size="100,100">&lt;&lt;widget &quot;setAge&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
+    &lt;&lt;if $minAge lte 0&gt;&gt;
+        &lt;&lt;set $minAge to 0&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;if $maxAge gte 100&gt;&gt;
+        &lt;&lt;set $maxAge to 100&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
     &lt;&lt;set $NPCAgeNum to random($minAge,$maxAge)&gt;&gt;
     &lt;&lt;if $NPCAgeNum gte 50&gt;&gt;&lt;&lt;set $NPCAge to &quot;elderly adult&quot;&gt;&gt;
     &lt;&lt;elseif $NPCAgeNum gte 30&gt;&gt;&lt;&lt;set $NPCAge to &quot;middle-aged adult&quot;&gt;&gt;
@@ -2469,7 +2475,10 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
      
     /* generate father */
     &lt;&lt;set $minAge to $agenum+20&gt;&gt;
-    &lt;&lt;set $maxAge to 100&gt;&gt;   
+    &lt;&lt;set $maxAge to $agenum+60&gt;&gt; 
+                 &lt;&lt;if $maxAge gte 101&gt;&gt;
+    	&lt;&lt;set $maxAge to 100&gt;&gt;
+    		&lt;&lt;/if&gt;&gt;  
     &lt;&lt;setAge&gt;&gt;
     
     &lt;&lt;if random(1,4) lte 3&gt;&gt;
@@ -2507,7 +2516,10 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
             &lt;&lt;set $hasMother to true&gt;&gt;
         &lt;&lt;else&gt;&gt;
             &lt;&lt;set $minAge to $agenum+20&gt;&gt;
-            &lt;&lt;set $maxAge to $agenum+100&gt;&gt;   
+            &lt;&lt;set $maxAge to $agenum+60&gt;&gt;  
+                         &lt;&lt;if $maxAge gte 101&gt;&gt;
+    	&lt;&lt;set $maxAge to 100&gt;&gt;
+    		&lt;&lt;/if&gt;&gt;
             &lt;&lt;setAge&gt;&gt;
             &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;father&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
             /* 1 in 6 chance for step-father */
