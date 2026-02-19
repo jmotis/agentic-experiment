@@ -4532,7 +4532,7 @@ After nearly a month in  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt;, y
 
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; convince your family to&lt;&lt;else&gt;&gt; have decided to&lt;&lt;/if&gt;&gt; &#39;&#39;flee to your country estate&#39;&#39;.
 &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;
-Your master flees London with you and the rest of your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;. You have only a little time to prepare and say goodbye to your friends before you leave.&lt;br&gt;
+Your master flees London with you and the rest of his &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;. You have only a little time to prepare and say goodbye to your friends before you leave.&lt;br&gt;
     &lt;&lt;elseif $socio is &quot;beggars&quot; and $fled is 2&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; convince your family &lt;&lt;else&gt;&gt; decide &lt;&lt;/if&gt;&gt;to flee the city to save yourself. Unfortunately, with no money and no reputation to speak of anymore, you only have the option of illegally begging along the road to survive./*note this conditional includes servants who flee their masters*/
     &lt;&lt;else&gt;&gt;You decide to flee the city&lt;&lt;if $origin isnot &quot;London&quot; and $origin isnot &quot;somewhere else&quot;&gt;&gt; and return to $origin&lt;&lt;elseif $origin is &quot;somewhere else&quot;&gt;&gt;and return to your homeland&lt;&lt;/if&gt;&gt;.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 
@@ -4577,7 +4577,7 @@ It&#39;s also not too late to
 /* Servant choice */
 &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;
     It&#39;s also not too late to 
-    &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;try to convince your family to &lt;&lt;/if&gt;&gt;[[flee the city, even though your master has chosen to stay.-&gt;Fled][$fled to 2]]
+    &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;try to convince your family to &lt;&lt;/if&gt;&gt;[[flee the city, even though your master has chosen to stay.-&gt;Fled][$fled to 2; $socio to &quot;beggars&quot;; $reputation to 0; $role to &quot;unemployed&quot;; $NPCsMaster to []; $NPCs to []; $decisions.push(&quot;Broke contract and fled the city&quot;)]]
 &lt;&lt;/if&gt;&gt;
 
 /* Artisans choice */
@@ -5033,12 +5033,12 @@ You &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;try to convince your famil
     &lt;&lt;if _masterflee is 1&gt;&gt;
         &lt;ul&gt;
             &lt;li&gt;[[Follow your master&#39;s lead and leave the city-&gt;Fled][$fled to 1; $decisions.push(&quot;Followed master and fled the city&quot;)]]&lt;/li&gt;
-            &lt;li&gt;[[Break your contract and remain in the city-&gt;Stay][$fled to 3; $socio to &quot;beggars&quot;; $reputation to 0; $role to &quot;unemployed&quot;; $NPCsMaster to []; $decisions.push(&quot;Broke contract and stayed in the city&quot;)]]]&lt;/li&gt;
+            &lt;li&gt;[[Break your contract and remain in the city-&gt;Stay][$fled to 3; $socio to &quot;beggars&quot;; $reputation to 0; $role to &quot;unemployed&quot;; $NPCsMaster to []; $NPCs to []; $decisions.push(&quot;Broke contract and stayed in the city&quot;)]]]&lt;/li&gt;
         &lt;/ul&gt;
     &lt;&lt;else&gt;&gt;
         &lt;ul&gt;
             &lt;li&gt;[[Remain in the city with your master-&gt;Stay][$fled to 0; $decisions.push(&quot;Stayed in the city with master&quot;)]]&lt;/li&gt;
-            &lt;li&gt;[[Break your contract and flee the city-&gt;Fled][$fled to 2; $socio to &quot;beggars&quot;; $reputation to 0; $role to &quot;unemployed&quot;; $NPCsMaster to []; $decisions.push(&quot;Broke contract and fled the city&quot;)]]]&lt;/li&gt;
+            &lt;li&gt;[[Break your contract and flee the city-&gt;Fled][$fled to 2; $socio to &quot;beggars&quot;; $reputation to 0; $role to &quot;unemployed&quot;; $NPCsMaster to []; $NPCs to []; $decisions.push(&quot;Broke contract and fled the city&quot;)]]]&lt;/li&gt;
         &lt;/ul&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -5281,8 +5281,6 @@ Life may go on for the reckless, but it will not be until 1667 that you&lt;&lt;i
         &lt;&lt;else&gt;&gt;You decide to remain in the city and fend for yourself. With so many people fleeing, surely there will be extra chances to earn some coin.
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-
-/* NTS need to deal with changes to servant household, as now should empty household if master leaves and servant breaks contract to stay, but only if the were living with master (unmarried). */
 
     /* Day Labourers */
     &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;
