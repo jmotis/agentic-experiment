@@ -1980,10 +1980,13 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;set $remedies.Immodium = { name: &quot;an anti-diarrheal posset made of plantain, sorrel, or knot grass&quot;, quantity: 0, cost: 0 }&gt;&gt;
 &lt;&lt;set $decisions to []&gt;&gt;
 &lt;&lt;set $quarantine to 0&gt;&gt;
-&lt;&lt;set $plagueRevealed to 0&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="PassageHeader" tags="" position="525,25" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $plagueRevealed to 0&gt;&gt;
+&lt;&lt;set $timeline to [&quot;December 1664&quot;, &quot;January 1665&quot;, &quot;May 1665&quot;, &quot;June 1665&quot;, &quot;July 1665&quot;, &quot;August 1665&quot;, &quot;September 1665&quot;, &quot;October 1665&quot;, &quot;November 1665&quot;, &quot;December 1665&quot;, &quot;January 1666&quot;, &quot;February 1666&quot;, &quot;March 1666&quot;, &quot;April 1666&quot;, &quot;May 1666&quot;, &quot;June 1666&quot;, &quot;July 1666&quot;, &quot;August 1666&quot;, &quot;September 1666&quot;, &quot;October 1666&quot;, &quot;November 1666&quot;, &quot;December 1666&quot;
+]&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="PassageHeader" tags="" position="525,25" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;
 &lt;&lt;fumigant-check&gt;&gt;
 	&lt;&lt;if tags().includes(&quot;storyline&quot;)&gt;&gt;
+    	&lt;&lt;set $monthIndex to $timeline.indexOf(passage())&gt;&gt;
     	&lt;&lt;if _fumes gt 0 and random(1,2) eq 1&gt;&gt;&lt;&lt;infection-program&gt;&gt;
     	&lt;&lt;elseif _fumes lt 1&gt;&gt;&lt;&lt;infection-program&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
@@ -2379,7 +2382,7 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 
 
 &lt;&lt;/silently&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="14" name="char-gen-widgets" tags="widget" position="1000,25" size="100,100">&lt;&lt;widget &quot;setAge&quot;&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="14" name="char-gen-widgets" tags="widget" position="1075,25" size="100,100">&lt;&lt;widget &quot;setAge&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
     &lt;&lt;if $minAge lte 0&gt;&gt;
         &lt;&lt;set $minAge to 0&gt;&gt;
@@ -2843,7 +2846,7 @@ Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.
 &lt;&lt;set $socio to either(&quot;day labourers&quot;, &quot;servants&quot;, &quot;artisans&quot;, &quot;merchants&quot;, &quot;nobles&quot;, &quot;beggars&quot;)&gt;&gt;
 &lt;&lt;set $location to either(&quot;inside the City walls&quot;, &quot;in the western suburbs, specifically Westminster&quot;, &quot;in another part of the western suburbs&quot;, &quot;in the northern suburbs&quot;, &quot;in the eastern suburbs&quot;, &quot;across the river in the southern suburbs&quot;)&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="impressed" tags="" position="1900,275" size="100,100">&lt;&lt;nobr&gt;&gt;/* NTS: for those not booted out, need to add reputation/money hits */
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="impressed" tags="" position="1900,250" size="100,100">&lt;&lt;nobr&gt;&gt;/* NTS: for those not booted out, need to add reputation/money hits */
 &lt;&lt;if $impressed gte 2&gt;&gt;You&#39;ve been caught again! 
     &lt;&lt;if $age is &quot;child&quot;&gt;&gt;As a child, you won&#39;t be transported to the New World or &lt;&lt;defImpressed &quot;impressed&quot;&gt;&gt; into His Majesty&#39;s Navy, but you are forced into service with a local merchant.
     &lt;br&gt;&lt;br&gt; /*NTS: insert text here about what happens to children who are impressed as servants */
@@ -3685,7 +3688,7 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 
 
 &lt;&lt;/silently&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="37" name="work-refusal" tags="" position="1725,550" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;Because you refused to work, your &lt;&lt;defParish &quot;parish&#39;s&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have committed you to the &lt;span class=&quot;def&quot; data-def=&quot;Jail&quot;&gt;gaol&lt;/span&gt;!&lt;br&gt;&lt;br&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="37" name="work-refusal" tags="" position="1700,525" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;Because you refused to work, your &lt;&lt;defParish &quot;parish&#39;s&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have committed you to the &lt;span class=&quot;def&quot; data-def=&quot;Jail&quot;&gt;gaol&lt;/span&gt;!&lt;br&gt;&lt;br&gt;
 Do you:
 [[beg for forgiveness and agree to work-&gt;ForgiveMe][$decisions.push(&quot;Begged for forgiveness and agreed to work&quot;)]]&lt;br&gt;
 &lt;&lt;if $origin is &quot;London&quot;&gt;&gt;
@@ -3980,37 +3983,43 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
         &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
-&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="return to the story" tags="widget" position="900,350" size="100,100">&lt;&lt;widget &quot;storyline-return&quot;&gt;&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="storyline-return widget" tags="widget" position="950,25" size="100,100">&lt;&lt;widget &quot;storyline-return&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
-/* NTS if you were imprisoned or impressed, show a bit of text here that says what happened while you were away. Add code that moves you forward a play equivalent to your imprisonment time. */
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Continue.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Continue.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Continue.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Continue.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Continue.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Continue.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Continue.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Continue.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Continue.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Continue.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Continue.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Continue.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Continue.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Continue.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Continue.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Continue.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Continue.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Continue.-&gt;July 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Continue.-&gt;June 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Continue.-&gt;May 1665]]
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
+    /* Argument 0: Text for the link (Defaults to &quot;Continue.&quot;) */
+    &lt;&lt;set _linkText to _args[0] || &quot;Continue.&quot;&gt;&gt;
+    
+    /* Argument 1: Number of months to advance (Defaults to 1) */
+    &lt;&lt;set _timeOffset to _args[1] || 1&gt;&gt;
+    
+	/* Argument 2: Money to add/subtract (Defaults to 0) */
+    &lt;&lt;set _moneyOffset to _args[2] || 0&gt;&gt;
+    
+	/* Argument 3: Reputation to add/subtract (Defaults to 0) */
+    &lt;&lt;set _reputationOffset to _args[3] || 0&gt;&gt;
+    
+    /* Calculate the next passage index */
+    &lt;&lt;set _nextIndex to $monthIndex + _timeOffset&gt;&gt;
+    
+    /* Failsafe: Cap the index so the game doesn&#39;t break if an event pushes them past Dec 1666 */
+    &lt;&lt;if _nextIndex &gt;= $timeline.length&gt;&gt;
+        &lt;&lt;set _nextIndex to $timeline.length - 1&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    
+    /* Output the link */
+    &lt;&lt;link _linkText $timeline[_nextIndex]&gt;&gt;
+	&lt;&lt;set $money += _moneyOffset&gt;&gt;
+	&lt;&lt;set $reputation += _reputationOffset&gt;&gt;
+		&lt;&lt;if $reputation gte 10&gt;&gt;
+        	&lt;&lt;set $reputation to 10&gt;&gt;
+        &lt;&lt;/if&gt;&gt; /* using math clamp elsewhere, revisit this bit of code and check minimums as well */
+    &lt;&lt;/link&gt;&gt;
+    &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="42" name="Hide" tags="infection-rates" position="500,725" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;set $plagueInfection to 2&gt;&gt;&lt;&lt;/silently&gt;&gt;
 You attempt to hide your illness from everyone, hoping that if you just ignore it then the lump will go away.&lt;br&gt;&lt;br&gt;
 Unfortunately, that&#39;s not how plague works. The lump gets bigger and is soon joined by even more lumps. They are now undeniably plague &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt;. 
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;The King is furious at your deception and [[banishes you to your country estate-&gt;banished][$reputation =0]]. &lt;&lt;else&gt;&gt;Your neighbors realize you attempted to hide your sickness and decide you can no longer be trusted. Not only do they shut up your household, they also conspire to have you [[removed to the pesthouse-&gt;YouPesthouse][$reputation to 0]]&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt; despite your high social status &lt;&lt;/if&gt;&gt; to keep the plague from spreading further.&lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="43" name="banished" tags="" position="1850,400" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $plagueInfection to 2&gt;&gt;All but the most loyal—or desperate—servants flee from your country estate. The villagers refuse to receive your servants and even the local priest hesitates to come pray for you.
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="43" name="banished" tags="" position="1775,350" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $plagueInfection to 2&gt;&gt;All but the most loyal—or desperate—servants flee from your country estate. The villagers refuse to receive your servants and even the local priest hesitates to come pray for you.
 &lt;&lt;linkreplace &quot;You take to your sickbed as your fever spikes and you fear for your life.&quot;&gt;&gt;&lt;&lt;linkreplace &quot;It occurs to you that perhaps you ought to write your will.&quot;&gt;&gt;
 &lt;&lt;if random(1,2) is 1&gt;&gt;Luckily, you will be too delirious to notice that the remainder of your servants all abandon you in the hours before your [[death]].
 &lt;&lt;else&gt;&gt;Luckily, despite your disgrace, your final few servants stay by your side, praying for your life and administering every &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; remedy known to mankind. 
@@ -4060,7 +4069,7 @@ Now you just have to figure out how to overcome your disgrace when you return ho
 &lt;br&gt;
 Do you:
 [[try to escape and return to London-&gt;escape]]
-[[go quietly]]</tw-passagedata><tw-passagedata pid="46" name="escape" tags="" position="2075,600" size="100,100">You try to escape 
+[[go quietly]]</tw-passagedata><tw-passagedata pid="46" name="escape" tags="" position="2050,600" size="100,100">You try to escape 
 &lt;&lt;if random(1,2) == 1&gt;&gt;but are immediately caught. The local authorities decide the safest course of action now is to have you [[transported]] to the New World.
 &lt;&lt;else&gt;&gt;and manage to sneak back into London.
 &lt;&lt;if $reputation gte 3&gt;&gt; Luckily, one of your neighbors takes pity on you and lets you stay with them while you seek work and a new place to stay. &lt;&lt;set $socio=&quot;day labourers&quot;&gt;&gt; /* NTS should regenerate household here? */
@@ -4080,7 +4089,7 @@ You return to &lt;&lt;if $origin isnot &quot;somewhere else&quot;&gt;&gt;$origin
 But at least you didn&#39;t die of plague!
 &lt;br&gt;&lt;br&gt;
 [[How typical was your experience of the Great Plague of London? Let&#39;s find out!-&gt;stats]]
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="48" name="stats" tags="" position="2200,775" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="48" name="stats" tags="" position="2275,725" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;h2&gt;Your Story&lt;/h2&gt;
 
 &lt;h3&gt;Player Stats&lt;/h3&gt;
@@ -4139,7 +4148,7 @@ But at least you didn&#39;t die of plague!
 &lt;p&gt;No decisions recorded yet.&lt;/p&gt;
 &lt;&lt;/if&gt;&gt;
 
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="49" name="transported" tags="" position="1900,525" size="100,100">The local authorities decide to have you bound into &lt;span class=&quot;def&quot; data-def=&quot;A person who has signed a labor contract, such as that of an apprentice or servant, to work for a set number of years in exchange for housing, food, clothing, training in a trade, and/or some other material benefit.&quot;&gt;indentured servitude&lt;/span&gt; and shipped to the colony of Virginia. 
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="49" name="transported" tags="" position="1900,475" size="100,100">The local authorities decide to have you bound into &lt;span class=&quot;def&quot; data-def=&quot;A person who has signed a labor contract, such as that of an apprentice or servant, to work for a set number of years in exchange for housing, food, clothing, training in a trade, and/or some other material benefit.&quot;&gt;indentured servitude&lt;/span&gt; and shipped to the colony of Virginia. 
 &lt;br&gt;
 If you don&#39;t die during the perilous months&#39; long journey across the Atlantic, you&#39;ll probably die of disease or violence within the first couple of years after your arrival.
 &lt;br&gt;
@@ -4160,7 +4169,7 @@ Lord have mercy! A strange lump has appeared on your
             &lt;/ul&gt;
         &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="51" name="highway-widget" tags="widget" position="1600,100" size="100,100">&lt;&lt;widget &quot;highway&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="51" name="highway-widget" tags="widget" position="1600,25" size="100,100">&lt;&lt;widget &quot;highway&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 It&#39;s illegal to beg on the highways, but you wonder if you would have better luck there.
 /* NTS: fix text here to influence choices */
@@ -4172,13 +4181,13 @@ Do you:
 &lt;li&gt;[[hope that you can survive on the resources you have-&gt;survival-mode][$money to Math.clamp($money - 1, 0, 100)]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="52" name="begging-success" tags="" position="1600,225" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $beggarsluck to random(0,5)&gt;&gt;&lt;&lt;set $money = ($money + $beggarsluck)&gt;&gt;Your begging earned you &lt;&lt;if $beggarsluck eq 0&gt;&gt;0 coins.&lt;&lt;else&gt;&gt;&#39;&#39;$beggarsluck&#39;&#39; coin.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="52" name="begging-success" tags="" position="1550,150" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $beggarsluck to random(0,5)&gt;&gt;&lt;&lt;set $money = ($money + $beggarsluck)&gt;&gt;Your begging earned you &lt;&lt;if $beggarsluck eq 0&gt;&gt;0 coins.&lt;&lt;else&gt;&gt;&#39;&#39;$beggarsluck&#39;&#39; coin.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;if $money lte 1&gt;&gt;Unfortunately, with no extra coins... /*NTS: more text here/consequences with no money*/
 &lt;&lt;else&gt;&gt;Your coins allow you to purchase food or secure shelter, but at a cost to your reputation...&lt;br&gt;&lt;br&gt;&lt;&lt;set $reputation -= 1&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;unset $beggarsluck&gt;&gt;
 &lt;&lt;storyline-return&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="53" name="good-neighbors" tags="" position="1725,175" size="100,100">&lt;&lt;set $money = ($money + 1)&gt;&gt;Your neighbors provide &#39;&#39;1 coin&#39;&#39; for you.
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="53" name="good-neighbors" tags="" position="1700,150" size="100,100">&lt;&lt;set $money = ($money + 1)&gt;&gt;Your neighbors provide &#39;&#39;1 coin&#39;&#39; for you.
 &lt;&lt;storyline-return&gt;&gt;</tw-passagedata><tw-passagedata pid="54" name="beggar-roles" tags="widget" position="1450,25" size="100,100">&lt;&lt;widget &quot;beggar-roles&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
     &lt;&lt;if $disability is 0&gt;&gt; and the &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have decided it will be your job to
         &lt;&lt;if $gender is &quot;male&quot; or $gender is &quot;nonbinary&quot;&gt;&gt;&lt;&lt;set $role to &quot;corpsebearer&quot;&gt;&gt;remove the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; corpses if anyone dies
@@ -4217,7 +4226,7 @@ Total wealth: $money (£$pounds, $shillings s., $pence d.)
 &lt;&lt;/link&gt;&gt;
 </tw-passagedata><tw-passagedata pid="57" name="ForgiveMe" tags="" position="1725,775" size="100,100">Forgiveness is a Christian virtue and you are lucky that your neighbors practice it.  You publicly apologize and are officially forgiven, though it will take a while longer before your reputation is restored.
 
-&lt;&lt;storyline-return&gt;&gt;</tw-passagedata><tw-passagedata pid="58" name="survival-mode" tags="" position="1725,50" size="100,100">&lt;&lt;if $origin is &quot;London&quot;&gt;&gt;
+&lt;&lt;storyline-return&gt;&gt;</tw-passagedata><tw-passagedata pid="58" name="survival-mode" tags="" position="1750,0" size="100,100">&lt;&lt;if $origin is &quot;London&quot;&gt;&gt;
 You &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;and your family &lt;&lt;/if&gt;&gt;are out of money and have been thrown in debtor&#39;s prison.
 &lt;&lt;set $plagueInfection to random (0,1)&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;
@@ -5206,7 +5215,7 @@ You decide to:
 &lt;&lt;/if&gt;&gt;
 
 /* Merchants */
-&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;and your neighbors have begun to flee the city. Many are renting houses in the countryside and small towns surrounding London, either for themselves or for their &lt;&lt;defHouseholds &quot;households&quot;&gt;&gt;.&lt;br&gt;&lt;br&gt;
+&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;and your neighbors have begun to flee the city. Many are renting houses in the countryside and small towns surrounding London, either for themselves or for their &lt;&lt;defHousehold &quot;households&quot;&gt;&gt;.&lt;br&gt;&lt;br&gt;
 You decide to:
     &lt;ul&gt;
         &lt;li&gt;[[Remain in the city with your entire household-&gt;Stay][$fled to 4; $decisions.push(&quot;Remained in the city with household&quot;)]]&lt;/li&gt;
@@ -5250,9 +5259,9 @@ Lord be praised, your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; has sur
 &lt;&lt;health-update&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-</tw-passagedata><tw-passagedata pid="84" name="Summer 1665" tags="fled" position="1025,1275" size="100,100">&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You lose money every day that you&#39;re away from the city, as no one wants to give charity to a beggar from the city&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;You lose money every day that you&#39;re away from the city and the people who normally would be willing to employ you for a day&#39;s labor&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;You dislike being so far from the city&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;You lose money every day that you&#39;re away from the city and unable to practice your trade&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;It&#39;s deeply irritating to have to pay rent on a country house as well as your home back in the city&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;It&#39;s to your great disadvantage to be so far from Court and the centers of power&lt;&lt;/if&gt;&gt;, but luckily it&#39;s a price that you&#39;re able to pay for at least a little while to ensure your safety.
+</tw-passagedata><tw-passagedata pid="84" name="Summer 1665" tags="fled" position="975,1275" size="100,100">&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You lose money every day that you&#39;re away from the city, as no one wants to give charity to a beggar from the city&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;You lose money every day that you&#39;re away from the city and the people who normally would be willing to employ you for a day&#39;s labor&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;You dislike being so far from the city&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;You lose money every day that you&#39;re away from the city and unable to practice your trade&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;It&#39;s deeply irritating to have to pay rent on a country house as well as your home back in the city&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;It&#39;s to your great disadvantage to be so far from Court and the centers of power&lt;&lt;/if&gt;&gt;, but luckily it&#39;s a price that you&#39;re able to pay for at least a little while to ensure your safety.
 
-When the death tolls top 7,000 a week in August and September, you&#39;re sure you made the right call. By the beginning of October, death tolls have fallen to half that and you decide to [[return to the city-&gt;October 1665]].</tw-passagedata><tw-passagedata pid="85" name="Winter 1665" tags="fled" position="1075,1450" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city, as no one wants to give charity to a beggar from the city&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and the people who normally would be willing to employ you for a day&#39;s labor&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;You dislike being so far from the city&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and unable to practice your trade&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;It&#39;s deeply irritating to have to pay rent on a country house as well as your home back in the city&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;It&#39;s to your great disadvantage to be so far from Court and the centers of power&lt;&lt;/if&gt;&gt;, but luckily it&#39;s a price that you&#39;re able to pay for at least a little while to ensure your safety.
+When the death tolls top 7,000 a week in August and September, you&#39;re sure you made the right call. By the beginning of October, death tolls have fallen to half that and you decide to [[return to the city-&gt;October 1665]].</tw-passagedata><tw-passagedata pid="85" name="Winter 1665" tags="fled" position="1075,1475" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city, as no one wants to give charity to a beggar from the city&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and the people who normally would be willing to employ you for a day&#39;s labor&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;You dislike being so far from the city&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and unable to practice your trade&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;It&#39;s deeply irritating to have to pay rent on a country house as well as your home back in the city&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;It&#39;s to your great disadvantage to be so far from Court and the centers of power&lt;&lt;/if&gt;&gt;, but luckily it&#39;s a price that you&#39;re able to pay for at least a little while to ensure your safety.
 
 When the death tolls top 7,000 a week in August and September, you&#39;re sure you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; made the right call. 
 
@@ -5348,7 +5357,7 @@ Finally, you receive word that /* NTS: put in results here based on where you li
 
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-While you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; consider making a profit from renting out your residence to those who have been made homeless, you feel like your house being spared is God&#39;s way of encouraging you to return to the city. Luckily, the official Thanksgiving Day for the end of the plague is proclaimed, and so you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; make your way [[back to the city-&gt;November 1666]].&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="88" name="no-plague" tags="fled" position="1575,1300" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You lose money every day that you&#39;re away from the city, as no one wants to give &lt;&lt;defCharity &quot;charity&quot;&gt;&gt; to a beggar from the city&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and the people who normally would be willing to employ you for a day&#39;s labor&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;You dislike being so far from the city&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and unable to practice your trade&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;It&#39;s deeply irritating to have to pay rent on a country house as well as your home back in the city&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;It&#39;s to your great disadvantage to be so far from Court and the centers of power&lt;&lt;/if&gt;&gt;, but luckily it&#39;s a price that you&#39;re able to pay for at least a little while to ensure your safety.
+While you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; consider making a profit from renting out your residence to those who have been made homeless, you feel like your house being spared is God&#39;s way of encouraging you to return to the city. Luckily, the official Thanksgiving Day for the end of the plague is proclaimed, and so you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; make your way [[back to the city-&gt;November 1666]].&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="88" name="no-plague" tags="fled" position="1600,1325" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You lose money every day that you&#39;re away from the city, as no one wants to give &lt;&lt;defCharity &quot;charity&quot;&gt;&gt; to a beggar from the city&lt;&lt;set $money to Math.clamp($money - 120, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and the people who normally would be willing to employ you for a day&#39;s labor&lt;&lt;set $money to Math.clamp($money - 300, 0, 1000000)&gt;&gt;&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;You dislike being so far from the city&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, 0, 1000000)&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and unable to practice your trade&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, 0, 1000000)&gt;&gt;It&#39;s deeply irritating to have to pay rent on a country house as well as your home back in the city&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;It&#39;s to your great disadvantage to be so far from Court and the centers of power&lt;&lt;/if&gt;&gt;, but luckily it&#39;s a price that you&#39;re able to pay for at least a little while to ensure your safety.
 
 When the death tolls top 7,000 a week in August and September, you&#39;re sure you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; made the right call.&lt;br&gt;&lt;br&gt;
 
@@ -5709,101 +5718,29 @@ You have been in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; so long, y
 &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), age: &quot;infant&quot;, relationship: weightedEither($fRelationships), health: &quot;healthy&quot;})&gt;&gt;
 &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), age: &quot;infant&quot;, relationship: weightedEither($fRelationships), health: &quot;healthy&quot;})&gt;&gt;
 &lt;&lt;/silently&gt;&gt;[[You have fallen ill.-&gt;Sickness]]
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="94" name="steward" tags="widget" position="2475,0" size="100,100">&lt;&lt;widget &quot;steward&quot;&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="94" name="steward" tags="widget" position="2375,25" size="100,100">&lt;&lt;widget &quot;steward&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 Zounds! The steward of &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;you and &lt;&lt;/if&gt;&gt;your&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; family&#39;s&lt;&lt;/if&gt;&gt; country estate has died and you must return home to manage affairs yourself.
 &lt;br&gt;&lt;br&gt;
 &lt;span id=&quot;fondness&quot;&gt;Were you fond of your steward? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#fondness&quot;&gt;&gt;You were fond of your steward so you &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;and your family&lt;&lt;/if&gt;&gt; are sad he is now dead, and even sadder that he can no longer manage your estate. It will be hard to replace him. You decide to hold a good funeral to honor his contributions to your family.&lt;&lt;set $money -=2&gt;&gt;&lt;&lt;set $reputation +=2&gt;&gt; 
 &lt;br&gt;&lt;br&gt;
 How long do you stay?&lt;ul&gt;
-&lt;li&gt;[[One month-&gt;steward-1][$money +=1; $reputation -=1]]&lt;/li&gt;
-&lt;li&gt;[[Two months-&gt;steward-2][$money +=2; $reputation -=2]]&lt;/li&gt;
-&lt;li&gt;[[Three months-&gt;steward-3][$money +=3; $reputation -=3]]&lt;/li&gt;
+	&lt;li&gt;&lt;&lt;storyline-return &quot;One month&quot; 1 1 -1&gt;&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;&lt;storyline-return &quot;Two months&quot; 2 2 -2&gt;&gt;&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;&lt;storyline-return &quot;Three months&quot; 3 3 -3&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#fondness&quot;&gt;&gt;You weren&#39;t fond of your steward and are looking forward to the opportunity to replace him, but it will still require a great deal of work to find someone capable soon.
 &lt;br&gt;&lt;br&gt;
 How long do you stay?&lt;ul&gt;
-&lt;li&gt;[[One month-&gt;steward-1][$money +=1; $reputation -=1]]&lt;/li&gt;
-&lt;li&gt;[[Two months-&gt;steward-2][$money +=2; $reputation -=2]]&lt;/li&gt;
-&lt;li&gt;[[Three months-&gt;steward-3][$money +=3; $reputation -=3]]&lt;/li&gt;
-&lt;/ul&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+/*	&lt;li&gt;&lt;&lt;link &quot;One month&quot; $timeline[Math.clamp($monthIndex + 1, 0, $timeline.length - 1)]&gt;&gt;&lt;&lt;set $money +=1; $reputation -=1&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;&lt;link &quot;Two months&quot; $timeline[Math.clamp($monthIndex + 2, 0, $timeline.length - 1)]&gt;&gt;&lt;&lt;set $money +=2; $reputation -=2&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;&lt;link &quot;Three months&quot; $timeline[Math.clamp($monthIndex + 3, 0, $timeline.length - 1)]&gt;&gt;&lt;&lt;set $money +=3; $reputation -=3&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;*/
+	&lt;li&gt;&lt;&lt;storyline-return &quot;One month&quot; 1 1 -1&gt;&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;&lt;storyline-return &quot;Two months&quot; 2 2 -2&gt;&gt;&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;&lt;storyline-return &quot;Three months&quot; 3 3 -3&gt;&gt;&lt;/li&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="95" name="steward-2" tags="" position="2300,50" size="100,100">
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Return from the country.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Return from the country.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Return from the country.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Return from the country.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Return from the country.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Return from the country.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Return from the country.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Return from the country.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Return from the country.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Return from the country.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Return from the country.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Return from the country.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Return from the country.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Return from the country.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Return from the country.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Return from the country.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Return from the country.-&gt;July 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Return from the country.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Return from the country.-&gt;January 1665]]
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
-</tw-passagedata><tw-passagedata pid="96" name="steward-3" tags="" position="2525,200" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Return from the country.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Return from the country.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Return from the country.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Return from the country.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Return from the country.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Return from the country.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Return from the country.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Return from the country.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Return from the country.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Return from the country.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Return from the country.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Return from the country.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Return from the country.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Return from the country.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Return from the country.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Return from the country.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Return from the country.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Return from the country.-&gt;January 1665]]
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
-</tw-passagedata><tw-passagedata pid="97" name="steward-1" tags="" position="2100,0" size="100,100">
-&lt;&lt;nobr&gt;&gt;
-/* NTS if you were imprisoned or impressed, show a bit of text here that says what happened while you were away. Add code that moves you forward a play equivalent to your imprisonment time. */
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Return from the country.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Return from the country.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Return from the country.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Return from the country.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Return from the country.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Return from the country.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Return from the country.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Return from the country.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Return from the country.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Return from the country.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Return from the country.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Return from the country.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Return from the country.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Return from the country.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Return from the country.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Return from the country.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Return from the country.-&gt;July 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Return from the country.-&gt;June 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Return from the country.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Return from the country.-&gt;January 1665]]
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
-</tw-passagedata><tw-passagedata pid="98" name="accident" tags="widget" position="2025,150" size="100,100">&lt;&lt;widget &quot;accident&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="95" name="steward-2" tags="" position="2825,1125" size="100,100">leaving this passage extant since it has a pid</tw-passagedata><tw-passagedata pid="96" name="steward-3" tags="" position="2950,1025" size="100,100">leaving this passage extant since it has a pid</tw-passagedata><tw-passagedata pid="97" name="steward-1" tags="" position="2950,1150" size="100,100">leaving this passage extant since it has a pid</tw-passagedata><tw-passagedata pid="98" name="accident" tags="widget" position="2525,225" size="100,100">&lt;&lt;widget &quot;accident&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $accident to random(0,5)&gt;&gt;&lt;&lt;if $accident is 1&gt;&gt;Send not to know for whom the church bells toll. They toll for you. 
 &lt;br&gt;&lt;br&gt;Unfortunately you have suffered from a fatal accident &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;while out on a job&lt;&lt;/if&gt;&gt;. &lt;&lt;set $death to random(1,5)&gt;&gt;&lt;&lt;if $death is 1&gt;&gt;You drowned in &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;a brewer&#39;s mash&lt;&lt;else&gt;&gt;a well&lt;&lt;/if&gt;&gt;. &lt;&lt;elseif $death is 2&gt;&gt;You were bitten by a dog. &lt;&lt;elseif $death is 3&gt;&gt;You fell from &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;scaffolding&lt;&lt;else&gt;&gt;a window&lt;&lt;/if&gt;&gt;. &lt;&lt;elseif $death is 4&gt;&gt;You were run over by a cart. &lt;&lt;else&gt;&gt;You fell down a flight of stairs.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;if $reputation lte 0&gt;&gt;You died with such a poor reputation that most of your neighbors didn&#39;t care. The rest of them probably cursed your name and hoped you were suffering in hell. Luckily, 
@@ -5814,35 +5751,10 @@ How long do you stay?&lt;ul&gt;
 &lt;br&gt;&lt;br&gt;
 [[At least you didn&#39;t die of the plague-&gt;stats]].
 &lt;&lt;else&gt;&gt;
-You have suffered an accident while&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;out on a job&lt;&lt;else&gt;&gt;running errands&lt;&lt;/if&gt;&gt;, but thanks to God you are still alive. &lt;&lt;set $accident to random (1,5)&gt;&gt;&lt;&lt;if $accident is 1&gt;&gt;You fell from a window. &lt;&lt;elseif $accident is 2&gt;&gt;You were kicked by a horse. &lt;&lt;elseif $accident is 3&gt;&gt;You broke your arm. &lt;&lt;elseif $accident is 4&gt;&gt;You were hit by a wagon wheel. &lt;&lt;else&gt;&gt;You fell in the Thames and a cut on your arm was infected. &lt;&lt;/if&gt;&gt; Fortunately, this is something you can recover from with rest and care. &lt;&lt;if $reputation lte 0&gt;&gt;Unfortunately your reputation is too low for anyone to offer you assistance so you must recover on your own and &lt;&lt;else&gt;&gt;Your &lt;&lt;if $NPCs.length gt 0&gt;&gt;family&lt;&lt;else&gt;&gt;neighbors&lt;&lt;/if&gt;&gt; take good care of you, but &lt;&lt;/if&gt;&gt;you lose money every day you aren&#39;t working.&lt;&lt;set $money -=3&gt;&gt;&lt;br&gt;&lt;br&gt;Soon you are ready to rejoin &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;the other day labourers in their [[search for work-&gt;healing]].&lt;&lt;else&gt;&gt;[[your master&#39;s household-&gt;healing]].&lt;&lt;/if&gt;&gt;
+You have suffered an accident while&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;out on a job&lt;&lt;else&gt;&gt;running errands&lt;&lt;/if&gt;&gt;, but thanks to God you are still alive. &lt;&lt;set $accident to random (1,5)&gt;&gt;&lt;&lt;if $accident is 1&gt;&gt;You fell from a window. &lt;&lt;elseif $accident is 2&gt;&gt;You were kicked by a horse. &lt;&lt;elseif $accident is 3&gt;&gt;You broke your arm. &lt;&lt;elseif $accident is 4&gt;&gt;You were hit by a wagon wheel. &lt;&lt;else&gt;&gt;You fell in the Thames and a cut on your arm was infected. &lt;&lt;/if&gt;&gt; Fortunately, this is something you can recover from with rest and care. &lt;&lt;if $reputation lte 0&gt;&gt;Unfortunately your reputation is too low for anyone to offer you assistance so you must recover on your own and &lt;&lt;else&gt;&gt;Your &lt;&lt;if $NPCs.length gt 0&gt;&gt;family&lt;&lt;else&gt;&gt;neighbors&lt;&lt;/if&gt;&gt; take good care of you, but &lt;&lt;/if&gt;&gt;you lose money every day you aren&#39;t working.&lt;&lt;set $money -=3&gt;&gt;&lt;br&gt;&lt;br&gt;Soon you are ready to rejoin &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;the other day labourers in their search for work. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;else&gt;&gt;your master&#39;s household. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="99" name="healing" tags="" position="2150,150" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if hasVisited(&quot;December 1666&quot;)&gt;&gt;[[Get back out there.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Get back out there.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Get back out there.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Get back out there.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Get back out there.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Get back out there.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Get back out there.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Get back out there.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Get back out there.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Get back out there.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Get back out there.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Get back out there.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Get back out there.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Get back out there.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Get back out there.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Get back out there.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Get back out there.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Get back out there.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Get back out there.-&gt;July 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Get back out there.-&gt;June 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Get back out there.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Get back out there.-&gt;January 1665]]
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
-</tw-passagedata><tw-passagedata pid="100" name="elderly" tags="widget" position="2025,275" size="100,100">&lt;&lt;widget &quot;elderly&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="99" name="healing" tags="" position="2200,75" size="100,100">retaining since has pid</tw-passagedata><tw-passagedata pid="100" name="elderly" tags="widget" position="2350,300" size="100,100">&lt;&lt;widget &quot;elderly&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 Send not to know for whom the church bells toll. They toll for you. Unfortunately your old age has caught up with you. You have managed not to die of a wide range of diseases and other ailments, but at long last you have died of natural causes. 
 &lt;br&gt;&lt;br&gt;
@@ -5870,7 +5782,7 @@ You died with a good enough reputation that your neighbors say prayers for your 
 [[At least you didn&#39;t die of plague-&gt;stats]]
 &lt;&lt;/nobr&gt;&gt;
 
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="101" name="runover" tags="widget" position="2025,400" size="100,100">&lt;&lt;widget &quot;runover&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="101" name="runover" tags="widget" position="2150,275" size="100,100">&lt;&lt;widget &quot;runover&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $runover to random (0,5)&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;
@@ -5913,13 +5825,13 @@ You died with a good enough reputation that your neighbors say prayers for your 
         Unfortunately, there are dangers even outside the city walls. As you walk out to get a closer look at the conflagration, you are run over by a cart fleeing the flames and suffer a serious injury.
         &lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
- You thank God that you have survived his wrath! &lt;&lt;if $reputation lte 1&gt;&gt;&lt;&lt;set $money -=1&gt;&gt; Unfortunately, your reputation is so low that your neighbors take no more pity on you and you earn very few spare coins [[while you recover.-&gt;healing]]&lt;&lt;else&gt;&gt;&lt;&lt;set $money +=2&gt;&gt;Fortunately, your reputation is so high among your neighbors that the sight of you after your injury invokes great pity (and a few extra coins). Nevertheless, you are glad that [[you will soon heal-&gt;healing]].&lt;&lt;/if&gt;&gt;
+ You thank God that you have survived his wrath! &lt;&lt;if $reputation lte 1&gt;&gt;&lt;&lt;set $money -=1&gt;&gt; Unfortunately, your reputation is so low that your neighbors take no more pity on you and you earn very few spare coins while you recover. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $money +=2&gt;&gt;Fortunately, your reputation is so high among your neighbors that the sight of you after your injury invokes great pity (and a few extra coins). Nevertheless, you are glad that you will soon heal. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;else&gt;&gt;
-    Alack! Begging in the streets in a city as bustling as London comes with its dangers. You have been run over by a cart and suffered a serious injury. &lt;&lt;if $reputation lte 1&gt;&gt;Unfortunately, your reputation is so low that your neighbors take no more pity on you and you earn very few spare coins while you recover. &lt;&lt;set $money -=1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $money +=2&gt;&gt;Fortunately, your reputation is so high among your neighbors that the sight of you after your injury invokes great pity (and a few extra coins). Nevertheless, you are glad that you will soon heal.&lt;&lt;/if&gt;&gt; You hear that in some areas of the city they are installing a new innovation–the sidewalk–which will help to keep people off the street and prevent more [[accidents like yours-&gt;healing]].   
+    Alack! Begging in the streets in a city as bustling as London comes with its dangers. You have been run over by a cart and suffered a serious injury. &lt;&lt;if $reputation lte 1&gt;&gt;Unfortunately, your reputation is so low that your neighbors take no more pity on you and you earn very few spare coins while you recover. &lt;&lt;set $money -=1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $money +=2&gt;&gt;Fortunately, your reputation is so high among your neighbors that the sight of you after your injury invokes great pity (and a few extra coins). Nevertheless, you are glad that you will soon heal.&lt;&lt;/if&gt;&gt; You hear that in some areas of the city they are installing a new innovation–the sidewalk–which will help to keep people off the street and prevent more accidents like yours. &lt;&lt;storyline-return&gt;&gt;   
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="102" name="fever" tags="widget" position="2175,275" size="100,100">&lt;&lt;widget &quot;fever&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="102" name="fever" tags="widget" position="2675,375" size="100,100">&lt;&lt;widget &quot;fever&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if random(0,10) is 1&gt;&gt;Send not to know for whom the church bells toll. They toll for you. You have come down with a mysterious fever. &lt;&lt;if $reputation gt 0&gt;&gt;Despite the care of your friends and family,&lt;&lt;else&gt;&gt;Your reputation is so low that no one will lend you aid in your sickness and&lt;&lt;/if&gt;&gt; you die.
 &lt;&lt;if hasVisited(&quot;May 1666&quot;)&gt;&gt;
@@ -5944,17 +5856,17 @@ You died with a good enough reputation that your neighbors say prayers for your 
 &lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;As a God-fearing Catholic, you know you are destined to spend time in purgatory before you can ascend to heaven but you hope that will not take too long&lt;&lt;if $reputation lte 0&gt;&gt;, despite your poor reputation on earth.&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;As a good Protestant, you know that Christ the Redeemer has died for you and your admittance to heaven is guaranteed.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
 [[At least you didn&#39;t die of plague-&gt;stats]]
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $money -=2&gt;&gt;Alack! You have come down with a mysterious fever.&lt;&lt;if $reputation gt 0&gt;&gt; Your reputation is high enough that your friends and family take diligent care of you in your sickness and&lt;&lt;else&gt;&gt; Your reputation is so low that no one lends you aid in your sickness but&lt;&lt;/if&gt;&gt; you slowly [[recover.-&gt;healing]]
+&lt;&lt;set $money -=2&gt;&gt;Alack! You have come down with a mysterious fever.&lt;&lt;if $reputation gt 0&gt;&gt; Your reputation is high enough that your friends and family take diligent care of you in your sickness and&lt;&lt;else&gt;&gt; Your reputation is so low that no one lends you aid in your sickness but&lt;&lt;/if&gt;&gt; you slowly recover. &lt;&lt;storyline-return&gt;&gt;
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="103" name="navy-volunteer" tags="" position="2175,400" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="103" name="navy-volunteer" tags="" position="2400,1300" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $death to random(1,10)&gt;&gt;
 &lt;&lt;set $discovery to random(1,10)&gt;&gt;
 &lt;&lt;if $discovery is 1&gt;&gt;
-	&lt;&lt;if $age is &quot;child&quot;&gt;&gt;When you show up to board your ship, the captain instantly realizes you are too young to volunteer. You are scolded and [[sent home to your parents-&gt;storyline-return again][$reputation to Math.clamp($reputation - 1, 0, 10)]]
-    &lt;&lt;elseif $age is &quot;elderly adult&quot;&gt;&gt;When you show up to board your ship, the captain instantly realizes you are too old to volunteer. He thanks you for volunteering but firmly refuses to let you board and [[sails away without you-&gt;storyline-return again][$reputation to Math.clamp($reputation + 1, 0, 10)]]
-    &lt;&lt;elseif $gender is &quot;female&quot;&gt;&gt;When you show up to board your ship, the captain instantly realizes you are female and has you cast back onto the dock while everyone [[stops to watch and gossip about you-&gt;storyline-return again][$reputation to Math.clamp($reputation - 3, 0, 10)]].  
+	&lt;&lt;if $age is &quot;child&quot;&gt;&gt;When you show up to board your ship, the captain instantly realizes you are too young to volunteer. You are scolded and &lt;&lt;storyline-return &quot;sent home to your parents.&quot; 1 0 -1&gt;&gt;
+    &lt;&lt;elseif $age is &quot;elderly adult&quot;&gt;&gt;When you show up to board your ship, the captain instantly realizes you are too old to volunteer. He thanks you for volunteering but firmly refuses to let you board and &lt;&lt;storyline-return &quot;sails away without you.&quot; 1 0 1&gt;&gt;
+    &lt;&lt;elseif $gender is &quot;female&quot;&gt;&gt;When you show up to board your ship, the captain instantly realizes you are female and has you cast back onto the dock while everyone &lt;&lt;storyline-return &quot;stops to watch and gossip about you.&quot; 1 0 -3&gt;&gt;  
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;else&gt;&gt;
 &lt;&lt;if $death is 1&gt;&gt;
@@ -5975,289 +5887,15 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-</tw-passagedata><tw-passagedata pid="104" name="apprentice" tags="widget" position="2300,1200" size="100,100">&lt;&lt;widget &quot;apprentice&quot;&gt;&gt;
+</tw-passagedata><tw-passagedata pid="104" name="apprentice" tags="widget" position="1950,1400" size="100,100">&lt;&lt;widget &quot;apprentice&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 Despite everything, business continues. A friend from the countryside writes to you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot; or &quot;young adult&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; and asks if you will take in their son as your apprentice.
 &lt;br&gt;&lt;br&gt;
-&lt;span id=&quot;apprentice&quot;&gt;Will you accept him into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice&quot;&gt;&gt;You accept him into your home. It&#39;s another mouth to feed, but you could use the help and are glad to [[do a friend a favor-&gt;storyline-return again]].&lt;&lt;addApprenticeNPC&gt;&gt;&lt;&lt;set $apprentice to 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice&quot;&gt;&gt;You don&#39;t accept him into your home. Things are too hard right now. You can&#39;t afford another mouth to feed and you don&#39;t have the time to teach someone else [[your trade-&gt;storyline-return again]].&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;span id=&quot;apprentice&quot;&gt;Will you accept him into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice&quot;&gt;&gt;You accept him into your home. It&#39;s another mouth to feed, but you could use the help and are glad to do a friend a favor. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;addApprenticeNPC&gt;&gt;&lt;&lt;set $apprentice to 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice&quot;&gt;&gt;You don&#39;t accept him into your home. Things are too hard right now. You can&#39;t afford another mouth to feed and you don&#39;t have the time to teach someone else your trade. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
-</tw-passagedata><tw-passagedata pid="105" name="storyline-return again" tags="" position="2150,1525" size="100,100">&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Continue.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Continue.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Continue.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Continue.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Continue.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Continue.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Continue.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Continue.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Continue.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Continue.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Continue.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Continue.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Continue.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Continue.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Continue.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Continue.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Continue.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Continue.-&gt;July 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Continue.-&gt;June 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Continue.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Continue.-&gt;January 1665]]
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="106" name="worker-kid" tags="widget" position="2500,1200" size="100,100">&lt;&lt;widget &quot;worker-kid&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-Despite everything, you &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;keep finding opportunities for work&lt;&lt;else&gt;&gt;know you are lucky to be steadily employed as a servant&lt;&lt;/if&gt;&gt;. A friend from the countryside writes to you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; and asks if you will take in their child so they can also seek work in London. 
-&lt;br&gt;&lt;br&gt;
-&lt;span id=&quot;worker&quot;&gt;Will you accept them into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#worker&quot;&gt;&gt;You accept them into your home. It&#39;s another mouth to feed, but you are glad to [[do a friend a favor-&gt;storyline-return again]].&lt;&lt;addWorkerKidNPC&gt;&gt;&lt;&lt;set $worker to 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#worker&quot;&gt;&gt;You don&#39;t accept them into your home. Things are too hard right now. You can&#39;t afford another mouth to feed and you don&#39;t have the time to teach someone else [[the lay of the city-&gt;storyline-return again]].&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="107" name="ward" tags="widget" position="2500,1400" size="100,100">&lt;&lt;widget &quot;ward&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-Despite everything, court life proceeds as usual. A friend living the countryside writes to you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot; or &quot;young adult&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; and asks if you will take in their child as your ward and help them get a place at court - and maybe even an advantageous marriage.
-&lt;br&gt;&lt;br&gt;
-&lt;span id=&quot;ward&quot;&gt;Will you accept them into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You accept them into your home. It will cost a small fortune to outfit a newcomer to court and provide the king the necessary gifts but you will control their purse strings and are glad to [[do a friend a favor-&gt;storyline-return again]].&lt;&lt;addWardNPC&gt;&gt;&lt;&lt;set $ward to 0&gt;&gt;&lt;&lt;set $money -=5600&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You don&#39;t accept them into your home. Your own affairs are not quite in order and you need to focus on setting them right before adding another person to the household. You don&#39;t have the time to teach someone else [[the ways of court-&gt;storyline-return again]].&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;
-</tw-passagedata><tw-passagedata pid="108" name="marriage-market" tags="widget" position="2325,200" size="100,100">&lt;&lt;widget &quot;marriage-market&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-As an unmarried adult, you may wish to get married. Marriage brings with it lots of advantages, including a life partner, social connections through their family, (probably) children, and &lt;&lt;if $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot;&gt;&gt;wealth from your &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&#39;s income&lt;&lt;else&gt;&gt;wife&#39;s dowry&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;additional income that will help protect you from &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;starvation&lt;&lt;else&gt;&gt;poverty&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;.&lt;&lt;if $gender is &quot;female&quot;&gt;&gt; The downside is all your property will become your husband&#39;s and you will be legally dependent on him until he dies... or you do.&lt;&lt;/if&gt;&gt;
-&lt;br&gt;&lt;br&gt;
-&lt;span id=&quot;marriage&quot;&gt;You are
-&lt;ul&gt;
-&lt;li&gt;&lt;&lt;link &quot;looking to be married soon&quot;&gt;&gt;&lt;&lt;set $seeking to 1&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;You are looking to be married soon and will be seeking out a spouse.
-
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;are content to remain single for now&quot;&gt;&gt;&lt;&lt;set $seeking to 0&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;You are content to remain single for now.
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;
-&lt;/span&gt;
-
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="109" name="wedding" tags="widget" position="2375,1325" size="100,100">&lt;&lt;widget &quot;wedding&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-You have found a &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&lt;&lt;elseif $gender is &quot;male&quot;&gt;&gt;wife&lt;&lt;else&gt;&gt;spouse&lt;&lt;/if&gt;&gt;! 
-
-&lt;span id=&quot;format&quot;&gt;Do you want to 
-&lt;ul&gt;
-&lt;li&gt;&lt;&lt;link &quot;be married formally&quot;&gt;&gt;&lt;&lt;set $money -=30&gt;&gt;&lt;&lt;set $reputation +=2&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;For the three weeks before the wedding, your parish priest reads the banns and then soon you are married in a nice ceremony. 
-After the dancing and feasting, you go home with your new spouse [[at your side.-&gt;storyline-return again]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;elope&quot;&gt;&gt;&lt;&lt;set $reputation -=1&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;Rather than going through the fuss of a formal wedding, you elope down to the &lt;&lt;if random(1,2) is 1&gt;&gt;debtors&#39; prison&lt;&lt;else&gt;&gt;Fleet prison&lt;&lt;/if&gt;&gt; where you find a priest willing to marry you without asking [[too many questions.-&gt;storyline-return again]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/span&gt;
-
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="110" name="seeking - OBE?" tags="widget" position="2700,725" size="100,100">/* this widget seems to never be called
-&lt;&lt;widget &quot;seeking&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;wedding&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;
-*/
-
-&lt;&lt;widget &quot;return1&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Return from the country.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Return from the country.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Return from the country.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Return from the country.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Return from the country.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Return from the country.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Return from the country.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Return from the country.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Return from the country.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Return from the country.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Return from the country.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Return from the country.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Return from the country.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Return from the country.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Return from the country.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Return from the country.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Return from the country.-&gt;July 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Return from the country.-&gt;June 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Return from the country.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Return from the country.-&gt;January 1665]]
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;
-
-&lt;&lt;widget &quot;return2&quot;&gt;&gt;
-
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Return from the country.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Return from the country.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Return from the country.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Return from the country.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Return from the country.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Return from the country.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Return from the country.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Return from the country.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Return from the country.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Return from the country.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Return from the country.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Return from the country.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Return from the country.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Return from the country.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Return from the country.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Return from the country.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Return from the country.-&gt;July 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Return from the country.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Return from the country.-&gt;January 1665]]
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;
-
-&lt;&lt;widget &quot;return3&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Return from the country.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Return from the country.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Return from the country.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Return from the country.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Return from the country.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Return from the country.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Return from the country.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Return from the country.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Return from the country.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Return from the country.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Return from the country.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Return from the country.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Return from the country.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Return from the country.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Return from the country.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Return from the country.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Return from the country.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Return from the country.-&gt;January 1665]]
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="111" name="pregnant" tags="widget" position="2450,400" size="100,100">&lt;&lt;widget &quot;pregnant&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;set $pregnant to 4&gt;&gt;
-You have realized you are pregnant! You look forward to adding a new member to the family&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt; even if it means another mouth to feed&lt;&lt;/if&gt;&gt;. In a few months you&#39;ll have a new baby, but until then life continues [[as usual.-&gt;healing]]
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="112" name="birth" tags="widget" position="2850,500" size="100,100">&lt;&lt;widget &quot;birth&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if random(1,30) is 1&gt;&gt;Send not to know for whom the church bells toll. They toll for you. You died in childbirth.
-&lt;&lt;if $reputation lt 0&gt;&gt; You died with such a poor reputation that most of your neighbors didn&#39;t care. The rest of them probably cursed your name and hoped you were suffering in hell. Luckily, 
-&lt;&lt;else&gt;&gt; You died with a good enough reputation that your neighbors say prayers for your soul. Because of the plague ordinances, none of your neighbors could attend your funeral but 
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;as a member of the nobility, you were interred in a position of honor in a vault within your family&#39;s private chapel.
-&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;you were rich enough to be buried within the walls of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; churchyard. Your heirs, of course, paid extremely well for that privilege.
-&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;your body was at least carefully wrapped in a burial shroud before being put into the communal plague pits, late at night with no one to witness your burial.
-&lt;&lt;else&gt;&gt;your body was at least put into the communal plague pits, instead of being left out to rot.&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;As a God-fearing Catholic, you know you are destined to spend time in purgatory before you can ascend to heaven but you hope that will not take too long&lt;&lt;if $reputation lte 0&gt;&gt;, despite your poor reputation on earth.&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;As a good Protestant, you know that Christ the Redeemer has died for you and your admittance to heaven is guaranteed.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-[[At least you didn&#39;t die of plague-&gt;stats]]
-&lt;&lt;else&gt;&gt;
-&lt;&lt;if random(1,4) is 1&gt;&gt;Unfortunately, your baby was [[stillborn.-&gt;healing]]
-&lt;&lt;else&gt;&gt;
-&lt;&lt;addNewbornNPC&gt;&gt;You have a new [[baby!-&gt;healing]]
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;
-</tw-passagedata><tw-passagedata pid="113" name="miscarriage" tags="widget" position="2600,425" size="100,100">&lt;&lt;widget &quot;miscarriage&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;unset $pregnant&gt;&gt;&lt;&lt;unset $miscarriage&gt;&gt;
-Unfortunately, you have suffered a miscarriage and are no [[longer pregnant.-&gt;healing]]
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="114" name="random events widget" tags="widget" position="1900,75" size="100,100">&lt;&lt;widget &quot;random-events&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;set _randomEventFired to true&gt;&gt;
-
-/* Pregnancy tracking for married women of childbearing age */
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;
-	&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;
-		&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;
-			&lt;&lt;if $pregnant is 0&gt;&gt;
-				&lt;&lt;set _tempPregnant to random(1,10)&gt;&gt;
-				&lt;&lt;if _tempPregnant is 1&gt;&gt;
-					&lt;&lt;set $pregnant to 1&gt;&gt;
-				&lt;&lt;/if&gt;&gt;
-			&lt;&lt;else&gt;&gt;
-				&lt;&lt;set $pregnant +=1&gt;&gt;
-				&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;
-			&lt;&lt;/if&gt;&gt;
-		&lt;&lt;/if&gt;&gt;
-	&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-
-/* Priority cascade: first matching event fires */
-
-/* Plague checks */
-
-&lt;&lt;if $plagueInfection is 1&gt;&gt;
-	&lt;&lt;if $pregnant is 4&gt;&gt;
-		&lt;&lt;set $pregnant to 0&gt;&gt; /* silent miscarriage */
-	&lt;&lt;/if&gt;&gt;
-	&lt;&lt;sickPC&gt;&gt;
-&lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;
-	&lt;&lt;if $pregnant is 4&gt;&gt;
-		&lt;&lt;set $pregnant to 0&gt;&gt; /* silent miscarriage */
-	&lt;&lt;/if&gt;&gt;
-	&lt;&lt;sickFam&gt;&gt;
-&lt;&lt;else&gt;&gt; /* Begin by Initializing Randomizers */
-	&lt;&lt;set $elderly to random(1,30)&gt;&gt;
-	&lt;&lt;set $wedding to random(1,10)&gt;&gt;
-	&lt;&lt;set $fever to random(1,20)&gt;&gt;
-	&lt;&lt;if $age is &quot;elderly adult&quot; and $elderly is 1&gt;&gt; /* Old Age */
-		&lt;&lt;elderly&gt;&gt;
-	&lt;&lt;elseif $seeking is 1 and $wedding is 1&gt;&gt;
-		&lt;&lt;wedding&gt;&gt;
-	&lt;&lt;elseif $pregnant is 4&gt;&gt; /* Pregnancy and Marriage */
-		&lt;&lt;pregnant&gt;&gt;
-	&lt;&lt;elseif $pregnant isnot 3 and $pregnant isnot 2 and $pregnant isnot 1 and $pregnant isnot 0 and $miscarriage is 1&gt;&gt;
-		&lt;&lt;miscarriage&gt;&gt;
-	&lt;&lt;elseif $pregnant is 9&gt;&gt;
-		&lt;&lt;birth&gt;&gt;
-	&lt;&lt;elseif $fever is 1&gt;&gt; /* Random Fevers and Socio dependent events */
-		&lt;&lt;fever&gt;&gt;
-	&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt; 
-		&lt;&lt;set $steward to random(1,40)&gt;&gt;
-		&lt;&lt;if $ward isnot 0&gt;&gt;
-			&lt;&lt;set $ward to random(1,10)&gt;&gt;
-		&lt;&lt;/if&gt;&gt;
-		&lt;&lt;if $steward is 1&gt;&gt;
-			&lt;&lt;steward&gt;&gt;
-		&lt;&lt;elseif $ward is 1 and hasVisited(&quot;March 1666&quot;)&gt;&gt; /* household additions only occur after height of plague */
-			&lt;&lt;ward&gt;&gt;
-		&lt;&lt;else&gt;&gt;
-			&lt;&lt;set _randomEventFired to false&gt;&gt;
-		&lt;&lt;/if&gt;&gt;
-	&lt;&lt;elseif $socio is &quot;day labourers&quot; or $socio is &quot;servants&quot;&gt;&gt;
-		&lt;&lt;set $accident to random(1,20)&gt;&gt;
-		&lt;&lt;if $worker isnot 0&gt;&gt;
-			&lt;&lt;set $worker to random(1,10)&gt;&gt;
-		&lt;&lt;/if&gt;&gt;
-		&lt;&lt;if $accident is 1&gt;&gt;
-			&lt;&lt;accident&gt;&gt;
-		&lt;&lt;elseif $worker is 1 and hasVisited(&quot;March 1666&quot;)&gt;&gt;
-			&lt;&lt;worker-kid&gt;&gt;
-		&lt;&lt;else&gt;&gt;
-			&lt;&lt;set _randomEventFired to false&gt;&gt;
-		&lt;&lt;/if&gt;&gt;
-	&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;
-			&lt;&lt;set $runover to random(1,30)&gt;&gt;
-			&lt;&lt;if $runover is 1&gt;&gt;
-				&lt;&lt;runover&gt;&gt;
-			&lt;&lt;else&gt;&gt;
-				&lt;&lt;set _randomEventFired to false&gt;&gt;
-			&lt;&lt;/if&gt;&gt;
-	&lt;&lt;elseif $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;
-		&lt;&lt;if $apprentice isnot 0&gt;&gt;
-			&lt;&lt;set $apprentice to random(1,10)&gt;&gt;
-			&lt;&lt;if $apprentice is 1 and hasVisited(&quot;March 1666&quot;)&gt;&gt;
-				&lt;&lt;apprentice&gt;&gt;
-			&lt;&lt;else&gt;&gt;
-				&lt;&lt;set _randomEventFired to false&gt;&gt;
-			&lt;&lt;/if&gt;&gt;
-		&lt;&lt;/if&gt;&gt;
-	&lt;&lt;else&gt;&gt; /* it should not be possible to reach this point but putting in as safeguard */
-		&lt;&lt;set _randomEventFired to false&gt;&gt;
-	&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="115" name="Claude-widgets" tags="widget" position="475,1150" size="100,100">/* all widgets generated via Claude should be temporarily placed here then manually moved to new locations as needed */
-
-/* Orphan-check widget: called at the end of plague/sickness/quarantine sequences.
+</tw-passagedata><tw-passagedata pid="105" name="orphan widget" tags="widget" position="800,325" size="100,100">/* Orphan-check widget: called at the end of plague/sickness/quarantine sequences.
    If the player is a child or adolescent and no living adult (young adult,
    middle-aged adult, or elderly adult) remains in $NPCs, regenerate their
    household according to their socio status. */
@@ -6400,7 +6038,178 @@ Unfortunately, you have suffered a miscarriage and are no [[longer pregnant.-&gt
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="116" name="june-1665-helper-widget" tags="widget" position="500,1300" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="106" name="worker-kid" tags="widget" position="1825,1200" size="100,100">&lt;&lt;widget &quot;worker-kid&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+Despite everything, you &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;keep finding opportunities for work&lt;&lt;else&gt;&gt;know you are lucky to be steadily employed as a servant&lt;&lt;/if&gt;&gt;. A friend from the countryside writes to you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; and asks if you will take in their child so they can also seek work in London. 
+&lt;br&gt;&lt;br&gt;
+&lt;span id=&quot;worker&quot;&gt;Will you accept them into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#worker&quot;&gt;&gt;You accept them into your home. It&#39;s another mouth to feed, but you are glad to do a friend a favor. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;addWorkerKidNPC&gt;&gt;&lt;&lt;set $worker to 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#worker&quot;&gt;&gt;You don&#39;t accept them into your home. Things are too hard right now. You can&#39;t afford another mouth to feed and you don&#39;t have the time to teach someone else the lay of the city. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="107" name="ward" tags="widget" position="1900,1550" size="100,100">&lt;&lt;widget &quot;ward&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+Despite everything, court life proceeds as usual. A friend living the countryside writes to you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot; or &quot;young adult&quot;&gt;&gt;r family&lt;&lt;/if&gt;&gt; and asks if you will take in their child as your ward and help them get a place at court - and maybe even an advantageous marriage.
+&lt;br&gt;&lt;br&gt;
+&lt;span id=&quot;ward&quot;&gt;Will you accept them into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You accept them into your home. It will cost a small fortune to outfit a newcomer to court and provide the king the necessary gifts but you will control their purse strings and are glad to do a friend a favor. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;addWardNPC&gt;&gt;&lt;&lt;set $ward to 0&gt;&gt;&lt;&lt;set $money -=5600&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You don&#39;t accept them into your home. Your own affairs are not quite in order and you need to focus on setting them right before adding another person to the household. You don&#39;t have the time to teach someone else the ways of court. &lt;&lt;storyline-return&gt;&gt;.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
+</tw-passagedata><tw-passagedata pid="108" name="marriage-market" tags="widget" position="2675,175" size="100,100">&lt;&lt;widget &quot;marriage-market&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+As an unmarried adult, you may wish to get married. Marriage brings with it lots of advantages, including a life partner, social connections through their family, (probably) children, and &lt;&lt;if $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot;&gt;&gt;wealth from your &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&#39;s income&lt;&lt;else&gt;&gt;wife&#39;s dowry&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;additional income that will help protect you from &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;starvation&lt;&lt;else&gt;&gt;poverty&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;.&lt;&lt;if $gender is &quot;female&quot;&gt;&gt; The downside is all your property will become your husband&#39;s and you will be legally dependent on him until he dies... or you do.&lt;&lt;/if&gt;&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;span id=&quot;marriage&quot;&gt;You are
+&lt;ul&gt;
+&lt;li&gt;&lt;&lt;link &quot;looking to be married soon&quot;&gt;&gt;&lt;&lt;set $seeking to 1&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;You are looking to be married soon and will be seeking out a spouse.
+
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;are content to remain single for now&quot;&gt;&gt;&lt;&lt;set $seeking to 0&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;You are content to remain single for now.
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;/span&gt;
+
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="109" name="wedding" tags="widget" position="2125,1425" size="100,100">&lt;&lt;widget &quot;wedding&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+You have found a &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&lt;&lt;elseif $gender is &quot;male&quot;&gt;&gt;wife&lt;&lt;else&gt;&gt;spouse&lt;&lt;/if&gt;&gt;! 
+
+&lt;span id=&quot;format&quot;&gt;Do you want to 
+&lt;ul&gt;
+&lt;li&gt;&lt;&lt;link &quot;be married formally&quot;&gt;&gt;&lt;&lt;set $money -=30&gt;&gt;&lt;&lt;set $reputation +=2&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;For the three weeks before the wedding, your parish priest reads the banns and then soon you are married in a nice ceremony. 
+After the dancing and feasting, you go home with your new spouse at your side. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;elope&quot;&gt;&gt;&lt;&lt;set $reputation -=1&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;Rather than going through the fuss of a formal wedding, you elope down to the &lt;&lt;if random(1,2) is 1&gt;&gt;debtors&#39; prison&lt;&lt;else&gt;&gt;Fleet prison&lt;&lt;/if&gt;&gt; where you find a priest willing to marry you without asking too many questions. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/span&gt;
+
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="110" name="seeking - OBE?" tags="widget" position="2625,975" size="100,100">/* this widget seems to never be called
+&lt;&lt;widget &quot;seeking&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+&lt;&lt;wedding&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
+*/</tw-passagedata><tw-passagedata pid="111" name="pregnant" tags="widget" position="2500,75" size="100,100">&lt;&lt;widget &quot;pregnant&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $pregnant to 4&gt;&gt;
+You have realized you are pregnant! You look forward to adding a new member to the family&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt; even if it means another mouth to feed&lt;&lt;/if&gt;&gt;. In a few months you&#39;ll have a new baby, but until then life continues as usual. &lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="112" name="birth" tags="widget" position="2750,500" size="100,100">&lt;&lt;widget &quot;birth&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if random(1,30) is 1&gt;&gt;Send not to know for whom the church bells toll. They toll for you. You died in childbirth.
+&lt;&lt;if $reputation lt 0&gt;&gt; You died with such a poor reputation that most of your neighbors didn&#39;t care. The rest of them probably cursed your name and hoped you were suffering in hell. Luckily, 
+&lt;&lt;else&gt;&gt; You died with a good enough reputation that your neighbors say prayers for your soul. Because of the plague ordinances, none of your neighbors could attend your funeral but 
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;as a member of the nobility, you were interred in a position of honor in a vault within your family&#39;s private chapel.
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;you were rich enough to be buried within the walls of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; churchyard. Your heirs, of course, paid extremely well for that privilege.
+&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;your body was at least carefully wrapped in a burial shroud before being put into the communal plague pits, late at night with no one to witness your burial.
+&lt;&lt;else&gt;&gt;your body was at least put into the communal plague pits, instead of being left out to rot.&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;As a God-fearing Catholic, you know you are destined to spend time in purgatory before you can ascend to heaven but you hope that will not take too long&lt;&lt;if $reputation lte 0&gt;&gt;, despite your poor reputation on earth.&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;As a good Protestant, you know that Christ the Redeemer has died for you and your admittance to heaven is guaranteed.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
+[[At least you didn&#39;t die of plague-&gt;stats]]
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if random(1,4) is 1&gt;&gt;Unfortunately, your baby was stillborn. &lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;addNewbornNPC&gt;&gt;You have a new baby! &lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
+</tw-passagedata><tw-passagedata pid="113" name="miscarriage" tags="widget" position="2350,150" size="100,100">&lt;&lt;widget &quot;miscarriage&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+&lt;&lt;unset $pregnant&gt;&gt;&lt;&lt;unset $miscarriage&gt;&gt;
+Unfortunately, you have suffered a miscarriage and are no longer pregnant. &lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="114" name="random events widget" tags="widget" position="2000,50" size="100,100">&lt;&lt;widget &quot;random-events&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _randomEventFired to true&gt;&gt;
+
+/* Pregnancy tracking for married women of childbearing age */
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;
+	&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;
+		&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;
+			&lt;&lt;if $pregnant is 0&gt;&gt;
+				&lt;&lt;set _tempPregnant to random(1,10)&gt;&gt;
+				&lt;&lt;if _tempPregnant is 1&gt;&gt;
+					&lt;&lt;set $pregnant to 1&gt;&gt;
+				&lt;&lt;/if&gt;&gt;
+			&lt;&lt;else&gt;&gt;
+				&lt;&lt;set $pregnant +=1&gt;&gt;
+				&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;
+			&lt;&lt;/if&gt;&gt;
+		&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+
+/* Priority cascade: first matching event fires */
+
+/* Plague checks */
+
+&lt;&lt;if $plagueInfection is 1&gt;&gt;
+	&lt;&lt;if $pregnant is 4&gt;&gt;
+		&lt;&lt;set $pregnant to 0&gt;&gt; /* silent miscarriage */
+	&lt;&lt;/if&gt;&gt;
+	&lt;&lt;sickPC&gt;&gt;
+&lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;
+	&lt;&lt;if $pregnant is 4&gt;&gt;
+		&lt;&lt;set $pregnant to 0&gt;&gt; /* silent miscarriage */
+	&lt;&lt;/if&gt;&gt;
+	&lt;&lt;sickFam&gt;&gt;
+&lt;&lt;else&gt;&gt; /* Begin by Initializing Randomizers */
+	&lt;&lt;set $elderly to random(1,30)&gt;&gt;
+	&lt;&lt;set $wedding to random(1,10)&gt;&gt;
+	&lt;&lt;set $fever to random(1,20)&gt;&gt;
+	&lt;&lt;if $age is &quot;elderly adult&quot; and $elderly is 1&gt;&gt; /* Old Age */
+		&lt;&lt;elderly&gt;&gt;
+	&lt;&lt;elseif $seeking is 1 and $wedding is 1&gt;&gt;
+		&lt;&lt;wedding&gt;&gt;
+	&lt;&lt;elseif $pregnant is 4&gt;&gt; /* Pregnancy and Marriage */
+		&lt;&lt;pregnant&gt;&gt;
+	&lt;&lt;elseif $pregnant isnot 3 and $pregnant isnot 2 and $pregnant isnot 1 and $pregnant isnot 0 and $miscarriage is 1&gt;&gt;
+		&lt;&lt;miscarriage&gt;&gt;
+	&lt;&lt;elseif $pregnant is 9&gt;&gt;
+		&lt;&lt;birth&gt;&gt;
+	&lt;&lt;elseif $fever is 1&gt;&gt; /* Random Fevers and Socio dependent events */
+		&lt;&lt;fever&gt;&gt;
+	&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt; 
+		&lt;&lt;set $steward to random(1,40)&gt;&gt;
+		&lt;&lt;if $ward isnot 0&gt;&gt;
+			&lt;&lt;set $ward to random(1,10)&gt;&gt;
+		&lt;&lt;/if&gt;&gt;
+		&lt;&lt;if $steward is 1&gt;&gt;
+			&lt;&lt;steward&gt;&gt;
+		&lt;&lt;elseif $ward is 1 and hasVisited(&quot;March 1666&quot;)&gt;&gt; /* household additions only occur after height of plague */
+			&lt;&lt;ward&gt;&gt;
+		&lt;&lt;else&gt;&gt;
+			&lt;&lt;set _randomEventFired to false&gt;&gt;
+		&lt;&lt;/if&gt;&gt;
+	&lt;&lt;elseif $socio is &quot;day labourers&quot; or $socio is &quot;servants&quot;&gt;&gt;
+		&lt;&lt;set $accident to random(1,20)&gt;&gt;
+		&lt;&lt;if $worker isnot 0&gt;&gt;
+			&lt;&lt;set $worker to random(1,10)&gt;&gt;
+		&lt;&lt;/if&gt;&gt;
+		&lt;&lt;if $accident is 1&gt;&gt;
+			&lt;&lt;accident&gt;&gt;
+		&lt;&lt;elseif $worker is 1 and hasVisited(&quot;March 1666&quot;)&gt;&gt;
+			&lt;&lt;worker-kid&gt;&gt;
+		&lt;&lt;else&gt;&gt;
+			&lt;&lt;set _randomEventFired to false&gt;&gt;
+		&lt;&lt;/if&gt;&gt;
+	&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;
+			&lt;&lt;set $runover to random(1,30)&gt;&gt;
+			&lt;&lt;if $runover is 1&gt;&gt;
+				&lt;&lt;runover&gt;&gt;
+			&lt;&lt;else&gt;&gt;
+				&lt;&lt;set _randomEventFired to false&gt;&gt;
+			&lt;&lt;/if&gt;&gt;
+	&lt;&lt;elseif $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;
+		&lt;&lt;if $apprentice isnot 0&gt;&gt;
+			&lt;&lt;set $apprentice to random(1,10)&gt;&gt;
+			&lt;&lt;if $apprentice is 1 and hasVisited(&quot;March 1666&quot;)&gt;&gt;
+				&lt;&lt;apprentice&gt;&gt;
+			&lt;&lt;else&gt;&gt;
+				&lt;&lt;set _randomEventFired to false&gt;&gt;
+			&lt;&lt;/if&gt;&gt;
+		&lt;&lt;/if&gt;&gt;
+	&lt;&lt;else&gt;&gt; /* it should not be possible to reach this point but putting in as safeguard */
+		&lt;&lt;set _randomEventFired to false&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="115" name="Claude-widgets" tags="widget" position="425,1075" size="100,100">/* all widgets generated via Claude  or other AI should be temporarily placed here then manually moved to new locations as needed */
+
+</tw-passagedata><tw-passagedata pid="116" name="june-1665-helper-widget" tags="widget" position="575,975" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; grows worse and the streets are soon filled with coaches and wagons full of people fleeing with their goods to the countryside. The &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMaria &quot;Henrietta Maria&quot;&gt;&gt; moves back to France&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, much to your dismay, and that of your fellow Catholics who flock to her chapel each week&lt;&lt;else&gt;&gt;, much to your relief, and that of all your fellow God-fearing &lt;&lt;defProtestants &quot;Protestants&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;. On June 29th, the King packs up his entire &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; in 148 carriages and moves 12 miles away, to his palace at &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt;.
     &lt;br&gt;&lt;br&gt;
