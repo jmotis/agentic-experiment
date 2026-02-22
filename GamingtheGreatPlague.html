@@ -4028,9 +4028,8 @@ You don&#39;t know which helps more, but after a few days you feel your fever br
 &lt;br&gt;&lt;br&gt;
 Now you just have to figure out how to overcome your disgrace and find your way back into the King&#39;s good graces. Groveling will obviously have to be involved, but that won&#39;t be enough. Do you also:&lt;br&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;&lt;link &quot;help him find his next mistress&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 12800, 0, 1000000)&gt;&gt;&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;loan him all your money to fund the war effort&quot;&gt;&gt;&lt;&lt;set $reputation +=1&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;give him all your money to fund the war effort&quot;&gt;&gt;&lt;&lt;set $reputation +=2&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;storyline-return &quot;help him find his next mistress.&quot; 1 -12800 -1&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;storyline-return &quot;give him money to fund the war effort&quot; 1 -25600 1&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/linkreplace&gt;&gt;
@@ -5732,12 +5731,8 @@ How long do you stay?&lt;ul&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#fondness&quot;&gt;&gt;You weren&#39;t fond of your steward and are looking forward to the opportunity to replace him, but it will still require a great deal of work to find someone capable soon.
 &lt;br&gt;&lt;br&gt;
 How long do you stay?&lt;ul&gt;
-/*	&lt;li&gt;&lt;&lt;link &quot;One month&quot; $timeline[Math.clamp($monthIndex + 1, 0, $timeline.length - 1)]&gt;&gt;&lt;&lt;set $money +=1; $reputation -=1&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-	&lt;li&gt;&lt;&lt;link &quot;Two months&quot; $timeline[Math.clamp($monthIndex + 2, 0, $timeline.length - 1)]&gt;&gt;&lt;&lt;set $money +=2; $reputation -=2&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-	&lt;li&gt;&lt;&lt;link &quot;Three months&quot; $timeline[Math.clamp($monthIndex + 3, 0, $timeline.length - 1)]&gt;&gt;&lt;&lt;set $money +=3; $reputation -=3&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;*/
 	&lt;li&gt;&lt;&lt;storyline-return &quot;One month&quot; 1 1 -1&gt;&gt;&lt;/li&gt;
-	&lt;li&gt;&lt;&lt;storyline-return &quot;Two months&quot; 2 2 -2&gt;&gt;&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;&lt;storyline-return &quot;Two months&quot; 2 2 -2&gt;&gt;&lt;/li&gt;
 	&lt;li&gt;&lt;&lt;storyline-return &quot;Three months&quot; 3 3 -3&gt;&gt;&lt;/li&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="95" name="steward-2" tags="" position="2825,1125" size="100,100">leaving this passage extant since it has a pid</tw-passagedata><tw-passagedata pid="96" name="steward-3" tags="" position="2950,1025" size="100,100">leaving this passage extant since it has a pid</tw-passagedata><tw-passagedata pid="97" name="steward-1" tags="" position="2950,1150" size="100,100">leaving this passage extant since it has a pid</tw-passagedata><tw-passagedata pid="98" name="accident" tags="widget" position="2525,225" size="100,100">&lt;&lt;widget &quot;accident&quot;&gt;&gt;
