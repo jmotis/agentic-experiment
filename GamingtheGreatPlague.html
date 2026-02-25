@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.35" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.36" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1477,7 +1477,7 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
       &lt;&lt;unset $textGroup&gt;&gt;
       &lt;&lt;if _remedyEffect is 0 and random(1,2) is 1&gt;&gt; But nothing works. At least you will grow too delirious to notice how miserable you are in the hours before your [[death]].
       &lt;&lt;elseif _remedyEffect is 1 and random(1,3) is 1&gt;&gt; But nothing works. At least you will grow too delirious to notice how miserable you are in the hours before your [[death]].
-      &lt;&lt;else&gt;&gt; Miraculously, after a few days you feel your fever break and your &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt; begin to go down. Thanks be to God, you have survived the plague.
+      &lt;&lt;else&gt;&gt;&lt;&lt;set $playerPlagueStatus to &quot;recovered&quot;&gt;&gt; Miraculously, after a few days you feel your fever break and your &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt; begin to go down. Thanks be to God, you have survived the plague.
       &lt;br&gt;&lt;br&gt;
       [[Too bad you and your household still have to be for the full 40 days, to make sure you don&#39;t spread the plague to anyone else.-&gt;Reconnecting]]
       /* NTS: Set choice in here about breaking quarantine if running out of money, tie to money and reputation of course. */
@@ -1956,6 +1956,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;set $disability to 0&gt;&gt;
 &lt;&lt;set $reputation to 6&gt;&gt;
 &lt;&lt;set $plagueInfection to 0&gt;&gt;
+&lt;&lt;set $playerPlagueStatus to &quot;healthy&quot;&gt;&gt;
 &lt;&lt;set $location to 0&gt;&gt;
 &lt;&lt;set $impressed to 0&gt;&gt;
 &lt;&lt;set $NPCs = []&gt;&gt;
@@ -4032,7 +4033,7 @@ Unfortunately, that&#39;s not how plague works. The lump gets bigger and is soon
 &lt;&lt;if random(1,2) is 1&gt;&gt;Luckily, you will be too delirious to notice that the remainder of your servants all abandon you in the hours before your [[death]].
 &lt;&lt;else&gt;&gt;Luckily, despite your disgrace, your final few servants stay by your side, praying for your life and administering every &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; remedy known to mankind. 
 &lt;br&gt;&lt;br&gt;
-You don&#39;t know which helps more, but after a few days you feel your fever break and your &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt; begin to go down. Thanks be to God, you have survived the plague.
+&lt;&lt;set $playerPlagueStatus to &quot;recovered&quot;&gt;&gt;You don&#39;t know which helps more, but after a few days you feel your fever break and your &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt; begin to go down. Thanks be to God, you have survived the plague.
 &lt;br&gt;&lt;br&gt;
 Now you just have to figure out how to overcome your disgrace and find your way back into the King&#39;s good graces. Groveling will obviously have to be involved, but that won&#39;t be enough. Do you also:&lt;br&gt;
 &lt;ul&gt;
@@ -4047,7 +4048,7 @@ Now you just have to figure out how to overcome your disgrace and find your way 
 The pesthouse is a terrible place to be confined, with countless sick people all crammed in close together so you can hear their every moan. They die terrifyingly fast and their cots refill just as quickly. You toss and turn in your dirty, sweat-soaked sheets, as your fever spikes and you fear for your life.
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;It occurs to you that perhaps you ought to have written your will, but your reputation is so poor and the pesthouse is so terrifying that no one can be convinced to bring you the writing materials you need.&lt;br&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;It occurs to you that perhaps you ought to have written your will, but your reputation is so poor and the pesthouse is so terrifying that you can&#39;t convince a &lt;&lt;defScrivener &quot;scrivener&quot;&gt;&gt; to come help you.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if random(1,2) is 1&gt;&gt;Luckily, you will grow too delirious to notice how miserable you are in the hours before your [[death]].&lt;&lt;else&gt;&gt;You spend all your remaining energy in prayer that God will spare you from death. Despite the neglect of the overworked pesthouse staff, after a few days you feel your fever break and your &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt; begin to go down. Thanks be to God, you have survived the plague.
+&lt;&lt;if random(1,2) is 1&gt;&gt;Luckily, you will grow too delirious to notice how miserable you are in the hours before your [[death]].&lt;&lt;else&gt;&gt;You spend all your remaining energy in prayer that God will spare you from death. &lt;&lt;set $playerPlagueStatus to &quot;recovered&quot;&gt;&gt;Despite the neglect of the overworked pesthouse staff, after a few days you feel your fever break and your &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt; begin to go down. Thanks be to God, you have survived the plague.
 &lt;br&gt;&lt;br&gt;
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/5/58/The_pest_house_and_plague_pit%2C_Moorfields%2C_London._Wellcome_V0013229.jpg&quot; width=&quot;100%&quot;&gt;
 &lt;br&gt;
@@ -4164,6 +4165,7 @@ Good luck! You&#39;ll need it...
 [[How typical was your experience of the Great Plague of London? Let&#39;s find out!-&gt;stats]]</tw-passagedata><tw-passagedata pid="50" name="sickPC" tags="widget infection-rates" position="475,600" size="100,100">&lt;&lt;widget &quot;sickPC&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $plagueRevealed to 1&gt;&gt;
+&lt;&lt;set $playerPlagueStatus to &quot;infected&quot;&gt;&gt;
 Lord have mercy! A strange lump has appeared on your 
     &lt;&lt;set _x to random(1,3)&gt;&gt;
     	&lt;&lt;if _x == 3&gt;&gt;neck and there&#39;s no hiding that you have caught the dreaded [[plague-&gt;Sickness]].
@@ -4923,6 +4925,7 @@ Luckily, there are no plague cases in your &lt;&lt;defParish &quot;parish&quot;&
 &lt;li&gt;Age: $age&lt;/li&gt;
 &lt;li&gt;Social class: $socio&lt;/li&gt;
 &lt;li&gt;Location: $location&lt;/li&gt;
+&lt;li&gt;Current plague status: $playerPlagueStatus&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;&lt;ListNPCs&gt;&gt; 
