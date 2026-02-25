@@ -4356,6 +4356,8 @@ You must remain in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for at l
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="60" name="Quarantine, Week 2" tags="quarantine" position="275,325" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 2&gt;&gt;
   /* check if any family members were infected the previous week */
       &lt;&lt;silently&gt;&gt;
+                    &lt;&lt;set _deceased = []&gt;&gt;
+              &lt;&lt;set _recovered = []&gt;&gt;
           &lt;&lt;set _infectedFamily = []&gt;&gt;
               &lt;&lt;for _y, _household range $NPCs&gt;&gt;
                   &lt;&lt;if _household.health is &quot;infected&quot;&gt;&gt;
@@ -4388,8 +4390,6 @@ You must remain in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for at l
               &lt;&lt;/for&gt;&gt;
   
           /* Check for family members who died or recovered */
-              &lt;&lt;set _deceased = []&gt;&gt;
-              &lt;&lt;set _recovered = []&gt;&gt;
                   &lt;&lt;for _d, _household range $NPCs&gt;&gt;
                       &lt;&lt;if _household.health is &quot;deceased2&quot;&gt;&gt;&lt;&lt;set _deceased.push(_d)&gt;&gt;
                       &lt;&lt;/if&gt;&gt;
@@ -4465,6 +4465,8 @@ You must remain in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for at l
   &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="61" name="Quarantine, Week 3" tags="quarantine" position="400,325" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 3&gt;&gt;
 /* check if any family members were infected the previous week */
     &lt;&lt;silently&gt;&gt;
+                &lt;&lt;set _deceased = []&gt;&gt;
+            &lt;&lt;set _recovered = []&gt;&gt;
         &lt;&lt;set _infectedFamily = []&gt;&gt;
             &lt;&lt;for _y, _household range $NPCs&gt;&gt;
                 &lt;&lt;if _household.health is &quot;infected&quot;&gt;&gt;
@@ -4502,8 +4504,6 @@ You must also remain in quarantine for at least two more weeks, and [[only time 
             &lt;&lt;/for&gt;&gt;
 
         /* Check for family members who died or recovered */
-            &lt;&lt;set _deceased = []&gt;&gt;
-            &lt;&lt;set _recovered = []&gt;&gt;
                 &lt;&lt;for _d, _household range $NPCs&gt;&gt;
                     &lt;&lt;if _household.health is &quot;deceased3&quot;&gt;&gt;&lt;&lt;set _deceased.push(_d)&gt;&gt;
                     &lt;&lt;/if&gt;&gt;
@@ -4571,6 +4571,8 @@ You must also remain in quarantine for at least two more weeks, and [[only time 
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="62" name="Quarantine, Week 4" tags="quarantine" position="150,450" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 4&gt;&gt;
     /* check if any family members were infected the previous week */
     &lt;&lt;silently&gt;&gt;
+            &lt;&lt;set _deceased = []&gt;&gt;
+        &lt;&lt;set _recovered = []&gt;&gt;
         &lt;&lt;set _infectedFamily = []&gt;&gt;
             &lt;&lt;for _y, _household range $NPCs&gt;&gt;
                 &lt;&lt;if _household.health is &quot;infected&quot;&gt;&gt;
@@ -4607,8 +4609,6 @@ After nearly a month in  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt;, y
         &lt;&lt;/for&gt;&gt;
         
         /* Check for family members who died or recovered */
-        &lt;&lt;set _deceased = []&gt;&gt;
-        &lt;&lt;set _recovered = []&gt;&gt;
             &lt;&lt;for _d, _household range $NPCs&gt;&gt;
                 &lt;&lt;if _household.health is &quot;deceased4&quot;&gt;&gt;&lt;&lt;set _deceased.push(_d)&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
@@ -5485,6 +5485,8 @@ You can also visit the &#39;&#39;&lt;&lt;defApothecary &quot;Apothecary&quot;&gt
 &lt;&lt;first-plague-day-continue&gt;&gt;</tw-passagedata><tw-passagedata pid="91" name="Quarantine, Week 5" tags="quarantine" position="275,450" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 5&gt;&gt;
     /* check if any family members were infected the previous week */
     &lt;&lt;silently&gt;&gt;
+            &lt;&lt;set _deceased = []&gt;&gt;
+        &lt;&lt;set _recovered = []&gt;&gt;
         &lt;&lt;set _infectedFamily = []&gt;&gt;
             &lt;&lt;for _y, _household range $NPCs&gt;&gt;
                 &lt;&lt;if _household.health is &quot;infected&quot;&gt;&gt;
@@ -5521,8 +5523,6 @@ You have now been in  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for o
         &lt;&lt;/for&gt;&gt;
         
         /* Check for family members who died or recovered */
-        &lt;&lt;set _deceased = []&gt;&gt;
-        &lt;&lt;set _recovered = []&gt;&gt;
             &lt;&lt;for _d, _household range $NPCs&gt;&gt;
                 &lt;&lt;if _household.health is &quot;deceased5&quot;&gt;&gt;&lt;&lt;set _deceased.push(_d)&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
@@ -5599,6 +5599,8 @@ You have now been in  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for o
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="92" name="Quarantine, Week ?" tags="quarantine" position="425,450" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 6&gt;&gt;
     /* check if any family members were infected the previous week */
     &lt;&lt;silently&gt;&gt;
+            &lt;&lt;set _deceased = []&gt;&gt;
+        &lt;&lt;set _recovered = []&gt;&gt;
         &lt;&lt;set _infectedFamily = []&gt;&gt;
             &lt;&lt;for _y, _household range $NPCs&gt;&gt;
                 &lt;&lt;if _household.health is &quot;infected&quot;&gt;&gt;
@@ -5634,8 +5636,6 @@ You have been in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; so long, y
         &lt;&lt;/for&gt;&gt;
         
         /* Check for family members who died or recovered */
-        &lt;&lt;set _deceased = []&gt;&gt;
-        &lt;&lt;set _recovered = []&gt;&gt;
             &lt;&lt;for _d, _household range $NPCs&gt;&gt;
                 &lt;&lt;if _household.health is &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deceased.push(_d)&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
