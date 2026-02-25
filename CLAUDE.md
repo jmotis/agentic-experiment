@@ -63,7 +63,12 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
 
 - **Do not reconstruct or rewrite** `<tw-storydata>` or any `<tw-passagedata>` opening/closing tags. `patch.js` preserves them automatically.
 - **Passage matching is by `pid`, not by `name`.** Passage names can change; `pid` is the stable identifier.
-- **Preserve verbatim encoding.** Passage content in the HTML uses HTML-entity encoding (e.g., `&lt;&lt;nobr&gt;&gt;`). The extract/patch scripts handle this transparently — do not manually re-encode or decode content in `passages.json`.
+- **Preserve verbatim encoding.** Passage content in the HTML uses HTML-entity encoding:
+  - `&lt;&lt;` represents `<<` (SugarCube macro opening)
+  - `&gt;&gt;` represents `>>` (SugarCube macro closing)
+  - `&quot;` represents `"` (double quote)
+
+  Example: `&lt;&lt;nobr&gt;&gt;` in the extracted JSON corresponds to `<<nobr>>` in the rendered game. The extract/patch scripts handle this transparently — do not manually re-encode or decode content in `passages.json`.
 - After patching, `passages.json` is a **transient artifact** and should not be committed to the repository. Only the updated HTML file should be committed.
 
 ## Version Control (Game Title)
