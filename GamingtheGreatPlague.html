@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.49" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.50" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1925,7 +1925,7 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 /* Pregnancy and marriage tracking, betrothal should not trigger pregnancy due to age restrictions in character generation */
 &lt;&lt;if $relationship is &quot;married&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;
 	&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;
-		&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;
+		&lt;&lt;if $agenum gte 16 and $agenum lte 40&gt;&gt;
 			&lt;&lt;set $pregnant to 0&gt;&gt;
 			&lt;&lt;set _tempPregnant to random(1,10)&gt;&gt;
 			&lt;&lt;if _tempPregnant is 1&gt;&gt;
@@ -2625,7 +2625,7 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
         &lt;&lt;set $maxAge to 100&gt;&gt;
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;set $NPCAgeNum to random($minAge,$maxAge)&gt;&gt;
-    &lt;&lt;if $NPCAgeNum gte 50&gt;&gt;&lt;&lt;set $NPCAge to &quot;elderly adult&quot;&gt;&gt;
+    &lt;&lt;if $NPCAgeNum gte 60&gt;&gt;&lt;&lt;set $NPCAge to &quot;elderly adult&quot;&gt;&gt;
     &lt;&lt;elseif $NPCAgeNum gte 30&gt;&gt;&lt;&lt;set $NPCAge to &quot;middle-aged adult&quot;&gt;&gt;
     &lt;&lt;elseif $NPCAgeNum gte 16&gt;&gt;&lt;&lt;set $NPCAge to &quot;young adult&quot;&gt;&gt;
     &lt;&lt;elseif $NPCAgeNum gte 10&gt;&gt;&lt;&lt;set $NPCAge to &quot;adolescent&quot;&gt;&gt;
@@ -2873,7 +2873,7 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 
 /* Always generate the master first */
 &lt;&lt;set _masterAgenum to random(30,76)&gt;&gt;
-&lt;&lt;if _masterAgenum gte 50&gt;&gt;&lt;&lt;set _masterAge to &quot;elderly adult&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _masterAge to &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _masterAgenum gte 60&gt;&gt;&lt;&lt;set _masterAge to &quot;elderly adult&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _masterAge to &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), age: _masterAge, agenum: _masterAgenum, relationship: &quot;master&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
 
 &lt;&lt;if random (1,2) eq 1 and _haswife&gt;&gt;
@@ -2977,8 +2977,8 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;if $age eq &quot;child&quot;&gt;&gt;&lt;&lt;set $agenum to random(5,9)&gt;&gt;
 &lt;&lt;elseif $age eq &quot;adolescent&quot;&gt;&gt;&lt;&lt;set $agenum to random(10,15)&gt;&gt;
 &lt;&lt;elseif $age eq &quot;young adult&quot;&gt;&gt;&lt;&lt;set $agenum to random(16,29)&gt;&gt;&lt;&lt;set $hoh to 1&gt;&gt;
-&lt;&lt;elseif $age eq &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;set $agenum to random(30,49)&gt;&gt;&lt;&lt;set $hoh to 1&gt;&gt;
-&lt;&lt;elseif $age eq &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $agenum to random(50,76)&gt;&gt;&lt;&lt;set $hoh to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $age eq &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;set $agenum to random(30,59)&gt;&gt;&lt;&lt;set $hoh to 1&gt;&gt;
+&lt;&lt;elseif $age eq &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $agenum to random(60,76)&gt;&gt;&lt;&lt;set $hoh to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;parish&quot;&gt;&gt;
@@ -3086,7 +3086,7 @@ Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.
     &lt;br&gt;&lt;br&gt; /*NTS: insert text here about what happens to children who are impressed as servants */
     &lt;&lt;set $socio to &quot;servants&quot;&gt;&gt;
     &lt;&lt;storyline-return&gt;&gt;
-    &lt;&lt;elseif $age is &quot;elderly&quot;&gt;&gt;/* NTS: need text about what happens to elderly players caught 2+ times. Also, confirm if age overrides nationality/means you&#39;ll be deported? */ As an elderly resident, you are released with another warning. &lt;&lt;storyline-return&gt;&gt;
+    &lt;&lt;elseif $age is &quot;elderly adult&quot;&gt;&gt;/* NTS: need text about what happens to elderly players caught 2+ times. Also, confirm if age overrides nationality/means you&#39;ll be deported? */ As an elderly resident, you are released with another warning. &lt;&lt;storyline-return&gt;&gt;
     &lt;&lt;else&gt;&gt;
         &lt;&lt;if $origin is &quot;somewhere else&quot; or $origin is &quot;France&quot;&gt;&gt;
             /* NTS: text for debtor&#39;s prison */ You are thrown into debtor&#39;s prison as punishment. [[stats]]
@@ -6507,7 +6507,7 @@ Despite everything, business continues. A friend from the countryside writes to 
       /* Build the new household starting with the guardian and their family */
       &lt;&lt;if _newGuardian isnot &quot;widowed aunt&quot;&gt;&gt;
             &lt;&lt;set _newGuardianAgenum to random(30,76)&gt;&gt;
-            &lt;&lt;if _newGuardianAgenum gte 50&gt;&gt;&lt;&lt;set _newGuardianAge to &quot;elderly adult&quot;&gt;&gt;
+            &lt;&lt;if _newGuardianAgenum gte 60&gt;&gt;&lt;&lt;set _newGuardianAge to &quot;elderly adult&quot;&gt;&gt;
             &lt;&lt;else&gt;&gt;&lt;&lt;set _newGuardianAge to &quot;middle-aged adult&quot;&gt;&gt;
             &lt;&lt;/if&gt;&gt;
             
@@ -6545,7 +6545,7 @@ Despite everything, business continues. A friend from the countryside writes to 
 
     &lt;&lt;else&gt;&gt;
         &lt;&lt;set _auntAgenum to random(30,76)&gt;&gt;
-        &lt;&lt;if _auntAgenum gte 50&gt;&gt;
+        &lt;&lt;if _auntAgenum gte 60&gt;&gt;
             &lt;&lt;set _newGuardianAge to &quot;elderly adult&quot;&gt;&gt;
         &lt;&lt;else&gt;&gt;&lt;&lt;set _newGuardianAge to &quot;middle-aged adult&quot;&gt;&gt;
         &lt;&lt;/if&gt;&gt;
