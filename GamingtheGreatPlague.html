@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.40" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.41" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1510,6 +1510,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;August 1665&quot;&gt;&gt;
     &lt;&lt;if not hasVisited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,12) eq 1&gt;&gt;
@@ -1530,6 +1535,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,12) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,12) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;September 1665&quot;&gt;&gt;
@@ -1554,6 +1564,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 		&lt;&lt;if random(1,7) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,7) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;October 1665&quot;&gt;&gt;
     &lt;&lt;if not hasVisited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,10) eq 1&gt;&gt;
@@ -1574,6 +1589,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,10) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,10) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;November 1665&quot;&gt;&gt;
@@ -1598,6 +1618,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 		&lt;&lt;if random(1,75) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,75) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
   &lt;&lt;else&gt;&gt;
   	&lt;&lt;if not hasVisited(&quot;Sickness&quot;)&gt;&gt;
   	&lt;&lt;if random(1,1000) eq 1&gt;&gt;
@@ -1620,6 +1645,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -1628,6 +1658,22 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     	&lt;&lt;set _infectedFamily.push(_idx)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+
+&lt;&lt;set _infectedMaster = []&gt;&gt;
+&lt;&lt;for _idx, _mh range $NPCsMaster&gt;&gt;
+	&lt;&lt;if _mh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedMaster.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _infectedExtended = []&gt;&gt;
+&lt;&lt;for _idx, _eh range $NPCsExtended&gt;&gt;
+	&lt;&lt;if _eh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedExtended.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+
+
 
 
 &lt;&lt;/silently&gt;&gt;
@@ -1657,6 +1703,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;July 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,20) eq 1&gt;&gt;
@@ -1677,6 +1728,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,20) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,20) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;August 1665&quot;&gt;&gt;
@@ -1701,6 +1757,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 		&lt;&lt;if random(1,4) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,4) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;September 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,3) eq 1&gt;&gt;
@@ -1721,6 +1782,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,3) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,3) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;October 1665&quot;&gt;&gt;
@@ -1745,6 +1811,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 		&lt;&lt;if random(1,5) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,5) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;November 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,20) eq 1&gt;&gt;
@@ -1767,6 +1838,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;December 1665&quot;&gt;&gt;
     &lt;&lt;if random(1,100) lte 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
@@ -1785,6 +1861,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -1807,6 +1888,11 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -1815,6 +1901,22 @@ Send not to know for whom the church bells toll. They toll for you. &lt;&lt;if $
     	&lt;&lt;set _infectedFamily.push(_idx)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+
+&lt;&lt;set _infectedMaster = []&gt;&gt;
+&lt;&lt;for _idx, _mh range $NPCsMaster&gt;&gt;
+	&lt;&lt;if _mh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedMaster.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _infectedExtended = []&gt;&gt;
+&lt;&lt;for _idx, _eh range $NPCsExtended&gt;&gt;
+	&lt;&lt;if _eh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedExtended.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+
+
 
 
 &lt;&lt;/silently&gt;&gt;
@@ -1961,6 +2063,9 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;set $impressed to 0&gt;&gt;
 &lt;&lt;set $NPCs = []&gt;&gt;
 &lt;&lt;set $NPCsExtended = []&gt;&gt;
+&lt;&lt;set $quarantineSwapped to &quot;&quot;&gt;&gt;
+&lt;&lt;set $SavedNPCs to []&gt;&gt;
+&lt;&lt;set $SavedServants to []&gt;&gt;
 &lt;&lt;set $FledFamily = []&gt;&gt;
 &lt;&lt;set $NPCsServants = []&gt;&gt;
 &lt;&lt;set $FledServants = []&gt;&gt;
@@ -2012,6 +2117,8 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 	&lt;&lt;elseif $location is &quot;in another part of the western suburbs&quot; and passage() is &quot;May 1665&quot;&gt;&gt;&lt;&lt;set $apothecary to 1&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
     &lt;&lt;if ndef _infectedFamily&gt;&gt;&lt;&lt;set _infectedFamily = []&gt;&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;if ndef _infectedMaster&gt;&gt;&lt;&lt;set _infectedMaster = []&gt;&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;if ndef _infectedExtended&gt;&gt;&lt;&lt;set _infectedExtended = []&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="Western-infection" tags="infection-rates" position="300,850" size="100,100">/* This adjusts the rate of infection for a specific location depending on how much time has passed in the game, starting at 5 plays (the first passage after the game starts proper). The play number roughly corresponds to our broad time events. */
 &lt;&lt;nobr&gt;&gt;
@@ -2039,6 +2146,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;July 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,13) eq 1&gt;&gt;
@@ -2059,6 +2171,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,13) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,13) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;August 1665&quot;&gt;&gt;
@@ -2083,6 +2200,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 		&lt;&lt;if random(1,4) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,4) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;September 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,20) eq 1&gt;&gt;
@@ -2103,6 +2225,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,20) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,20) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;October 1665&quot;&gt;&gt;
@@ -2127,6 +2254,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 		&lt;&lt;if random(1,10) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,10) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;November 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,50) eq 1&gt;&gt;
@@ -2147,6 +2279,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,50) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,50) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;December 1665&quot;&gt;&gt;
@@ -2171,6 +2308,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;else&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,1000) eq 1&gt;&gt;
@@ -2193,6 +2335,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -2201,6 +2348,22 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
     	&lt;&lt;set _infectedFamily.push(_idx)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+
+&lt;&lt;set _infectedMaster = []&gt;&gt;
+&lt;&lt;for _idx, _mh range $NPCsMaster&gt;&gt;
+	&lt;&lt;if _mh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedMaster.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _infectedExtended = []&gt;&gt;
+&lt;&lt;for _idx, _eh range $NPCsExtended&gt;&gt;
+	&lt;&lt;if _eh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedExtended.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+
+
 
 
 &lt;&lt;/silently&gt;&gt;
@@ -2230,6 +2393,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;July 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,50) eq 1&gt;&gt;
@@ -2250,6 +2418,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,50) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,50) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;August 1665&quot;&gt;&gt;
@@ -2274,6 +2447,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 		&lt;&lt;if random(1,3) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,3) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;September 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,2) eq 1&gt;&gt;
@@ -2294,6 +2472,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,2) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,2) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;October 1665&quot;&gt;&gt;
@@ -2318,6 +2501,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 		&lt;&lt;if random(1,5) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,5) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;November 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,30) eq 1&gt;&gt;
@@ -2340,6 +2528,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 		&lt;&lt;if random(1,30) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,30) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;December 1665&quot;&gt;&gt;
     &lt;&lt;if random(1,100) lte 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
@@ -2358,6 +2551,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
  &lt;&lt;else&gt;&gt;
@@ -2380,6 +2578,11 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -2388,6 +2591,22 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
     	&lt;&lt;set _infectedFamily.push(_idx)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+
+&lt;&lt;set _infectedMaster = []&gt;&gt;
+&lt;&lt;for _idx, _mh range $NPCsMaster&gt;&gt;
+	&lt;&lt;if _mh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedMaster.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _infectedExtended = []&gt;&gt;
+&lt;&lt;for _idx, _eh range $NPCsExtended&gt;&gt;
+	&lt;&lt;if _eh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedExtended.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+
+
 
 
 &lt;&lt;/silently&gt;&gt;
@@ -3383,6 +3602,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,500) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;July 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,18) eq 1&gt;&gt;
@@ -3403,6 +3627,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,18) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,18) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;August 1665&quot;&gt;&gt;
@@ -3427,6 +3656,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 		&lt;&lt;if random(1,3) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,3) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;September 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,5) eq 1&gt;&gt;
@@ -3447,6 +3681,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,5) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,5) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;October 1665&quot;&gt;&gt;
@@ -3471,6 +3710,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 		&lt;&lt;if random(1,15) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,15) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;November 1665&quot;&gt;&gt;
     &lt;&lt;if random(1,100) lte 1&gt;&gt;
     &lt;&lt;set $plagueInfection to 1&gt;&gt;
@@ -3489,6 +3733,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -3511,6 +3760,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -3519,6 +3773,22 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     	&lt;&lt;set _infectedFamily.push(_idx)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+
+&lt;&lt;set _infectedMaster = []&gt;&gt;
+&lt;&lt;for _idx, _mh range $NPCsMaster&gt;&gt;
+	&lt;&lt;if _mh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedMaster.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _infectedExtended = []&gt;&gt;
+&lt;&lt;for _idx, _eh range $NPCsExtended&gt;&gt;
+	&lt;&lt;if _eh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedExtended.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+
+
 
 
 &lt;&lt;/silently&gt;&gt;
@@ -3548,6 +3818,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;July 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,100) eq 1&gt;&gt;
@@ -3568,6 +3843,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,100) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;August 1665&quot;&gt;&gt;
@@ -3592,6 +3872,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 		&lt;&lt;if random(1,8) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,8) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;September 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,4) eq 1&gt;&gt;
@@ -3612,6 +3897,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,4) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,4) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;October 1665&quot;&gt;&gt;
@@ -3636,6 +3926,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 		&lt;&lt;if random(1,6) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,6) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;November 1665&quot;&gt;&gt;
     &lt;&lt;if not visited(&quot;Sickness&quot;)&gt;&gt;
     &lt;&lt;if random(1,25) eq 1&gt;&gt;
@@ -3656,6 +3951,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
 	&lt;&lt;if $NPCsMaster[_mi].health is &quot;healthy&quot;&gt;&gt;
 		&lt;&lt;if random(1,25) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,25) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif passage() is &quot;December 1665&quot;&gt;&gt;
@@ -3686,6 +3986,11 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+	&lt;&lt;if $NPCsExtended[_ei].health is &quot;healthy&quot;&gt;&gt;
+		&lt;&lt;if random(1,1000) lte 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;infected&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -3694,6 +3999,22 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     	&lt;&lt;set _infectedFamily.push(_idx)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+
+&lt;&lt;set _infectedMaster = []&gt;&gt;
+&lt;&lt;for _idx, _mh range $NPCsMaster&gt;&gt;
+	&lt;&lt;if _mh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedMaster.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _infectedExtended = []&gt;&gt;
+&lt;&lt;for _idx, _eh range $NPCsExtended&gt;&gt;
+	&lt;&lt;if _eh.health is &quot;infected&quot;&gt;&gt;
+    	&lt;&lt;set _infectedExtended.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+
+
 
 
 &lt;&lt;/silently&gt;&gt;
@@ -4047,7 +4368,79 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
         &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
-&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="storyline-return widget" tags="widget" position="950,25" size="100,100">&lt;&lt;widget &quot;storyline-return&quot;&gt;&gt;
+/* Process extended family health updates */
+&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+    &lt;&lt;if $NPCsExtended[_ei].health is &quot;infected&quot;&gt;&gt;
+        &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased&quot;&gt;&gt;
+        &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+
+
+&lt;&lt;widget &quot;sickOtherHH&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $plagueRevealed to 1&gt;&gt;
+&lt;&lt;silently&gt;&gt;
+&lt;&lt;set _infectedMaster = []&gt;&gt;
+&lt;&lt;for _idx, _mh range $NPCsMaster&gt;&gt;
+    &lt;&lt;if _mh.health is &quot;infected&quot;&gt;&gt;
+        &lt;&lt;set _infectedMaster.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _infectedExtended = []&gt;&gt;
+&lt;&lt;for _idx, _eh range $NPCsExtended&gt;&gt;
+    &lt;&lt;if _eh.health is &quot;infected&quot;&gt;&gt;
+        &lt;&lt;set _infectedExtended.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;span id=&quot;other-hh-choice&quot;&gt;
+&lt;&lt;if _infectedMaster.length gte 1&gt;&gt;Word reaches you that plague has struck your master&#39;s &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;. Your
+    &lt;&lt;for _n, _idx range _infectedMaster&gt;&gt;
+        &lt;&lt;if _infectedMaster.length eq 1&gt;&gt;
+    $NPCsMaster[_idx].relationship $NPCsMaster[_idx].name is infected with the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;.&lt;br&gt;
+    &lt;&lt;elseif _n &lt; _infectedMaster.length - 1&gt;&gt;$NPCsMaster[_idx].relationship, $NPCsMaster[_idx].name,&lt;&lt;else&gt;&gt; and $NPCsMaster[_idx].relationship, $NPCsMaster[_idx].name are infected with the plague.&lt;br&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _infectedExtended.length gte 1&gt;&gt;Word reaches you that plague has struck your extended family. Your
+    &lt;&lt;for _n, _idx range _infectedExtended&gt;&gt;
+        &lt;&lt;if _infectedExtended.length eq 1&gt;&gt;
+    $NPCsExtended[_idx].relationship $NPCsExtended[_idx].name is infected with the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;.&lt;br&gt;
+    &lt;&lt;elseif _n &lt; _infectedExtended.length - 1&gt;&gt;$NPCsExtended[_idx].relationship, $NPCsExtended[_idx].name,&lt;&lt;else&gt;&gt; and $NPCsExtended[_idx].relationship, $NPCsExtended[_idx].name are infected with the plague.&lt;br&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+    &lt;br&gt;
+    As a good Christian, it is your duty to look after the poor, sick, and needy. But as a good Christian, you also know it is a sin to needlessly risk your life. Do you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; convince your household to&lt;&lt;/if&gt;&gt;:&lt;ul&gt;
+&lt;li&gt;&lt;&lt;link &quot;Quarantine with the sick&quot; &quot;Quarantine, Week 1&quot;&gt;&gt;&lt;&lt;swap-to-other-hh&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 3, 0, 10)&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;&lt;link &quot;Remain in your own household&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;&lt;&lt;if $NPCsMaster[_mi].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;&lt;&lt;if $NPCsExtended[_ei].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;replace &quot;#other-hh-choice&quot;&gt;&gt;You decide to remain in your own household and pray for the recovery of the sick. Life goes on.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+    &lt;/ul&gt;&lt;/span&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;swap-to-other-hh&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
+/* Save original household */
+&lt;&lt;set $SavedNPCs to clone($NPCs)&gt;&gt;
+&lt;&lt;set $SavedServants to clone($NPCsServants)&gt;&gt;
+/* Determine which household is infected */
+&lt;&lt;set _infectedMaster = []&gt;&gt;
+&lt;&lt;for _idx, _mh range $NPCsMaster&gt;&gt;
+    &lt;&lt;if _mh.health is &quot;infected&quot;&gt;&gt;
+        &lt;&lt;set _infectedMaster.push(_idx)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;if _infectedMaster.length gte 1&gt;&gt;
+    &lt;&lt;set $NPCs to clone($NPCsMaster)&gt;&gt;
+    &lt;&lt;set $quarantineSwapped to &quot;master&quot;&gt;&gt;
+&lt;&lt;else&gt;&gt;
+    &lt;&lt;set $NPCs to clone($NPCsExtended)&gt;&gt;
+    &lt;&lt;set $quarantineSwapped to &quot;extended&quot;&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;set $NPCsServants to []&gt;&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="storyline-return widget" tags="widget" position="950,25" size="100,100">&lt;&lt;widget &quot;storyline-return&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
     /* Argument 0: Text for the link (Defaults to &quot;Continue.&quot;) */
     &lt;&lt;set _linkText to _args[0] || &quot;Continue.&quot;&gt;&gt;
@@ -5351,6 +5744,25 @@ You decide to:
 Lord be praised, your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; has survived the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. You still need to finish  &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt;, but begin reconnecting with the outside world.
 
 /* In the time you were away....  nts: add updates based on what big events have happened */
+&lt;&lt;if $quarantineSwapped is &quot;master&quot;&gt;&gt;
+&lt;&lt;silently&gt;&gt;
+&lt;&lt;set $NPCsMaster to clone($NPCs)&gt;&gt;
+&lt;&lt;set $NPCs to clone($SavedNPCs)&gt;&gt;
+&lt;&lt;set $NPCsServants to clone($SavedServants)&gt;&gt;
+&lt;&lt;set $quarantineSwapped to &quot;&quot;&gt;&gt;
+&lt;&lt;set $SavedNPCs to []&gt;&gt;
+&lt;&lt;set $SavedServants to []&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;&lt;elseif $quarantineSwapped is &quot;extended&quot;&gt;&gt;
+&lt;&lt;silently&gt;&gt;
+&lt;&lt;set $NPCsExtended to clone($NPCs)&gt;&gt;
+&lt;&lt;set $NPCs to clone($SavedNPCs)&gt;&gt;
+&lt;&lt;set $NPCsServants to clone($SavedServants)&gt;&gt;
+&lt;&lt;set $quarantineSwapped to &quot;&quot;&gt;&gt;
+&lt;&lt;set $SavedNPCs to []&gt;&gt;
+&lt;&lt;set $SavedServants to []&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;orphan-check&gt;&gt;
 
 &lt;&lt;storyline-return&gt;&gt;
@@ -5993,6 +6405,26 @@ Despite everything, business continues. A friend from the countryside writes to 
    middle-aged adult, or elderly adult) remains in $NPCs, regenerate their
    household according to their socio status. */
 &lt;&lt;widget &quot;orphan-check&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+/* If household was swapped for other-HH quarantine, undo the swap first */
+&lt;&lt;if $quarantineSwapped is &quot;master&quot;&gt;&gt;
+&lt;&lt;silently&gt;&gt;
+&lt;&lt;set $NPCsMaster to clone($NPCs)&gt;&gt;
+&lt;&lt;set $NPCs to clone($SavedNPCs)&gt;&gt;
+&lt;&lt;set $NPCsServants to clone($SavedServants)&gt;&gt;
+&lt;&lt;set $quarantineSwapped to &quot;&quot;&gt;&gt;
+&lt;&lt;set $SavedNPCs to []&gt;&gt;
+&lt;&lt;set $SavedServants to []&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;&lt;elseif $quarantineSwapped is &quot;extended&quot;&gt;&gt;
+&lt;&lt;silently&gt;&gt;
+&lt;&lt;set $NPCsExtended to clone($NPCs)&gt;&gt;
+&lt;&lt;set $NPCs to clone($SavedNPCs)&gt;&gt;
+&lt;&lt;set $NPCsServants to clone($SavedServants)&gt;&gt;
+&lt;&lt;set $quarantineSwapped to &quot;&quot;&gt;&gt;
+&lt;&lt;set $SavedNPCs to []&gt;&gt;
+&lt;&lt;set $SavedServants to []&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;
   &lt;&lt;set _hasLivingAdult to false&gt;&gt;
   &lt;&lt;for _oi = 0; _oi &lt; $NPCs.length; _oi++&gt;&gt;
@@ -6244,6 +6676,8 @@ Unfortunately, you have suffered a miscarriage and are no longer pregnant. &lt;&
 		&lt;&lt;set $pregnant to 0&gt;&gt; /* silent miscarriage */
 	&lt;&lt;/if&gt;&gt;
 	&lt;&lt;sickFam&gt;&gt;
+&lt;&lt;elseif _infectedMaster.length gte 1 or _infectedExtended.length gte 1&gt;&gt;
+	&lt;&lt;sickOtherHH&gt;&gt;
 &lt;&lt;else&gt;&gt; /* Begin by Initializing Randomizers */
 	&lt;&lt;set $elderly to random(1,30)&gt;&gt;
 	&lt;&lt;set $wedding to random(1,10)&gt;&gt;
