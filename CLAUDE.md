@@ -51,6 +51,7 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
 1. **Extract** — Run `node extract.js` to produce `passages.json` from the HTML file. This is your sole working copy of passage data.
 2. **Analyze / Edit** — Perform all reading, searching, and editing against `passages.json`. Never open or modify the HTML file for passage content.
    - **`passages.json` is large** (generally exceeds 256 KB). Do not attempt to read the entire file at once. Use the `offset` and `limit` parameters to read specific portions, or use the Grep tool to search for specific content by keyword or passage name.
+   - **`passages.json` uses HTML entity encoding.** The `content` field in each passage object contains HTML-encoded text (e.g., `&lt;&lt;` for `<<`, `&quot;` for `"`, etc.). All modification scripts should work directly with these encoded entities without manual decoding — `patch.js` applies changes verbatim to the HTML file.
 3. **Patch** — When edits are complete, run `node patch.js` to write changes back into the HTML.
 
 ### Pre-patch safety rules (mandatory before running `node patch.js`)
@@ -63,14 +64,14 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
 
 - **Do not reconstruct or rewrite** `<tw-storydata>` or any `<tw-passagedata>` opening/closing tags. `patch.js` preserves them automatically.
 - **Passage matching is by `pid`, not by `name`.** Passage names can change; `pid` is the stable identifier.
-- **Preserve verbatim encoding.** Passage content in the HTML uses HTML-entity encoding:
+- **Preserve verbatim encoding.** Passage content in `passages.json` (extracted from the HTML) uses HTML-entity encoding:
   - `&lt;&lt;` represents `<<` (SugarCube macro opening)
   - `&gt;&gt;` represents `>>` (SugarCube macro closing)
   - `&quot;` represents `"` (double quote)
   - `&#39;` represents `'` (single quote)
   - `&amp;` represents `&` (ampersand)
 
-  Example: `&lt;&lt;nobr&gt;&gt;` in the extracted JSON corresponds to `<<nobr>>` in the rendered game. The extract/patch scripts handle this transparently — do not manually re-encode or decode content in `passages.json`.
+  **When working with `passages.json`, use these encoded entities directly in your modifications.** Example: to insert `<<nobr>>`, add `&lt;&lt;nobr&gt;&gt;` to the `content` field. Do not manually decode, re-encode, or attempt to "translate" entity text — work with what `extract.js` produced. `patch.js` expects encoded content and applies it verbatim to the HTML file.
 - After patching, `passages.json` is a **transient artifact** and should not be committed to the repository. Only the updated HTML file should be committed.
 
 ## Version Control (Game Title)
