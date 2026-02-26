@@ -67,6 +67,8 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
   - `&lt;&lt;` represents `<<` (SugarCube macro opening)
   - `&gt;&gt;` represents `>>` (SugarCube macro closing)
   - `&quot;` represents `"` (double quote)
+  - `&#39;` represents `'` (single quote)
+  - `&amp;` represents `&` (ampersand)
 
   Example: `&lt;&lt;nobr&gt;&gt;` in the extracted JSON corresponds to `<<nobr>>` in the rendered game. The extract/patch scripts handle this transparently — do not manually re-encode or decode content in `passages.json`.
 - After patching, `passages.json` is a **transient artifact** and should not be committed to the repository. Only the updated HTML file should be committed.
