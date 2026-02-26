@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.47" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.48" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3075,10 +3075,10 @@ Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.
 &lt;&lt;else&gt;&gt;
 &lt;&lt;set $relationship to either(&quot;single&quot;, &quot;married&quot;, &quot;widowed&quot;)&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;set $religion to either(&quot;member of the Church of England&quot;, &quot;member of a dissident Protestant church&quot;, &quot;Catholic&quot;)&gt;&gt;
+&lt;&lt;set $religion to weightedEither({&quot;member of the Church of England&quot;: 9209, &quot;member of a dissident Protestant church&quot;: 758, &quot;Catholic&quot;: 33})&gt;&gt;
 &lt;&lt;set $origin to either(&quot;London&quot;, &quot;the English countryside&quot;, &quot;another English town or city&quot;, &quot;Scotland&quot;, &quot;Ireland&quot;, &quot;the Dutch Republic&quot;, &quot;France&quot;, &quot;somewhere else&quot;)&gt;&gt;
 &lt;&lt;set $socio to either(&quot;day labourers&quot;, &quot;servants&quot;, &quot;artisans&quot;, &quot;merchants&quot;, &quot;nobles&quot;, &quot;beggars&quot;)&gt;&gt;
-&lt;&lt;set $location to either(&quot;inside the City walls&quot;, &quot;in the western suburbs, specifically Westminster&quot;, &quot;in another part of the western suburbs&quot;, &quot;in the northern suburbs&quot;, &quot;in the eastern suburbs&quot;, &quot;across the river in the southern suburbs&quot;)&gt;&gt;
+&lt;&lt;set $location to weightedEither({&quot;inside the City walls&quot;: 3458, &quot;in the western suburbs, specifically Westminster&quot;: 2796, &quot;in another part of the western suburbs&quot;: 2405, &quot;in the northern suburbs&quot;: 4810, &quot;in the eastern suburbs&quot;: 3140, &quot;across the river in the southern suburbs&quot;: 2563})&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="impressed" tags="" position="1900,250" size="100,100">&lt;&lt;nobr&gt;&gt;/* NTS: for those not booted out, need to add reputation/money hits */
 &lt;&lt;if $impressed gte 2&gt;&gt;You&#39;ve been caught again! 
