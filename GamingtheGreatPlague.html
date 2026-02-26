@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.39" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.40" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3952,19 +3952,74 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
 /* if sending household away or back to place of origin, change their location for status updates */
 &lt;&lt;widget &quot;fled-family&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;
 &lt;&lt;if $origin isnot &quot;London&quot;&gt;&gt;&lt;&lt;set $hhlocation to $origin&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $hhlocation to &quot;in the countryside&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+/* If the player is a child or adolescent, one adult NPC stays behind */
+&lt;&lt;if $agenum lte 15&gt;&gt;
+    &lt;&lt;set _stayIdx to -1&gt;&gt;
+    /* Priority 1: father or step-father */
+    &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
+        &lt;&lt;if _stayIdx is -1 and ($NPCs[_fi].relationship is &quot;father&quot; or $NPCs[_fi].relationship is &quot;step-father&quot;)&gt;&gt;
+            &lt;&lt;set _stayIdx to _fi&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+    /* Priority 2: mother or step-mother */
+    &lt;&lt;if _stayIdx is -1&gt;&gt;
+        &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
+            &lt;&lt;if $NPCs[_fi].relationship is &quot;mother&quot; or $NPCs[_fi].relationship is &quot;step-mother&quot;&gt;&gt;
+                &lt;&lt;set _stayIdx to _fi&gt;&gt;
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    /* Priority 3: master */
+    &lt;&lt;if _stayIdx is -1&gt;&gt;
+        &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
+            &lt;&lt;if $NPCs[_fi].relationship is &quot;master&quot;&gt;&gt;
+                &lt;&lt;set _stayIdx to _fi&gt;&gt;
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    /* Priority 4: oldest adult by agenum */
+    &lt;&lt;if _stayIdx is -1&gt;&gt;
+        &lt;&lt;set _bestAge to -1&gt;&gt;
+        &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
+            &lt;&lt;if ($NPCs[_fi].age is &quot;young adult&quot; or $NPCs[_fi].age is &quot;middle-aged adult&quot; or $NPCs[_fi].age is &quot;elderly adult&quot;) and ($NPCs[_fi].agenum || 0) gt _bestAge&gt;&gt;
+                &lt;&lt;set _bestAge to ($NPCs[_fi].agenum || 0)&gt;&gt;
+                &lt;&lt;set _stayIdx to _fi&gt;&gt;
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    /* Move everyone except the staying adult to FledFamily */
+    &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
+        &lt;&lt;if _fi isnot _stayIdx&gt;&gt;
+            &lt;&lt;set $FledFamily.push($NPCs[_fi])&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+    &lt;&lt;if _stayIdx gte 0&gt;&gt;
+        &lt;&lt;set $NPCs to [$NPCs[_stayIdx]]&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+        &lt;&lt;set $NPCs to []&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    /* If the child has servants, keep the oldest one */
+    &lt;&lt;if $NPCsServants.length gt 0&gt;&gt;
+        &lt;&lt;for _fs = 1; _fs &lt; $NPCsServants.length; _fs++&gt;&gt;
+            &lt;&lt;set $FledServants.push($NPCsServants[_fs])&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+        &lt;&lt;set $NPCsServants to $NPCsServants.slice(0, 1)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;
     &lt;&lt;for _f range $NPCs&gt;&gt;
             &lt;&lt;set $FledFamily.push(_f)&gt;&gt;
     &lt;&lt;/for&gt;&gt;
     &lt;&lt;set $NPCs to []&gt;&gt;
-/* For nobles, keep 1-2 servants while the rest flee with the family */
-&lt;&lt;if $socio is &quot;nobles&quot; and $NPCsServants.length gt 0&gt;&gt;
-    &lt;&lt;set _keepCount to random(1,2)&gt;&gt;
-    &lt;&lt;if _keepCount gt $NPCsServants.length&gt;&gt;&lt;&lt;set _keepCount to $NPCsServants.length&gt;&gt;&lt;&lt;/if&gt;&gt;
-    &lt;&lt;set _totalServants to $NPCsServants.length&gt;&gt;
-    &lt;&lt;for _fs to _keepCount; _fs lt _totalServants; _fs++&gt;&gt;
-        &lt;&lt;set $FledServants.push($NPCsServants[_fs])&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-    &lt;&lt;set $NPCsServants to $NPCsServants.slice(0, _keepCount)&gt;&gt;
+    /* For nobles, keep 1-2 servants while the rest flee with the family */
+    &lt;&lt;if $socio is &quot;nobles&quot; and $NPCsServants.length gt 0&gt;&gt;
+        &lt;&lt;set _keepCount to random(1,2)&gt;&gt;
+        &lt;&lt;if _keepCount gt $NPCsServants.length&gt;&gt;&lt;&lt;set _keepCount to $NPCsServants.length&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;set _totalServants to $NPCsServants.length&gt;&gt;
+        &lt;&lt;for _fs to _keepCount; _fs lt _totalServants; _fs++&gt;&gt;
+            &lt;&lt;set $FledServants.push($NPCsServants[_fs])&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+        &lt;&lt;set $NPCsServants to $NPCsServants.slice(0, _keepCount)&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
