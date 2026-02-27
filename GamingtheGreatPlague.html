@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.59" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.60" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3574,7 +3574,7 @@ You must remain in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for at l
     &lt;&lt;/for&gt;&gt;&lt;&lt;/silently&gt;&gt;
     &lt;&lt;if $plagueInfection is 1&gt;&gt;&lt;&lt;if $quarantine is 2&gt;&gt;[[You fear more of your family will die. You are even more afraid you will fall ill next.-&gt;Sickness]]&lt;&lt;elseif $quarantine is 3&gt;&gt;[[The days continue to pass with agonizing slowness.-&gt;Sickness]]&lt;&lt;else&gt;&gt;[[You wonder what has happened while you were away from the world.-&gt;Sickness]]&lt;&lt;/if&gt;&gt;
     &lt;&lt;elseif $quarantine lt 4&gt;&gt;&lt;&lt;if $quarantine is 2&gt;&gt;[[You fear more of your family will die. You are even more afraid you will fall ill next.-&gt;Quarantine Continues]]&lt;&lt;else&gt;&gt;[[The days continue to pass with agonizing slowness.-&gt;Quarantine Continues]]&lt;&lt;/if&gt;&gt;
-    &lt;&lt;elseif $quarantine lt 6 and _infectedFamily.length gt 0&gt;&gt;[[You wonder what has happened while you were away from the world.-&gt;Quarantine Continues]]
+    &lt;&lt;elseif _infectedFamily.length gt 0&gt;&gt;[[You wonder what has happened while you were away from the world.-&gt;Quarantine Continues]]
     &lt;&lt;else&gt;&gt;[[You wonder what has happened while you were away from the world.-&gt;Reconnecting]]
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;fumigant&gt;&gt;
