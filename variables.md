@@ -300,6 +300,20 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Dependency:** Only meaningful when `$socio is "servants"`
 - **Used for:** Determines master's household size and composition
 
+### `$masterGender`
+- **Type:** String
+- **Possible values:** `""` (empty/not applicable), `"male"`, `"female"`
+- **Set by:** `weightedEither({"male": 4, "female": 1})` inside the `addMasterHousehold` widget (~80% male, ~20% female)
+- **Dependency:** Only meaningful when `$socio is "servants"`
+- **Used for:** Determines the master NPC's name pool (male or female names) and pronoun selection in narrative text. A female master is implicitly widowed (running the household after her husband's death).
+
+### `$masterTitle`
+- **Type:** String
+- **Possible values:** `""` (empty/not applicable), `"master"`, `"mistress"`
+- **Set by:** Derived from `$masterGender` inside the `addMasterHousehold` widget — `"mistress"` when female, `"master"` when male
+- **Dependency:** Depends on `$masterGender`; only meaningful when `$socio is "servants"`
+- **Used for:** Display term used in all narrative text that references the player's master/mistress (e.g., "Your $masterTitle decides to flee"). The NPC's `relationship` field remains `"master"` regardless of gender for code compatibility.
+
 ---
 
 ## NPC Name Pools
