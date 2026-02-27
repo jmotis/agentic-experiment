@@ -3071,13 +3071,13 @@ Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.
 &lt;&lt;set $gender to either(&quot;male&quot;, &quot;female&quot;)&gt;&gt;
 &lt;&lt;set $age to weightedEither({&quot;child&quot;: 14, &quot;adolescent&quot;: 16, &quot;young adult&quot;: 25, &quot;middle-aged adult&quot;: 35, &quot;elderly adult&quot;: 10})&gt;&gt;
 &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;
-&lt;&lt;set $relationship to either(&quot;single&quot;, &quot;betrothed&quot;)&gt;&gt;
+&lt;&lt;set $relationship to weightedEither({&quot;single&quot;: 95, &quot;betrothed&quot;: 5})&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $relationship to either(&quot;single&quot;, &quot;married&quot;, &quot;widowed&quot;)&gt;&gt;
+&lt;&lt;set $relationship to weightedEither({&quot;single&quot;: 17, &quot;married&quot;: 32, &quot;widowed&quot;: 9})&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;set $religion to weightedEither({&quot;member of the Church of England&quot;: 9209, &quot;member of a dissident Protestant church&quot;: 758, &quot;Catholic&quot;: 33})&gt;&gt;
-&lt;&lt;set $origin to either(&quot;London&quot;, &quot;the English countryside&quot;, &quot;another English town or city&quot;, &quot;Scotland&quot;, &quot;Ireland&quot;, &quot;the Dutch Republic&quot;, &quot;France&quot;, &quot;somewhere else&quot;)&gt;&gt;
-&lt;&lt;set $socio to either(&quot;day labourers&quot;, &quot;servants&quot;, &quot;artisans&quot;, &quot;merchants&quot;, &quot;nobles&quot;, &quot;beggars&quot;)&gt;&gt;
+&lt;&lt;set $origin to weightedEither({&quot;London&quot;: 30, &quot;the English countryside&quot;: 200, &quot;another English town or city&quot;: 20, &quot;Scotland&quot;: 20, &quot;Ireland&quot;: 20, &quot;the Dutch Republic&quot;: 5, &quot;France&quot;: 4, &quot;somewhere else&quot;: 1})&gt;&gt;
+&lt;&lt;set $socio to weightedEither({&quot;day labourers&quot;: 1820, &quot;servants&quot;: 1820, &quot;artisans&quot;: 600, &quot;merchants&quot;: 80, &quot;nobles&quot;: 8, &quot;beggars&quot;: 4000})&gt;&gt;
 &lt;&lt;set $location to weightedEither({&quot;inside the City walls&quot;: 3458, &quot;in the western suburbs, specifically Westminster&quot;: 2796, &quot;in another part of the western suburbs&quot;: 2405, &quot;in the northern suburbs&quot;: 4810, &quot;in the eastern suburbs&quot;: 3140, &quot;across the river in the southern suburbs&quot;: 2563})&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="impressed" tags="" position="1900,250" size="100,100">&lt;&lt;nobr&gt;&gt;/* NTS: for those not booted out, need to add reputation/money hits */
