@@ -15,6 +15,7 @@ This repository contains **Gaming the Great Plague**, an interactive fiction gam
 ├── GamingtheGreatPlague.html      # Complete Twine game (single-file, ~1.2 MB)
 ├── extract.js                     # Extracts <tw-passagedata> elements to passages.json
 ├── patch.js                       # Patches modified passage content back into the HTML
+├── variables.md                   # Reference list of all global game variables
 └── README.md                      # Project description and play instructions
 ```
 
@@ -111,6 +112,12 @@ Known limitations and gotchas discovered during development:
   <<for ; _usedNames.includes(_n); >><<set _n to weightedEither($fNames)>><</for>>
   ```
   The body executes as long as the condition is true; if the condition is false on first entry the body is skipped entirely, matching typical while-loop semantics.
+
+## Global Variables Reference
+
+The file `variables.md` contains a comprehensive list of all global (`$`-prefixed) game variables, including their types, possible values, dependencies, and usage notes. Consult this file when you need to understand what a variable does, what values it can hold, or how it relates to other variables.
+
+**Maintenance rule:** If a future update creates a new global variable or changes how an existing variable is used, `variables.md` must be updated along with the game file.
 
 ## Git Conventions
 
