@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.14" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.15" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -4572,36 +4572,36 @@ Lord be praised, your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; has sur
 
 When the death tolls top 7,000 a week in August and September, you&#39;re sure you made the right call. By the beginning of October, death tolls have fallen to half that and you decide to [[return to the city-&gt;October 1665]].</tw-passagedata><tw-passagedata pid="85" name="Winter 1665" tags="fled" position="1050,1475" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;fled-opening&gt;&gt;
 
-When the death tolls top 7,000 a week in August and September, you&#39;re sure you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; made the right call. 
+&lt;&lt;if $fledFromIndex lt 7&gt;&gt;When the death tolls top 7,000 a week in August and September, you&#39;re sure you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; made the right call. 
 
 &lt;&lt;fled-cost&gt;&gt;
 
-By the beginning of October, death tolls have fallen to half that but there are still a horrifying number of people dying every week.&lt;&lt;fled-broke &quot;October 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
+By the beginning of October, death tolls have fallen to half that but there are still a horrifying number of people dying every week.&lt;&lt;/if&gt;&gt;&lt;&lt;fled-broke &quot;October 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 8&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
-You anxiously watch the fall in the number of deaths each week, thanking God when only a thousand people a week are dying at the beginning of November. &lt;&lt;fled-broke &quot;November 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
+You anxiously watch the fall in the number of deaths each week, thanking God when only a thousand people a week are dying at the beginning of November. &lt;&lt;/if&gt;&gt;&lt;&lt;fled-broke &quot;November 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
 
 By the start of Advent, there are barely 200 or 300 odd people dying each week and you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; decide it&#39;s finally safe to [[return to the city-&gt;December 1665]] just in time for the Christmas feasting and merrymaking.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="86" name="court-return" tags="fled" position="1225,1475" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;fled-opening&gt;&gt;
 
-When the death tolls top 7,000 a week in August and September, you&#39;re sure you made the right call. 
+&lt;&lt;if $fledFromIndex lt 7&gt;&gt;When the death tolls top 7,000 a week in August and September, you&#39;re sure you made the right call. 
 
 &lt;&lt;fled-cost&gt;&gt;
 
-By the beginning of October, death tolls have fallen to half that but there are still a horrifying number of people dying every week.&lt;&lt;fled-broke &quot;October 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
+By the beginning of October, death tolls have fallen to half that but there are still a horrifying number of people dying every week.&lt;&lt;/if&gt;&gt;&lt;&lt;fled-broke &quot;October 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 8&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
-You anxiously watch the fall in the number of deaths each week, thanking God when only a thousand people a week are dying at the beginning of November. &lt;&lt;fled-broke &quot;November 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
+You anxiously watch the fall in the number of deaths each week, thanking God when only a thousand people a week are dying at the beginning of November. &lt;&lt;/if&gt;&gt;&lt;&lt;fled-broke &quot;November 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 9&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
-At the start of Advent, there are still 200 or 300 odd people dying each week &lt;&lt;if $money lte 0&gt;&gt;but unfortunately, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; have run out of money and are forced to [[return to the city-&gt;December 1665]] to avoid starving.&lt;&lt;else&gt;&gt;and you reconcile yourself with a Christmas spent away from the City.&lt;br&gt;&lt;br&gt;
+At the start of Advent, there are still 200 or 300 odd people dying each week &lt;&lt;/if&gt;&gt;&lt;&lt;if $money lte 0 and $timeline.indexOf(&quot;December 1665&quot;) gt $fledFromIndex&gt;&gt;but unfortunately, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; have run out of money and are forced to [[return to the city-&gt;December 1665]] to avoid starving.&lt;&lt;else&gt;&gt;&lt;&lt;if $fledFromIndex lt 9&gt;&gt;and you reconcile yourself with a Christmas spent away from the City.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 10&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
-When the New Year dawns, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are desperately homesick and renew your resolve to return to London as soon as the court does. You hear the King and court have returned to &lt;&lt;defHamptonCourt &quot;Hampton Court Palace&quot;&gt;&gt;, near to the city, and eagerly await news of his return. &lt;&lt;if $money lte 0&gt;&gt;While you are waiting, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return early to avoid starving-&gt;January 1666]].&lt;&lt;else&gt;&gt;
+When the New Year dawns, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are desperately homesick and renew your resolve to return to London as soon as the court does. You hear the King and court have returned to &lt;&lt;defHamptonCourt &quot;Hampton Court Palace&quot;&gt;&gt;, near to the city, and eagerly await news of his return. &lt;&lt;/if&gt;&gt;&lt;&lt;if $money lte 0 and $timeline.indexOf(&quot;January 1666&quot;) gt $fledFromIndex&gt;&gt;While you are waiting, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return early to avoid starving-&gt;January 1666]].&lt;&lt;else&gt;&gt;
 
 &lt;&lt;fled-cost&gt;&gt;
 
@@ -4609,61 +4609,61 @@ As soon as the first rumors fly of the king&#39;s entrance into London, you&lt;&
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="87" name="official-end" tags="fled" position="1400,1475" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;fled-opening&gt;&gt;
 
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $reputation to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
-When the death tolls top 7,000 a week in August and September, you&#39;re sure you made the right call.&lt;br&gt;&lt;br&gt;
+&lt;&lt;if $fledFromIndex lt 7&gt;&gt;When the death tolls top 7,000 a week in August and September, you&#39;re sure you made the right call.&lt;br&gt;&lt;br&gt;
 
 &lt;&lt;fled-cost&gt;&gt;
 
-By the beginning of October, death tolls have fallen to half that but there are still a horrifying number of people dying every week.&lt;&lt;fled-broke &quot;October 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;&lt;br&gt;&lt;br&gt; 
+By the beginning of October, death tolls have fallen to half that but there are still a horrifying number of people dying every week.&lt;&lt;/if&gt;&gt;&lt;&lt;fled-broke &quot;October 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;&lt;br&gt;&lt;br&gt; 
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 8&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
-You anxiously watch the fall in the number of deaths each week, thanking God when only a thousand people a week are dying at the beginning of November. &lt;&lt;fled-broke &quot;November 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
+You anxiously watch the fall in the number of deaths each week, thanking God when only a thousand people a week are dying at the beginning of November. &lt;&lt;/if&gt;&gt;&lt;&lt;fled-broke &quot;November 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 9&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
-At the start of Advent, there are still 200 or 300 odd people dying each week &lt;&lt;if $money lte 0&gt;&gt;but unfortunately, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; have run out of money and are forced to [[return to the city-&gt;December 1665]] to avoid starving.&lt;&lt;else&gt;&gt;and you reconcile yourself with a Christmas spent away from the City.&lt;br&gt;&lt;br&gt;
+At the start of Advent, there are still 200 or 300 odd people dying each week &lt;&lt;/if&gt;&gt;&lt;&lt;if $money lte 0 and $timeline.indexOf(&quot;December 1665&quot;) gt $fledFromIndex&gt;&gt;but unfortunately, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; have run out of money and are forced to [[return to the city-&gt;December 1665]] to avoid starving.&lt;&lt;else&gt;&gt;&lt;&lt;if $fledFromIndex lt 9&gt;&gt;and you reconcile yourself with a Christmas spent away from the City.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 10&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
-When the New Year dawns, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are desperately homesick but renew your resolve not to return to London until the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; is officially over. You hear the King and court have returned to &lt;&lt;defHamptonCourt &quot;Hampton Court Palace&quot;&gt;&gt;, near to the city, and eagerly anticipate the end of the plague.&lt;&lt;if $money lte 0&gt;&gt;While you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are waiting, you realize you&#39;ve run out of money and are forced to return early to avoid starving.&lt;&lt;else&gt;&gt;
+When the New Year dawns, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are desperately homesick but renew your resolve not to return to London until the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; is officially over. You hear the King and court have returned to &lt;&lt;defHamptonCourt &quot;Hampton Court Palace&quot;&gt;&gt;, near to the city, and eagerly anticipate the end of the plague.&lt;&lt;/if&gt;&gt;&lt;&lt;if $money lte 0 and $timeline.indexOf(&quot;January 1666&quot;) gt $fledFromIndex&gt;&gt;While you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are waiting, you realize you&#39;ve run out of money and are forced to return early to avoid starving.&lt;&lt;else&gt;&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 11&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
-In February, you hear that the King has reentered the city and people begin asking you why you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; have not returned when the danger has clearly passed. Your reputation plummets &lt;&lt;set $reputation to 0&gt;&gt; and people begin accusing you of cowardice. &lt;&lt;if $money lte 0&gt;&gt;It is therefore a mixed blessing that you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return early to avoid starving-&gt;January 1666]].&lt;&lt;else&gt;&gt;
+In February, you hear that the King has reentered the city and people begin asking you why you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; have not returned when the danger has clearly passed. Your reputation plummets &lt;&lt;set $reputation to 0&gt;&gt; and people begin accusing you of cowardice. &lt;&lt;/if&gt;&gt;&lt;&lt;if $money lte 0 and $timeline.indexOf(&quot;January 1666&quot;) gt $fledFromIndex&gt;&gt;It is therefore a mixed blessing that you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return early to avoid starving-&gt;January 1666]].&lt;&lt;else&gt;&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 12&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
-But by March, the &lt;&lt;defBillsOfMortality &quot;bills of mortality&quot;&gt;&gt; show plague deaths creeping back up again and you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; &lt;&lt;if $money lte 0&gt;&gt;are terrified to realize you&#39;ve run out of money and must [[return early to the city-&gt;April 1666]]&lt;&lt;else&gt;&gt;hold your course.&lt;br&gt;&lt;br&gt;
+But by March, the &lt;&lt;defBillsOfMortality &quot;bills of mortality&quot;&gt;&gt; show plague deaths creeping back up again and you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; &lt;&lt;/if&gt;&gt;&lt;&lt;if $money lte 0 and $timeline.indexOf(&quot;April 1666&quot;) gt $fledFromIndex&gt;&gt;are terrified to realize you&#39;ve run out of money and must [[return early to the city-&gt;April 1666]]&lt;&lt;else&gt;&gt;&lt;&lt;if $fledFromIndex lt 12&gt;&gt;hold your course.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 13&gt;&gt;&lt;&lt;fled-cost&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;fled-broke &quot;April 1666&quot; &quot;April&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 14&gt;&gt;&lt;&lt;fled-cost&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;fled-broke &quot;May 1666&quot; &quot;May&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 15&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
-As summer dawns over the city, plague deaths reach a height of /* NTS: check numbers */ a week. It&#39;s nothing compared to 1665, but the risk of death is still high and you are frustrated with all the people who demand your return.&lt;&lt;if $money lte 0&gt;&gt;It is therefore a mixed blessing that you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return early to avoid starving-&gt;June 1666]].&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;
+As summer dawns over the city, plague deaths reach a height of /* NTS: check numbers */ a week. It&#39;s nothing compared to 1665, but the risk of death is still high and you are frustrated with all the people who demand your return.&lt;&lt;/if&gt;&gt;&lt;&lt;if $money lte 0 and $timeline.indexOf(&quot;June 1666&quot;) gt $fledFromIndex&gt;&gt;It is therefore a mixed blessing that you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return early to avoid starving-&gt;June 1666]].&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 16&gt;&gt;&lt;&lt;fled-cost&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;fled-broke &quot;July 1666&quot; &quot;July&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 17&gt;&gt;&lt;&lt;fled-cost&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;fled-broke &quot;August 1666&quot; &quot;August&quot;&gt;&gt;&lt;&lt;if not _fledBroke&gt;&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 18&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
-Then, in September, disaster strikes. Your first hint is a dark cloud rising into the air, just barely visible in the distance, but news soon arrives that the city is burning. You pray to God for the salvation of the city - and your home and everything you left behind in it - as the fire burns for days.&lt;&lt;if $money lte 0&gt;&gt; Disaster heaps upon disaster as you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return to the ruined city to avoid starving-&gt;October 1666]].&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;
+Then, in September, disaster strikes. Your first hint is a dark cloud rising into the air, just barely visible in the distance, but news soon arrives that the city is burning. You pray to God for the salvation of the city - and your home and everything you left behind in it - as the fire burns for days.&lt;&lt;/if&gt;&gt;&lt;&lt;if $money lte 0 and $timeline.indexOf(&quot;October 1666&quot;) gt $fledFromIndex&gt;&gt; Disaster heaps upon disaster as you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; realize you&#39;ve run out of money and are forced to [[return to the ruined city to avoid starving-&gt;October 1666]].&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 19&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
 Finally, you receive word that your home &lt;&lt;if $fireParishes.includes($parish)&gt;&gt;was destroyed. It will cost you a significant amount of time and money to rebuild, and you resign yourself to searching for a new place to live.&lt;&lt;else&gt;&gt;remains standing. You thank God for your close escape from disaster and look forward to your return to the city.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
 
-&lt;&lt;fled-cost&gt;&gt;
+&lt;&lt;fled-cost&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;if $fledReturn is &quot;no-plague&quot;&gt;&gt;
 While you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; consider making a profit from renting out your residence to those who have been made homeless, you are uncomfortable doing so when you aren&#39;t around to make sure to make sure the tenant is taking proper care of your belongings. There is still plague about and who knows what other pestilence they could bring into your home?&lt;&lt;if $money lte 0&gt;&gt; Besides, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are running out of money and realize you&#39;re going to have to return to the city soon to avoid starving-&gt;November 1666]]&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;
@@ -5482,7 +5482,7 @@ The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; grows worse and the streets are
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;fled-broke&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;set _fledBroke to ($money lte 0)&gt;&gt;
+&lt;&lt;set _fledBroke to ($money lte 0 and $timeline.indexOf($args[0]) gt $fledFromIndex)&gt;&gt;
 &lt;&lt;if _fledBroke&gt;&gt; Unfortunately, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; &lt;&lt;if $args.length gt 1&gt;&gt;run out of money in $args[1]&lt;&lt;else&gt;&gt;have run out of money&lt;&lt;/if&gt;&gt; and are forced to [[return to the city-&gt;$args[0]]] to avoid starving.&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="116" name="Flight" tags="" position="775,25" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $fled is 5&gt;&gt;
