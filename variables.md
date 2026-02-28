@@ -67,7 +67,7 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Type:** String
 - **Possible values:** `"single"`, `"married"`, `"widowed"`, `"betrothed"`
 - **Set by:** `random-character` widget. Children/adolescents: `weightedEither({"single": 95, "betrothed": 5})`. Adults: `weightedEither({"single": 17, "married": 32, "widowed": 9})`
-- **Can change to:** `"married"` (via wedding event), `"single"` (if spouse dies)
+- **Can change to:** `"married"` (via wedding event), `"widowed"` (if spouse NPC dies, via `check-widowed` widget)
 - **Dependency:** `$age` determines which weight table is used
 
 ### `$religion`
