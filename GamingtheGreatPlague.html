@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.10" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.11" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -2134,10 +2134,10 @@ Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.
 
 &#39;&#39;Household:&#39;&#39; &lt;&lt;if $fled is 5&gt;&gt;&#39;&#39;fled to $hhlocation&#39;&#39;&lt;&lt;/if&gt;&gt;&lt;br&gt;
         &lt;&lt;for _i, _idx range $FledFamily&gt;&gt;
-        $FledFamily[_i].name, $FledFamily[_i].age $FledFamily[_i].relationship: &lt;&lt;if $FledFamily[_i].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$FledFamily[_i].health&lt;&lt;/if&gt;&gt;.&lt;br&gt;
+        $FledFamily[_i].name, $FledFamily[_i].age &lt;&lt;print $FledFamily[_i].relationship.replace(/^master/, $masterTitle || &quot;master&quot;)&gt;&gt;: &lt;&lt;if $FledFamily[_i].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$FledFamily[_i].health&lt;&lt;/if&gt;&gt;.&lt;br&gt;
         &lt;&lt;/for&gt;&gt;
         &lt;&lt;for _i, _idx range $NPCs&gt;&gt;
-        $NPCs[_i].name, $NPCs[_i].age $NPCs[_i].relationship: &lt;&lt;if $NPCs[_i].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$NPCs[_i].health&lt;&lt;/if&gt;&gt;.&lt;br&gt;
+        $NPCs[_i].name, $NPCs[_i].age &lt;&lt;print $NPCs[_i].relationship.replace(/^master/, $masterTitle || &quot;master&quot;)&gt;&gt;: &lt;&lt;if $NPCs[_i].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;else&gt;&gt;$NPCs[_i].health&lt;&lt;/if&gt;&gt;.&lt;br&gt;
         &lt;&lt;/for&gt;&gt;
 &lt;br&gt;&lt;br&gt;
         &lt;&lt;if $NPCsExtended.length gt 0&gt;&gt;
@@ -2679,7 +2679,7 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
   &lt;&lt;set $masterTitle to &quot;master&quot;&gt;&gt;&lt;&lt;set $masterGender to &quot;male&quot;&gt;&gt;
   &lt;&lt;set _smdSucceeded to true&gt;&gt;
   &lt;&lt;NPCpronouns&gt;&gt;
-  &lt;br&gt;&lt;br&gt;Following the death of your _smdOldTitle, your master&#39;s father has taken over as head of the household.&lt;br&gt;&lt;br&gt;
+  &lt;br&gt;&lt;br&gt;Following the death of your _smdOldTitle, your &lt;&lt;print _smdOldTitle&gt;&gt;&#39;s father has taken over as head of the household.&lt;br&gt;&lt;br&gt;
 &lt;&lt;elseif _smdMotherAlive&gt;&gt;
   /* Master&#39;s mother becomes new widowed mistress;
      surviving master&#39;s sons/daughters become master&#39;s grandsons/granddaughters */
@@ -2705,7 +2705,7 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
   &lt;&lt;set $masterTitle to &quot;mistress&quot;&gt;&gt;&lt;&lt;set $masterGender to &quot;female&quot;&gt;&gt;
   &lt;&lt;set _smdSucceeded to true&gt;&gt;
   &lt;&lt;NPCpronouns&gt;&gt;
-  &lt;br&gt;&lt;br&gt;Following the death of your _smdOldTitle, your master&#39;s mother has taken over as head of the household.&lt;br&gt;&lt;br&gt;
+  &lt;br&gt;&lt;br&gt;Following the death of your _smdOldTitle, your &lt;&lt;print _smdOldTitle&gt;&gt;&#39;s mother has taken over as head of the household.&lt;br&gt;&lt;br&gt;
 &lt;&lt;elseif _smdAdultSons.length gt 0&gt;&gt;
   /* Oldest adult son becomes new master;
      remaining master&#39;s sons/daughters become master&#39;s brothers/sisters */
@@ -2732,7 +2732,7 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
   &lt;&lt;set $masterTitle to &quot;master&quot;&gt;&gt;&lt;&lt;set $masterGender to &quot;male&quot;&gt;&gt;
   &lt;&lt;set _smdSucceeded to true&gt;&gt;
   &lt;&lt;NPCpronouns&gt;&gt;
-  &lt;br&gt;&lt;br&gt;Following the death of your _smdOldTitle, your master&#39;s oldest son has become the new head of the household.&lt;br&gt;&lt;br&gt;
+  &lt;br&gt;&lt;br&gt;Following the death of your _smdOldTitle, your &lt;&lt;print _smdOldTitle&gt;&gt;&#39;s oldest son has become the new head of the household.&lt;br&gt;&lt;br&gt;
 &lt;&lt;else&gt;&gt;
   /* No qualifying relatives — dissolve household and find new master */
   &lt;&lt;if _smdSingle&gt;&gt;
@@ -3919,19 +3919,19 @@ As a member of your $masterTitle&#39;s &lt;&lt;defHousehold &quot;household&quot
 You decide to:
     &lt;&lt;if _masterflee is 1&gt;&gt;
         &lt;ul&gt;
-            &lt;li&gt;[[Follow your $masterTitle&#39;s lead and leave the city-&gt;Fled][$fled to 1; $decisions.push({text: &quot;Followed &quot; + $masterTitle + &quot; and fled the city&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
+            &lt;li&gt;&lt;&lt;link `&quot;Follow your &quot; + $masterTitle + &quot;&#39;s lead and leave the city&quot;` &quot;Fled&quot;&gt;&gt;&lt;&lt;set $fled to 1&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Followed &quot; + $masterTitle + &quot; and fled the city&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
             &lt;li&gt;[[Break your contract and remain in the city-&gt;Stay][$fled to 3; $socio to &quot;beggars&quot;; _repBefore to $reputation; $reputation to 0; $role to &quot;unemployed&quot;; $NPCsMaster to []; $NPCs to []; $decisions.push({text: &quot;Broke contract and stayed in the city&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
         &lt;/ul&gt;
     &lt;&lt;else&gt;&gt;
         &lt;ul&gt;
-            &lt;li&gt;[[Remain in the city with your $masterTitle-&gt;Stay][$fled to 0; $decisions.push({text: &quot;Stayed in the city with &quot; + $masterTitle, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
+            &lt;li&gt;&lt;&lt;link `&quot;Remain in the city with your &quot; + $masterTitle` &quot;Stay&quot;&gt;&gt;&lt;&lt;set $fled to 0&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Stayed in the city with &quot; + $masterTitle, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
             &lt;li&gt;[[Break your contract and flee the city-&gt;Fled][$fled to 2; $socio to &quot;beggars&quot;; _repBefore to $reputation; $reputation to 0; $role to &quot;unemployed&quot;; $NPCsMaster to []; $NPCs to []; $decisions.push({text: &quot;Broke contract and fled the city&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
         &lt;/ul&gt;
     &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;else&gt;&gt;/* late context for servants */
     It&#39;s also not too late to
-    &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;try to convince your family to &lt;&lt;/if&gt;&gt;[[flee the city, even though your $masterTitle has chosen to stay.-&gt;Fled][$fled to 2; $socio to &quot;beggars&quot;; _repBefore to $reputation; $reputation to 0; $role to &quot;unemployed&quot;; $NPCsMaster to []; $NPCs to []; $decisions.push({text: &quot;Broke contract and fled the city&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
+    &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;try to convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;link `&quot;flee the city, even though your &quot; + $masterTitle + &quot; has chosen to stay.&quot;` &quot;Fled&quot;&gt;&gt;&lt;&lt;set $fled to 2&gt;&gt;&lt;&lt;set $socio to &quot;beggars&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to 0&gt;&gt;&lt;&lt;set $role to &quot;unemployed&quot;&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;set $NPCs to []&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Broke contract and fled the city&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
@@ -5277,7 +5277,7 @@ One thing is for certain, though. The weather is so hot that &lt;&lt;defPlague &
 &lt;br&gt;&lt;br&gt;
 [[At least you didn&#39;t die of the plague-&gt;stats]].
 &lt;&lt;else&gt;&gt;
-You have suffered an accident while&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;out on a job&lt;&lt;else&gt;&gt;running errands&lt;&lt;/if&gt;&gt;, but thanks to God you are still alive. &lt;&lt;set $accident to random (1,5)&gt;&gt;&lt;&lt;if $accident is 1&gt;&gt;You fell from a window. &lt;&lt;elseif $accident is 2&gt;&gt;You were kicked by a horse. &lt;&lt;elseif $accident is 3&gt;&gt;You broke your arm. &lt;&lt;elseif $accident is 4&gt;&gt;You were hit by a wagon wheel. &lt;&lt;else&gt;&gt;You fell in the Thames and a cut on your arm was infected. &lt;&lt;/if&gt;&gt; Fortunately, this is something you can recover from with rest and care. &lt;&lt;if $reputation lte 0&gt;&gt;Unfortunately your reputation is too low for anyone to offer you assistance so you must recover on your own and &lt;&lt;else&gt;&gt;Your &lt;&lt;if $NPCs.length gt 0&gt;&gt;family&lt;&lt;else&gt;&gt;neighbors&lt;&lt;/if&gt;&gt; take good care of you, but &lt;&lt;/if&gt;&gt;you lose money every day you aren&#39;t working.&lt;&lt;set $money -=3&gt;&gt;&lt;br&gt;&lt;br&gt;Soon you are ready to rejoin &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;the other &lt;&lt;defDayLabourer &quot;day labourers&quot;&gt;&gt; in their search for work. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;else&gt;&gt;your master&#39;s household. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;/if&gt;&gt;
+You have suffered an accident while&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;out on a job&lt;&lt;else&gt;&gt;running errands&lt;&lt;/if&gt;&gt;, but thanks to God you are still alive. &lt;&lt;set $accident to random (1,5)&gt;&gt;&lt;&lt;if $accident is 1&gt;&gt;You fell from a window. &lt;&lt;elseif $accident is 2&gt;&gt;You were kicked by a horse. &lt;&lt;elseif $accident is 3&gt;&gt;You broke your arm. &lt;&lt;elseif $accident is 4&gt;&gt;You were hit by a wagon wheel. &lt;&lt;else&gt;&gt;You fell in the Thames and a cut on your arm was infected. &lt;&lt;/if&gt;&gt; Fortunately, this is something you can recover from with rest and care. &lt;&lt;if $reputation lte 0&gt;&gt;Unfortunately your reputation is too low for anyone to offer you assistance so you must recover on your own and &lt;&lt;else&gt;&gt;Your &lt;&lt;if $NPCs.length gt 0&gt;&gt;family&lt;&lt;else&gt;&gt;neighbors&lt;&lt;/if&gt;&gt; take good care of you, but &lt;&lt;/if&gt;&gt;you lose money every day you aren&#39;t working.&lt;&lt;set $money -=3&gt;&gt;&lt;br&gt;&lt;br&gt;Soon you are ready to rejoin &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;the other &lt;&lt;defDayLabourer &quot;day labourers&quot;&gt;&gt; in their search for work. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;else&gt;&gt;your &lt;&lt;print $masterTitle || &quot;master&quot;&gt;&gt;&#39;s household. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="99" name="healing" tags="" position="2200,75" size="100,100">retaining since has pid</tw-passagedata><tw-passagedata pid="100" name="elderly" tags="widget" position="2350,300" size="100,100">&lt;&lt;widget &quot;elderly&quot;&gt;&gt;
