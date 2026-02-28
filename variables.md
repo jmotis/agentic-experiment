@@ -454,6 +454,13 @@ This document lists all global (story) variables used in **Gaming the Great Plag
   - `7` &mdash; Failed flight attempt (artisans with low reputation; tried to flee but were turned away)
 - **Notes:** Values 0--3 are primarily for servants. Values 4--7 are for other social classes. A value of `5` triggers display of `$FledFamily` instead of `$NPCs` in the sidebar. `$fled` can change over time as the player gets additional flee opportunities.
 
+### `$fledReturn`
+- **Type:** String
+- **Possible values:** `"official"`, `"no-plague"`
+- **Set by:** Fled passage (pid 63) when player chooses how long to stay away
+- **Used in:** official-end passage (pid 87) to branch between the "official Thanksgiving Day" ending and the "no more plague deaths" ending
+- **Notes:** Only relevant when the player has fled the city and chosen one of the two longest stay-away options.
+
 ### `$getaway`
 - **Type:** Array of objects
 - **Used for:** Tracks NPCs who successfully escape during flight events. Objects are pushed into the array and its length is checked.
