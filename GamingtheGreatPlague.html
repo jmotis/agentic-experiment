@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.1" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.2" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -5559,7 +5559,7 @@ One thing is for certain, though. The weather is so hot that &lt;&lt;defPlague &
     You hear that the local parish officials want to hire you to &lt;&lt;if $gender is &quot;male&quot; and $agenum gte 16&gt;&gt;remove the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; corpses if anyone dies&lt;&lt;elseif $gender is &quot;female&quot; and $agenum gte 16 and $reputation gte 5&gt;&gt;look at plague corpses and determine if they died of plague or some other cause of death&lt;&lt;else&gt;&gt;nurse the sick and dying, despite the risk to your own life&lt;&lt;/if&gt;&gt;.&lt;br&gt;&lt;br&gt;
     You decide to:
     &lt;ul&gt;
-        &lt;li&gt;&lt;&lt;link &quot;accept the job&quot; &quot;Stay&quot;&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Accepted a plague work job&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;if $gender is &quot;female&quot; and $agenum gte 16 and $reputation gt 5&gt;&gt;&lt;&lt;set $role to &quot;searcher&quot;&gt;&gt;&lt;&lt;elseif $agenum lte 15&gt;&gt;&lt;&lt;set $role to &quot;nurse&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $role to &quot;corpsebearer&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;&lt;link &quot;accept the job&quot; &quot;Stay&quot;&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Accepted a plague work job&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;if $gender is &quot;female&quot; and $agenum gte 16 and $reputation gte 5&gt;&gt;&lt;&lt;set $role to &quot;searcher&quot;&gt;&gt;&lt;&lt;elseif $agenum lte 15&gt;&gt;&lt;&lt;set $role to &quot;nurse&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $role to &quot;corpsebearer&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
         &lt;li&gt;[[not accept the job-&gt;Stay][_repBefore to $reputation; $reputation -= 1; $fled to 4; $role to &quot;unemployed&quot;; $decisions.push({text: &quot;Refused the plague work job&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
         &lt;&lt;if $origin isnot &quot;London&quot;&gt;&gt;
             &lt;&lt;if $hoh is 1&gt;&gt;&lt;li&gt;[[flee the city and return to your place of origin-&gt;Fled][$fled to 6; $decisions.push({text: &quot;Fled back to place of origin&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
@@ -5676,7 +5676,7 @@ It&#39;s also not too late to &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;
 You decide to:
     &lt;ul&gt;
         &lt;li&gt;[[Remain in the city with your entire household-&gt;Stay][$fled to 4; $decisions.push({text: &quot;Remained in the city with household&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
-        &lt;li&gt;[[Remain in the city, but send most of your household away to the countryside-&gt;Stay][$fled to 5; $money -= 5000; $decisions.push({text: &quot;Sent most of household to the countryside&quot;, money: -5000, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
+        &lt;li&gt;[[Remain in the city, but send most of your household away to the countryside-&gt;Stay][$fled to 5; $money -= 5000; $decisions.push({text: &quot;Sent most of household to the countryside&quot;, money: -5000, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;
         &lt;li&gt;[[Flee the city with your entire household.-&gt;Fled][_repBefore to $reputation; $reputation to Math.clamp($reputation - 1, 0, 10); $fled to 6; $money -= 10000; $decisions.push({text: &quot;Fled the city with household&quot;, money: -10000, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
     &lt;/ul&gt;
 
