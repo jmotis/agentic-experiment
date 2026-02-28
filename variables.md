@@ -536,12 +536,6 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Set by:** `random(1, 10)`
 - **Trigger:** `$discovery is 1` (10% chance) triggers a discovery event
 
-### `$gossip`
-- **Type:** Integer
-- **Possible values:** `3`
-- **Set by:** `$gossip to 3`
-- **Used for:** A gossip event counter or flag
-
 ### `$investigate`
 - **Type:** Integer
 - **Possible values:** `0`

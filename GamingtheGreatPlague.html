@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v1.60" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v1.61" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1245,57 +1245,15 @@ Not everything is perfect, though. Rumors swirl throughout the city about the po
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Volunteered for the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Stayed out of the fighting&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
 
-But those are worries for the future! For now, it is time to eat, drink, and play games with dice and cards to celebrate the Christmas season. &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;You look forward to gathering with your neighbors in the &lt;&lt;defParish &quot;parish&quot;&gt;&gt; church to celebrate the birth of Jesus Christ.&lt;&lt;elseif $religion is &quot;Catholic&quot;&gt;&gt; You enjoy gathering with your fellow Catholics at the magnificent chapel attached to &lt;&lt;defSomersetHouse &quot;Somerset House&quot;&gt;&gt;, the &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMarias &quot;Henrietta Maria&#39;s&quot;&gt;&gt; London home. 
-
-&lt;&lt;else&gt;&gt;You might not be able to celebrate as openly as a conforming member of the Church of England, or the &lt;&lt;defPapists &quot;papists&quot;&gt;&gt; who flock to the chapels of the Catholic &lt;&lt;defQueenCatherine &quot;Queen Catherine&quot;&gt;&gt; and &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMaria &quot;Henrietta Maria&quot;&gt;&gt;, but you will still enjoy the holidays in the comfort and privacy of your home.
-&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-
-&lt;span id= &quot;decision&quot;&gt;Will you &lt;&lt;if $agenum lte 15&gt;&gt;and your family &lt;&lt;/if&gt;&gt;celebrate Christmas with a feast? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;infection-program&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation +=3&gt;&gt;&lt;&lt;set $money -=20&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Celebrated Christmas with a feast&quot;, money: -20, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;You &lt;&lt;if $agenum lte 15&gt;&gt;and your family&lt;&lt;/if&gt;&gt; are planning a feast for a few friends. You&#39;re excited about all the things on the menu but especially your favorite dessert &lt;&lt;set _food = [&quot;minced pie&quot;, &quot;sweetmeats&quot;, &quot;currant cake&quot;, &quot;syllabub&quot;, &quot;tansy&quot;]&gt;&gt;&lt;&lt;listbox &quot;$food&quot;&gt;&gt;&lt;&lt;optionsfrom _food&gt;&gt;&lt;&lt;/listbox&gt;&gt;. Feasting costs money though, and things might be tight in the coming months, though your heart and stomach are full.&lt;br&gt;&lt;br&gt; On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of good things to come-&gt;January 1665]].&lt;br&gt;&lt;br&gt;
-
-
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot;&gt;
-//Great Comet of 1665//
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $money +=5&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Skipped the Christmas feast to save money&quot;, money: 5, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You &lt;&lt;if $agenum lte 15&gt;&gt;and your family&lt;&lt;/if&gt;&gt; decide to save money and forego a large feast for the holiday.&lt;br&gt;&lt;br&gt; On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of good things to come-&gt;January 1665]].&lt;br&gt;&lt;br&gt;
-
-
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot;&gt;
-//Great Comet of 1665//&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;december-1664-helper&gt;&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 
 &lt;&lt;elseif $socio is &quot;beggars&quot; and $religion isnot &quot;Quaker&quot; and $gender is &quot;female&quot;&gt;&gt;
-&lt;span id=&quot;volunteer&quot;&gt;Do you want to join the navy?&lt;&lt;link &quot;Yes, I can disguise myself as a man&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Disguised as a man to join the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No, I don&#39;t want to get caught&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Decided not to join the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;But those are worries for the future! For now, it is time to eat, drink, and play games with dice and cards to celebrate the Christmas season. &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;You look forward to gathering with your neighbors in the &lt;&lt;defParish &quot;parish&quot;&gt;&gt; church to celebrate the birth of Jesus Christ.&lt;&lt;elseif $religion is &quot;Catholic&quot;&gt;&gt; You enjoy gathering with your fellow Catholics at the magnificent chapel attached to &lt;&lt;defSomersetHouse &quot;Somerset House&quot;&gt;&gt;, the &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMarias &quot;Henrietta Maria&#39;s&quot;&gt;&gt; London home. 
-
-&lt;&lt;else&gt;&gt;You might not be able to celebrate as openly as a conforming member of the Church of England, or the &lt;&lt;defPapists &quot;papists&quot;&gt;&gt; who flock to the chapels of the Catholic &lt;&lt;defQueenCatherine &quot;Queen Catherine&quot;&gt;&gt; and &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMaria &quot;Henrietta Maria&quot;&gt;&gt;, but you will still enjoy the holidays in the comfort and privacy of your home.
-&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-
-&lt;span id= &quot;decision&quot;&gt;Will you &lt;&lt;if $agenum lte 15&gt;&gt;and your family &lt;&lt;/if&gt;&gt;celebrate Christmas with a feast? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;infection-program&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation +=3&gt;&gt;&lt;&lt;set $money -=20&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Celebrated Christmas with a feast&quot;, money: -20, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;You &lt;&lt;if $agenum lte 15&gt;&gt;and your family&lt;&lt;/if&gt;&gt; are planning a feast for a few friends. You&#39;re excited about all the things on the menu but especially your favorite dessert &lt;&lt;set _food = [&quot;minced pie&quot;, &quot;sweetmeats&quot;, &quot;currant cake&quot;, &quot;syllabub&quot;, &quot;tansy&quot;]&gt;&gt;&lt;&lt;listbox &quot;$food&quot;&gt;&gt;&lt;&lt;optionsfrom _food&gt;&gt;&lt;&lt;/listbox&gt;&gt;. Feasting costs money though, and things might be tight in the coming months, though your heart and stomach are full.&lt;br&gt;&lt;br&gt; On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of good things to come-&gt;January 1665]].&lt;br&gt;&lt;br&gt;
-
-
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot;&gt;
-//Great Comet of 1665//
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $money +=5&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Skipped the Christmas feast to save money&quot;, money: 5, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You &lt;&lt;if $agenum lte 15&gt;&gt;and your family&lt;&lt;/if&gt;&gt; decide to save money and forego a large feast for the holiday.&lt;br&gt;&lt;br&gt; On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of good things to come-&gt;January 1665]].&lt;br&gt;&lt;br&gt;
-
-
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot;&gt;
-//Great Comet of 1665//&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;span id=&quot;volunteer&quot;&gt;Do you want to join the navy?&lt;&lt;link &quot;Yes, I can disguise myself as a man&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Disguised as a man to join the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No, I don&#39;t want to get caught&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Decided not to join the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;&lt;&lt;december-1664-helper&gt;&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 
 &lt;&lt;else&gt;&gt;
-But those are worries for the future! For now, it is time to eat, drink, and play games with dice and cards to celebrate the Christmas season. &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;You look forward to gathering with your neighbors in the &lt;&lt;defParish &quot;parish&quot;&gt;&gt; church to celebrate the birth of Jesus Christ.&lt;&lt;elseif $religion is &quot;Catholic&quot;&gt;&gt; You enjoy gathering with your fellow Catholics at the magnificent chapel attached to &lt;&lt;defSomersetHouse &quot;Somerset House&quot;&gt;&gt;, the &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMarias &quot;Henrietta Maria&#39;s&quot;&gt;&gt; London home. 
-
-&lt;&lt;else&gt;&gt;You might not be able to celebrate as openly as a conforming member of the Church of England, or the &lt;&lt;defPapists &quot;papists&quot;&gt;&gt; who flock to the chapels of the Catholic &lt;&lt;defQueenCatherine &quot;Queen Catherine&quot;&gt;&gt; and &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMaria &quot;Henrietta Maria&quot;&gt;&gt;, but you will still enjoy the holidays in the comfort and privacy of your home.
-&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-
-&lt;span id= &quot;decision&quot;&gt;Will you &lt;&lt;if $agenum lte 15&gt;&gt;and your family &lt;&lt;/if&gt;&gt;celebrate Christmas with a feast? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;infection-program&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation +=3&gt;&gt;&lt;&lt;set $money -=20&gt;&gt;&lt;&lt;set $gossip to 3&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Celebrated Christmas with a feast&quot;, money: -20, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;You &lt;&lt;if $agenum lte 15&gt;&gt;and your family&lt;&lt;/if&gt;&gt; are planning a feast for a few friends. You&#39;re excited about all the things on the menu but especially your favorite dessert &lt;&lt;set _food = [&quot;minced pie&quot;, &quot;sweetmeats&quot;, &quot;currant cake&quot;, &quot;syllabub&quot;, &quot;tansy&quot;]&gt;&gt;&lt;&lt;listbox &quot;$food&quot;&gt;&gt;&lt;&lt;optionsfrom _food&gt;&gt;&lt;&lt;/listbox&gt;&gt;. Feasting costs money though, and things might be tight in the coming months, though your heart and stomach are full.&lt;br&gt;&lt;br&gt; On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of good things to come-&gt;January 1665]].&lt;br&gt;&lt;br&gt;
-
-
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot;&gt;
-//Great Comet of 1665//
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $money +=5&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Skipped the Christmas feast to save money&quot;, money: 5, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You &lt;&lt;if $agenum lte 15&gt;&gt;and your family&lt;&lt;/if&gt;&gt; decide to save money and forego a large feast for the holiday.&lt;br&gt;&lt;br&gt; On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of good things to come-&gt;January 1665]].&lt;br&gt;&lt;br&gt;
-
-
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot;&gt;
-//Great Comet of 1665//&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;december-1664-helper&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;set $murder =0&gt;&gt;
 
@@ -2278,11 +2236,7 @@ You
            &lt;&lt;default&gt;&gt;
                 So many people are sick and shut up in their houses that the city has imposed a 9pm curfew for healthy people, so that the sick can go out for a bit of air.
                 &lt;br&gt;&lt;br&gt;
-                The city has ordered public &lt;&lt;defFasts &quot;fasts&quot;&gt;&gt; and prayers to help combat the plague. &lt;&lt;if $religion is &quot;Presbyterian&quot;&gt;&gt;You attempt to join a private meeting of your fellow &lt;&lt;defPresbyterians &quot;Presbyterians&quot;&gt;&gt; in &lt;&lt;defCoventGarden &quot;Covent Garden&quot;&gt;&gt; but are too poor and turned away, which is lucky for you because everyone who attends the meeting is arrested. They are told they can be released if they pay £5 each to help care for the poor of the city, but they refuse and so are imprisoned.&lt;&lt;/if&gt;&gt;
-                &lt;br&gt;&lt;br&gt;
-                &lt;&lt;preventative&gt;&gt;
-                &lt;br&gt;
-            &lt;&lt;unset $textGroup&gt;&gt;[[Continue to September 1665-&gt;September 1665]]&lt;&lt;/switch&gt;&gt;&lt;&lt;if def $textGroup&gt;&gt;&lt;&lt;set $textGroup +=1&gt;&gt;&lt;&lt;/if&gt;&gt;
+                &lt;&lt;unset $textGroup&gt;&gt;&lt;&lt;august-1665-helper&gt;&gt;&lt;&lt;/switch&gt;&gt;&lt;&lt;if def $textGroup&gt;&gt;&lt;&lt;set $textGroup +=1&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;else&gt;&gt;
 People are dying so fast now that burials have to happen night and day to keep corpses from piling up throughout the city.&lt;br&gt;&lt;br&gt;
 So many people are sick and shut up in their houses that the city has imposed a 9pm curfew for healthy people, so that the sick can go out for a bit of air. &lt;span id=&quot;curfew&quot;&gt;Do you adhere to the curfew? &lt;&lt;link &quot;Yes, of course&quot;&gt;&gt;&lt;&lt;replace &quot;#curfew&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Aug 1665: Obeyed the curfew&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You keep to the curfew. 
@@ -2290,23 +2244,13 @@ So many people are sick and shut up in their houses that the city has imposed a 
        &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/1/1d/Nine_images_of_the_plague_in_London%2C_17th_century_Wellcome_L0016640_%28cropped%29_7.jpg&quot;  height=&quot;575px&quot; width=&quot;900px&quot;&gt;
        //Nine images of the plague in London, 17th century, Wellcome Images.//
         &lt;br&gt;&lt;br&gt;
-        The city has ordered public &lt;&lt;defFasts &quot;fasts&quot;&gt;&gt; and prayers to help combat the plague. &lt;&lt;if $religion is &quot;Presbyterian&quot;&gt;&gt;You attempt to join a private meeting of your fellow &lt;&lt;defPresbyterians &quot;Presbyterians&quot;&gt;&gt; in &lt;&lt;defCoventGarden &quot;Covent Garden&quot;&gt;&gt;but are too poor and turned away, which is lucky for you because everyone who attends the meeting is arrested. They are told they can be released if they pay £5 each to help care for the poor of the city, but they refuse and so are imprisoned.&lt;&lt;/if&gt;&gt;
-        &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
-        Afraid of the worsening plague outbreak, the King removes his household even further away to the west, finally settling into the city of &lt;&lt;defSalisbury &quot;Salisbury&quot;&gt;&gt;. Unfortunately, there is no royal palace there and anyone who follows him will have to find their own makeshift lodgings somewhere else in the city.&lt;&lt;/if&gt;&gt;
-        &lt;br&gt;&lt;br&gt;You can continue to try and prevent catching plague by visiting the &lt;&lt;defApothecary &quot;apothecary&quot;&gt;&gt;, or you can:
-        &lt;&lt;preventative&gt;&gt;
-        [[Continue to September 1665-&gt;September 1665]] 
+        &lt;&lt;august-1665-helper&gt;&gt; 
   &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No, I need to know more&quot;&gt;&gt;&lt;&lt;replace &quot;#curfew&quot;&gt;&gt;&lt;&lt;set $plagueInfection to random(1,8)&gt;&gt;&lt;&lt;set $money -=10&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation -=2&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Aug 1665: Broke curfew to seek news&quot;, money: -10, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 12.5})&gt;&gt;You step out, despite the curfew, hoping to hear more news. You learn that there is sickness in the &lt;&lt;defFleet &quot;fleet&quot;&gt;&gt; and everyone worries what that means for the war.
       &lt;br&gt;&lt;br&gt;
        &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/1/1d/Nine_images_of_the_plague_in_London%2C_17th_century_Wellcome_L0016640_%28cropped%29_7.jpg&quot;  height=&quot;575px&quot; width=&quot;900px&quot;&gt;
        //Nine images of the plague in London, 17th century, Wellcome Images.//
         &lt;br&gt;&lt;br&gt;
-        The city has ordered public &lt;&lt;defFasts &quot;fasts&quot;&gt;&gt; and prayers to help combat the plague. &lt;&lt;if $religion is &quot;Presbyterian&quot;&gt;&gt;You attempt to join a private meeting of your fellow &lt;&lt;defPresbyterians &quot;Presbyterians&quot;&gt;&gt; in &lt;&lt;defCoventGarden &quot;Covent Garden&quot;&gt;&gt;but are too poor and turned away, which is lucky for you because everyone who attends the meeting is arrested. They are told they can be released if they pay £5 each to help care for the poor of the city, but they refuse and so are imprisoned.&lt;&lt;/if&gt;&gt;
-        &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
-        Afraid of the worsening plague outbreak, the King removes his household even further away to the west, finally settling into the city of &lt;&lt;defSalisbury &quot;Salisbury&quot;&gt;&gt;. Unfortunately, there is no royal palace there and anyone who follows him will have to find their own makeshift lodgings somewhere else in the city.&lt;&lt;/if&gt;&gt;
-        &lt;br&gt;&lt;br&gt;You can continue to try and prevent catching plague by visiting the &lt;&lt;defApothecary &quot;apothecary&quot;&gt;&gt;, or you can:
-        &lt;&lt;preventative&gt;&gt;
-        [[Continue to September 1665-&gt;September 1665]] 
+        &lt;&lt;august-1665-helper&gt;&gt; 
   &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -2316,43 +2260,15 @@ So many people are sick and shut up in their houses that the city has imposed a 
 &lt;&lt;if not _randomEventFired&gt;&gt;
 The deaths continue in such great numbers that you can hardly believe it.&lt;br&gt;&lt;br&gt;
 &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;You are shocked to see that some bold people have begun attending &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; funerals, as if it were a child’s game or dare. &lt;br&gt;&lt;br&gt;
-The &lt;&lt;defLordMayor &quot;Lord Mayor&quot;&gt;&gt; has ordered fires to be lit throughout the city, to fill the air with smoke and sweep away any bad air that might be making the plague worse. 
-&lt;br&gt;&lt;br&gt;
-You can continue to try and avoid the plague by visiting the &lt;&lt;defApothecary &quot;Apothecary&quot;&gt;&gt;, or you can:
-&lt;&lt;preventative&gt;&gt;
-/* NTS: text about smuggling children from plague houses */
-
-[[Continue to October 1665-&gt;October 1665]] 
-    &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;Some of your patients, furious at being locked in, have been trying to lean out windows to breathe and spit upon the healthy people walking past.&lt;br&gt;&lt;br&gt;The &lt;&lt;defLordMayor &quot;Lord Mayor&quot;&gt;&gt; has ordered fires to be lit throughout the city, to fill the air with smoke and sweep away any bad air that might be making the plague worse. 
-&lt;br&gt;&lt;br&gt;
-You can continue to try and avoid the plague by visiting the &lt;&lt;defApothecary &quot;Apothecary&quot;&gt;&gt;, or you can:
-&lt;&lt;preventative&gt;&gt;
-/* NTS: text about smuggling children from plague houses */
-
-[[Continue to October 1665-&gt;October 1665]] 
+&lt;&lt;sep-1665-helper&gt;&gt; 
+    &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;Some of your patients, furious at being locked in, have been trying to lean out windows to breathe and spit upon the healthy people walking past.&lt;br&gt;&lt;br&gt;&lt;&lt;sep-1665-helper&gt;&gt; 
     &lt;&lt;else&gt;&gt;
     &lt;span id=&quot;gossip&quot;&gt;Do you continue to go out in the city? &lt;&lt;link &quot;No, better say inside for now&quot;&gt;&gt;&lt;&lt;replace &quot;#gossip&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Sep 1665: Stayed indoors&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You stay indoors. 
-    &lt;br&gt;&lt;br&gt;The &lt;&lt;defLordMayor &quot;Lord Mayor&quot;&gt;&gt; has ordered fires to be lit throughout the city, to fill the air with smoke and sweep away any bad air that might be making the plague worse. 
-&lt;br&gt;&lt;br&gt;
-/* NTS: text about smuggling children from plague houses */
-
-[[Continue to October 1665-&gt;October 1665]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Yes, you still need to go out to conduct business&quot;&gt;&gt;&lt;&lt;replace &quot;#gossip&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Sep 1665: Went out despite the danger&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;While out you see that a few brave souls have begun to attend plague funerals.
+    &lt;br&gt;&lt;br&gt;&lt;&lt;sep-1665-helper&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Yes, you still need to go out to conduct business&quot;&gt;&gt;&lt;&lt;replace &quot;#gossip&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Sep 1665: Went out despite the danger&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;While out you see that a few brave souls have begun to attend plague funerals.
     &lt;span id=&quot;game&quot;&gt;Do you join them? &lt;&lt;link &quot;Yes, I&#39;ll be fine&quot;&gt;&gt;&lt;&lt;set $plagueInfection to random(1,5)&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Sep 1665: Attended plague funerals&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: 20})&gt;&gt;&lt;&lt;replace &quot;#game&quot;&gt;&gt;You attend a few funerals for friends, confident that the low attendance will ensure your safety. Plus, it helps to be able to see the people you&#39;re mourning. &lt;br&gt;&lt;br&gt;
-    The &lt;&lt;defLordMayor &quot;Lord Mayor&quot;&gt;&gt; has ordered fires to be lit throughout the city, to fill the air with smoke and sweep away any bad air that might be making the plague worse. 
-&lt;br&gt;&lt;br&gt;
-You can continue to try and avoid the plague by visiting the &lt;&lt;defApothecary &quot;Apothecary&quot;&gt;&gt;, or you can:
-&lt;&lt;preventative&gt;&gt;
-/* NTS: text about smuggling children from plague houses */
-
-[[Continue to October 1665-&gt;October 1665]] 
+    &lt;&lt;sep-1665-helper&gt;&gt; 
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No, it&#39;s not safe&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Sep 1665: Avoided plague funerals&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#game&quot;&gt;&gt; You don&#39;t attend, but are secretly glad that the dead aren&#39;t being buried alone.
-The &lt;&lt;defLordMayor &quot;Lord Mayor&quot;&gt;&gt; has ordered fires to be lit throughout the city, to fill the air with smoke and sweep away any bad air that might be making the plague worse. 
-&lt;br&gt;&lt;br&gt;
-You can continue to try and avoid the plague by visiting the &lt;&lt;defApothecary &quot;Apothecary&quot;&gt;&gt;, or you can:
-&lt;&lt;preventative&gt;&gt;
-/* NTS: text about smuggling children from plague houses */
-
-[[Continue to October 1665-&gt;October 1665]] 
+&lt;&lt;sep-1665-helper&gt;&gt; 
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -2447,35 +2363,11 @@ Your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; priest hasn&#39;t returned yet
 &lt;&lt;if not _randomEventFired&gt;&gt;
 The Queen of Portugal, mother to England&#39;s beloved &lt;&lt;defQueenCatherine &quot;Queen Catherine&quot;&gt;&gt;, has died.&lt;br&gt;&lt;br&gt;
 &lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;&lt;span id=&quot;candle&quot;&gt;Do you go to church and light a candle for the queen?&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#candle&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Mar 1666: Lit a candle for the Queen of Portugal&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You go to church and light a candle for the late queen.
-The Court is plunged into mourning&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;. After a month in London, the King moves on to one of his father&#39;s old houses of &lt;&lt;defAudleyEndInEssex &quot;Audley End, in Essex&quot;&gt;&gt;. Once an enormous and grand palace, it is in bad shape after the &lt;&lt;defCivilWar &quot;Civil War&quot;&gt;&gt; and &lt;&lt;defInterregnum &quot;Interregnum&quot;&gt;&gt;. But the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has proved the wisdom of the King having more royal palaces outside of London and the Court is happy to follow him...&lt;&lt;else&gt;&gt; and the city quiets as well... &lt;&lt;/if&gt;&gt; because &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; numbers are starting to go up again.
-
-So much for the city being safe again.&lt;br&gt;
-&lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/d/d4/Catherine_of_Braganza_-_Lely_1663-65.jpg&quot; width=&quot;100%&quot;&gt;
-&lt;br&gt;
-//Peter Lely, Catherine of Braganza, 1663-5//
-&lt;br&gt;&lt;br&gt;
-It&#39;s not a great lead up for [[April 1666]].
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Mar 1666: Prayed privately instead of lighting a candle&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#candle&quot;&gt;&gt;You don&#39;t light a candle for the queen, but you do pray for her soul. The Court is plunged into mourning&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;. After a month in London, the King moves on to one of his father&#39;s old houses of &lt;&lt;defAudleyEndInEssex &quot;Audley End, in Essex&quot;&gt;&gt;. Once an enormous and grand palace, it is in bad shape after the &lt;&lt;defCivilWar &quot;Civil War&quot;&gt;&gt; and &lt;&lt;defInterregnum &quot;Interregnum&quot;&gt;&gt;. But the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has proved the wisdom of the King having more royal palaces outside of London and the Court is happy to follow him...&lt;&lt;else&gt;&gt; and the city quiets as well... &lt;&lt;/if&gt;&gt; because &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; numbers are starting to go up again.
-
-So much for the city being safe again.&lt;br&gt;
-&lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/d/d4/Catherine_of_Braganza_-_Lely_1663-65.jpg&quot; width=&quot;100%&quot;&gt;
-&lt;br&gt;
-//Peter Lely, Catherine of Braganza, 1663-5//
-&lt;br&gt;&lt;br&gt;
-It&#39;s not a great lead up for [[April 1666]].
+&lt;&lt;march-1666-helper&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Mar 1666: Prayed privately instead of lighting a candle&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#candle&quot;&gt;&gt;You don&#39;t light a candle for the queen, but you do pray for her soul. &lt;&lt;march-1666-helper&gt;&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;else&gt;&gt;
-The Court is plunged into mourning&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;. After a month in London, the King moves on to one of his father&#39;s old houses of &lt;&lt;defAudleyEndInEssex &quot;Audley End, in Essex&quot;&gt;&gt;. Once an enormous and grand palace, it is in bad shape after the &lt;&lt;defCivilWar &quot;Civil War&quot;&gt;&gt; and &lt;&lt;defInterregnum &quot;Interregnum&quot;&gt;&gt;. But the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has proved the wisdom of the King having more royal palaces outside of London and the Court is happy to follow him...&lt;&lt;else&gt;&gt; and the city quiets as well... &lt;&lt;/if&gt;&gt; because &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; numbers are starting to go up again.
-
-So much for the city being safe again.&lt;br&gt;
-&lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/d/d4/Catherine_of_Braganza_-_Lely_1663-65.jpg&quot; width=&quot;100%&quot;&gt;
-&lt;br&gt;
-//Peter Lely, Catherine of Braganza, 1663-5//
-&lt;br&gt;&lt;br&gt;
-It&#39;s not a great lead up for [[April 1666]].
+&lt;&lt;march-1666-helper&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;fumigant&gt;&gt;
@@ -2516,16 +2408,10 @@ You hear rumors that the &lt;&lt;defFleet &quot;fleet&quot;&gt;&gt; has engaged 
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jun 1666: Volunteered for the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jun 1666: Stayed out of the fighting&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
 
-One thing is for certain, though. The weather is so hot that &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases are on the rise again and you know it will only get worse in [[July 1666]]. 
-&lt;br&gt;&lt;br&gt;
-&lt;img src=&quot;https://collections.rmg.co.uk/media/287/368/bhc0286.jpg&quot; width=&quot;100%&quot;&gt;
-//Abraham Storck, The &#39;Royal Prince&#39; and other Vessels at the Four Days Battle, 1–4 June 1666, c. 1670//
+&lt;&lt;june-1666-helper&gt;&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;else&gt;&gt;
-One thing is for certain, though. The weather is so hot that &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases are on the rise again and you know it will only get worse in [[July 1666]]. 
-&lt;br&gt;&lt;br&gt;
-&lt;img src=&quot;https://collections.rmg.co.uk/media/287/368/bhc0286.jpg&quot; width=&quot;100%&quot;&gt;
-//Abraham Storck, The &#39;Royal Prince&#39; and other Vessels at the Four Days Battle, 1–4 June 1666, c. 1670//
+&lt;&lt;june-1666-helper&gt;&gt;
 &lt;&lt;/if&gt;&gt;
  &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jun 1666: Ignored the gossip&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
 The sky has been rumbling for days and you wonder whether the sound was cannon fire or thunder. Yes, the hot weather could have led to four days of distant thunder but the skies are clear. You assume that this is why when you look out your window you can see &lt;&lt;defPressGangs &quot;press gangs&quot;&gt;&gt; roaming the street, grabbing any man they can.
@@ -2534,16 +2420,10 @@ The sky has been rumbling for days and you wonder whether the sound was cannon f
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jun 1666: Volunteered for the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jun 1666: Stayed out of the fighting&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
 
-You avoid being pressed by keeping out of the way of the gangs. You don&#39;t know what future the city holds but at least it&#39;s better than being in the Navy. One thing is for certain, though. The weather is so hot that &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases are on the rise again and you know it will only get worse in [[July 1666]]. 
-&lt;br&gt;&lt;br&gt;
-&lt;img src=&quot;https://collections.rmg.co.uk/media/287/368/bhc0286.jpg&quot; width=&quot;100%&quot;&gt;
-//Abraham Storck, The &#39;Royal Prince&#39; and other Vessels at the Four Days Battle, 1–4 June 1666, c. 1670//
+You avoid being pressed by keeping out of the way of the gangs. You don&#39;t know what future the city holds but at least it&#39;s better than being in the Navy. &lt;&lt;june-1666-helper&gt;&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;else&gt;&gt;
-One thing is for certain, though. The weather is so hot that &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases are on the rise again and you know it will only get worse in [[July 1666]]. 
-&lt;br&gt;&lt;br&gt;
-&lt;img src=&quot;https://collections.rmg.co.uk/media/287/368/bhc0286.jpg&quot; width=&quot;100%&quot;&gt;
-//Abraham Storck, The &#39;Royal Prince&#39; and other Vessels at the Four Days Battle, 1–4 June 1666, c. 1670//
+&lt;&lt;june-1666-helper&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 
@@ -2701,68 +2581,12 @@ Despite the English &lt;&lt;defFleet &quot;fleet&#39;s&quot;&gt;&gt; victory, th
 &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;
 There aren&#39;t as many rumors as there might have been, given how many people have fled the city and how afraid the people who remain are of coming near each other. 
 &lt;br&gt;&lt;br&gt;
-The graveyards are beginning to overflow and corpses are being flung into the open marshes of &lt;&lt;defTuttlefields &quot;Tuttle-fields&quot;&gt;&gt;. There is still room in the &lt;&lt;defNewChapelChurchyard &quot;New Chapel churchyard&quot;&gt;&gt;, that was walled in during the last &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; at great public expenses, but only the rich whose families can afford to pay are being buried there now.
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
-&lt;&lt;else&gt;&gt;
-	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt;
-/* NTS: should these descriptions end with a choice to abandon your work? yes */
-    &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;You have tried to slip a few corpses in from your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; and have been turned away. Luckily, their grieving families are still shut into their houses and can&#39;t come out to yell at you over the treatment of the dead.
-    &lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot;&gt;
-//Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
-
-    &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;People attempt to bribe you to say that their loved ones died of something other than &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. 
-    &lt;br&gt;
-    &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot;&gt;
-    &lt;br&gt;
-//Nathaniel Parr, Three men loading plague victims from the street onto a cart to left, two of them smoking pipes to protect themselves, a figure with a bundle over his shoulder walking under an arch in the background to right; illustration to a &#39;History of England&#39;, c. 1747, published by Thomas Astley. British Museum.//
-&lt;br&gt;
-    You say &lt;span id=&quot;bribe-yn&quot;&gt;\
-&lt;&lt;link &quot;yes&quot;&gt;&gt;&lt;&lt;set $reputation -=3&gt;&gt;&lt;&lt;set $money +=3&gt;&gt;&lt;&lt;set $searcherbribe to 1&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;yes&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
-| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $reputation += 1&gt;&gt;&lt;&lt;set $searcherbribe to &quot;no&quot;&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;no&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;.
-    &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;You fear death every day.
-    &lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-&lt;&lt;/if&gt;&gt;
-It feels like the church bells are ringing constantly, with each new death or funeral.
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
-The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has followed the King&#39;s household to &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt; and one of his guards dies of plague at the end of the month.&lt;&lt;/if&gt;&gt;
-[[Continue to August 1665-&gt;August 1665]]
-&lt;&lt;/if&gt;&gt;
+&lt;&lt;july-1665-helper&gt;&gt;
 
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | 
 &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;
 &lt;br&gt;&lt;br&gt;
-The graveyards are beginning to overflow and corpses are being flung into the open marshes of &lt;&lt;defTuttlefields &quot;Tuttle-fields&quot;&gt;&gt;. There is still room in the &lt;&lt;defNewChapelChurchyard &quot;New Chapel churchyard&quot;&gt;&gt;, that was walled in during the last &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; at great public expenses, but only the rich whose families can afford to pay are being buried there now.
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
-&lt;&lt;else&gt;&gt;
-	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt;
-/* NTS: should these descriptions end with a choice to abandon your work? yes */
-    &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;You have tried to slip a few corpses in from your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; and have been turned away. Luckily, their grieving families are still shut into their houses and can&#39;t come out to yell at you over the treatment of the dead.
-    &lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot;&gt;
-//Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
-
-    &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;People attempt to bribe you to say that their loved ones died of something other than &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. 
-    &lt;br&gt;
-    &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot;&gt;
-    &lt;br&gt;
-//Nathaniel Parr, Three men loading plague victims from the street onto a cart to left, two of them smoking pipes to protect themselves, a figure with a bundle over his shoulder walking under an arch in the background to right; illustration to a &#39;History of England&#39;, c. 1747, published by Thomas Astley. British Museum.//
-&lt;br&gt;
-    You say &lt;span id=&quot;bribe-yn&quot;&gt;\
-&lt;&lt;link &quot;yes&quot;&gt;&gt;&lt;&lt;set $reputation -=3&gt;&gt;&lt;&lt;set $money +=3&gt;&gt;&lt;&lt;set $searcherbribe to 1&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;yes&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
-| &lt;&lt;link &quot;no&quot;&gt;&gt;&lt;&lt;set $reputation += 1&gt;&gt;&lt;&lt;set $searcherbribe to &quot;no&quot;&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;no&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;.
-    &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;You fear death every day.
-    &lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-&lt;&lt;/if&gt;&gt;
-It feels like the church bells are ringing constantly, with each new death or funeral.
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
-The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has followed the King&#39;s household to &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt; and one of his guards dies of plague at the end of the month.&lt;&lt;/if&gt;&gt;
-[[Continue to August 1665-&gt;August 1665]]
-&lt;&lt;/if&gt;&gt;
+&lt;&lt;july-1665-helper&gt;&gt;
 
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;/span&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
@@ -2771,67 +2595,11 @@ The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has followed the King&#39;s hou
 &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;
 There aren&#39;t as many rumors as there might have been, given how many people have fled the city and how afraid the people who remain are of coming near each other.
 &lt;br&gt;&lt;br&gt;
-The graveyards are beginning to overflow and corpses are being flung into the open marshes of &lt;&lt;defTuttlefields &quot;Tuttle-fields&quot;&gt;&gt;. There is still room in the &lt;&lt;defNewChapelChurchyard &quot;New Chapel churchyard&quot;&gt;&gt;, that was walled in during the last &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; at great public expenses, but only the rich whose families can afford to pay are being buried there now.
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
-&lt;&lt;else&gt;&gt;
-	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt;
-/* NTS: should these descriptions end with a choice to abandon your work? yes */
-    &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;You have tried to slip a few corpses in from your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; and have been turned away. Luckily, their grieving families are still shut into their houses and can&#39;t come out to yell at you over the treatment of the dead.
-    &lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot;&gt;
-//Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
-
-    &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;People attempt to bribe you to say that their loved ones died of something other than &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. 
-    &lt;br&gt;
-    &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot;&gt;
-    &lt;br&gt;
-//Nathaniel Parr, Three men loading plague victims from the street onto a cart to left, two of them smoking pipes to protect themselves, a figure with a bundle over his shoulder walking under an arch in the background to right; illustration to a &#39;History of England&#39;, c. 1747, published by Thomas Astley. British Museum.//
-&lt;br&gt;
-    You say &lt;span id=&quot;bribe-yn&quot;&gt;\
-&lt;&lt;link &quot;yes&quot;&gt;&gt;&lt;&lt;set $reputation -=3&gt;&gt;&lt;&lt;set $money +=3&gt;&gt;&lt;&lt;set $searcherbribe to 1&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;yes&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
-| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $reputation += 1&gt;&gt;&lt;&lt;set $searcherbribe to &quot;no&quot;&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;no&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;.
-    &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;You fear death every day.
-    &lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-&lt;&lt;/if&gt;&gt;
-It feels like the church bells are ringing constantly, with each new death or funeral.
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
-The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has followed the King&#39;s household to &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt; and one of his guards dies of plague at the end of the month.&lt;&lt;/if&gt;&gt;
-[[Continue to August 1665-&gt;August 1665]]
-&lt;&lt;/if&gt;&gt;
+&lt;&lt;july-1665-helper&gt;&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; |
 &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;
 &lt;br&gt;&lt;br&gt;
-The graveyards are beginning to overflow and corpses are being flung into the open marshes of &lt;&lt;defTuttlefields &quot;Tuttle-fields&quot;&gt;&gt;. There is still room in the &lt;&lt;defNewChapelChurchyard &quot;New Chapel churchyard&quot;&gt;&gt;, that was walled in during the last &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; at great public expenses, but only the rich whose families can afford to pay are being buried there now.
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
-&lt;&lt;else&gt;&gt;
-	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt;
-/* NTS: should these descriptions end with a choice to abandon your work? yes */
-    &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;You have tried to slip a few corpses in from your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; and have been turned away. Luckily, their grieving families are still shut into their houses and can&#39;t come out to yell at you over the treatment of the dead.
-    &lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot;&gt;
-//Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
-
-    &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;People attempt to bribe you to say that their loved ones died of something other than &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. 
-    &lt;br&gt;
-    &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot;&gt;
-    &lt;br&gt;
-//Nathaniel Parr, Three men loading plague victims from the street onto a cart to left, two of them smoking pipes to protect themselves, a figure with a bundle over his shoulder walking under an arch in the background to right; illustration to a &#39;History of England&#39;, c. 1747, published by Thomas Astley. British Museum.//
-&lt;br&gt;
-    You say &lt;span id=&quot;bribe-yn&quot;&gt;\
-&lt;&lt;link &quot;yes&quot;&gt;&gt;&lt;&lt;set $reputation -=3&gt;&gt;&lt;&lt;set $money +=3&gt;&gt;&lt;&lt;set $searcherbribe to 1&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;yes&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
-| &lt;&lt;link &quot;no&quot;&gt;&gt;&lt;&lt;set $reputation += 1&gt;&gt;&lt;&lt;set $searcherbribe to &quot;no&quot;&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;no&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;.
-    &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;You fear death every day.
-    &lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-&lt;&lt;/if&gt;&gt;
-It feels like the church bells are ringing constantly, with each new death or funeral.
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
-The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has followed the King&#39;s household to &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt; and one of his guards dies of plague at the end of the month.&lt;&lt;/if&gt;&gt;
-[[Continue to August 1665-&gt;August 1665]]
-&lt;&lt;/if&gt;&gt;
+&lt;&lt;july-1665-helper&gt;&gt;
 
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/if&gt;&gt;
