@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.6" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.7" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3109,11 +3109,10 @@ Monthly spending: $expenses
 /* Remaining total: _remainder */
 /*&lt;&lt;set $money to _remainder&gt;&gt;*/
 &lt;&lt;nobr&gt;&gt;
-&lt;&lt;set _shillings to Math.floor($money/12)&gt;&gt;&lt;&lt;set $pence to ($money - (_shillings*12))&gt;&gt;
-&lt;&lt;if _shillings gte 20&gt;&gt;
-&lt;&lt;set $pounds to Math.floor(_shillings/20)&gt;&gt;&lt;&lt;set $shillings to (_shillings- Math.floor($pounds*20))&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set _moneyNeg to ($money lt 0)&gt;&gt;&lt;&lt;set _moneyAbs to Math.abs($money)&gt;&gt;&lt;&lt;set _shillings to Math.floor(_moneyAbs/12)&gt;&gt;&lt;&lt;set _pence to (_moneyAbs - (_shillings*12))&gt;&gt;
+&lt;&lt;set _pounds to Math.floor(_shillings/20)&gt;&gt;&lt;&lt;set _shillings to (_shillings - Math.floor(_pounds*20))&gt;&gt;
 
-Total wealth: $money (£$pounds, $shillings s., $pence d.)
+Total wealth: $money (&lt;&lt;if _moneyNeg&gt;&gt;-&lt;&lt;/if&gt;&gt;£_pounds, _shillings s., _pence d.)
 &lt;&lt;/nobr&gt;&gt;
 
 &lt;&lt;link &quot;Inventory&quot;&gt;&gt;
