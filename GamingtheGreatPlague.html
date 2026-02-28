@@ -3861,11 +3861,10 @@ Your stats go here..
 &lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;conversion&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
-&lt;&lt;set _convertAmt to (_args.length ? _args[0] : $money)&gt;&gt;&lt;&lt;set _shillings to Math.floor(_convertAmt/12)&gt;&gt;&lt;&lt;set _pence to (_convertAmt - (_shillings*12))&gt;&gt;
-&lt;&lt;if _shillings gte 20&gt;&gt;
+&lt;&lt;set _convertAmt to (_args.length ? _args[0] : $money)&gt;&gt;&lt;&lt;set _neg to (_convertAmt lt 0)&gt;&gt;&lt;&lt;set _convertAmt to Math.abs(_convertAmt)&gt;&gt;&lt;&lt;set _shillings to Math.floor(_convertAmt/12)&gt;&gt;&lt;&lt;set _pence to (_convertAmt - (_shillings*12))&gt;&gt;
 &lt;&lt;set _pounds to Math.floor(_shillings/20)&gt;&gt;&lt;&lt;set _shillings to (_shillings - Math.floor(_pounds*20))&gt;&gt;
-&lt;&lt;else&gt;&gt;&lt;&lt;set _pounds to 0&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;
-£_pounds, _shillings s., _pence p.&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;&lt;if _neg&gt;&gt;-&lt;&lt;/if&gt;&gt;£_pounds, _shillings s., _pence p.&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;money&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 	&lt;&lt;set $money to Math.clamp($money + _args[0], 0, Infinity)&gt;&gt;
