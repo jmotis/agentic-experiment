@@ -61,6 +61,11 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
 2. **Never touch passages you did not explicitly analyze.** If a passage was not part of the current task, its `content` field in `passages.json` must remain byte-identical to what `extract.js` produced. Do not reformat, re-encode, or "clean up" unrelated passages.
 3. **Never alter `<tw-storydata>` wrapper attributes.** The attributes on the `<tw-storydata>` element (`name`, `startnode`, `creator`, `creator-version`, `format`, `format-version`, `ifid`, `options`, `tags`, `zoom`, `hidden`) are managed by Twine and must never be modified. `patch.js` only replaces inner text of `<tw-passagedata>` elements matched by `pid` — do not change this behavior.
 
+### Passage creation rules
+
+- **Do not create new passages.** The `patch.js` script can only update existing `<tw-passagedata>` elements matched by `pid`. It cannot insert new passages into the HTML. Any new passage added to `passages.json` will be silently ignored during patching and will not appear in the game. Only the Twine editor can create new passages.
+- **New widgets go in the Claude-widgets passage (pid 115).** When you need to define a new `<<widget>>`, append its `<<widget "name">>...<</widget>>` block to the content of the existing **Claude-widgets** passage (`pid` `115`, tagged `widget`). Do not attempt to create a separate widget passage.
+
 ### Additional guardrails
 
 - **Do not reconstruct or rewrite** `<tw-storydata>` or any `<tw-passagedata>` opening/closing tags. `patch.js` preserves them automatically.
