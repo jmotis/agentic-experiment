@@ -454,6 +454,12 @@ This document lists all global (story) variables used in **Gaming the Great Plag
   - `7` &mdash; Failed flight attempt (artisans with low reputation; tried to flee but were turned away)
 - **Notes:** Values 0--3 are primarily for servants. Values 4--7 are for other social classes. A value of `5` triggers display of `$FledFamily` instead of `$NPCs` in the sidebar. `$fled` can change over time as the player gets additional flee opportunities.
 
+### `$fledFromIndex`
+- **Type:** Integer
+- **Set by:** `$monthIndex` at the start of the Fled passage (pid 63)
+- **Used for:** Records which timeline index the player fled from, so that the Fled passage can hide return options that would send the player backwards in time (preventing time-travel bug)
+- **Dependency:** Derived from `$monthIndex`
+
 ### `$fledReturn`
 - **Type:** String
 - **Possible values:** `"official"`, `"no-plague"`
