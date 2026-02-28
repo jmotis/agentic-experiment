@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.9" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.10" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3042,6 +3042,27 @@ But at least you didn&#39;t die of plague!
 &lt;tr&gt;&lt;td&gt;$remedies.Immodium.name&lt;/td&gt;&lt;td&gt;$remedies.Immodium.quantity&lt;/td&gt;&lt;td&gt;No mechanical effect on survival rates&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 
+
+
+&lt;hr&gt;
+&lt;h2&gt;How Representative Was Your Experience?&lt;/h2&gt;
+&lt;p&gt;The following sections place your experience in historical context, using data from the Bills of Mortality and other primary sources.&lt;/p&gt;
+
+&lt;&lt;stats-household-mortality&gt;&gt;
+
+&lt;&lt;stats-historical-totals&gt;&gt;
+
+&lt;&lt;stats-parish-risk&gt;&gt;
+
+&lt;&lt;stats-characteristics&gt;&gt;
+
+&lt;&lt;stats-non-plague-deaths&gt;&gt;
+
+&lt;&lt;stats-cumulative-risk&gt;&gt;
+
+&lt;&lt;stats-timeline&gt;&gt;
+
+&lt;&lt;stats-limitations&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="49" name="transported" tags="" position="1900,475" size="100,100">The local authorities decide to have you bound into &lt;&lt;defIndenturedServitude &quot;indentured servitude&quot;&gt;&gt; and shipped to the colony of Virginia. 
 &lt;br&gt;
 If you don&#39;t die during the perilous months&#39; long journey across the Atlantic, you&#39;ll probably die of disease or violence within the first couple of years after your arrival.
@@ -5703,6 +5724,243 @@ It&#39;s also not too late to &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+\n
+
+&lt;&lt;widget &quot;stats-household-mortality&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;h3&gt;Household Mortality&lt;/h3&gt;
+&lt;&lt;silently&gt;&gt;
+&lt;&lt;set _totalStart to 0&gt;&gt;
+&lt;&lt;set _totalDead to 0&gt;&gt;
+&lt;&lt;set _plagueDead to 0&gt;&gt;
+&lt;&lt;set _otherDead to 0&gt;&gt;
+&lt;&lt;set _totalRecovered to 0&gt;&gt;
+&lt;&lt;set _totalHealthy to 0&gt;&gt;
+&lt;&lt;set _totalSafe to 0&gt;&gt;
+&lt;&lt;set _totalFled to 0&gt;&gt;
+/* Count NPCs */
+&lt;&lt;for _mi to 0; _mi lt $NPCs.length; _mi++&gt;&gt;
+&lt;&lt;set _totalStart += 1&gt;&gt;
+&lt;&lt;set _h to $NPCs[_mi].health&gt;&gt;
+&lt;&lt;if _h is &quot;deceased&quot; or _h.indexOf(&quot;deceased&quot;) is 0&gt;&gt;&lt;&lt;set _totalDead += 1&gt;&gt;
+&lt;&lt;if _h is &quot;deceased-pq&quot; or _h.indexOf(&quot;deceased-pq&quot;) is 0&gt;&gt;&lt;&lt;set _plagueDead += 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _otherDead += 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _h.indexOf(&quot;recovered&quot;) is 0&gt;&gt;&lt;&lt;set _totalRecovered += 1&gt;&gt;
+&lt;&lt;elseif _h is &quot;safe from harm&quot;&gt;&gt;&lt;&lt;set _totalSafe += 1&gt;&gt;
+&lt;&lt;elseif _h is &quot;healthy&quot;&gt;&gt;&lt;&lt;set _totalHealthy += 1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+/* Count fled family */
+&lt;&lt;for _mi to 0; _mi lt $FledFamily.length; _mi++&gt;&gt;
+&lt;&lt;set _totalStart += 1&gt;&gt;&lt;&lt;set _totalFled += 1&gt;&gt;
+&lt;&lt;set _h to $FledFamily[_mi].health&gt;&gt;
+&lt;&lt;if _h is &quot;deceased&quot; or _h.indexOf(&quot;deceased&quot;) is 0&gt;&gt;&lt;&lt;set _totalDead += 1&gt;&gt;
+&lt;&lt;if _h is &quot;deceased-pq&quot; or _h.indexOf(&quot;deceased-pq&quot;) is 0&gt;&gt;&lt;&lt;set _plagueDead += 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _otherDead += 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _h.indexOf(&quot;recovered&quot;) is 0&gt;&gt;&lt;&lt;set _totalRecovered += 1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+/* Count servants */
+&lt;&lt;for _mi to 0; _mi lt $NPCsServants.length; _mi++&gt;&gt;
+&lt;&lt;set _totalStart += 1&gt;&gt;
+&lt;&lt;set _h to $NPCsServants[_mi].health&gt;&gt;
+&lt;&lt;if _h is &quot;deceased&quot; or _h.indexOf(&quot;deceased&quot;) is 0&gt;&gt;&lt;&lt;set _totalDead += 1&gt;&gt;
+&lt;&lt;if _h is &quot;deceased-pq&quot; or _h.indexOf(&quot;deceased-pq&quot;) is 0&gt;&gt;&lt;&lt;set _plagueDead += 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _otherDead += 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _h.indexOf(&quot;recovered&quot;) is 0&gt;&gt;&lt;&lt;set _totalRecovered += 1&gt;&gt;
+&lt;&lt;elseif _h is &quot;healthy&quot;&gt;&gt;&lt;&lt;set _totalHealthy += 1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+/* Count fled servants */
+&lt;&lt;for _mi to 0; _mi lt $FledServants.length; _mi++&gt;&gt;
+&lt;&lt;set _totalStart += 1&gt;&gt;&lt;&lt;set _totalFled += 1&gt;&gt;
+&lt;&lt;set _h to $FledServants[_mi].health&gt;&gt;
+&lt;&lt;if _h is &quot;deceased&quot; or _h.indexOf(&quot;deceased&quot;) is 0&gt;&gt;&lt;&lt;set _totalDead += 1&gt;&gt;
+&lt;&lt;if _h is &quot;deceased-pq&quot; or _h.indexOf(&quot;deceased-pq&quot;) is 0&gt;&gt;&lt;&lt;set _plagueDead += 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _otherDead += 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _h.indexOf(&quot;recovered&quot;) is 0&gt;&gt;&lt;&lt;set _totalRecovered += 1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+/* Count master household */
+&lt;&lt;for _mi to 0; _mi lt $NPCsMaster.length; _mi++&gt;&gt;
+&lt;&lt;set _totalStart += 1&gt;&gt;
+&lt;&lt;set _h to $NPCsMaster[_mi].health&gt;&gt;
+&lt;&lt;if _h is &quot;deceased&quot; or _h.indexOf(&quot;deceased&quot;) is 0&gt;&gt;&lt;&lt;set _totalDead += 1&gt;&gt;
+&lt;&lt;if _h is &quot;deceased-pq&quot; or _h.indexOf(&quot;deceased-pq&quot;) is 0&gt;&gt;&lt;&lt;set _plagueDead += 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _otherDead += 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _h.indexOf(&quot;recovered&quot;) is 0&gt;&gt;&lt;&lt;set _totalRecovered += 1&gt;&gt;
+&lt;&lt;elseif _h is &quot;healthy&quot;&gt;&gt;&lt;&lt;set _totalHealthy += 1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+/* Count extended family */
+&lt;&lt;for _mi to 0; _mi lt $NPCsExtended.length; _mi++&gt;&gt;
+&lt;&lt;set _totalStart += 1&gt;&gt;
+&lt;&lt;set _h to $NPCsExtended[_mi].health&gt;&gt;
+&lt;&lt;if _h is &quot;deceased&quot; or _h.indexOf(&quot;deceased&quot;) is 0&gt;&gt;&lt;&lt;set _totalDead += 1&gt;&gt;
+&lt;&lt;if _h is &quot;deceased-pq&quot; or _h.indexOf(&quot;deceased-pq&quot;) is 0&gt;&gt;&lt;&lt;set _plagueDead += 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _otherDead += 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _h.indexOf(&quot;recovered&quot;) is 0&gt;&gt;&lt;&lt;set _totalRecovered += 1&gt;&gt;
+&lt;&lt;elseif _h is &quot;healthy&quot;&gt;&gt;&lt;&lt;set _totalHealthy += 1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _totalSurvived to _totalHealthy + _totalRecovered + _totalSafe&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;&lt;if _totalStart gt 0&gt;&gt;
+&lt;table width=90%&gt;&lt;tr&gt;&lt;th width=70%&gt;Category&lt;/th&gt;&lt;th width=30%&gt;Count&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Total household members&lt;/td&gt;&lt;td&gt;&lt;&lt;print _totalStart&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Died of plague&lt;/td&gt;&lt;td&gt;&lt;&lt;print _plagueDead&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Died of other causes&lt;/td&gt;&lt;td&gt;&lt;&lt;print _otherDead&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Survived&lt;/td&gt;&lt;td&gt;&lt;&lt;print _totalSurvived&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;&lt;if _totalFled gt 0&gt;&gt;&lt;tr&gt;&lt;td&gt;Fled London&lt;/td&gt;&lt;td&gt;&lt;&lt;print _totalFled&gt;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;&lt;/if&gt;&gt;
+&lt;/table&gt;
+&lt;&lt;if _totalDead gt 0&gt;&gt;
+&lt;p&gt;&lt;i&gt;Your household lost &lt;&lt;print Math.round((_totalDead / _totalStart) * 100)&gt;&gt;% of its members. Historically, households struck by plague often lost 30-50% of their members, and some were wiped out entirely.&lt;/i&gt;&lt;/p&gt;
+&lt;&lt;else&gt;&gt;
+&lt;p&gt;&lt;i&gt;Your household suffered no deaths. This was fortunate but not unusual&amp;mdash;many households, especially in less-affected parishes, escaped the plague entirely.&lt;/i&gt;&lt;/p&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;p&gt;You had no household members.&lt;/p&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;stats-historical-totals&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;h3&gt;London&amp;rsquo;s Death Toll: The Numbers&lt;/h3&gt;
+&lt;p&gt;The &lt;b&gt;Bills of Mortality&lt;/b&gt;&amp;mdash;weekly tallies of deaths published by London&amp;rsquo;s parish clerks&amp;mdash;record the staggering scale of the Great Plague:&lt;/p&gt;
+&lt;table width=90%&gt;&lt;tr&gt;&lt;th width=35%&gt;Year&lt;/th&gt;&lt;th width=30%&gt;Total Burials&lt;/th&gt;&lt;th width=35%&gt;Plague Deaths&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;1664 (normal year)&lt;/td&gt;&lt;td&gt;18,297&lt;/td&gt;&lt;td&gt;6&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;b&gt;1665 (plague year)&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;97,306&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;b&gt;68,596&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;1666&lt;/td&gt;&lt;td&gt;12,738&lt;/td&gt;&lt;td&gt;1,998&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;With an estimated population of 400,000&amp;ndash;460,000, roughly &lt;b&gt;1 in 4 to 5 Londoners died&lt;/b&gt; in 1665 alone. Burials increased more than fivefold compared to a normal year.&lt;/p&gt;
+&lt;p&gt;Plague accounted for about 70% of all recorded deaths in 1665. But the true toll was likely higher&amp;mdash;historians estimate 20&amp;ndash;30% of plague deaths were misattributed to other causes like &amp;ldquo;spotted fever,&amp;rdquo; &amp;ldquo;surfeit,&amp;rdquo; or simply &amp;ldquo;fever&amp;rdquo; due to bribery of searchers, fear of quarantine, or diagnostic uncertainty.&lt;/p&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;stats-parish-risk&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;h3&gt;Your Parish: $parish&lt;/h3&gt;
+&lt;&lt;silently&gt;&gt;
+&lt;&lt;set _rates to $parishRate[$parish]&gt;&gt;
+&lt;&lt;set _survProb to 1.0&gt;&gt;
+&lt;&lt;for _ri to 0; _ri lt _rates.length; _ri++&gt;&gt;
+&lt;&lt;if _rates[_ri] lt 1000&gt;&gt;
+&lt;&lt;set _survProb to _survProb * (1.0 - (1.0 / _rates[_ri]))&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _infectProb to Math.round((1.0 - _survProb) * 100)&gt;&gt;
+/* Find most dangerous month */
+&lt;&lt;set _worstRate to 1000&gt;&gt;
+&lt;&lt;set _worstMonth to &quot;&quot;&gt;&gt;
+&lt;&lt;for _ri to 0; _ri lt _rates.length; _ri++&gt;&gt;
+&lt;&lt;if _rates[_ri] lt _worstRate&gt;&gt;&lt;&lt;set _worstRate to _rates[_ri]&gt;&gt;&lt;&lt;set _worstMonth to $timeline[_ri]&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+/* Get parish plague death count from the parish lists */
+&lt;&lt;set _parishDeaths to 0&gt;&gt;
+&lt;&lt;if def $wallParishes[$parish]&gt;&gt;&lt;&lt;set _parishDeaths to $wallParishes[$parish]&gt;&gt;
+&lt;&lt;elseif def $WestmParishes[$parish]&gt;&gt;&lt;&lt;set _parishDeaths to $WestmParishes[$parish]&gt;&gt;
+&lt;&lt;elseif def $eParishes[$parish]&gt;&gt;&lt;&lt;set _parishDeaths to $eParishes[$parish]&gt;&gt;
+&lt;&lt;elseif def $wParishes[$parish]&gt;&gt;&lt;&lt;set _parishDeaths to $wParishes[$parish]&gt;&gt;
+&lt;&lt;elseif def $nParishes[$parish]&gt;&gt;&lt;&lt;set _parishDeaths to $nParishes[$parish]&gt;&gt;
+&lt;&lt;elseif def $sParishes[$parish]&gt;&gt;&lt;&lt;set _parishDeaths to $sParishes[$parish]&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;table width=90%&gt;&lt;tr&gt;&lt;th width=70%&gt;&lt;/th&gt;&lt;th width=30%&gt;&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Recorded plague deaths in your parish&lt;/td&gt;&lt;td&gt;&lt;&lt;print _parishDeaths&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Cumulative chance of catching plague (per the game&amp;rsquo;s model)&lt;/td&gt;&lt;td&gt;&lt;&lt;print _infectProb&gt;&gt;%&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Most dangerous month&lt;/td&gt;&lt;td&gt;&lt;&lt;print _worstMonth&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Peak monthly infection chance&lt;/td&gt;&lt;td&gt;1 in &lt;&lt;print _worstRate&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;i&gt;For comparison: St Mary Islington (a suburban parish) had only 58 plague deaths over the whole outbreak, while St Giles Cripplegate (a crowded northern suburb) had 1,353. The deadliest parish was St Dunstan Stepney with 1,392 recorded plague deaths. Parishes inside the City walls were generally safer than the poorer suburbs, where plague arrived earlier and spread faster due to crowded housing.&lt;/i&gt;&lt;/p&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;stats-characteristics&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;h3&gt;How Your Character&amp;rsquo;s Traits Affected Survival&lt;/h3&gt;
+&lt;table width=90%&gt;&lt;tr&gt;&lt;th width=30%&gt;Trait&lt;/th&gt;&lt;th width=70%&gt;Effect on Your Experience&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;b&gt;Age: $age&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;Elderly characters faced a 1-in-30 chance of dying from old age each month (~55% cumulative over the game). Historically, the elderly were especially vulnerable to plague and other diseases.&lt;&lt;elseif $age is &quot;child&quot; or $age is &quot;infant&quot;&gt;&gt;As a child, you could not make your own decisions&amp;mdash;your family decided whether to flee, quarantine, or stay. Historically, children and infants were extremely vulnerable; &amp;ldquo;Chrisomes and Infants&amp;rdquo; (infant deaths) was the second-largest cause of death after consumption in normal years.&lt;&lt;else&gt;&gt;As a young or middle-aged adult, you had the best survival odds from non-plague causes. The game does not model the adult non-plague deaths (consumption, dropsy, fever) that were common in this period.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;b&gt;Class: $socio&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;Nobles could afford to flee London and had the best chance of avoiding plague entirely. Historically, the nobility and gentry fled in large numbers, leaving the poor to bear the brunt of the epidemic.&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;Merchants had resources to flee or send their families away, though leaving meant abandoning their businesses. Many merchants stayed to protect their trade.&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;Artisans faced difficult choices about whether to flee (if their reputation allowed) or stay and risk infection. Their middling status meant plague hit them hard.&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;As a servant, your fate was tied to your master&amp;rsquo;s decisions. If your master fled, you went too; if they stayed, so did you. Breaking your contract meant destitution.&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;Day labourers were among the most vulnerable. Many were recruited into dangerous plague work (corpse-bearing, searching, nursing) because they had no other income. Historically, the working poor suffered the highest plague mortality rates.&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;Beggars were the most vulnerable class. With no money, no home security, and no ability to flee, they faced starvation, freezing, and constant plague exposure. Many were forcibly removed from the city.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;b&gt;Location: $location&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;Living inside the City walls generally meant lower plague rates. The plague arrived later here (July 1665) and the wealthier, less crowded parishes fared better.&lt;&lt;elseif $location is &quot;in the western suburbs&quot; or $location is &quot;in another part of the western suburbs&quot;&gt;&gt;The western suburbs, including St Giles in the Field, were where plague first appeared in London in late 1664. These areas were hit earliest and hardest.&lt;&lt;elseif $location is &quot;in the eastern suburbs&quot;&gt;&gt;The eastern suburbs, including Stepney and Whitechapel, were densely populated and suffered heavily. St Dunstan Stepney recorded more plague deaths than any other parish.&lt;&lt;elseif $location is &quot;in the northern suburbs&quot;&gt;&gt;The northern suburbs included large parishes like St Giles Cripplegate (1,353 plague deaths) and Shoreditch, which were heavily affected.&lt;&lt;elseif $location is &quot;south of the Thames&quot;&gt;&gt;Southwark and the parishes south of the Thames were somewhat protected by the river barrier but still suffered significantly, especially St Olave Southwark (829 deaths) and St Saviour Southwark (605 deaths).&lt;&lt;else&gt;&gt;Your location in the Westminster area placed you near the early epicenter of the outbreak.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;b&gt;Status: $relationship&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;if $relationship is &quot;married&quot; or $relationship is &quot;widowed&quot;&gt;&gt;Married women of childbearing age (16&amp;ndash;40) faced additional risks from pregnancy and childbirth. &amp;ldquo;Childbed&amp;rdquo; (maternal mortality) killed 625 women in 1665. Plague during pregnancy also caused miscarriages.&lt;&lt;elseif $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;Being unmarried meant a smaller household, which could mean fewer people to fall ill in quarantine&amp;mdash;but also fewer people to provide care if you did.&lt;&lt;else&gt;&gt;Your relationship status affected your household composition and therefore your exposure to plague during quarantine.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;i&gt;Historically, roughly half of London&amp;rsquo;s population fled the city during the plague. Those who stayed were disproportionately poor, unable to afford the costs of relocation. The King and his court left for Hampton Court in June 1665 and did not return until February 1666.&lt;/i&gt;&lt;/p&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;stats-non-plague-deaths&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;h3&gt;What Else Killed Londoners in 1665&lt;/h3&gt;
+&lt;p&gt;Plague was not the only killer. The Bills of Mortality recorded these top non-plague causes of death in 1665:&lt;/p&gt;
+&lt;table width=90%&gt;&lt;tr&gt;&lt;th width=60%&gt;Cause of Death&lt;/th&gt;&lt;th width=20%&gt;Deaths&lt;/th&gt;&lt;th width=20%&gt;In Game?&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Fever&lt;/td&gt;&lt;td&gt;5,257&lt;/td&gt;&lt;td&gt;Yes&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Consumption and Tissick&lt;/td&gt;&lt;td&gt;4,808&lt;/td&gt;&lt;td&gt;No&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Teeth and Worms (infant deaths)&lt;/td&gt;&lt;td&gt;2,614&lt;/td&gt;&lt;td&gt;Yes&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Convulsions&lt;/td&gt;&lt;td&gt;2,036&lt;/td&gt;&lt;td&gt;Yes&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Spotted Fever and Purples&lt;/td&gt;&lt;td&gt;1,929&lt;/td&gt;&lt;td&gt;Yes&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Aged&lt;/td&gt;&lt;td&gt;1,545&lt;/td&gt;&lt;td&gt;Yes&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Dropsy and Tympany&lt;/td&gt;&lt;td&gt;1,478&lt;/td&gt;&lt;td&gt;No&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Griping in the Guts&lt;/td&gt;&lt;td&gt;1,288&lt;/td&gt;&lt;td&gt;Yes&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Chrisomes and Infants&lt;/td&gt;&lt;td&gt;1,258&lt;/td&gt;&lt;td&gt;Yes&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Surfeit (overeating/overdrinking)&lt;/td&gt;&lt;td&gt;1,251&lt;/td&gt;&lt;td&gt;No&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Smallpox&lt;/td&gt;&lt;td&gt;655&lt;/td&gt;&lt;td&gt;Yes&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Childbed (maternal death)&lt;/td&gt;&lt;td&gt;625&lt;/td&gt;&lt;td&gt;No&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Abortive and Stillborn&lt;/td&gt;&lt;td&gt;617&lt;/td&gt;&lt;td&gt;No&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Rickets&lt;/td&gt;&lt;td&gt;557&lt;/td&gt;&lt;td&gt;Yes&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;i&gt;Many of the recorded &amp;ldquo;fever,&amp;rdquo; &amp;ldquo;spotted fever,&amp;rdquo; and &amp;ldquo;surfeit&amp;rdquo; deaths were likely misattributed plague cases. Searchers of the dead (often elderly women) could be bribed to record a different cause of death, since a plague diagnosis meant the entire household would be quarantined.&lt;/i&gt;&lt;/p&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;stats-cumulative-risk&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;h3&gt;Your Plague Exposure&lt;/h3&gt;
+&lt;&lt;silently&gt;&gt;
+&lt;&lt;set _exposureCount to 0&gt;&gt;
+&lt;&lt;set _survivalProb to 1.0&gt;&gt;
+&lt;&lt;for _di to 0; _di lt $decisions.length; _di++&gt;&gt;
+&lt;&lt;set _d to $decisions[_di]&gt;&gt;
+&lt;&lt;if typeof _d is &quot;object&quot; and _d.infectPct neq null and _d.infectPct gt 0&gt;&gt;
+&lt;&lt;set _exposureCount += 1&gt;&gt;
+&lt;&lt;set _survivalProb to _survivalProb * (1.0 - (_d.infectPct / 100))&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _cumRisk to Math.round((1.0 - _survivalProb) * 100)&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;&lt;if _exposureCount gt 0&gt;&gt;
+&lt;p&gt;Over the course of the game, your decisions exposed you to plague infection &lt;&lt;print _exposureCount&gt;&gt; time&lt;&lt;if _exposureCount gt 1&gt;&gt;s&lt;&lt;/if&gt;&gt;, for a combined cumulative risk of approximately &lt;b&gt;&lt;&lt;print _cumRisk&gt;&gt;%&lt;/b&gt;.&lt;/p&gt;
+&lt;p&gt;These exposure events included:&lt;/p&gt;&lt;ul&gt;
+&lt;&lt;for _di to 0; _di lt $decisions.length; _di++&gt;&gt;
+&lt;&lt;set _d to $decisions[_di]&gt;&gt;
+&lt;&lt;if typeof _d is &quot;object&quot; and _d.infectPct neq null and _d.infectPct gt 0&gt;&gt;
+&lt;li&gt;&lt;&lt;print _d.text&gt;&gt; (&lt;&lt;print _d.infectPct&gt;&gt;% infection chance)&lt;/li&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;/ul&gt;
+&lt;&lt;else&gt;&gt;
+&lt;p&gt;None of your decisions directly exposed you to a measurable plague infection risk from decision-based events. Your primary risk came from simply living in your parish (see above).&lt;/p&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;p&gt;&lt;i&gt;This risk is separate from and in addition to the monthly parish-based infection probability. In the game, your parish&amp;rsquo;s infection rate was the primary determinant of whether you caught plague, but decisions like attending funerals, doing plague work, or visiting crowded places added to that risk.&lt;/i&gt;&lt;/p&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;stats-timeline&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;h3&gt;The Plague by the Month&lt;/h3&gt;
+&lt;p&gt;Approximate monthly plague deaths in London, based on the weekly Bills of Mortality:&lt;/p&gt;
+&lt;table width=90%&gt;&lt;tr&gt;&lt;th width=50%&gt;Month&lt;/th&gt;&lt;th width=25%&gt;Plague Deaths&lt;/th&gt;&lt;th width=25%&gt;Notes&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Dec 1664 &amp;ndash; Apr 1665&lt;/td&gt;&lt;td&gt;&amp;lt; 10&lt;/td&gt;&lt;td&gt;Isolated cases&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;May 1665&lt;/td&gt;&lt;td&gt;~43&lt;/td&gt;&lt;td&gt;Outbreak begins&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;June 1665&lt;/td&gt;&lt;td&gt;~590&lt;/td&gt;&lt;td&gt;Rapid spread&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;July 1665&lt;/td&gt;&lt;td&gt;~4,129&lt;/td&gt;&lt;td&gt;Crosses into the City&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;August 1665&lt;/td&gt;&lt;td&gt;~19,049&lt;/td&gt;&lt;td&gt;Devastating peak begins&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;September 1665&lt;/td&gt;&lt;td&gt;~26,219&lt;/td&gt;&lt;td&gt;&lt;b&gt;Worst month&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;October 1665&lt;/td&gt;&lt;td&gt;~14,373&lt;/td&gt;&lt;td&gt;Decline begins&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;November 1665&lt;/td&gt;&lt;td&gt;~3,219&lt;/td&gt;&lt;td&gt;Cold weather helps&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;December 1665&lt;/td&gt;&lt;td&gt;~595&lt;/td&gt;&lt;td&gt;Sharp decline&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Jan &amp;ndash; Mar 1666&lt;/td&gt;&lt;td&gt;~250 total&lt;/td&gt;&lt;td&gt;Lingering cases&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Apr &amp;ndash; Sep 1666&lt;/td&gt;&lt;td&gt;~1,700 total&lt;/td&gt;&lt;td&gt;Summer resurgence&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Oct &amp;ndash; Dec 1666&lt;/td&gt;&lt;td&gt;~35 total&lt;/td&gt;&lt;td&gt;Outbreak ends&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;i&gt;At its worst, in the week of September 12&amp;ndash;19, 1665, the Bills of Mortality recorded 7,165 plague deaths in a single week&amp;mdash;more than 1,000 per day. In reality, the true number was almost certainly higher, as many deaths went unrecorded. The plague followed a seasonal pattern: it arrived in warm weather, peaked in late summer, and retreated with the cold. This pattern was well known to Londoners, which is why many chose to flee until winter.&lt;/i&gt;&lt;/p&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;stats-limitations&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;h3&gt;What This Game Does Not Include&lt;/h3&gt;
+&lt;p&gt;To keep the game playable, several historical realities are simplified or omitted:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;Flat plague mortality rate:&lt;/b&gt; The game gives everyone the same 50% chance of dying from plague (33% with a plaster). In reality, mortality varied by age, overall health, and strain of plague. The elderly and very young were more vulnerable.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Limited non-plague adult deaths:&lt;/b&gt; Adults in the game can only die of plague, old age, fever, or accidents. Historically, consumption (4,808 deaths), dropsy (1,478), and many other diseases killed adults regularly.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;No class-based plague rates:&lt;/b&gt; All social classes in the game face the same parish-based infection rates. Historically, the poor (living in crowded, unsanitary conditions) were infected at much higher rates than the wealthy.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Childbirth mortality:&lt;/b&gt; The game models pregnancy and miscarriage but not death in childbirth, which killed 625 women in 1665.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Under-recording of deaths:&lt;/b&gt; The Bills of Mortality are known to undercount deaths, especially among the poor, dissenters, and those who bribed searchers. True plague mortality may have been 20&amp;ndash;30% higher than official records.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Unusual causes of death:&lt;/b&gt; The Bills record deaths from &amp;ldquo;Grief&amp;rdquo; (46), &amp;ldquo;Frighted&amp;rdquo; (23&amp;mdash;literally dying of fright), &amp;ldquo;Hanged and made away themselves&amp;rdquo; (7&amp;mdash;suicide), and even &amp;ldquo;Overlaid and Starved&amp;rdquo; (45&amp;mdash;mostly infants accidentally smothered).&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Post-plague consequences:&lt;/b&gt; The Great Fire of London in September 1666 destroyed much of the City and dramatically reshaped the urban landscape. Many plague survivors faced poverty, displacement, and loss of livelihood in the years that followed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;i&gt;Source: Data from the General Bills of Mortality as transcribed by Millar et al.&lt;/i&gt;&lt;/p&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 </tw-passagedata><tw-passagedata pid="116" name="june-1665-helper-widget" tags="widget" position="1450,350" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
