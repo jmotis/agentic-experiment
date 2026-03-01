@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.16" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.17" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1374,8 +1374,34 @@ Send not to know for whom the church bells toll. They toll for you.&lt;br&gt;&lt
                 &lt;&lt;if _household.health is &quot;recovered-pq&quot;&gt;&gt;&lt;&lt;set _recovered.push(_d)&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
             &lt;&lt;/for&gt;&gt;
+        /* Also resolve infected servants now */
+        &lt;&lt;set _decSv5 to []&gt;&gt;&lt;&lt;set _recSv5 to []&gt;&gt;
+        &lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
+            &lt;&lt;if $NPCsServants[_si].health is &quot;infected&quot;&gt;&gt;
+                &lt;&lt;if _remedyEffect is 1 and random(1,3) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _decSv5.push(_si)&gt;&gt;
+                &lt;&lt;elseif _remedyEffect is 0 and random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _decSv5.push(_si)&gt;&gt;
+                &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recSv5.push(_si)&gt;&gt;
+                &lt;&lt;/if&gt;&gt;
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+        /* Also resolve infected master household */
+        &lt;&lt;set _decMs5 to []&gt;&gt;&lt;&lt;set _recMs5 to []&gt;&gt;
+        &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
+            &lt;&lt;if $NPCsMaster[_mi].health is &quot;infected&quot;&gt;&gt;
+                &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _decMs5.push(_mi)&gt;&gt;
+                &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recMs5.push(_mi)&gt;&gt;&lt;&lt;/if&gt;&gt;
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+        /* Also resolve infected extended family */
+        &lt;&lt;set _decEx5 to []&gt;&gt;&lt;&lt;set _recEx5 to []&gt;&gt;
+        &lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
+            &lt;&lt;if $NPCsExtended[_ei].health is &quot;infected&quot;&gt;&gt;
+                &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _decEx5.push(_ei)&gt;&gt;
+                &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recEx5.push(_ei)&gt;&gt;&lt;&lt;/if&gt;&gt;
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
       &lt;&lt;/silently&gt;&gt;
-    
+
     /* reveal if sick family members have died or survived*/
         &lt;&lt;if _recovered.length gt 0&gt;&gt;&lt;br&gt;&lt;br&gt;You are grateful to hear that your
             &lt;&lt;for _r, _d range _recovered&gt;&gt;
@@ -1387,11 +1413,20 @@ Send not to know for whom the church bells toll. They toll for you.&lt;br&gt;&lt
         &lt;&lt;if _deceased.length gt 0&gt;&gt;&lt;&lt;if _recovered.length gt 0&gt;&gt;Unfortunately, not all have fared the same. &lt;&lt;/if&gt;&gt;Your
             &lt;&lt;for _x, _d range _deceased&gt;&gt;
                 &lt;&lt;if _deceased.length eq 1&gt;&gt; $NPCs[_d].relationship $NPCs[_d].name has died.&lt;&lt;elseif _x &lt; _deceased.length - 1&gt;&gt; $NPCs[_d].relationship $NPCs[_d].name,&lt;&lt;else&gt;&gt;and $NPCs[_d].relationship $NPCs[_d].name have died.
-                &lt;&lt;/if&gt;&gt;       
+                &lt;&lt;/if&gt;&gt;
             &lt;&lt;/for&gt;&gt;
-            &lt;br&gt;&lt;br&gt; 
+            &lt;br&gt;&lt;br&gt;
         &lt;&lt;/if&gt;&gt;
-    
+    /* Report servant deaths and recoveries */
+    &lt;&lt;if _decSv5.length gt 0&gt;&gt;Your &lt;&lt;for _n, _idx range _decSv5&gt;&gt;&lt;&lt;if _decSv5.length eq 1&gt;&gt;servant $NPCsServants[_idx].name has died.&lt;&lt;elseif _n &lt; _decSv5.length - 1&gt;&gt;servant $NPCsServants[_idx].name, &lt;&lt;else&gt;&gt;and servant $NPCsServants[_idx].name have died.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;if _recSv5.length gt 0&gt;&gt;Your &lt;&lt;for _n, _idx range _recSv5&gt;&gt;&lt;&lt;if _recSv5.length eq 1&gt;&gt;servant $NPCsServants[_idx].name has recovered.&lt;&lt;elseif _n &lt; _recSv5.length - 1&gt;&gt;servant $NPCsServants[_idx].name, &lt;&lt;else&gt;&gt;and servant $NPCsServants[_idx].name have recovered.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+    /* Report master household deaths and recoveries */
+    &lt;&lt;if _decMs5.length gt 0&gt;&gt;In your $masterTitle&#39;s &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;, &lt;&lt;for _n, _idx range _decMs5&gt;&gt;&lt;&lt;if _decMs5.length eq 1&gt;&gt;$NPCsMaster[_idx].relationship $NPCsMaster[_idx].name has died.&lt;&lt;elseif _n &lt; _decMs5.length - 1&gt;&gt;$NPCsMaster[_idx].relationship $NPCsMaster[_idx].name, &lt;&lt;else&gt;&gt;and $NPCsMaster[_idx].relationship $NPCsMaster[_idx].name have died.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;if _recMs5.length gt 0&gt;&gt;In your $masterTitle&#39;s &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;, &lt;&lt;for _n, _idx range _recMs5&gt;&gt;&lt;&lt;if _recMs5.length eq 1&gt;&gt;$NPCsMaster[_idx].relationship $NPCsMaster[_idx].name has recovered.&lt;&lt;elseif _n &lt; _recMs5.length - 1&gt;&gt;$NPCsMaster[_idx].relationship $NPCsMaster[_idx].name, &lt;&lt;else&gt;&gt;and $NPCsMaster[_idx].relationship $NPCsMaster[_idx].name have recovered.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+    /* Report extended family deaths and recoveries */
+    &lt;&lt;if _decEx5.length gt 0&gt;&gt;Your &lt;&lt;for _n, _idx range _decEx5&gt;&gt;&lt;&lt;if _decEx5.length eq 1&gt;&gt;$NPCsExtended[_idx].relationship $NPCsExtended[_idx].name has died.&lt;&lt;elseif _n &lt; _decEx5.length - 1&gt;&gt;$NPCsExtended[_idx].relationship $NPCsExtended[_idx].name, &lt;&lt;else&gt;&gt;and $NPCsExtended[_idx].relationship $NPCsExtended[_idx].name have died.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;if _recEx5.length gt 0&gt;&gt;Your &lt;&lt;for _n, _idx range _recEx5&gt;&gt;&lt;&lt;if _recEx5.length eq 1&gt;&gt;$NPCsExtended[_idx].relationship $NPCsExtended[_idx].name has recovered.&lt;&lt;elseif _n &lt; _recEx5.length - 1&gt;&gt;$NPCsExtended[_idx].relationship $NPCsExtended[_idx].name, &lt;&lt;else&gt;&gt;and $NPCsExtended[_idx].relationship $NPCsExtended[_idx].name have recovered.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+
     &lt;&lt;silently&gt;&gt;
       /* check if plague spreads */
         &lt;&lt;fumigant-check&gt;&gt;
@@ -2843,12 +2878,48 @@ It is a difficult decision, but your family decide it&#39;s for the best to send
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;set $money -= 5&gt;&gt;
 
-&lt;br&gt;
-Family status after quarantine:
-&lt;&lt;for _z, _idx range $NPCs&gt;&gt;
-$NPCs[_z].relationship, $NPCs[_z].name, $NPCs[_z].health
+&lt;&lt;silently&gt;&gt;
+/* Resolve infected household NPCs at the pesthouse */
+&lt;&lt;set _phDead = []&gt;&gt;&lt;&lt;set _phRec = []&gt;&gt;
+&lt;&lt;for _pi = 0; _pi &lt; $NPCs.length; _pi++&gt;&gt;
+    &lt;&lt;if $NPCs[_pi].health is &quot;infected&quot;&gt;&gt;
+        &lt;&lt;if random(1,2) eq 1&gt;&gt;
+            &lt;&lt;set $NPCs[_pi].health to &quot;deceased&quot;&gt;&gt;
+            &lt;&lt;set _phDead.push(_pi)&gt;&gt;
+            /* Silent quick burial for pesthouse deaths */
+            &lt;&lt;set $NPCs[_pi].funeralDone to true&gt;&gt;
+            &lt;&lt;set $money -= 9&gt;&gt;
+            &lt;&lt;set $decisions.push({text: &quot;Quick burial for &quot; + $NPCs[_pi].name, money: -9, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
+        &lt;&lt;else&gt;&gt;
+            &lt;&lt;set $NPCs[_pi].health to &quot;recovered&quot;&gt;&gt;
+            &lt;&lt;set _phRec.push(_pi)&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
-&lt;&lt;silently&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;
+/* Resolve infected servants at the pesthouse */
+&lt;&lt;set _phSvDead = []&gt;&gt;&lt;&lt;set _phSvRec = []&gt;&gt;
+&lt;&lt;for _pi = 0; _pi &lt; $NPCsServants.length; _pi++&gt;&gt;
+    &lt;&lt;if $NPCsServants[_pi].health is &quot;infected&quot;&gt;&gt;
+        &lt;&lt;if random(1,2) eq 1&gt;&gt;
+            &lt;&lt;set $NPCsServants[_pi].health to &quot;deceased&quot;&gt;&gt;
+            &lt;&lt;set _phSvDead.push(_pi)&gt;&gt;
+            &lt;&lt;set $NPCsServants[_pi].funeralDone to true&gt;&gt;
+            &lt;&lt;set $money -= 9&gt;&gt;
+            &lt;&lt;set $decisions.push({text: &quot;Quick burial for &quot; + $NPCsServants[_pi].name, money: -9, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
+        &lt;&lt;else&gt;&gt;
+            &lt;&lt;set $NPCsServants[_pi].health to &quot;recovered&quot;&gt;&gt;
+            &lt;&lt;set _phSvRec.push(_pi)&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;check-widowed&gt;&gt;
+&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+&lt;br&gt;
+&lt;&lt;if _phDead.length gt 0&gt;&gt;Despite the pesthouse&#39;s care, your &lt;&lt;for _n, _idx range _phDead&gt;&gt;&lt;&lt;if _phDead.length eq 1&gt;&gt;$NPCs[_idx].relationship $NPCs[_idx].name has died.&lt;&lt;elseif _n &lt; _phDead.length - 1&gt;&gt;$NPCs[_idx].relationship $NPCs[_idx].name, &lt;&lt;else&gt;&gt;and $NPCs[_idx].relationship $NPCs[_idx].name have died.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _phSvDead.length gt 0&gt;&gt;Your servant &lt;&lt;for _n, _idx range _phSvDead&gt;&gt;&lt;&lt;if _phSvDead.length eq 1&gt;&gt;$NPCsServants[_idx].name has also died in the pesthouse.&lt;&lt;elseif _n &lt; _phSvDead.length - 1&gt;&gt;$NPCsServants[_idx].name, &lt;&lt;else&gt;&gt;and $NPCsServants[_idx].name have also died in the pesthouse.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _phRec.length gt 0&gt;&gt;Thankfully, your &lt;&lt;for _n, _idx range _phRec&gt;&gt;&lt;&lt;if _phRec.length eq 1&gt;&gt;$NPCs[_idx].relationship $NPCs[_idx].name has survived.&lt;&lt;elseif _n &lt; _phRec.length - 1&gt;&gt;$NPCs[_idx].relationship $NPCs[_idx].name, &lt;&lt;else&gt;&gt;and $NPCs[_idx].relationship $NPCs[_idx].name have survived.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _phSvRec.length gt 0&gt;&gt;Your servant &lt;&lt;for _n, _idx range _phSvRec&gt;&gt;&lt;&lt;if _phSvRec.length eq 1&gt;&gt;$NPCsServants[_idx].name has also survived.&lt;&lt;elseif _n &lt; _phSvRec.length - 1&gt;&gt;$NPCsServants[_idx].name, &lt;&lt;else&gt;&gt;and $NPCsServants[_idx].name have also survived.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;orphan-check&gt;&gt;
 &lt;&lt;storyline-return&gt;&gt;
@@ -3006,30 +3077,43 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
  	&lt;&lt;set $NPCs[_r].health to &quot;recovered&quot;&gt;&gt;
     &lt;&lt;/for&gt;&gt;
 /* Process servant health updates */
+&lt;&lt;set _deceasedSv to []&gt;&gt;&lt;&lt;set _recoveredSv to []&gt;&gt;
 &lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
     &lt;&lt;if $NPCsServants[_si].health is &quot;infected&quot;&gt;&gt;
-        &lt;&lt;if _remedyEffect is 1 and random(1,3) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;elseif _remedyEffect is 0 and random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;recovered&quot;&gt;&gt;
+        &lt;&lt;if _remedyEffect is 1 and random(1,3) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deceasedSv.push(_si)&gt;&gt;
+        &lt;&lt;elseif _remedyEffect is 0 and random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deceasedSv.push(_si)&gt;&gt;
+        &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recoveredSv.push(_si)&gt;&gt;
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 /* Process master household health updates */
+&lt;&lt;set _deceasedMs to []&gt;&gt;&lt;&lt;set _recoveredMs to []&gt;&gt;
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
     &lt;&lt;if $NPCsMaster[_mi].health is &quot;infected&quot;&gt;&gt;
-        &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deceasedMs.push(_mi)&gt;&gt;
+        &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recoveredMs.push(_mi)&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 /* Process extended family health updates */
+&lt;&lt;set _deceasedEx to []&gt;&gt;&lt;&lt;set _recoveredEx to []&gt;&gt;
 &lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
     &lt;&lt;if $NPCsExtended[_ei].health is &quot;infected&quot;&gt;&gt;
-        &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deceasedEx.push(_ei)&gt;&gt;
+        &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recoveredEx.push(_ei)&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;check-widowed&gt;&gt;
-&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+/* Report servant deaths and recoveries */
+&lt;&lt;if _deceasedSv.length gt 0&gt;&gt;Your &lt;&lt;for _n, _idx range _deceasedSv&gt;&gt;&lt;&lt;if _deceasedSv.length eq 1&gt;&gt;servant $NPCsServants[_idx].name has died.&lt;&lt;elseif _n &lt; _deceasedSv.length - 1&gt;&gt;servant $NPCsServants[_idx].name, &lt;&lt;else&gt;&gt;and servant $NPCsServants[_idx].name have died.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _recoveredSv.length gt 0&gt;&gt;Your &lt;&lt;for _n, _idx range _recoveredSv&gt;&gt;&lt;&lt;if _recoveredSv.length eq 1&gt;&gt;servant $NPCsServants[_idx].name has recovered.&lt;&lt;elseif _n &lt; _recoveredSv.length - 1&gt;&gt;servant $NPCsServants[_idx].name, &lt;&lt;else&gt;&gt;and servant $NPCsServants[_idx].name have recovered.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+/* Report master household deaths and recoveries */
+&lt;&lt;if _deceasedMs.length gt 0&gt;&gt;In your $masterTitle&#39;s &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;, &lt;&lt;for _n, _idx range _deceasedMs&gt;&gt;&lt;&lt;if _deceasedMs.length eq 1&gt;&gt;$NPCsMaster[_idx].relationship $NPCsMaster[_idx].name has died.&lt;&lt;elseif _n &lt; _deceasedMs.length - 1&gt;&gt;$NPCsMaster[_idx].relationship $NPCsMaster[_idx].name, &lt;&lt;else&gt;&gt;and $NPCsMaster[_idx].relationship $NPCsMaster[_idx].name have died.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _recoveredMs.length gt 0&gt;&gt;In your $masterTitle&#39;s &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;, &lt;&lt;for _n, _idx range _recoveredMs&gt;&gt;&lt;&lt;if _recoveredMs.length eq 1&gt;&gt;$NPCsMaster[_idx].relationship $NPCsMaster[_idx].name has recovered.&lt;&lt;elseif _n &lt; _recoveredMs.length - 1&gt;&gt;$NPCsMaster[_idx].relationship $NPCsMaster[_idx].name, &lt;&lt;else&gt;&gt;and $NPCsMaster[_idx].relationship $NPCsMaster[_idx].name have recovered.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+/* Report extended family deaths and recoveries */
+&lt;&lt;if _deceasedEx.length gt 0&gt;&gt;Your &lt;&lt;for _n, _idx range _deceasedEx&gt;&gt;&lt;&lt;if _deceasedEx.length eq 1&gt;&gt;$NPCsExtended[_idx].relationship $NPCsExtended[_idx].name has died.&lt;&lt;elseif _n &lt; _deceasedEx.length - 1&gt;&gt;$NPCsExtended[_idx].relationship $NPCsExtended[_idx].name, &lt;&lt;else&gt;&gt;and $NPCsExtended[_idx].relationship $NPCsExtended[_idx].name have died.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _recoveredEx.length gt 0&gt;&gt;Your &lt;&lt;for _n, _idx range _recoveredEx&gt;&gt;&lt;&lt;if _recoveredEx.length eq 1&gt;&gt;$NPCsExtended[_idx].relationship $NPCsExtended[_idx].name has recovered.&lt;&lt;elseif _n &lt; _recoveredEx.length - 1&gt;&gt;$NPCsExtended[_idx].relationship $NPCsExtended[_idx].name, &lt;&lt;else&gt;&gt;and $NPCsExtended[_idx].relationship $NPCsExtended[_idx].name have recovered.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
 
 
 
@@ -3069,7 +3153,7 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
     &lt;br&gt;
     As a good Christian, it is your duty to look after the poor, sick, and needy. But as a good Christian, you also know it is a sin to needlessly risk your life. Do you&lt;&lt;if $agenum lte 15&gt;&gt; convince your household to&lt;&lt;/if&gt;&gt;:&lt;ul&gt;
 &lt;li&gt;&lt;&lt;link &quot;Quarantine with the sick&quot; &quot;Quarantine, Week 1&quot;&gt;&gt;&lt;&lt;swap-to-other-hh&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 3, 0, 10)&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;&lt;link &quot;Remain in your own household&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;&lt;&lt;if $NPCsMaster[_mi].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;&lt;&lt;if $NPCsExtended[_ei].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;replace &quot;#other-hh-choice&quot;&gt;&gt;You decide to remain in your own household and pray for the recovery of the sick. Life goes on.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;&lt;link &quot;Remain in your own household&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;set _deadOther to []&gt;&gt;&lt;&lt;set _recovOther to []&gt;&gt;&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;&lt;&lt;if $NPCsMaster[_mi].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deadOther.push($NPCsMaster[_mi].relationship + &quot; &quot; + $NPCsMaster[_mi].name)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recovOther.push($NPCsMaster[_mi].relationship + &quot; &quot; + $NPCsMaster[_mi].name)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;&lt;&lt;if $NPCsExtended[_ei].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deadOther.push($NPCsExtended[_ei].relationship + &quot; &quot; + $NPCsExtended[_ei].name)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recovOther.push($NPCsExtended[_ei].relationship + &quot; &quot; + $NPCsExtended[_ei].name)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;check-widowed&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;replace &quot;#other-hh-choice&quot;&gt;&gt;You decide to remain in your own household and pray for the sick.&lt;&lt;if _deadOther.length gt 0&gt;&gt; Despite your prayers, &lt;&lt;for _n, _name range _deadOther&gt;&gt;&lt;&lt;if _deadOther.length eq 1&gt;&gt;your _name has&lt;&lt;elseif _n &lt; _deadOther.length - 1&gt;&gt;your _name, &lt;&lt;else&gt;&gt;and your _name have&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt; died.&lt;&lt;/if&gt;&gt;&lt;&lt;if _recovOther.length gt 0&gt;&gt; Thankfully, &lt;&lt;for _n, _name range _recovOther&gt;&gt;&lt;&lt;if _recovOther.length eq 1&gt;&gt;your _name has&lt;&lt;elseif _n &lt; _recovOther.length - 1&gt;&gt;your _name, &lt;&lt;else&gt;&gt;and your _name have&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt; survived.&lt;&lt;/if&gt;&gt;&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
     &lt;/ul&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
