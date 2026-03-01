@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.17" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.18" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1347,7 +1347,7 @@ Send not to know for whom the church bells toll. They toll for you.&lt;br&gt;&lt
       In the meantime, your family has resorted to desperate measures to protect the health of the youngest. One evening, someone manages to smuggle 
         &lt;&lt;for _f, _g range $getaway&gt;&gt;
           &lt;&lt;if $getaway.length eq 1&gt;&gt;your $NPCs[_g].relationship $NPCs[_g].name,
-          &lt;&lt;elseif _f &lt; $getaway.length - 1&gt;&gt;your $NPCs[_g].relationship $NPCs[_g].name, &lt;&lt;else&gt;&gt;and your $NPCs[_g].relationship $NPCs[_y].name
+          &lt;&lt;elseif _f &lt; $getaway.length - 1&gt;&gt;your $NPCs[_g].relationship $NPCs[_g].name, &lt;&lt;else&gt;&gt;and your $NPCs[_g].relationship $NPCs[_g].name
           &lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;out of the house and to a safer location.
       &lt;&lt;/if&gt;&gt;
@@ -2800,12 +2800,12 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="widow widget" tags="widget" position="150,725" size="100,100">&lt;&lt;widget &quot;check-widowed&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;
   &lt;&lt;for _cwi = 0; _cwi &lt; $NPCs.length; _cwi++&gt;&gt;
-    &lt;&lt;if ($NPCs[_cwi].relationship is &quot;husband&quot; or $NPCs[_cwi].relationship is &quot;wife&quot;) and $NPCs[_cwi].health is &quot;deceased&quot;&gt;&gt;
+    &lt;&lt;if ($NPCs[_cwi].relationship is &quot;husband&quot; or $NPCs[_cwi].relationship is &quot;wife&quot;) and $NPCs[_cwi].health.indexOf(&quot;deceased&quot;) is 0&gt;&gt;
       &lt;&lt;set $relationship to &quot;widowed&quot;&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
   &lt;&lt;for _cwi = 0; _cwi &lt; $FledFamily.length; _cwi++&gt;&gt;
-    &lt;&lt;if ($FledFamily[_cwi].relationship is &quot;husband&quot; or $FledFamily[_cwi].relationship is &quot;wife&quot;) and $FledFamily[_cwi].health is &quot;deceased&quot;&gt;&gt;
+    &lt;&lt;if ($FledFamily[_cwi].relationship is &quot;husband&quot; or $FledFamily[_cwi].relationship is &quot;wife&quot;) and $FledFamily[_cwi].health.indexOf(&quot;deceased&quot;) is 0&gt;&gt;
       &lt;&lt;set $relationship to &quot;widowed&quot;&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
@@ -3071,7 +3071,7 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
 
 &lt;&lt;widget &quot;health-update&quot;&gt;&gt;
 &lt;&lt;silently&gt;&gt;&lt;&lt;if ndef _deceased&gt;&gt;&lt;&lt;set _deceased to []&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if ndef _recovered&gt;&gt;&lt;&lt;set _recovered to []&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;for _d range _deceased&gt;&gt;
-        &lt;&lt;set $NPCs[_d].health to &quot;deceased&quot;&gt;&gt;
+        &lt;&lt;if $NPCs[_d].health isnot &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set $NPCs[_d].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;
  &lt;&lt;for _r range _recovered&gt;&gt;
  	&lt;&lt;set $NPCs[_r].health to &quot;recovered&quot;&gt;&gt;
