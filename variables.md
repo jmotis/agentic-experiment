@@ -700,6 +700,28 @@ These are weighted objects mapping parish names to their relative population wei
 
 ---
 
+## Bills of Mortality Data (Corpse Interactions)
+
+These lookup tables provide historical Bills of Mortality burial counts per parish per game month. They are used by the `<<corpse-work>>` widget to generate monthly notifications for corpsebearer and searcher roles.
+
+### `$corpseBuried`
+- **Type:** Object (`{parishName: [Integer x 22]}`)
+- **Contains:** 127 parishes, each mapped to an array of 22 integers (one per month in `$timeline`)
+- **Values:** Total burials recorded in the Bills of Mortality for that parish in that month
+- **Set by:** `StoryInit` (pid 10)
+- **Used by:** `<<corpse-work>>` widget. Accessed as `$corpseBuried[$parish][$monthIndex]`
+- **Source data:** `supporting-data/1665-1666-combined-BOM-data.csv` (weekly data aggregated to monthly totals)
+
+### `$corpsePlague`
+- **Type:** Object (`{parishName: [Integer x 22]}`)
+- **Contains:** 127 parishes, each mapped to an array of 22 integers (one per month in `$timeline`)
+- **Values:** Plague-attributed burials recorded in the Bills of Mortality for that parish in that month
+- **Set by:** `StoryInit` (pid 10)
+- **Used by:** `<<corpse-work>>` widget. Accessed as `$corpsePlague[$parish][$monthIndex]`. Also used to determine searcher plague infection risk (y in 100 chance, where y = plague burials)
+- **Source data:** `supporting-data/1665-1666-combined-BOM-data.csv` (weekly data aggregated to monthly totals)
+
+---
+
 ## Variables Used in Commented-Out / Unused Code
 
 ### `$shop`
