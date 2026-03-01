@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.19" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.20" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -2190,6 +2190,7 @@ Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.
 &lt;&lt;set $relationship to weightedEither({&quot;single&quot;: 17, &quot;married&quot;: 32, &quot;widowed&quot;: 9})&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;set $religion to weightedEither({&quot;member of the Church of England&quot;: 9209, &quot;member of a dissident Protestant church&quot;: 758, &quot;Catholic&quot;: 33})&gt;&gt;
+&lt;&lt;set $skipServices to 0&gt;&gt;
 &lt;&lt;set $origin to weightedEither({&quot;London&quot;: 30, &quot;the English countryside&quot;: 200, &quot;another English town or city&quot;: 20, &quot;Scotland&quot;: 20, &quot;Ireland&quot;: 20, &quot;the Dutch Republic&quot;: 5, &quot;France&quot;: 4, &quot;somewhere else&quot;: 1})&gt;&gt;
 &lt;&lt;set $socio to weightedEither({&quot;day labourers&quot;: 1820, &quot;servants&quot;: 1820, &quot;artisans&quot;: 600, &quot;merchants&quot;: 80, &quot;nobles&quot;: 8, &quot;beggars&quot;: 4000})&gt;&gt;
 &lt;&lt;set $location to weightedEither({&quot;inside the City walls&quot;: 3458, &quot;in the western suburbs, specifically Westminster&quot;: 2796, &quot;in another part of the western suburbs&quot;: 2405, &quot;in the northern suburbs&quot;: 4810, &quot;in the eastern suburbs&quot;: 3140, &quot;across the river in the southern suburbs&quot;: 2563})&gt;&gt;
@@ -5479,6 +5480,9 @@ Unfortunately, you have suffered a miscarriage and are no longer pregnant.
 		&lt;&lt;if not _npcDeathOccurred&gt;&gt;&lt;&lt;set _randomEventFired to false&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;if not _randomEventFired&gt;&gt;
+&lt;&lt;church-services&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="114" name="Claude-widgets" tags="widget" position="500,1225" size="100,100">/* all widgets generated via Claude  or other AI should be temporarily placed here then manually moved to new locations as needed */
 </tw-passagedata><tw-passagedata pid="115" name="june-1665-helper-widget" tags="widget" position="1475,325" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
@@ -5582,6 +5586,37 @@ The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; grows worse and the streets are
 &lt;&lt;widget &quot;fled-broke&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set _fledBroke to ($money lte 0 and $timeline.indexOf($args[0]) gt $fledFromIndex)&gt;&gt;
 &lt;&lt;if _fledBroke&gt;&gt; Unfortunately, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; &lt;&lt;if $args.length gt 1&gt;&gt;run out of money in $args[1]&lt;&lt;else&gt;&gt;have run out of money&lt;&lt;/if&gt;&gt; and are forced to [[return to the city-&gt;$args[0]]] to avoid starving.&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;church-services&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+/* Only applies to non-Church of England characters */
+&lt;&lt;if $religion isnot &quot;member of the Church of England&quot;&gt;&gt;
+/* Skip for April 1666 - Easter has its own service code */
+&lt;&lt;if passage() is &quot;April 1666&quot;&gt;&gt;
+/* Always-skip: apply penalty silently */
+&lt;&lt;elseif $skipServices is 1&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Skipped Church of England services (fined 48d.)&quot;, money: -48, repDelta: -1, repBefore: $reputation, infectPct: null})&gt;&gt;
+&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;
+&lt;&lt;set $money to Math.clamp($money - 48, -Infinity, Infinity)&gt;&gt;
+/* Offer choice if not in debt */
+&lt;&lt;elseif $money gte 0&gt;&gt;
+&lt;span id=&quot;churchChoice&quot;&gt;As a $religion, do you want to attend services at your parish Church of England this month?&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Always avoid Church of England services&quot;&gt;&gt;&lt;&lt;replace &quot;#churchChoice&quot;&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Skipped Church of England services (fined 48d.)&quot;, money: -48, repDelta: -1, repBefore: $reputation, infectPct: null})&gt;&gt;
+&lt;&lt;set $skipServices to 1&gt;&gt;
+&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;
+&lt;&lt;set $money to Math.clamp($money - 48, -Infinity, Infinity)&gt;&gt;
+You resolve to stop attending services at the Church of England. You are fined 48d. for non-attendance and your reputation suffers.&lt;br&gt;&lt;br&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Skip Church of England services this month&quot;&gt;&gt;&lt;&lt;replace &quot;#churchChoice&quot;&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Skipped Church of England services (fined 48d.)&quot;, money: -48, repDelta: -1, repBefore: $reputation, infectPct: null})&gt;&gt;
+&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;
+&lt;&lt;set $money to Math.clamp($money - 48, -Infinity, Infinity)&gt;&gt;
+You skip services at your parish church this month and are fined 48d. for non-attendance.&lt;br&gt;&lt;br&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Attend services&quot;&gt;&gt;&lt;&lt;replace &quot;#churchChoice&quot;&gt;&gt;
+You attend services at your parish church, though it goes against your beliefs as a $religion.&lt;br&gt;&lt;br&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="116" name="Flight" tags="" position="775,25" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $fled is 5&gt;&gt;
 Your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; is currently safe and sheltering from the plague outbreak in $hhlocation. Do you want to bring them back to London?&lt;br&gt;&lt;br&gt;

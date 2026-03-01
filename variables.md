@@ -590,6 +590,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Modified by:** Various increments/decrements (`+= 1`, `-= 1`, `+= 2`, `-= 2`, `+= 3`, `-= 3`, or set to `0` for contract-breaking). Always clamped to 0--10.
 - **Used for:** Affects flee success (artisans with reputation <= 5 may fail to flee), available choices, and narrative outcomes
 
+### `$skipServices`
+- **Type:** Integer
+- **Possible values:** `0` (attend services / ask each month), `1` (always skip)
+- **Initial value:** `0`
+- **Set by:** `random-character` widget (pid 14) initializes to `0`. Set to `1` when the player chooses "Always avoid Church of England services" in the `church-services` widget.
+- **Used for:** Controls whether non-Church of England characters skip weekly parish church services. When `1`, the 48d. fine and &minus;1 reputation penalty are applied automatically each month without prompting the player. Only available to characters not in debt (`$money gte 0`). Does not apply in April 1666 (Easter has its own service code).
+- **Dependency:** Only meaningful when `$religion isnot "member of the Church of England"`. Interacts with `$money` (fine) and `$reputation` (penalty).
+
 ### `$timeline`
 - **Type:** Array of strings
 - **Value:** `["December 1664", "January 1665", "May 1665", "June 1665", "July 1665", "August 1665", "September 1665", "October 1665", "November 1665", "December 1665", "January 1666", "February 1666", "March 1666", "April 1666", "May 1666", "June 1666", "July 1666", "August 1666", "September 1666", "October 1666", "November 1666", "December 1666"]`
