@@ -124,6 +124,16 @@ The file `variables.md` contains a comprehensive list of all global (`$`-prefixe
 
 **Maintenance rule:** If a future update creates a new global variable or changes how an existing variable is used, `variables.md` must be updated along with the game file.
 
+## Session Setup
+
+At the start of every session, set the following environment variable:
+
+```
+export CLAUDE_CODE_MAX_OUTPUT_TOKENS=64000
+```
+
+This ensures Claude Code has sufficient output capacity for tasks involving large files like `passages.json` or `GamingtheGreatPlague.html`.
+
 ## Git Conventions
 
 - **Primary branch:** `master`
