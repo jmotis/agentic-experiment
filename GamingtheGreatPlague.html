@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.18" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.19" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1484,8 +1484,8 @@ The graveyards are beginning to overflow and corpses are being flung into the op
 //Nathaniel Parr, Three men loading plague victims from the street onto a cart to left, two of them smoking pipes to protect themselves, a figure with a bundle over his shoulder walking under an arch in the background to right; illustration to a &#39;History of England&#39;, c. 1747, published by Thomas Astley. British Museum.//
 &lt;br&gt;
     You say &lt;span id=&quot;bribe-yn&quot;&gt;\
-&lt;&lt;link &quot;yes&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 3, 0, 10)&gt;&gt;&lt;&lt;set $money +=3&gt;&gt;&lt;&lt;set $searcherbribe to 1&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;yes&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
-| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;set $searcherbribe to &quot;no&quot;&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;no&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;.
+&lt;&lt;link &quot;yes&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 3, 0, 10)&gt;&gt;&lt;&lt;set $money +=3&gt;&gt;&lt;&lt;set $searcherbribe to 1&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;yes&lt;&lt;/replace&gt;&gt;&lt;&lt;append &quot;#july-nav&quot;&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/append&gt;&gt;&lt;&lt;/link&gt;&gt;
+| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;set $searcherbribe to &quot;no&quot;&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;no&lt;&lt;/replace&gt;&gt;&lt;&lt;append &quot;#july-nav&quot;&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/append&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;.
     &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;You fear death every day.
     &lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;
@@ -1493,7 +1493,7 @@ It feels like the church bells are ringing constantly, with each new death or fu
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
 The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has followed the King&#39;s household to &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt; and one of his guards dies of plague at the end of the month.&lt;&lt;/if&gt;&gt;
-[[Continue to August 1665-&gt;August 1665]]
+&lt;&lt;if $role is &quot;searcher&quot;&gt;&gt;&lt;span id=&quot;july-nav&quot;&gt;&lt;/span&gt;&lt;&lt;else&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="august-1665-helper widget" tags="widget" position="900,650" size="100,100">&lt;&lt;widget &quot;august-1665-helper&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 The city has ordered public &lt;&lt;defFasts &quot;fasts&quot;&gt;&gt; and prayers to help combat the plague. &lt;&lt;if $religion is &quot;Presbyterian&quot;&gt;&gt;You attempt to join a private meeting of your fellow &lt;&lt;defPresbyterians &quot;Presbyterians&quot;&gt;&gt; in &lt;&lt;defCoventGarden &quot;Covent Garden&quot;&gt;&gt;but are too poor and turned away, which is lucky for you because everyone who attends the meeting is arrested. They are told they can be released if they pay £5 each to help care for the poor of the city, but they refuse and so are imprisoned.&lt;&lt;/if&gt;&gt;
@@ -1730,7 +1730,7 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot;&gt;
 //Great Comet of 1665//&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="NPC-funeral widget" tags="widget" position="25,850" size="100,100">&lt;&lt;widget &quot;funeral-choice&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;set _funeralId to (_funeralId || 0) + 1&gt;&gt;&lt;&lt;set _fNPC to $args[0]&gt;&gt;&lt;&lt;set _fName to _fNPC.name&gt;&gt;&lt;&lt;set _fNPC.funeralDone to true&gt;&gt;Do you give _fName &lt;span @id=&quot;&#39;funeral-&#39; + _funeralId&quot;&gt;&lt;&lt;capture _funeralId, _fNPC, _fName&gt;&gt;&lt;&lt;link &quot;a quick burial&quot;&gt;&gt;&lt;&lt;replace `&#39;#funeral-&#39; + _funeralId`&gt;&gt;&lt;&lt;set $money -= 9&gt;&gt;&lt;&lt;set _fNPC.funeralDone to true&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Quick burial for &quot; + _fName, money: -9, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;a quick burial.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;a proper funeral&quot;&gt;&gt;&lt;&lt;replace `&#39;#funeral-&#39; + _funeralId`&gt;&gt;&lt;&lt;set $plagueInfection to random(1,50)&gt;&gt;&lt;&lt;set _fNPC.funeralDone to true&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $money -= 4800&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Proper funeral for &quot; + _fName, money: -4800, repDelta: 0, repBefore: $reputation, infectPct: 2})&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money -= 960&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Proper funeral for &quot; + _fName, money: -960, repDelta: 0, repBefore: $reputation, infectPct: 2})&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money -= 240&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Proper funeral for &quot; + _fName, money: -240, repDelta: 0, repBefore: $reputation, infectPct: 2})&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $money -= 12&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Proper funeral for &quot; + _fName, money: -12, repDelta: 0, repBefore: $reputation, infectPct: 2})&gt;&gt;&lt;&lt;/if&gt;&gt;a proper funeral.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/capture&gt;&gt;&lt;/span&gt;&lt;br&gt;
+&lt;&lt;set _funeralId to (_funeralId || 0) + 1&gt;&gt;&lt;&lt;set _fNPC to $args[0]&gt;&gt;&lt;&lt;set _fName to _fNPC.name&gt;&gt;&lt;&lt;set _npcDeathOccurred to true&gt;&gt;&lt;&lt;set _fNPC.funeralDone to true&gt;&gt;Do you give _fName &lt;span @id=&quot;&#39;funeral-&#39; + _funeralId&quot;&gt;&lt;&lt;capture _funeralId, _fNPC, _fName&gt;&gt;&lt;&lt;link &quot;a quick burial&quot;&gt;&gt;&lt;&lt;replace `&#39;#funeral-&#39; + _funeralId`&gt;&gt;&lt;&lt;set $money -= 9&gt;&gt;&lt;&lt;set _fNPC.funeralDone to true&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Quick burial for &quot; + _fName, money: -9, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;a quick burial.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;a proper funeral&quot;&gt;&gt;&lt;&lt;replace `&#39;#funeral-&#39; + _funeralId`&gt;&gt;&lt;&lt;set $plagueInfection to random(1,50)&gt;&gt;&lt;&lt;set _fNPC.funeralDone to true&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $money -= 4800&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Proper funeral for &quot; + _fName, money: -4800, repDelta: 0, repBefore: $reputation, infectPct: 2})&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money -= 960&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Proper funeral for &quot; + _fName, money: -960, repDelta: 0, repBefore: $reputation, infectPct: 2})&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money -= 240&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Proper funeral for &quot; + _fName, money: -240, repDelta: 0, repBefore: $reputation, infectPct: 2})&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $money -= 12&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Proper funeral for &quot; + _fName, money: -12, repDelta: 0, repBefore: $reputation, infectPct: 2})&gt;&gt;&lt;&lt;/if&gt;&gt;a proper funeral.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/capture&gt;&gt;&lt;/span&gt;&lt;br&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="14" name="char-gen-widgets" tags="widget" position="1075,25" size="100,100">&lt;&lt;widget &quot;setAge&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
     &lt;&lt;if $minAge lte 0&gt;&gt;
@@ -2582,7 +2582,7 @@ You ask around and discover the fire began in the King&#39;s Baker&#39;s house o
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
-Everyone is still reeling from the shock of the Great Fire at the beginning of [[October 1666]]. 
+&lt;&lt;if $location is &quot;inside the City walls&quot; or $fireParishes.includes($parish)&gt;&gt;Everyone is still reeling from the shock of the Great Fire at the beginning of [[October 1666]].&lt;&lt;/if&gt;&gt; 
 
 &lt;&lt;/if&gt;&gt;
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/b/b6/Great_Fire_London.jpg&quot; width=&quot;100%&quot;&gt;
@@ -4952,6 +4952,7 @@ At least you didn&#39;t die of plague.&lt;br&gt;&lt;br&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;set $money -=2&gt;&gt;Alack! You have come down with a mysterious fever.&lt;&lt;if $reputation gt 0&gt;&gt; Your reputation is high enough that your friends and family take diligent care of you in your sickness and&lt;&lt;else&gt;&gt; Your reputation is so low that no one lends you aid in your sickness but&lt;&lt;/if&gt;&gt; you slowly recover.
 &lt;br&gt;&lt;br&gt;
+&lt;&lt;storyline-return&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="102" name="navy-volunteer" tags="" position="2250,1125" size="100,100">&lt;&lt;nobr&gt;&gt;
@@ -5148,7 +5149,7 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 &lt;&lt;nobr&gt;&gt;
 Despite everything, you &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;keep finding opportunities for work&lt;&lt;else&gt;&gt;know you are lucky to be steadily employed as a servant&lt;&lt;/if&gt;&gt;. A friend from the countryside writes to you&lt;&lt;if $agenum lte 15&gt;&gt;r family&lt;&lt;/if&gt;&gt; and asks if you will take in their child so they can also seek work in London. 
 &lt;br&gt;&lt;br&gt;
-&lt;span id=&quot;worker&quot;&gt;Will you accept them into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#worker&quot;&gt;&gt;You accept them into your home. It&#39;s another mouth to feed, but you are glad to do a friend a favor.&lt;&lt;addWorkerKidNPC&gt;&gt;&lt;&lt;set $worker to 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#worker&quot;&gt;&gt;You don&#39;t accept them into your home. Things are too hard right now. You can&#39;t afford another mouth to feed and you don&#39;t have the time to teach someone else the lay of the city.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;span id=&quot;worker&quot;&gt;Will you accept them into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#worker&quot;&gt;&gt;You accept them into your home. It&#39;s another mouth to feed, but you are glad to do a friend a favor.&lt;&lt;addWorkerKidNPC&gt;&gt;&lt;&lt;set $worker to 0&gt;&gt;&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#worker&quot;&gt;&gt;You don&#39;t accept them into your home. Things are too hard right now. You can&#39;t afford another mouth to feed and you don&#39;t have the time to teach someone else the lay of the city.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
@@ -5156,7 +5157,7 @@ Despite everything, you &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;ke
 &lt;&lt;nobr&gt;&gt;
 Despite everything, business continues. A friend from the countryside writes to you&lt;&lt;if $agenum lte 15&gt;&gt;r family&lt;&lt;/if&gt;&gt; and asks if you will take in their son as your apprentice.
 &lt;br&gt;&lt;br&gt;
-&lt;span id=&quot;apprentice&quot;&gt;Will you accept him into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice&quot;&gt;&gt;You accept him into your home. It&#39;s another mouth to feed, but you could use the help and are glad to do a friend a favor.&lt;&lt;addApprenticeNPC&gt;&gt;&lt;&lt;set $apprentice to 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice&quot;&gt;&gt;You don&#39;t accept him into your home. Things are too hard right now. You can&#39;t afford another mouth to feed and you don&#39;t have the time to teach someone else your trade.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;span id=&quot;apprentice&quot;&gt;Will you accept him into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice&quot;&gt;&gt;You accept him into your home. It&#39;s another mouth to feed, but you could use the help and are glad to do a friend a favor.&lt;&lt;addApprenticeNPC&gt;&gt;&lt;&lt;set $apprentice to 0&gt;&gt;&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice&quot;&gt;&gt;You don&#39;t accept him into your home. Things are too hard right now. You can&#39;t afford another mouth to feed and you don&#39;t have the time to teach someone else your trade.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
@@ -5164,7 +5165,7 @@ Despite everything, business continues. A friend from the countryside writes to 
 &lt;&lt;nobr&gt;&gt;
 Despite everything, court life proceeds as usual. A friend living the countryside writes to you&lt;&lt;if $agenum lte 15&gt;&gt;r family&lt;&lt;/if&gt;&gt; and asks if you will take in their child as your ward and help them get a place at court - and maybe even an advantageous marriage.
 &lt;br&gt;&lt;br&gt;
-&lt;span id=&quot;ward&quot;&gt;Will you accept them into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You accept them into your home. It will cost a small fortune to outfit a newcomer to court and provide the king the necessary gifts but you will control their purse strings and are glad to do a friend a favor.&lt;&lt;addWardNPC&gt;&gt;&lt;&lt;set $ward to 0&gt;&gt;&lt;&lt;set $money -=5600&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You don&#39;t accept them into your home. Your own affairs are not quite in order and you need to focus on setting them right before adding another person to the household. You don&#39;t have the time to teach someone else the ways of court..&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;span id=&quot;ward&quot;&gt;Will you accept them into your home? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You accept them into your home. It will cost a small fortune to outfit a newcomer to court and provide the king the necessary gifts but you will control their purse strings and are glad to do a friend a favor.&lt;&lt;addWardNPC&gt;&gt;&lt;&lt;set $ward to 0&gt;&gt;&lt;&lt;set $money -=5600&gt;&gt;&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#ward&quot;&gt;&gt;You don&#39;t accept them into your home. Your own affairs are not quite in order and you need to focus on setting them right before adding another person to the household. You don&#39;t have the time to teach someone else the ways of court..&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 </tw-passagedata><tw-passagedata pid="106" name="spare" tags="" position="150,1425" size="100,100">/* use as needed */</tw-passagedata><tw-passagedata pid="107" name="marriage-market" tags="widget" position="2250,300" size="100,100">&lt;&lt;widget &quot;marriage-market&quot;&gt;&gt;
@@ -5188,9 +5189,9 @@ You have found a &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&lt;&lt;
 &lt;span id=&quot;format&quot;&gt;Do you want to 
 &lt;ul&gt;
 &lt;li&gt;&lt;&lt;link &quot;be married in your parish church&quot;&gt;&gt;&lt;&lt;set $money -=48&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 2, 0, 10)&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;For the three weeks before the wedding, your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; priest reads the banns and then you are married in a nice ceremony in the church of $parish.
-After the dancing and feasting, you go home with your new spouse at your side.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;pay for a private wedding license&quot;&gt;&gt;&lt;&lt;set $money -=96&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;Rather than wait for three weeks ot have the banns read, you obtain a license to get married sooner at home.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;elope at Fleet prison&quot;&gt;&gt;&lt;&lt;set $money -=72&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;Rather than going through the fuss of a formal wedding, you go to the Fleet prison where you find a priest willing to marry you in a nearby tavern without asking too many questions.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/span&gt;
+After the dancing and feasting, you go home with your new spouse at your side.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;pay for a private wedding license&quot;&gt;&gt;&lt;&lt;set $money -=96&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;Rather than wait for three weeks ot have the banns read, you obtain a license to get married sooner at home.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;elope at Fleet prison&quot;&gt;&gt;&lt;&lt;set $money -=72&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;Rather than going through the fuss of a formal wedding, you go to the Fleet prison where you find a priest willing to marry you in a nearby tavern without asking too many questions.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/span&gt;
 
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="109" name="NPC-death widget" tags="widget" position="25,725" size="100,100">&lt;&lt;widget &quot;NPC-death&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
@@ -5320,6 +5321,7 @@ After the dancing and feasting, you go home with your new spouse at your side.&l
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $pregnant to 4&gt;&gt;
 You have realized you are pregnant! You look forward to adding a new member to the family&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt; even if it means another mouth to feed&lt;&lt;/if&gt;&gt;. In a few months you&#39;ll have a new baby, but until then life continues as usual.
+&lt;&lt;storyline-return&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="111" name="birth" tags="widget" position="2500,50" size="100,100">&lt;&lt;widget &quot;birth&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
@@ -5327,6 +5329,7 @@ You have realized you are pregnant! You look forward to adding a new member to t
 &lt;&lt;death-announcement&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if random(1,4) is 1&gt;&gt;After a long, hard labor you are devastated to find your baby was stillborn. You bury &lt;&lt;= either(&quot;him&quot;, &quot;her&quot;)&gt;&gt;&lt;&lt;set $money -=9&gt;&gt; and attempt to move on.
+&lt;&lt;storyline-return&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;addNewbornNPC&gt;&gt;After a long, hard labor you are delighted to add a baby to your family. 
 
@@ -5344,12 +5347,14 @@ Do you &lt;span id=&quot;decision&quot;&gt;
     &lt;&lt;set $money -=6&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Childbirth: Threw a Party&quot;, money: -6, repDelta: 0, repBefore: $reputation, infectPct: 2})&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 You have your new baby, $NPCs.last().name, baptized then celebrate with all your family, friends, and neighbors. You know such a gathering might be dangerous, in such a time of plague, but there is a good chance that $NPCs.last().name will not be one of the babies who survives their perilous first year of life and you want everyone to meet them.
+&lt;&lt;storyline-return&gt;&gt;
 &lt;&lt;/replace&gt;&gt;
 &lt;&lt;/link&gt;&gt; | 
 &lt;&lt;link &quot;have a quick baptism&quot;&gt;&gt;
 &lt;&lt;replace &quot;#decision&quot;&gt;&gt;
 &lt;&lt;set $decisions.push({text: &quot;Childbirth: Had a quick baptism&quot;, money: -6, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
 You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPCs.last().name will be one of the babies who survives their perilous first year of life.
+&lt;&lt;storyline-return&gt;&gt;
 &lt;&lt;/replace&gt;&gt;
 &lt;&lt;/link&gt;&gt;
 &lt;/span&gt;
@@ -5361,14 +5366,17 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;unset $pregnant&gt;&gt;&lt;&lt;unset $miscarriage&gt;&gt;
 Unfortunately, you have suffered a miscarriage and are no longer pregnant.
+&lt;&lt;storyline-return&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="113" name="random events widget" tags="widget" position="2000,50" size="100,100">&lt;&lt;widget &quot;random-events&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set _randomEventFired to true&gt;&gt;
-/* _randomEventFired starts true each tick. Branches that fire a quick,
-   single-month event (wedding, pregnancy update, miscarriage, etc.) reset
-   it to false so the passage&#39;s default monthly narrative still renders.
-   Multi-month events (plague illness, death sequences) leave it true to
-   suppress the default text and let the event widget own the output. */
+/* _randomEventFired starts true each tick. Events that present
+   decisions (wedding, birth, funeral, etc.) leave it true and provide
+   their own &lt;&lt;storyline-return&gt;&gt; navigation. Branches where no event
+   fires reset it to false so the passage&#39;s default monthly narrative
+   still renders. Multi-month events (plague illness, death sequences)
+   leave it true to suppress default text and let the event widget own
+   the output. */
 
 /* Pregnancy tracking for married women of childbearing age */
 &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;
@@ -5388,6 +5396,7 @@ Unfortunately, you have suffered a miscarriage and are no longer pregnant.
 &lt;&lt;/if&gt;&gt;
 
 /* NPC death from non-plague causes */
+&lt;&lt;set _npcDeathOccurred to false&gt;&gt;
 &lt;&lt;NPC-death&gt;&gt;
 
 /* Servant dismissal for bad reputation */
@@ -5422,19 +5431,14 @@ Unfortunately, you have suffered a miscarriage and are no longer pregnant.
 		&lt;&lt;elderly&gt;&gt;
 	&lt;&lt;elseif $seeking is 1 and $wedding is 1&gt;&gt;
 		&lt;&lt;wedding&gt;&gt;
-	&lt;&lt;set _randomEventFired to false&gt;&gt;
 	&lt;&lt;elseif $pregnant is 4&gt;&gt; /* Pregnancy and Marriage */
 		&lt;&lt;pregnant&gt;&gt;
-	&lt;&lt;set _randomEventFired to false&gt;&gt;
 	&lt;&lt;elseif $pregnant isnot 3 and $pregnant isnot 2 and $pregnant isnot 1 and $pregnant isnot 0 and $miscarriage is 1&gt;&gt;
 		&lt;&lt;miscarriage&gt;&gt;
-	&lt;&lt;set _randomEventFired to false&gt;&gt;
 	&lt;&lt;elseif $pregnant is 9&gt;&gt;
 		&lt;&lt;birth&gt;&gt;
-	&lt;&lt;if not _eventCausedDeath&gt;&gt;&lt;&lt;set _randomEventFired to false&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;elseif $fever is 1&gt;&gt; /* Random Fevers and Socio dependent events */
 		&lt;&lt;fever&gt;&gt;
-	&lt;&lt;if not _eventCausedDeath&gt;&gt;&lt;&lt;set _randomEventFired to false&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt; 
 		&lt;&lt;set $steward to random(1,40)&gt;&gt;
 		&lt;&lt;if $ward isnot 0&gt;&gt;
@@ -5444,9 +5448,8 @@ Unfortunately, you have suffered a miscarriage and are no longer pregnant.
 			&lt;&lt;steward&gt;&gt;
 		&lt;&lt;elseif $ward is 1 and hasVisited(&quot;March 1666&quot;)&gt;&gt; /* household additions only occur after height of plague */
 			&lt;&lt;ward&gt;&gt;
-		&lt;&lt;set _randomEventFired to false&gt;&gt;
 		&lt;&lt;else&gt;&gt;
-			&lt;&lt;set _randomEventFired to false&gt;&gt;
+			&lt;&lt;if not _npcDeathOccurred&gt;&gt;&lt;&lt;set _randomEventFired to false&gt;&gt;&lt;&lt;/if&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
 	&lt;&lt;elseif $socio is &quot;day labourers&quot; or $socio is &quot;servants&quot;&gt;&gt;
 		&lt;&lt;set $accident to random(1,20)&gt;&gt;
@@ -5457,29 +5460,29 @@ Unfortunately, you have suffered a miscarriage and are no longer pregnant.
 			&lt;&lt;accident&gt;&gt;
 		&lt;&lt;elseif $worker is 1 and hasVisited(&quot;March 1666&quot;)&gt;&gt;
 			&lt;&lt;worker-kid&gt;&gt;
-		&lt;&lt;set _randomEventFired to false&gt;&gt;
 		&lt;&lt;else&gt;&gt;
-			&lt;&lt;set _randomEventFired to false&gt;&gt;
+			&lt;&lt;if not _npcDeathOccurred&gt;&gt;&lt;&lt;set _randomEventFired to false&gt;&gt;&lt;&lt;/if&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
 	&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;
 			&lt;&lt;set $runover to random(1,30)&gt;&gt;
 			&lt;&lt;if $runover is 1&gt;&gt;
 				&lt;&lt;runover&gt;&gt;
 			&lt;&lt;else&gt;&gt;
-				&lt;&lt;set _randomEventFired to false&gt;&gt;
+				&lt;&lt;if not _npcDeathOccurred&gt;&gt;&lt;&lt;set _randomEventFired to false&gt;&gt;&lt;&lt;/if&gt;&gt;
 			&lt;&lt;/if&gt;&gt;
 	&lt;&lt;elseif $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;
 		&lt;&lt;if $apprentice isnot 0&gt;&gt;
 			&lt;&lt;set $apprentice to random(1,10)&gt;&gt;
 			&lt;&lt;if $apprentice is 1 and hasVisited(&quot;March 1666&quot;)&gt;&gt;
 				&lt;&lt;apprentice&gt;&gt;
-			&lt;&lt;set _randomEventFired to false&gt;&gt;
 			&lt;&lt;else&gt;&gt;
-				&lt;&lt;set _randomEventFired to false&gt;&gt;
+				&lt;&lt;if not _npcDeathOccurred&gt;&gt;&lt;&lt;set _randomEventFired to false&gt;&gt;&lt;&lt;/if&gt;&gt;
 			&lt;&lt;/if&gt;&gt;
+		&lt;&lt;else&gt;&gt;
+			&lt;&lt;if not _npcDeathOccurred&gt;&gt;&lt;&lt;set _randomEventFired to false&gt;&gt;&lt;&lt;/if&gt;&gt;
 		&lt;&lt;/if&gt;&gt;
 	&lt;&lt;else&gt;&gt; /* it should not be possible to reach this point but putting in as safeguard */
-		&lt;&lt;set _randomEventFired to false&gt;&gt;
+		&lt;&lt;if not _npcDeathOccurred&gt;&gt;&lt;&lt;set _randomEventFired to false&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
