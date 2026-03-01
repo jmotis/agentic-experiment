@@ -588,7 +588,17 @@ This document lists all global (story) variables used in **Gaming the Great Plag
   - `"merchants"`: `8`
   - `"nobles"`: `10`
 - **Modified by:** Various increments/decrements (`+= 1`, `-= 1`, `+= 2`, `-= 2`, `+= 3`, `-= 3`, or set to `0` for contract-breaking). Always clamped to 0--10.
-- **Used for:** Affects flee success (artisans with reputation <= 5 may fail to flee), available choices, and narrative outcomes
+- **Used for:** Affects flee success (artisans with reputation <= 5 may fail to flee), available choices, narrative outcomes, and church office eligibility
+
+### `$office`
+- **Type:** String
+- **Possible values:** `""` (no office), `"Churchwarden"`, `"Overseer of the Poor"`
+- **Initial value:** `""` (set in `char-gen-widgets`, pid 14)
+- **Set by:** The `hold-office` widget (pid 114) when an eligible player accepts a church office position.
+- **Eligibility:** `$socio` is `"artisans"` or `"merchants"`, `$religion` is `"member of the Church of England"`, `$gender` is `"male"`, `$agenum gte 30`, `$reputation gte 8`, and `$office` is `""`. If eligible, there is a 25% chance per month of being offered an office, with equal odds of Churchwarden or Overseer of the Poor.
+- **Removal conditions:** Removed (reset to `""`) with &minus;1 reputation if `$reputation lte 4`, or if the player flees (enters the Fled passage, pid 63).
+- **Displayed in:** Household Status (pid 74) as "Office: $office" beneath "Social class" when not empty.
+- **Dependencies:** Interacts with `$reputation` (eligibility threshold, removal threshold, +1 on acceptance, &minus;1 on removal).
 
 ### `$skipServices`
 - **Type:** Integer
