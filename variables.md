@@ -92,9 +92,10 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 
 ### `$role`
 - **Type:** String
-- **Possible values:** `"0"` (none/default), `"searcher"`, `"nurse"`, `"corpsebearer"`, `"unemployed"`
-- **Set by:** Initially `"0"`. Changes to a plague worker role when the player takes a plague job, or `"unemployed"` when a servant breaks their contract.
+- **Possible values:** `"0"` (none/default), `"searcher"`, `"nurse"`, `"corpsebearer"`, `"warder"`, `"unemployed"`
+- **Set by:** Initially `"0"`. Changes to a plague worker role when the player takes a plague job, or `"unemployed"` when a servant breaks their contract. Male/nonbinary Church of England members have a 50/50 chance of being assigned `"corpsebearer"` or `"warder"`.
 - **Dependency:** `$socio` determines which roles are available. `$role` affects income and narrative options.
+- **Notes on warder role:** Warders stand guard outside quarantined houses to prevent escape. They earn a flat 48d. per month (not per-corpse), their monthly plague risk is doubled compared to other plague workers, and they take a −1 reputation hit upon accepting the job.
 
 ### `$hoh`
 - **Type:** Integer (boolean-like)
