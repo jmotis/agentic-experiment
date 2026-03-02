@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.32" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.33" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1640,6 +1640,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;set $income to 0&gt;&gt;
 &lt;&lt;set $hoh to 0&gt;&gt;
 &lt;&lt;set $role to &quot;0&quot;&gt;&gt;
+&lt;&lt;set $billSubscribed to 0&gt;&gt;
 &lt;&lt;set $disability to 0&gt;&gt;
 &lt;&lt;set $reputation to 6&gt;&gt;
 &lt;&lt;set $plagueInfection to 0&gt;&gt;
@@ -2236,6 +2237,7 @@ You&#39;ve been taken by a press gang&lt;&lt;if $impressed gte 2&gt;&gt; again&l
 &lt;&lt;random-events&gt;&gt;
 &lt;&lt;if not _randomEventFired&gt;&gt;
 &lt;&lt;corpse-work&gt;&gt;
+&lt;&lt;bill-subscribe&gt;&gt;
 As if war wasn’t bad enough, you begin to hear rumors around the city that several houses have been shut up because their inhabitants have &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. 
 You
 &lt;span id=&quot;decision&quot;&gt;
@@ -5617,6 +5619,18 @@ You stood guard outside quarantined houses this month and were paid &lt;&lt;prin
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+/* Bill of Mortality subscription report */
+&lt;&lt;if $billSubscribed is 1 and $role isnot &quot;searcher&quot; and $role isnot &quot;corpsebearer&quot; and $corpseBuried and $corpseBuried[$parish]&gt;&gt;
+&lt;&lt;set _bomBuried to $corpseBuried[$parish][$monthIndex]&gt;&gt;
+&lt;&lt;set _bomPlague to $corpsePlague[$parish][$monthIndex]&gt;&gt;
+&lt;&lt;set $money -= 4&gt;&gt;
+&lt;&lt;if _bomBuried gt 0&gt;&gt;
+The Bills of Mortality report &lt;&lt;print _bomBuried&gt;&gt; burials in $parish this month&lt;&lt;if _bomPlague gt 0&gt;&gt;, &lt;&lt;print _bomPlague&gt;&gt; of plague&lt;&lt;/if&gt;&gt;.
+&lt;&lt;else&gt;&gt;
+The Bills of Mortality report no burials in $parish this month.
+&lt;&lt;/if&gt;&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;party-costs&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
@@ -5679,6 +5693,13 @@ You don&#39;t want the hassle of holding office in your parish and pay a fine to
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;br&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;bill-subscribe&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $billSubscribed is 0&gt;&gt;
+&lt;span id=&quot;billOffer&quot;&gt;You hear that you can subscribe to the weekly Bills of Mortality, printed broadsides that record every death in every parish in London and whether the cause of death was plague. A subscription costs 4d. per month. Do you wish to subscribe?&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#billOffer&quot;&gt;&gt;&lt;&lt;set $billSubscribed to 1&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;May 1665: Subscribed to the Bills of Mortality&quot;, money: -4, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You subscribe to the Bills of Mortality. Each month, you will receive a report on the deaths in your parish.&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#billOffer&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;May 1665: Declined Bills of Mortality subscription&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You decide not to subscribe to the Bills of Mortality.&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="115" name="june-1665-helper-widget" tags="widget" position="1475,325" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
