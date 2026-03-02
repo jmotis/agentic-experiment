@@ -535,10 +535,10 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 
 ### `$murder`
 - **Type:** Integer
-- **Possible values:** `0` (no murder), `1` (murder occurred)
+- **Possible values:** `0` (no murder accusation), `1` (accused of murder)
 - **Set by:** `$murder = 0` or `$murder = 1`
 - **Checked with:** `$murder gte 1`, `$murder lte 1`
-- **Used for:** Tracks whether a murder event has occurred
+- **Used for:** Tracks whether the player was accused of murder by sending people to the pesthouse
 
 ### `$runover`
 - **Type:** Integer (random event roll)
@@ -549,6 +549,7 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Type:** Integer (random event roll)
 - **Set by:** `random(1, 10)`
 - **Trigger:** `$discovery is 1` (10% chance) triggers a discovery event
+- **Used for:** Tracks whether the player was discovered attempting to join the Navy when ineligible
 
 ### `$investigate`
 - **Type:** Integer
