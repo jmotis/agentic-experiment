@@ -610,6 +610,15 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Used for:** Controls whether non-Church of England characters skip weekly parish church services. When `1`, the 48d. fine and &minus;1 reputation penalty are applied automatically each month without prompting the player. Only available to characters not in debt (`$money gte 0`). Does not apply in April 1666 (Easter has its own service code).
 - **Dependency:** Only meaningful when `$religion isnot "member of the Church of England"`. Interacts with `$money` (fine) and `$reputation` (penalty).
 
+### `$billSubscribed`
+- **Type:** Integer (boolean-like)
+- **Possible values:** `0` (not subscribed), `1` (subscribed to Bills of Mortality)
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** The `bill-subscribe` widget (pid 114) when the player accepts the subscription offer in May 1665. Set to `1` on acceptance.
+- **Used for:** Controls whether the player receives monthly Bills of Mortality reports showing total burials and plague deaths in their parish. When `1`, the `corpse-work` widget (pid 114) deducts 4d. per month and displays a burial report at the top of each month passage.
+- **Suppression:** Reports are suppressed when `$role is "searcher"` or `$role is "corpsebearer"`, since those roles already receive equivalent information through their plague work duties.
+- **Dependencies:** Interacts with `$money` (4d. monthly charge), `$corpseBuried` and `$corpsePlague` (data source), `$parish` and `$monthIndex` (data lookup), `$role` (suppression logic).
+
 ### `$timeline`
 - **Type:** Array of strings
 - **Value:** `["December 1664", "January 1665", "May 1665", "June 1665", "July 1665", "August 1665", "September 1665", "October 1665", "November 1665", "December 1665", "January 1666", "February 1666", "March 1666", "April 1666", "May 1666", "June 1666", "July 1666", "August 1666", "September 1666", "October 1666", "November 1666", "December 1666"]`
