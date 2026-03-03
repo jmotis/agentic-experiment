@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.36" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.37" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3839,11 +3839,11 @@ In fact, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;
 &lt;&lt;if _ctx is &quot;initial&quot;&gt;&gt;
 &lt;&lt;if $origin isnot &quot;London&quot;&gt;&gt; You still have family back home in $origin and have to consider whether or not to abandon your home and whatever possessions you cannot carry to take refuge with your family.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-    &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;&lt;&lt;set _offeredRole to either(&quot;corpsebearer&quot;, &quot;warder&quot;)&gt;&gt;You hear that the local parish officials want to hire you to &lt;&lt;if $gender is &quot;male&quot; and $agenum gte 16 and _offeredRole is &quot;corpsebearer&quot;&gt;&gt;remove the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; corpses if anyone dies&lt;&lt;elseif $gender is &quot;male&quot; and $agenum gte 16 and _offeredRole is &quot;warder&quot;&gt;&gt;stand guard outside quarantined houses to prevent anyone from escaping&lt;&lt;elseif $gender is &quot;female&quot; and $agenum gte 16 and $reputation gte 5&gt;&gt;look at plague corpses and determine if they died of plague or some other cause of death&lt;&lt;else&gt;&gt;nurse the sick and dying, despite the risk to your own life&lt;&lt;/if&gt;&gt;.&lt;br&gt;&lt;br&gt;
+    &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;&lt;&lt;set _offeredRole to either(&quot;corpsebearer&quot;, &quot;warder&quot;)&gt;&gt;You hear that the local parish officials want to hire you to &lt;&lt;if $gender is &quot;male&quot; and $agenum gte 16 and _offeredRole is &quot;corpsebearer&quot;&gt;&gt;remove the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; corpses if anyone dies&lt;&lt;elseif $gender is &quot;male&quot; and $agenum gte 16 and _offeredRole is &quot;warder&quot;&gt;&gt;stand guard outside quarantined houses to prevent anyone from escaping&lt;&lt;elseif $gender is &quot;female&quot; and $agenum gte 16 and $reputation gte 3&gt;&gt;look at plague corpses and determine if they died of plague or some other cause of death&lt;&lt;else&gt;&gt;nurse the sick and dying, despite the risk to your own life&lt;&lt;/if&gt;&gt;.&lt;br&gt;&lt;br&gt;
 &lt;&lt;else&gt;&gt;As you are not a member of the Church of England, the parish cannot offer you plague work.&lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;    You decide to:
     &lt;ul&gt;
-        &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;&lt;li&gt;&lt;&lt;link &quot;accept the job&quot; &quot;Stay&quot;&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Accepted a plague work job&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;if $gender is &quot;female&quot; and $agenum gte 16 and $reputation gte 5&gt;&gt;&lt;&lt;set $role to &quot;searcher&quot;&gt;&gt;&lt;&lt;elseif $agenum lte 15&gt;&gt;&lt;&lt;set $role to &quot;nurse&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $role to _offeredRole&gt;&gt;&lt;&lt;if _offeredRole is &quot;warder&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+        &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;&lt;li&gt;&lt;&lt;link &quot;accept the job&quot; &quot;Stay&quot;&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Accepted a plague work job&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;if $gender is &quot;female&quot; and $agenum gte 16 and $reputation gte 3&gt;&gt;&lt;&lt;set $role to &quot;searcher&quot;&gt;&gt;&lt;&lt;elseif $agenum lte 15&gt;&gt;&lt;&lt;set $role to &quot;nurse&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $role to _offeredRole&gt;&gt;&lt;&lt;if _offeredRole is &quot;warder&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
         &lt;li&gt;[[not accept the job-&gt;Stay][_repBefore to $reputation; $reputation to Math.clamp($reputation - 1, 0, 10); $fled to 4; $role to &quot;unemployed&quot;; $decisions.push({text: &quot;Refused the plague work job&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
         &lt;&lt;else&gt;&gt;&lt;li&gt;[[Remain in the city-&gt;Stay][$fled to 4; $decisions.push({text: &quot;Remained in the city&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
         &lt;&lt;/if&gt;&gt;
@@ -3907,7 +3907,7 @@ You decide to:
 /* Artisans */
 &lt;&lt;if $socio is &quot;artisans&quot;&gt;&gt;
 &lt;&lt;if _ctx is &quot;initial&quot;&gt;&gt;
-    &lt;&lt;if $origin is &quot;London&quot; and $reputation lte 5&gt;&gt;Your reputation is so bad that you&#39;re not sure if anyone will take you in if you decide to leave London.
+    &lt;&lt;if $origin is &quot;London&quot; and $reputation lte 5&gt;&gt;Your reputation is not high enough to be sure that anyone will take you in if you decide to leave London.
     &lt;&lt;else&gt;&gt;
         &lt;&lt;if $origin isnot &quot;London&quot;&gt;&gt;You still have family back home in $origin
         &lt;&lt;else&gt;&gt;You have friends in the countryside
