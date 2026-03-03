@@ -608,7 +608,7 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Initial value:** `0`
 - **Set by:** `random-character` widget (pid 14) initializes to `0`. Set to `1` when the player chooses "Always avoid Church of England services" in the `church-services` widget.
 - **Used for:** Controls whether non-Church of England characters skip weekly parish church services. When `1`, the 48d. fine and &minus;1 reputation penalty are applied automatically each month without prompting the player. Only available to characters not in debt (`$money gte 0`). Does not apply in April 1666 (Easter has its own service code).
-- **Dependency:** Only meaningful when `$religion isnot "member of the Church of England"`. Interacts with `$money` (fine) and `$reputation` (penalty).
+- **Dependency:** Only meaningful when `$religion isnot "member of the Church of England"`. Interacts with `$money` (fine) and `$reputation` (penalty). Reset to `0` by the `debt-check` widget when the player enters debt, which also sets `$debtForcedAttend` to `1`.
 
 ### `$billSubscribed`
 - **Type:** Integer (boolean-like)
@@ -617,7 +617,23 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Set by:** The `bill-subscribe` widget (pid 114) when the player accepts the subscription offer in May 1665. Set to `1` on acceptance.
 - **Used for:** Controls whether the player receives monthly Bills of Mortality reports showing total burials and plague deaths in their parish. When `1`, the `corpse-work` widget (pid 114) deducts 4d. per month and displays a burial report at the top of each month passage.
 - **Suppression:** Reports are suppressed when `$role is "searcher"` or `$role is "corpsebearer"`, since those roles already receive equivalent information through their plague work duties.
-- **Dependencies:** Interacts with `$money` (4d. monthly charge), `$corpseBuried` and `$corpsePlague` (data source), `$parish` and `$monthIndex` (data lookup), `$role` (suppression logic).
+- **Dependencies:** Interacts with `$money` (4d. monthly charge), `$corpseBuried` and `$corpsePlague` (data source), `$parish` and `$monthIndex` (data lookup), `$role` (suppression logic). Reset to `0` by the `debt-check` widget when the player enters debt.
+
+### `$debtWarned`
+- **Type:** Integer (boolean-like)
+- **Possible values:** `0` (not yet warned), `1` (debt warning has fired)
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** The `debt-check` widget (pid 114) sets this to `1` the first time `$money` falls below 0 after a monthly disposable-income calculation. Once set to `1`, it is never reset.
+- **Used for:** Prevents the debt warning message and recurring-cost cancellation logic from firing more than once. When the player first enters debt, the `debt-check` widget cancels `$billSubscribed` and `$skipServices` (if active) and displays a one-time notification.
+- **Dependencies:** Checked alongside `$money` in the `debt-check` widget. Interacts with `$billSubscribed`, `$skipServices`, and `$debtForcedAttend`.
+
+### `$debtForcedAttend`
+- **Type:** Integer (boolean-like)
+- **Possible values:** `0` (not applicable), `1` (player was forced back to attending Church of England services due to debt)
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** The `debt-check` widget (pid 114) sets this to `1` when `$skipServices` is reset from `1` to `0` due to the player entering debt.
+- **Used for:** In the `church-services` widget (pid 115), when `$debtForcedAttend is 1` and `$money lt 0`, the player is automatically enrolled in Church of England services (2% plague infection risk) with a message explaining they cannot afford the fine for non-attendance. Once `$money` recovers to &ge; 0, the normal three-way choice (always skip / skip this month / attend) is presented again.
+- **Dependencies:** Interacts with `$skipServices`, `$money`, `$religion`, and `$plagueInfection`.
 
 ### `$timeline`
 - **Type:** Array of strings
