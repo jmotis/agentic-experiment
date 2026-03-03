@@ -583,13 +583,13 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Type:** Integer
 - **Range:** 0 -- 10 (clamped via `Math.clamp($reputation + N, 0, 10)`)
 - **Initial values by `$socio`:**
-  - `"beggars"`: `0`
+  - `"beggars"`: `4`
   - `"day labourers"`: `6`
   - `"servants"`: `6`
-  - `"artisans"`: `8`
-  - `"merchants"`: `8`
-  - `"nobles"`: `10`
-- **Modified by:** Various increments/decrements (`+= 1`, `-= 1`, `+= 2`, `-= 2`, `+= 3`, `-= 3`, or set to `0` for contract-breaking). Always clamped to 0--10.
+  - `"artisans"`: `6` (default; no per-socio override)
+  - `"merchants"`: `6` (default; no per-socio override)
+  - `"nobles"`: `8`
+- **Modified by:** Various increments/decrements (`+= 1`, `-= 1`, `+= 2`, `-= 2`, `+= 3`, `-= 3`, or `-3` for noble end-game/fled too late). Always clamped to 0--10.
 - **Used for:** Affects flee success (artisans with reputation <= 5 may fail to flee), available choices, narrative outcomes, and church office eligibility
 
 ### `$office`
