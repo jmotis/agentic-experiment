@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.40" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.41" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1213,7 +1213,7 @@ You were born and raised in &lt;&lt;if $origin is &quot;London&quot;&gt;&gt;Lond
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;if $relationship is &quot;betrothed&quot;&gt;&gt;You are currently &lt;&lt;defVarRelationship &quot;betrothed&quot;&gt;&gt; to be married. &lt;&lt;elseif $relationship is &quot;widowed&quot;&gt;&gt;Alas, your &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;wife&lt;&lt;else&gt;&gt;husband&lt;&lt;/if&gt;&gt; died some time ago. &lt;&lt;/if&gt;&gt;
 
-&lt;&lt;silently&gt;&gt;&lt;&lt;addServantNPC&gt;&gt;&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;addMasterHousehold&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;&lt;&lt;set $NPCsExtended to $NPCsExtended.concat($NPCs)&gt;&gt;&lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $NPCs to $NPCs.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsMaster to $NPCsMaster.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsExtended to $NPCsExtended.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsServants to $NPCsServants.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;/silently&gt;&gt;
+&lt;&lt;silently&gt;&gt;&lt;&lt;addServantNPC&gt;&gt;&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;addMasterHousehold&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;&lt;&lt;set $NPCsExtended to $NPCsExtended.concat($NPCs)&gt;&gt;&lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $NPCs to $NPCs.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsMaster to $NPCsMaster.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsExtended to $NPCsExtended.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsServants to $NPCsServants.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set-hoh&gt;&gt;&lt;&lt;/silently&gt;&gt;
 &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;Your $masterTitle is &lt;&lt;if $masterStatus is &quot;artisans&quot;&gt;&gt;an artisan&lt;&lt;elseif $masterStatus is &quot;merchants&quot;&gt;&gt;a merchant&lt;&lt;elseif $masterStatus is &quot;nobles&quot;&gt;&gt;a noble&lt;&lt;/if&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;. As an unmarried servant, you live in their household.&lt;&lt;else&gt;&gt; with a household of $NPCsMaster.length members.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $NPCs.length gt 0&gt;&gt;You live with your
   &lt;&lt;for _i, _idx range $NPCs&gt;&gt;
@@ -1222,7 +1222,7 @@ You were born and raised in &lt;&lt;if $origin is &quot;London&quot;&gt;&gt;Lond
     &lt;&lt;else&gt;&gt; and $NPCs[_i].relationship, $NPCs[_i].name.
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
-&lt;&lt;elseif $NPCs.length eq 0&gt;&gt;You live alone.&lt;&lt;set $hoh to 1&gt;&gt;
+&lt;&lt;elseif $NPCs.length eq 0&gt;&gt;You live alone.
 &lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;Your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; also includes $servants servants.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
@@ -2102,9 +2102,9 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 &lt;&lt;widget &quot;playerAge&quot;&gt;&gt;
 &lt;&lt;if $age eq &quot;child&quot;&gt;&gt;&lt;&lt;set $agenum to random(5,9)&gt;&gt;
 &lt;&lt;elseif $age eq &quot;adolescent&quot;&gt;&gt;&lt;&lt;set $agenum to random(10,15)&gt;&gt;
-&lt;&lt;elseif $age eq &quot;young adult&quot;&gt;&gt;&lt;&lt;set $agenum to random(16,29)&gt;&gt;&lt;&lt;set $hoh to 1&gt;&gt;
-&lt;&lt;elseif $age eq &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;set $agenum to random(30,59)&gt;&gt;&lt;&lt;set $hoh to 1&gt;&gt;
-&lt;&lt;elseif $age eq &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $agenum to random(60,76)&gt;&gt;&lt;&lt;set $hoh to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $age eq &quot;young adult&quot;&gt;&gt;&lt;&lt;set $agenum to random(16,29)&gt;&gt;
+&lt;&lt;elseif $age eq &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;set $agenum to random(30,59)&gt;&gt;
+&lt;&lt;elseif $age eq &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $agenum to random(60,76)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;parish&quot;&gt;&gt;
@@ -2826,6 +2826,7 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="widow widget" tags="widget" position="150,725" size="100,100">&lt;&lt;widget &quot;check-widowed&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;
@@ -2840,6 +2841,7 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="37" name="work-refusal" tags="" position="1700,525" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;Because you refused to work, your &lt;&lt;defParish &quot;parish&#39;s&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have committed you to the &lt;&lt;defGaol &quot;gaol&quot;&gt;&gt;!&lt;br&gt;&lt;br&gt;
 Do you:
 [[beg for forgiveness and agree to work-&gt;ForgiveMe][$decisions.push({text: &quot;Begged for forgiveness and agreed to work&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;br&gt;
@@ -2848,7 +2850,7 @@ Do you:
 &lt;&lt;else&gt;&gt;
 [[stand firm in your refusal to risk your life-&gt;deported][$decisions.push({text: &quot;Stood firm and was deported&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $socio to &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;Because you are no longer working, you quickly run out of money and have to throw yourself on the mercy of your &lt;&lt;defParish &quot;parish&#39;s&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt;.&lt;br&gt;&lt;br&gt;
+&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $socio to &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;set-hoh&gt;&gt;Because you are no longer working, you quickly run out of money and have to throw yourself on the mercy of your &lt;&lt;defParish &quot;parish&#39;s&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt;.&lt;br&gt;&lt;br&gt;
 &lt;&lt;if $religion is &quot;member of the Church of England&quot; and $agenum gt 16&gt;&gt;They have decided it will be your job to 
 &lt;&lt;if $reputation gte 6&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $role to &quot;searcher&quot;&gt;&gt;look at the corpses and determine if they died of &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; or some other cause of death
 &lt;br&gt;
@@ -2950,6 +2952,7 @@ It is a difficult decision, but your family decide it&#39;s for the best to send
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;check-widowed&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
 &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 &lt;br&gt;
@@ -3313,7 +3316,7 @@ Do you:
 [[go quietly]]</tw-passagedata><tw-passagedata pid="46" name="escape" tags="" position="2050,625" size="100,100">You try to escape 
 &lt;&lt;if random(1,2) == 1&gt;&gt;but are immediately caught. The local authorities decide the safest course of action now is to have you [[transported]] to the New World.
 &lt;&lt;else&gt;&gt;and manage to sneak back into London.
-&lt;&lt;if $reputation gte 3&gt;&gt; Luckily, one of your neighbors takes pity on you and lets you stay with them while you seek work and a new place to stay. &lt;&lt;set $socio to &quot;day labourers&quot;&gt;&gt; You &lt;&lt;storyline-return &quot;settle into your new life&quot;&gt;&gt;.
+&lt;&lt;if $reputation gte 3&gt;&gt; Luckily, one of your neighbors takes pity on you and lets you stay with them while you seek work and a new place to stay. &lt;&lt;set $socio to &quot;day labourers&quot;&gt;&gt;&lt;&lt;set-hoh&gt;&gt; You &lt;&lt;storyline-return &quot;settle into your new life&quot;&gt;&gt;.
 &lt;&lt;else&gt;&gt;Unfortunately, now you are now homeless, no longer receiving alms from your &lt;&lt;defParish &quot;parish&#39;s&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers for the Poor&quot;&gt;&gt;, and cannot legally beg anymore. It doesn&#39;t take long before you are caught and thrown in gaol.
 &lt;br&gt;
 Do you:
@@ -4917,7 +4920,7 @@ You can also visit the &#39;&#39;&lt;&lt;defApothecary &quot;Apothecary&quot;&gt
 &lt;&lt;widget &quot;dismiss-servant&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $socio is &quot;servants&quot; and $reputation lte 2&gt;&gt;
 	&lt;&lt;if random(1,2) is 1&gt;&gt;
-		&lt;&lt;set $socio to &quot;day labourers&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;&lt;&lt;set $NPCs to $NPCsExtended.slice()&gt;&gt;&lt;&lt;set $NPCsExtended to []&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;Due to your poor reputation, your $masterTitle has dismissed you and you have been unable to find a new position. You will have to hope you can survive as a day labourer.
+		&lt;&lt;set $socio to &quot;day labourers&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;&lt;&lt;set $NPCs to $NPCsExtended.slice()&gt;&gt;&lt;&lt;set $NPCsExtended to []&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;&lt;&lt;set-hoh&gt;&gt;Due to your poor reputation, your $masterTitle has dismissed you and you have been unable to find a new position. You will have to hope you can survive as a day labourer.
 		&lt;br&gt;&lt;br&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -5100,6 +5103,7 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
       &lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
       &lt;&lt;set $NPCsMaster to []&gt;&gt;
       &lt;&lt;NPCpronouns&gt;&gt;
+      &lt;&lt;set-hoh&gt;&gt;
       &lt;br&gt;&lt;br&gt;Because your $masterTitle died, you have found a new position in another household.&lt;br&gt;&lt;br&gt;
       
     &lt;&lt;elseif $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt;
@@ -5119,6 +5123,7 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
       &lt;&lt;set $NPCsMaster to []&gt;&gt;
       &lt;&lt;NPCpronouns&gt;&gt;
       &lt;&lt;set $socio to &quot;servants&quot;&gt;&gt; /* set last so can differentiate in addMasterHousehold widget */
+      &lt;&lt;set-hoh&gt;&gt;
       &lt;&lt;set _MasterTrade to either(&quot;baker&quot;, &quot;chandler&quot;, &quot;grocer&quot;, &quot;tailor&quot;, &quot;weaver&quot;)&gt;&gt;
       &lt;br&gt;&lt;br&gt;Because you have been orphaned, your &lt;&lt;defParish &quot;Parish&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have found you a position as a servant in a local _MasterTrade&#39;s household.&lt;br&gt;&lt;br&gt;
 
@@ -5218,6 +5223,7 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
       /* Move surviving child/adolescent NPCs from original household into new household */
       &lt;&lt;set $NPCs to $NPCs.concat(_survivingKids)&gt;&gt;
       &lt;&lt;NPCpronouns&gt;&gt;
+      &lt;&lt;set-hoh&gt;&gt;
       &lt;br&gt;&lt;br&gt;Because you have been orphaned, you have moved in with &lt;&lt;if _newGuardian is &quot;family friend&quot;&gt;&gt;a family friend&lt;&lt;else&gt;&gt;your _newGuardian&lt;&lt;/if&gt;&gt;.&lt;br&gt;&lt;br&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/if&gt;&gt;
@@ -5265,10 +5271,10 @@ You have found a &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&lt;&lt;
 
 &lt;span id=&quot;format&quot;&gt;Do you want to 
 &lt;ul&gt;
-&lt;li&gt;&lt;&lt;link &quot;be married in your parish church&quot;&gt;&gt;&lt;&lt;set $money -=48&gt;&gt;&lt;&lt;party-costs&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 2, 0, 10)&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,15)&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Married in parish church&quot;, money: -48, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 6.6})&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;For the three weeks before the wedding, your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; priest reads the banns and then you are married in a nice ceremony in the church of $parish.
+&lt;li&gt;&lt;&lt;link &quot;be married in your parish church&quot;&gt;&gt;&lt;&lt;set $money -=48&gt;&gt;&lt;&lt;party-costs&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 2, 0, 10)&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,15)&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Married in parish church&quot;, money: -48, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 6.6})&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;set-hoh&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;For the three weeks before the wedding, your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; priest reads the banns and then you are married in a nice ceremony in the church of $parish.
 After the dancing and feasting, you go home with your new spouse at your side.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;pay for a private wedding license&quot;&gt;&gt;&lt;&lt;set $money -=96&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Paid for a private wedding license&quot;, money: -96, repDelta: 0, repBefore: $reputation, infectPct: 3.3})&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;Rather than wait for three weeks ot have the banns read, you obtain a license to get married sooner at home.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;elope at Fleet prison&quot;&gt;&gt;&lt;&lt;set $money -=72&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Eloped at Fleet prison&quot;, money: -72, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 3.3})&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;Rather than going through the fuss of a formal wedding, you go to the Fleet prison where you find a priest willing to marry you in a nearby tavern without asking too many questions.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/span&gt;
+&lt;li&gt;&lt;&lt;link &quot;pay for a private wedding license&quot;&gt;&gt;&lt;&lt;set $money -=96&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Paid for a private wedding license&quot;, money: -96, repDelta: 0, repBefore: $reputation, infectPct: 3.3})&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;set-hoh&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;Rather than wait for three weeks ot have the banns read, you obtain a license to get married sooner at home.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;elope at Fleet prison&quot;&gt;&gt;&lt;&lt;set $money -=72&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Eloped at Fleet prison&quot;, money: -72, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 3.3})&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;set-hoh&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;Rather than going through the fuss of a formal wedding, you go to the Fleet prison where you find a priest willing to marry you in a nearby tavern without asking too many questions.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/span&gt;
 
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="109" name="NPC-death widget" tags="widget" position="25,725" size="100,100">&lt;&lt;widget &quot;NPC-death&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
@@ -5392,6 +5398,7 @@ After the dancing and feasting, you go home with your new spouse at your side.&l
 &lt;&lt;elseif _cr lte 90&gt;&gt;Your servant $NPCsServants[_di].name has contracted measles but survived.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;servant-master-death&gt;&gt;
 &lt;&lt;check-widowed&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
 &lt;&lt;/if&gt;&gt; /* end _deathYear gt 0 */
 &lt;&lt;/if&gt;&gt; /* end plague/quarantine check */
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="110" name="pregnant" tags="widget" position="2375,50" size="100,100">&lt;&lt;widget &quot;pregnant&quot;&gt;&gt;
@@ -5737,6 +5744,38 @@ You don&#39;t want the hassle of holding office in your parish and pay a fine to
 &lt;&lt;set _debtCancelled.push(&quot;your commitment to always skip Church of England services&quot;)&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 You are in debt and can no longer afford your recurring expenses.&lt;&lt;if _debtCancelled.length gt 0&gt;&gt; The following have been cancelled: &lt;&lt;print _debtCancelled.join(&quot; and &quot;)&gt;&gt;.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;set-hoh&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $agenum lt 16&gt;&gt;
+  &lt;&lt;set $hoh to 0&gt;&gt;
+&lt;&lt;else&gt;&gt;
+  &lt;&lt;set $hoh to 1&gt;&gt;
+  /* Check for living with parents (hoh 2) */
+  &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;
+    &lt;&lt;for _shi to 0; _shi lt $NPCs.length; _shi++&gt;&gt;
+      &lt;&lt;if ($NPCs[_shi].relationship is &quot;father&quot; or $NPCs[_shi].relationship is &quot;step-father&quot;) and $NPCs[_shi].health isnot &quot;deceased&quot;&gt;&gt;
+        &lt;&lt;set $hoh to 2&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+  &lt;&lt;else&gt;&gt;
+    &lt;&lt;for _shi to 0; _shi lt $NPCs.length; _shi++&gt;&gt;
+      &lt;&lt;if ($NPCs[_shi].relationship is &quot;father&quot; or $NPCs[_shi].relationship is &quot;step-father&quot; or $NPCs[_shi].relationship is &quot;mother&quot; or $NPCs[_shi].relationship is &quot;step-mother&quot;) and $NPCs[_shi].health isnot &quot;deceased&quot;&gt;&gt;
+        &lt;&lt;set $hoh to 2&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+  /* Check for servant living with master (hoh 3) */
+  &lt;&lt;for _shi to 0; _shi lt $NPCs.length; _shi++&gt;&gt;
+    &lt;&lt;if $NPCs[_shi].relationship is &quot;master&quot; and $NPCs[_shi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set $hoh to 3&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  /* Check for married woman / coverture (hoh 4) */
+  &lt;&lt;if $gender is &quot;female&quot; and $relationship is &quot;married&quot;&gt;&gt;
+    &lt;&lt;set $hoh to 4&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="115" name="june-1665-helper-widget" tags="widget" position="1475,325" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
