@@ -78,10 +78,11 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 
 ### `$origin`
 - **Type:** String
-- **Possible values:** `"London"`, `"the English countryside"`, `"another English town or city"`, `"Scotland"`, `"Ireland"`, `"the Dutch Republic"`, `"France"`, `"somewhere else"`
+- **Possible values (at character creation):** `"London"`, `"the English countryside"`, `"another English town or city"`, `"Scotland"`, `"Ireland"`, `"the Dutch Republic"`, `"France"`, `"somewhere else"`
+- **Possible values (during gameplay, after bio passage):** All of the above except `"somewhere else"`, which is immediately refined in `bio.txt` (pid 1) to one of: `"the Holy Roman Empire"`, `"Italy"`, `"Spain"`, `"the Americas"`. After character creation, `$origin` is **never** `"somewhere else"` during gameplay.
 - **Set by:** `random-character` widget via `weightedEither` with weights: London (30), English countryside (200), another English town or city (20), Scotland (20), Ireland (20), Dutch Republic (5), France (4), somewhere else (1)
-- **Used for:** Name pool weighting (certain names get boosted 5x based on origin), flee destination text, narrative branches
-- **Note:** Some passages compare against `"the Dutch republic"` (lowercase "r") as well as `"the Dutch Republic"` (uppercase "R")
+- **Used for:** Name pool weighting (certain names get boosted 5x based on origin — the boost for `"somewhere else"` fires via `<<playerName>>` before bio.txt refines the value), flee destination text, narrative branches
+- **Note:** All conditional checks consistently use `"the Dutch Republic"` (uppercase "R").
 
 ### `$socio`
 - **Type:** String (social class)
@@ -92,9 +93,10 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 
 ### `$role`
 - **Type:** String
-- **Possible values:** `"0"` (none/default), `"searcher"`, `"nurse"`, `"corpsebearer"`, `"warder"`, `"unemployed"`
-- **Set by:** Initially `"0"`. Changes to a plague worker role when the player takes a plague job, or `"unemployed"` when a servant breaks their contract. Male/nonbinary Church of England members have a 50/50 chance of being assigned `"corpsebearer"` or `"warder"`.
+- **Possible values:** `"0"` (none/default), `"searcher"`, `"nurse"`, `"corpsebearer"`, `"warder"`, `"unemployed"`, `"mercer"`, `"draper"`, `"ironmonger"`, `"goldsmith"`
+- **Set by:** Initially `"0"` for most social classes. **Exception:** `$socio is "merchants"` — `$role` is set during character creation to `either($trades)`, which picks randomly from `["mercer", "draper", "ironmonger", "goldsmith"]`. Changes to a plague worker role when the player takes a plague job, or `"unemployed"` when a servant breaks their contract. Male/nonbinary Church of England members have a 50/50 chance of being assigned `"corpsebearer"` or `"warder"`.
 - **Dependency:** `$socio` determines which roles are available. `$role` affects income and narrative options.
+- **Notes on plague worker roles:** Only `"searcher"`, `"nurse"`, `"corpsebearer"`, and `"warder"` activate plague-work narrative content and infection risk logic. Merchant trade roles (`"mercer"` etc.) are display-only — no plague work content is implemented for merchants.
 - **Notes on warder role:** Warders stand guard outside quarantined houses to prevent escape. They earn a flat 48d. per month (not per-corpse), their monthly plague risk is doubled compared to other plague workers, and they take a −1 reputation hit upon accepting the job.
 
 ### `$hoh`
@@ -489,10 +491,12 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Dependency:** Populated during the "Fled" passage
 
 ### `$beggarsluck`
-- **Type:** Integer
-- **Set by:** `random(0, 5)`
-- **Trigger:** `$beggarsluck eq 0` triggers a lucky event for beggars
-- **Dependency:** Only rolled when `$socio is "beggars"`
+- **Type:** Integer (temporary money-quantity variable)
+- **Set by:**
+  - `random(6, 10)` in `begging-success` (pid 52) — used as pence earned from roadside begging
+  - `random(2, 6)` in `good-neighbors` (pid 53) — used as pence saved through neighbor charity
+- **Used for:** Holds a small random pence amount that is immediately added to `$money` and then `<<unset>>`. It is a display variable only (shown in the passage text as the amount earned/saved) and is never checked in a conditional.
+- **Dependency:** Only set when `$socio is "beggars"` and the player takes a begging or charity action.
 
 ### `$seeking`
 - **Type:** Integer (boolean-like)
@@ -758,6 +762,18 @@ These are weighted objects mapping parish names to their relative population wei
 - **Contains:** 8 southern suburb parishes
 - **Entries include:** "St Olave Southwark" (829), "St Saviour Southwark" (605), "St Mary Magdalen Bermondsey" (305)
 
+### `$fireParishes`
+- **Type:** Array of strings
+- **Set by:** `StoryInit` (pid 10)
+- **Contains:** ~80 parish names that were destroyed by the Great Fire of London (September 1666). All entries are parishes within the City walls.
+- **Used by:** `September 1666` (pid 31), `October 1666` (pid 32), and `official-end` (pid 87) via `$fireParishes.includes($parish)` to determine whether the player's parish was in the path of the fire.
+
+### `$parishRate`
+- **Type:** Object (`{parishName: [Integer x 22]}`)
+- **Set by:** `StoryInit` (pid 10)
+- **Contains:** Parish names mapped to an array of 22 integers (one per month in `$timeline`), representing the plague infection rate denominator for that parish in that month. A higher number means lower risk (the game rolls `random(1, rate) eq 1`).
+- **Used by:** Infection probability calculations in multiple month passages (e.g., July 1665, October 1665, September 1665) and `final-stats-widgets` (pid 75). Accessed as `$parishRate[$parish][$monthIndex]`.
+
 ---
 
 ## Bills of Mortality Data (Corpse Interactions)
@@ -793,8 +809,11 @@ These lookup tables provide historical Bills of Mortality burial counts per pari
 - **Notes:** Referenced alongside `$shop`. Not active in the current game.
 
 ### `$trades`
-- **Type:** Referenced via `weightedEither($trades)` during character generation for artisans
-- **Notes:** Used to assign a trade to the player, but the initialization and specific trade values are not visible in the current passage data.
+- **Type:** Array of strings
+- **Value:** `["mercer", "draper", "ironmonger", "goldsmith"]`
+- **Set by:** `StoryInit` (pid 10)
+- **Used for:** Assigns a specific merchant trade to `$role` during character creation (`bio.txt`, pid 1) when `$socio is "merchants"` via `either($trades)`. The selected trade is displayed on the stats page.
+- **Note:** Despite appearing in the "unused code" section historically, this variable is actively used in the current game.
 
 ### `$food`
 - **Type:** String (player selection)
