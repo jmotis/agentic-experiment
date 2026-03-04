@@ -533,6 +533,20 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Trigger:** `$elderly is 1` (3.3% chance) triggers an elderly death event
 - **Dependency:** Only checked for elderly NPCs
 
+### `$lodger`
+- **Type:** Integer
+- **Possible values:** `0` (no lodgers), `1` (lodgers accepted)
+- **Set by:** `0` in StoryInit; set to `1` by `<<lodger-choice>>` widget when the player accepts lodgers
+- **Used for:** Tracks whether the player has taken in lodgers. When `1`, lodger rent is added to monthly income via the `<<income>>` widget.
+- **Dependency:** Only offered in October 1666 to players in non-fire parishes whose `$socio` is not `"nobles"` or `"beggars"`
+
+### `$lodgerRent`
+- **Type:** Integer (pence per month)
+- **Possible values:** `0` (default), `10`, `20`, `40` (low rent), `20`, `40`, `80` (high rent)
+- **Set by:** `0` in StoryInit; set by `<<lodger-choice>>` widget based on `$socio` and the player's rent choice (low = base rate, high = 2x base rate)
+- **Used for:** Added to `$income` each month when `$lodger is 1`. Base rent by class: day labourers/servants 10d., artisans 20d., merchants 40d.
+- **Dependency:** Requires `$lodger is 1` to have any effect
+
 ---
 
 ## Random Event Rolls
