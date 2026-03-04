@@ -13,10 +13,15 @@ This repository contains **Gaming the Great Plague**, an interactive fiction gam
 /
 ├── CLAUDE.md                      # This file — guidance for AI assistants
 ├── GamingtheGreatPlague.html      # Complete Twine game (single-file, ~1.2 MB)
-├── extract.js                     # Extracts <tw-passagedata> elements to passages.json
-├── patch.js                       # Patches modified passage content back into the HTML
+├── extract.js                     # Extracts passages to passages/ dir + passage-index.json
+├── patch.js                       # Re-encodes and patches passage files back into the HTML
 ├── variables.md                   # Reference list of all global game variables
-└── README.md                      # Project description and play instructions
+├── README.md                      # Project description and play instructions
+├── passage-index.json             # [transient] Lightweight index of all passages (pid, name, tags, size)
+└── passages/                      # [transient] Individual decoded passage files (one per passage)
+    ├── 001-bio.txt
+    ├── 002-December-1664.txt
+    └── ...
 ```
 
 There is no build system, package manager, test framework, or CI/CD pipeline.
@@ -49,36 +54,32 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
 
 ### Extract → Analyze → Patch workflow
 
-1. **Extract** — Run `node extract.js` to produce `passages.json` from the HTML file. This is your sole working copy of passage data.
-2. **Analyze / Edit** — Perform all reading, searching, and editing against `passages.json`. Never open or modify the HTML file for passage content.
-   - **`passages.json` is large** (generally exceeds 256 KB). Do not attempt to read the entire file at once. Use the `offset` and `limit` parameters to read specific portions, or use the Grep tool to search for specific content by keyword or passage name.
-   - **`passages.json` uses HTML entity encoding.** The `content` field in each passage object contains HTML-encoded text (e.g., `&lt;&lt;` for `<<`, `&quot;` for `"`, etc.). All modification scripts should work directly with these encoded entities without manual decoding — `patch.js` applies changes verbatim to the HTML file.
-3. **Patch** — When edits are complete, run `node patch.js` to write changes back into the HTML.
+1. **Extract** — Run `node extract.js`. This produces:
+   - `passages/` — A directory of individual passage files (one `.txt` file per passage), with **decoded** plain-text content (no HTML entities). Files are named `{pid}-{name}.txt` (e.g., `010-StoryInit.txt`).
+   - `passage-index.json` — A lightweight JSON index (~5 KB) listing each passage's `pid`, `name`, `tags`, `filename`, and `size` in bytes. Use this to find passages by name or tag without reading any content.
+2. **Analyze / Edit** — Work with individual passage files in `passages/`. Never open or modify the HTML file for passage content.
+   - **Start with `passage-index.json`** to find the passage you need by name, tag, or pid. Read only the specific passage file(s) relevant to your task.
+   - **Passage content is plain text** — SugarCube macros appear as `<<macro>>`, quotes as `"`, etc. Write edits using normal characters, not HTML entities.
+   - **Search across all passages** using `Grep(pattern="keyword", path="passages/")`. Results include the filename, so you instantly know which passage matched.
+3. **Patch** — When edits are complete, run `node patch.js` to re-encode passage content (back to HTML entities) and write changes into the HTML file.
 
 ### Pre-patch safety rules (mandatory before running `node patch.js`)
 
 1. **List every pid you modified.** Before executing `patch.js`, explicitly state which `pid` values were changed and summarize what changed in each.
-2. **Never touch passages you did not explicitly analyze.** If a passage was not part of the current task, its `content` field in `passages.json` must remain byte-identical to what `extract.js` produced. Do not reformat, re-encode, or "clean up" unrelated passages.
+2. **Never touch passages you did not explicitly analyze.** If a passage was not part of the current task, its file in `passages/` must remain byte-identical to what `extract.js` produced. Do not reformat or "clean up" unrelated passage files.
 3. **Never alter `<tw-storydata>` wrapper attributes.** The attributes on the `<tw-storydata>` element (`name`, `startnode`, `creator`, `creator-version`, `format`, `format-version`, `ifid`, `options`, `tags`, `zoom`, `hidden`) are managed by Twine and must never be modified. `patch.js` only replaces inner text of `<tw-passagedata>` elements matched by `pid` — do not change this behavior.
 
 ### Passage creation rules
 
 - **Do not create new passages.** The `patch.js` script can only update existing `<tw-passagedata>` elements matched by `pid`. It cannot insert new passages into the HTML. Any new passage added to `passages.json` will be silently ignored during patching and will not appear in the game. Only the Twine editor can create new passages.
-- **New widgets go in the Claude-widgets passage (pid 115).** When you need to define a new `<<widget>>`, append its `<<widget "name">>...<</widget>>` block to the content of the existing **Claude-widgets** passage (`pid` `115`, tagged `widget`). Do not attempt to create a separate widget passage.
+- **New widgets go in the Claude-widgets passage (pid 115).** When you need to define a new `<<widget>>`, append its `<<widget "name">>...<</widget>>` block to the file `passages/115-Claude-widgets.txt`. Do not attempt to create a separate widget passage.
 
 ### Additional guardrails
 
 - **Do not reconstruct or rewrite** `<tw-storydata>` or any `<tw-passagedata>` opening/closing tags. `patch.js` preserves them automatically.
 - **Passage matching is by `pid`, not by `name`.** Passage names can change; `pid` is the stable identifier.
-- **Preserve verbatim encoding.** Passage content in `passages.json` (extracted from the HTML) uses HTML-entity encoding:
-  - `&lt;&lt;` represents `<<` (SugarCube macro opening)
-  - `&gt;&gt;` represents `>>` (SugarCube macro closing)
-  - `&quot;` represents `"` (double quote)
-  - `&#39;` represents `'` (single quote)
-  - `&amp;` represents `&` (ampersand)
-
-  **When working with `passages.json`, use these encoded entities directly in your modifications.** Example: to insert `<<nobr>>`, add `&lt;&lt;nobr&gt;&gt;` to the `content` field. Do not manually decode, re-encode, or attempt to "translate" entity text — work with what `extract.js` produced. `patch.js` expects encoded content and applies it verbatim to the HTML file.
-- After patching, `passages.json` is a **transient artifact** and should not be committed to the repository. Only the updated HTML file should be committed.
+- **Write plain text in passage files.** Passage files in `passages/` contain decoded plain text. Write SugarCube macros as `<<macro>>`, use normal `"` quotes, etc. `patch.js` handles re-encoding to HTML entities automatically.
+- After patching, `passages/` and `passage-index.json` are **transient artifacts** and should not be committed to the repository. Only the updated HTML file should be committed.
 
 ## Version Control (Game Title)
 
@@ -132,7 +133,7 @@ At the start of every session, set the following environment variable:
 export CLAUDE_CODE_MAX_OUTPUT_TOKENS=64000
 ```
 
-This ensures Claude Code has sufficient output capacity for tasks involving large files like `passages.json` or `GamingtheGreatPlague.html`.
+This ensures Claude Code has sufficient output capacity for tasks involving large passage files or `GamingtheGreatPlague.html`.
 
 ## Git Conventions
 

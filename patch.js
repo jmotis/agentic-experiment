@@ -5,21 +5,37 @@ const fs = require("fs");
 const path = require("path");
 
 const htmlPath = path.resolve(__dirname, "GamingtheGreatPlague.html");
-const jsonPath = path.resolve(__dirname, "passages.json");
+const passagesDir = path.resolve(__dirname, "passages");
+const indexPath = path.resolve(__dirname, "passage-index.json");
 const outPath = htmlPath; // overwrite in place
 
 const html = fs.readFileSync(htmlPath, "utf-8");
-const passages = JSON.parse(fs.readFileSync(jsonPath, "utf-8"));
+const index = JSON.parse(fs.readFileSync(indexPath, "utf-8"));
 
-// Build a map of pid -> new content from the JSON file.
-const contentByPid = new Map();
-for (const p of passages) {
-  contentByPid.set(p.pid, p.content);
+// ── Re-encode plain text back to HTML entities ──────────────────────
+// Order matters: & must be encoded FIRST to avoid double-encoding.
+function encodeEntities(s) {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
-// For each <tw-passagedata pid="X" ...>...</tw-passagedata>, replace the inner
-// text if the pid is present in the JSON.  Attributes and surrounding HTML are
-// left completely untouched — we only swap the captured group for the content.
+// ── Read passage content from individual files ──────────────────────
+const contentByPid = new Map();
+for (const entry of index) {
+  const filepath = path.join(passagesDir, entry.filename);
+  if (!fs.existsSync(filepath)) {
+    console.warn(`Warning: missing file ${entry.filename} for pid ${entry.pid}, skipping`);
+    continue;
+  }
+  const decoded = fs.readFileSync(filepath, "utf-8");
+  contentByPid.set(entry.pid, encodeEntities(decoded));
+}
+
+// ── Patch each <tw-passagedata> element in the HTML ─────────────────
 const re = /(<tw-passagedata\s+pid="(\d+)"[^>]*>)([\s\S]*?)(<\/tw-passagedata>)/g;
 
 const result = html.replace(re, (match, openTag, pid, _oldContent, closeTag) => {
