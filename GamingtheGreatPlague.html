@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.44" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.45" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3556,9 +3556,21 @@ You never have much money to spare, but things have gone more poorly than usual 
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;prison&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-/* Find the head-of-household NPC for non-independent players */
 &lt;&lt;set _hohNPCName to &quot;&quot;&gt;&gt;
 &lt;&lt;set _hohNPCRel to &quot;&quot;&gt;&gt;
+&lt;&lt;set _servantHandled to false&gt;&gt;
+/* Servant special case (hoh 3): master/mistress handles the debt or dismisses the servant */
+&lt;&lt;if $hoh is 3&gt;&gt;
+  &lt;&lt;if $reputation gte 6&gt;&gt;
+    &lt;&lt;set _servantHandled to true&gt;&gt;
+Your $masterTitle learns of your debts and, valuing your service, pays them off on your behalf. &lt;&lt;set $money to 0&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: &quot; + $masterTitle.toUpperFirst() + &quot; paid off your debts&quot;, money: 0, repDelta: -2, repBefore: $reputation + 2, infectPct: null})&gt;&gt;You are grateful, but your reputation has suffered for your inability to manage your own affairs. &lt;&lt;storyline-return&gt;&gt;
+  &lt;&lt;else&gt;&gt;
+Your $masterTitle learns of your debts and is furious. &lt;&lt;set $socio to &quot;day labourers&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;&lt;&lt;set $NPCs to $NPCsExtended.slice()&gt;&gt;&lt;&lt;set $NPCsExtended to []&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;&lt;&lt;set-hoh&gt;&gt;Due to your poor reputation, your $masterTitle has dismissed you from service. You will have to hope you can survive as a day labourer.&lt;br&gt;&lt;br&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+/* After servant dismissal, $hoh has been recalculated — proceed with new status */
+/* Find the head-of-household NPC for non-independent players (hoh 0, 2, 4) */
+&lt;&lt;if not _servantHandled&gt;&gt;
 &lt;&lt;if $hoh is 4&gt;&gt;
   &lt;&lt;for _pi to 0; _pi lt $NPCs.length; _pi++&gt;&gt;
     &lt;&lt;if _hohNPCName is &quot;&quot; and $NPCs[_pi].relationship is &quot;husband&quot; and $NPCs[_pi].health isnot &quot;deceased&quot;&gt;&gt;
@@ -3593,11 +3605,14 @@ You never have much money to spare, but things have gone more poorly than usual 
     &lt;&lt;/for&gt;&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;if $hoh isnot 1 and _hohNPCName isnot &quot;&quot;&gt;&gt;
+/* Non-independent player with a qualifying HoH NPC — HoH goes to prison */
+&lt;&lt;if _hohNPCName isnot &quot;&quot;&gt;&gt;
 Your household has fallen so far into debt that creditors have demanded someone answer for it. To your distress, your _hohNPCRel, _hohNPCName, is thrown into debtor&#39;s prison. &lt;&lt;if $reputation gte 6&gt;&gt;To your relief, your _hohNPCRel&#39;s creditors agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; due to your family&#39;s good reputation. &lt;&lt;else&gt;&gt;_hohNPCName is committed to the Fleet and forced to reside there until the debts are reduced. &lt;&lt;set $plagueInfection to random (0,1)&gt;&gt;&lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;&lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+/* Independent head of household (hoh 1) or no qualifying NPC found — player goes to prison */
 &lt;&lt;else&gt;&gt;
 To your humiliation, you&#39;ve fallen so far into debt that your creditors have demanded you be thrown in debtor&#39;s prison. &lt;&lt;if $reputation gte 6&gt;&gt;To your relief, your creditors agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; due to your good reputation. &lt;&lt;else&gt;&gt;You are committed to the Fleet and forced to reside there until you reduce your debts. &lt;&lt;set $plagueInfection to random (0,1)&gt;&gt;&lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;&lt;&lt;elseif  _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="59" name="Quarantine, Week 1" tags="quarantine" position="150,325" size="100,100">/* Quarantine Week 1*/
 &lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 1&gt;&gt;
