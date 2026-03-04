@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.50" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.51" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -6076,7 +6076,7 @@ The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; grows worse and the streets are
 
 &lt;&lt;widget &quot;fled-broke&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set _fledBroke to ($money lte 0 and $timeline.indexOf($args[0]) gt $fledFromIndex)&gt;&gt;
-&lt;&lt;if _fledBroke&gt;&gt; Unfortunately, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; &lt;&lt;if $args.length gt 1&gt;&gt;run out of money in $args[1]&lt;&lt;else&gt;&gt;have run out of money&lt;&lt;/if&gt;&gt; and are forced to [[return to the city-&gt;$args[0]]] to avoid starving.&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _fledBroke&gt;&gt; Unfortunately, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; &lt;&lt;if $args.length gt 1&gt;&gt;run out of money in $args[1]&lt;&lt;else&gt;&gt;have run out of money&lt;&lt;/if&gt;&gt; and are forced to &lt;&lt;link &quot;return to the city&quot;&gt;&gt;&lt;&lt;goto $args[0]&gt;&gt;&lt;&lt;/link&gt;&gt; to avoid starving.&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;church-services&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
