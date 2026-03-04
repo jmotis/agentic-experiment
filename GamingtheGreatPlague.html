@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.52" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.53" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1710,7 +1710,7 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;if tags().includes(&quot;storyline&quot;)&gt;&gt;&lt;h2&gt;&lt;&lt;print passage()&gt;&gt;, $location&lt;/h2&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if tags().includes(&quot;quarantine&quot;)&gt;&gt;&lt;h2&gt;&lt;&lt;print passage()&gt;&gt;&lt;/h2&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if tags().includes(&quot;storyline&quot;) and visited() lte 1&gt;&gt;&lt;&lt;debt-check&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if tags().includes(&quot;storyline&quot;) and visited() lte 1&gt;&gt;&lt;&lt;debt-check&gt;&gt;&lt;&lt;debtor&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;silently&gt;&gt;
 &lt;&lt;if $location is &quot;inside the City walls&quot; and hasVisited(&quot;June 1665&quot;)&gt;&gt;&lt;&lt;set $apothecary to 1&gt;&gt; /*this is OBE since currently apothecary set to always show*/
 	&lt;&lt;elseif $location isnot &quot;in another part of the western suburbs&quot;&gt;&gt;
@@ -3377,7 +3377,7 @@ Now you just have to figure out how to overcome your disgrace and find your way 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/linkreplace&gt;&gt;
 &lt;&lt;/linkreplace&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="44" name="YouPesthouse" tags="infection-rates" position="500,625" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;set $plagueInfection to 2&gt;&gt;&lt;&lt;/silently&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="44" name="YouPesthouse" tags="infection-rates" position="500,625" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;set $plagueInfection to 2&gt;&gt;&lt;&lt;set $money -= 5&gt;&gt;&lt;&lt;/silently&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 The &lt;&lt;defPesthouse &quot;pesthouse&quot;&gt;&gt; is a terrible place to be confined, with countless sick people all crammed in close together so you can hear their every moan. They die terrifyingly fast and their cots refill just as quickly. You toss and turn in your dirty, sweat-soaked sheets, as your fever spikes and you fear for your life.
 &lt;br&gt;&lt;br&gt;
@@ -3620,7 +3620,7 @@ Total wealth: $money (&lt;&lt;conversion&gt;&gt;)
 /*set maximum allowable debt*/
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
 &lt;&lt;set _debtCeiling to 60&gt;&gt;
-&lt;&lt;else&gt;&gt;&lt;&lt;set _debtCeiling to ($disposable*-1)&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;set _debtCeiling to ($income - $expenses) * -1&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
 /* consequences for exceeding debt ceiling */
@@ -3694,6 +3694,7 @@ To your humiliation, you&#39;ve fallen so far into debt that your creditors have
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="59" name="Quarantine, Week 1" tags="quarantine" position="150,325" size="100,100">/* Quarantine Week 1*/
 &lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to 1&gt;&gt;
+&lt;&lt;quarantine-costs&gt;&gt;
 /* check which family members are currently infected */
     &lt;&lt;silently&gt;&gt;
         &lt;&lt;set _infectedFamily = []&gt;&gt;
@@ -3798,6 +3799,7 @@ You must remain in &lt;&lt;defQuarantine &quot;quarantine&quot;&gt;&gt; for at l
 &lt;&lt;/link&gt;&gt;
 &lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="60" name="Quarantine Continues" tags="quarantine" position="350,325" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set $quarantine to $quarantine + 1&gt;&gt;
+&lt;&lt;quarantine-costs&gt;&gt;
 /* check if any family members were infected the previous week */
 &lt;&lt;silently&gt;&gt;
     &lt;&lt;set _deceased = []&gt;&gt;
@@ -5934,6 +5936,55 @@ You are in debt and can no longer afford your recurring expenses.&lt;&lt;if _deb
   &lt;&lt;if $gender is &quot;female&quot; and $relationship is &quot;married&quot;&gt;&gt;
     &lt;&lt;set $hoh to 4&gt;&gt;
   &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;quarantine-costs&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;expenses&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
+&lt;&lt;income&gt;&gt;
+&lt;&lt;set _qWeekly to Math.round(($income - $expenses) / 4)&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;set _qWeekly to Math.round($expenses / 4) * -1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;set $money to Math.clamp($money + _qWeekly, -10000000, 10000000)&gt;&gt;
+&lt;&lt;quarantine-debt-check&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;quarantine-debt-check&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $money lt 0&gt;&gt;
+/* Calculate debt ceiling using prorated weekly income/expenses */
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set _qdCeiling to 60&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;
+&lt;&lt;set _qdCeiling to ($income - $expenses) * -1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+/* Check if debt exceeds class-based ceiling */
+&lt;&lt;set _qdExceeded to false&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot; and $money lte (_qdCeiling * 4)&gt;&gt;&lt;&lt;set _qdExceeded to true&gt;&gt;
+&lt;&lt;elseif ($socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;) and $money lte (_qdCeiling * 3)&gt;&gt;&lt;&lt;set _qdExceeded to true&gt;&gt;
+&lt;&lt;elseif $money lte (_qdCeiling * 2)&gt;&gt;&lt;&lt;set _qdExceeded to true&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _qdExceeded and $playerPlagueStatus isnot &quot;infected&quot; and $playerPlagueStatus isnot &quot;recovered&quot;&gt;&gt;
+&lt;br&gt;&lt;br&gt;&lt;span id=&quot;break-quarantine&quot;&gt;You are running desperately low on money. With no income coming in, your debts are mounting. Do you risk breaking quarantine to earn some money?&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Attempt to break quarantine&quot;&gt;&gt;&lt;&lt;replace &quot;#break-quarantine&quot;&gt;&gt;
+&lt;&lt;if random(1,2) is 1&gt;&gt;
+You are caught by the warder as you attempt to sneak out of the house and have been committed to the &lt;&lt;defPesthouse &quot;pesthouse&quot;&gt;&gt;.
+&lt;&lt;set $money -= 5&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Caught breaking quarantine&quot;, money: -5, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
+&lt;br&gt;&lt;br&gt;[[You are dragged away.-&gt;YouPesthouse]]
+&lt;&lt;else&gt;&gt;
+&lt;&lt;income&gt;&gt;
+&lt;&lt;set _qHalfIncome to Math.round($income / 2)&gt;&gt;
+&lt;&lt;set $money += _qHalfIncome&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;
+&lt;&lt;set $reputation to Math.clamp($reputation - 3, 0, 10)&gt;&gt;
+You have successfully evaded the warder outside your house and managed to bring in a little income to stave off your creditors.
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Broke quarantine for income&quot;, money: _qHalfIncome, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Endure the hardship&quot;&gt;&gt;&lt;&lt;replace &quot;#break-quarantine&quot;&gt;&gt;You tighten your belt and pray your creditors will be patient.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;/span&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
