@@ -5971,16 +5971,16 @@ You are in debt and can no longer afford your recurring expenses.&lt;&lt;if _deb
 &lt;&lt;if random(1,2) is 1&gt;&gt;
 You are caught by the warder as you attempt to sneak out of the house and have been committed to the &lt;&lt;defPesthouse &quot;pesthouse&quot;&gt;&gt;.
 &lt;&lt;set $money -= 5&gt;&gt;
-&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Caught breaking quarantine&quot;, money: -5, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;
+&lt;&lt;set $reputation to Math.clamp($reputation - 3, 0, 10)&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Caught breaking quarantine&quot;, money: -5, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;
 &lt;br&gt;&lt;br&gt;[[You are dragged away.-&gt;YouPesthouse]]
 &lt;&lt;else&gt;&gt;
 &lt;&lt;income&gt;&gt;
 &lt;&lt;set _qHalfIncome to Math.round($income / 2)&gt;&gt;
 &lt;&lt;set $money += _qHalfIncome&gt;&gt;
-&lt;&lt;set _repBefore to $reputation&gt;&gt;
-&lt;&lt;set $reputation to Math.clamp($reputation - 3, 0, 10)&gt;&gt;
 You have successfully evaded the warder outside your house and managed to bring in a little income to stave off your creditors.
-&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Broke quarantine for income&quot;, money: _qHalfIncome, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Broke quarantine for income&quot;, money: _qHalfIncome, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Endure the hardship&quot;&gt;&gt;&lt;&lt;replace &quot;#break-quarantine&quot;&gt;&gt;You tighten your belt and pray your creditors will be patient.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;/span&gt;
