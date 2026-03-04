@@ -622,8 +622,16 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Possible values:** `0` (attend services / ask each month), `1` (always skip)
 - **Initial value:** `0`
 - **Set by:** `random-character` widget (pid 14) initializes to `0`. Set to `1` when the player chooses "Always avoid Church of England services" in the `church-services` widget.
-- **Used for:** Controls whether non-Church of England characters skip weekly parish church services. When `1`, the 48d. fine and &minus;1 reputation penalty are applied automatically each month without prompting the player. Only available to characters not in debt (`$money gte 0`). Does not apply in April 1666 (Easter has its own service code).
+- **Used for:** Controls whether non-Church of England characters skip weekly parish church services. When `1`, the 48d. fine is applied automatically each month without prompting the player. The &minus;1 reputation penalty only fires on the first skip (tracked by `$churchSkipRepPenalty`). Only available to characters not in debt (`$money gte 0`). Does not apply in April 1666 (Easter has its own service code).
 - **Dependency:** Only meaningful when `$religion isnot "member of the Church of England"`. Interacts with `$money` (fine) and `$reputation` (penalty). Reset to `0` by the `debt-check` widget when the player enters debt, which also sets `$debtForcedAttend` to `1`.
+
+### `$churchSkipRepPenalty`
+- **Type:** Integer (boolean-like)
+- **Possible values:** `0` (reputation penalty not yet applied), `1` (reputation penalty already applied)
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** The `church-services` widget (pid 115) sets this to `1` the first time a non-Church of England character skips church services.
+- **Used for:** Ensures the &minus;1 reputation penalty for skipping Church of England services only fires once (on the first skip). The 48d. monetary fine continues to apply every month the player skips.
+- **Dependencies:** Interacts with `$reputation`, `$skipServices`, and `$religion`.
 
 ### `$billSubscribed`
 - **Type:** Integer (boolean-like)
