@@ -498,9 +498,9 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 
 ### `$miscarriage`
 - **Type:** Integer (random event roll)
-- **Set by:** `random(1, 10)`
-- **Trigger:** `$miscarriage is 1` (10% chance) causes a miscarriage
-- **Dependency:** Only checked during pregnancy
+- **Set by:** `random(1, 100)`
+- **Trigger:** `$miscarriage lte _miscarriageThreshold` causes a miscarriage. Threshold scales with `$agenum`: 10% (age ≤ 25), 15% (age 26–35), 20% (age 36), 25% (age 37), 30% (age 38), 35% (age 39), 40% (age 40).
+- **Dependency:** Only checked during pregnancy. Can now fire at any pregnancy stage (including pre-notification stages 2–3). At stages ≤ 3 the player sees a softer message ("thought you might be pregnant"); at stages 5+ the standard miscarriage message is shown.
 
 ### `$wedding`
 - **Type:** Integer (random event roll)
