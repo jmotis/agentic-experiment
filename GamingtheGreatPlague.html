@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.46" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.47" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -2910,7 +2910,30 @@ There aren&#39;t as many rumors as there might have been, given how many people 
 &lt;&lt;fumigant&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="39" name="FamPesthouse" tags="infection-rates" position="25,450" size="100,100">&lt;&lt;nobr&gt;&gt;
-It is a difficult decision, but your family decide it&#39;s for the best to send your sick to the &lt;&lt;defPesthouse &quot;pesthouse&quot;&gt;&gt;.
+&lt;&lt;silently&gt;&gt;
+/* Check whether the authority figure is among the infected being sent away */
+&lt;&lt;set _authoritySick to false&gt;&gt;
+&lt;&lt;if $hoh is 0 or $hoh is 2&gt;&gt;
+    &lt;&lt;for _npc range $NPCs&gt;&gt;
+        &lt;&lt;if _npc.health is &quot;infected&quot; and ($gender is &quot;male&quot; and (_npc.relationship is &quot;father&quot; or _npc.relationship is &quot;step-father&quot;) or $gender isnot &quot;male&quot; and (_npc.relationship is &quot;father&quot; or _npc.relationship is &quot;step-father&quot; or _npc.relationship is &quot;mother&quot; or _npc.relationship is &quot;step-mother&quot;))&gt;&gt;
+            &lt;&lt;set _authoritySick to true&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+&lt;&lt;elseif $hoh is 3&gt;&gt;
+    &lt;&lt;for _npc range $NPCs&gt;&gt;
+        &lt;&lt;if _npc.health is &quot;infected&quot; and (_npc.relationship is &quot;master&quot; or _npc.relationship is &quot;mistress&quot;)&gt;&gt;
+            &lt;&lt;set _authoritySick to true&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+&lt;&lt;elseif $hoh is 4&gt;&gt;
+    &lt;&lt;for _npc range $NPCs&gt;&gt;
+        &lt;&lt;if _npc.health is &quot;infected&quot; and _npc.relationship is &quot;husband&quot;&gt;&gt;
+            &lt;&lt;set _authoritySick to true&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+It is a difficult decision, but &lt;&lt;if $hoh is 0&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;with your &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;father&lt;&lt;else&gt;&gt;parent&lt;&lt;/if&gt;&gt; among the sick, you decide&lt;&lt;else&gt;&gt;your family decide&lt;&lt;/if&gt;&gt;&lt;&lt;elseif $hoh is 2&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;with your &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;father&lt;&lt;else&gt;&gt;parent&lt;&lt;/if&gt;&gt; among the sick, you decide&lt;&lt;else&gt;&gt;your family decide&lt;&lt;/if&gt;&gt;&lt;&lt;elseif $hoh is 3&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;with your $masterTitle among the sick, you decide&lt;&lt;else&gt;&gt;your $masterTitle decides&lt;&lt;/if&gt;&gt;&lt;&lt;elseif $hoh is 4&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;with your husband among the sick, you decide&lt;&lt;else&gt;&gt;your family decide&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;you decide&lt;&lt;/if&gt;&gt; it&#39;s for the best to send your sick to the &lt;&lt;defPesthouse &quot;pesthouse&quot;&gt;&gt;.
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $reputation lte 2&gt;&gt;To your horror, rumors swirl that your family have actually murdered a member of your household and hidden the body! &lt;&lt;if $murder gte 1&gt;&gt; Remembering the rumors of murder that circulated last time  your family sent someone to the household, you &lt;&lt;/if&gt;&gt;&lt;&lt;if $murder lte 1&gt;&gt;You&lt;&lt;/if&gt;&gt; send to the master of the pesthouse to produce a certificate for you that proves the rumor is a lie.
 &lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $murder =1&gt;&gt;
@@ -2987,7 +3010,28 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
             &lt;&lt;if _mh.health is &quot;infected&quot;&gt;&gt;
                 &lt;&lt;set _infectedMaster.push(_idx)&gt;&gt;
             &lt;&lt;/if&gt;&gt;
-        &lt;&lt;/for&gt;&gt;&lt;&lt;/silently&gt;&gt;
+        &lt;&lt;/for&gt;&gt;
+        /* Check whether the player&#39;s authority figure is among the infected */
+        &lt;&lt;set _authoritySick to false&gt;&gt;
+        &lt;&lt;if $hoh is 0 or $hoh is 2&gt;&gt;
+            &lt;&lt;for _idx range _infectedFamily&gt;&gt;
+                &lt;&lt;if $NPCs[_idx].relationship is &quot;father&quot; or $NPCs[_idx].relationship is &quot;step-father&quot; or $NPCs[_idx].relationship is &quot;mother&quot; or $NPCs[_idx].relationship is &quot;step-mother&quot;&gt;&gt;
+                    &lt;&lt;set _authoritySick to true&gt;&gt;
+                &lt;&lt;/if&gt;&gt;
+            &lt;&lt;/for&gt;&gt;
+        &lt;&lt;elseif $hoh is 3&gt;&gt;
+            &lt;&lt;for _idx range _infectedFamily&gt;&gt;
+                &lt;&lt;if $NPCs[_idx].relationship is &quot;master&quot; or $NPCs[_idx].relationship is &quot;mistress&quot;&gt;&gt;
+                    &lt;&lt;set _authoritySick to true&gt;&gt;
+                &lt;&lt;/if&gt;&gt;
+            &lt;&lt;/for&gt;&gt;
+        &lt;&lt;elseif $hoh is 4&gt;&gt;
+            &lt;&lt;for _idx range _infectedFamily&gt;&gt;
+                &lt;&lt;if $NPCs[_idx].relationship is &quot;husband&quot;&gt;&gt;
+                    &lt;&lt;set _authoritySick to true&gt;&gt;
+                &lt;&lt;/if&gt;&gt;
+            &lt;&lt;/for&gt;&gt;
+        &lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;
         &lt;&lt;for _n, _idx range _infectedFamily&gt;&gt;
             &lt;&lt;if _infectedFamily.length eq 1&gt;&gt;
         $NPCs[_idx].relationship $NPCs[_idx].name is infected with the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;.&lt;br&gt;
@@ -3007,10 +3051,10 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
         &lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;
     &lt;br&gt;
-    As a good Christian, it is your duty to look after the poor, sick, and needy. But as a good Christian, you also know it is a sin to needlessly risk your life. Do you&lt;&lt;if $agenum lte 15&gt;&gt; convince your household to&lt;&lt;/if&gt;&gt;:&lt;ul&gt;
+    As a good Christian, it is your duty to look after the poor, sick, and needy. But as a good Christian, you also know it is a sin to needlessly risk your life. &lt;&lt;if $hoh is 0&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;With your &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;father&lt;&lt;else&gt;&gt;parent&lt;&lt;/if&gt;&gt; too ill to make decisions, the responsibility falls to you. Do you&lt;&lt;else&gt;&gt;Do you convince your household to&lt;&lt;/if&gt;&gt;&lt;&lt;elseif $hoh is 2&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;With your &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;father&lt;&lt;else&gt;&gt;parent&lt;&lt;/if&gt;&gt; too ill to make decisions, the responsibility falls to you. Do you&lt;&lt;else&gt;&gt;Do you convince your family to&lt;&lt;/if&gt;&gt;&lt;&lt;elseif $hoh is 3&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;With your $masterTitle too ill to give orders, the decision falls to you. Do you&lt;&lt;else&gt;&gt;Do you convince your $masterTitle to&lt;&lt;/if&gt;&gt;&lt;&lt;elseif $hoh is 4&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;With your husband too ill to make decisions, you must decide for yourself. Do you&lt;&lt;else&gt;&gt;Do you convince your husband to&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;Do you&lt;&lt;/if&gt;&gt;:&lt;ul&gt;
 &lt;li&gt;[[Quarantine with your household-&gt;Quarantine, Week 1][$reputation to Math.clamp($reputation + 3, 0, 10)]]&lt;/li&gt;
     &lt;li&gt;[[Send the sick to the pesthouse-&gt;FamPesthouse][$reputation to Math.clamp($reputation - 5, 0, 10)]]&lt;/li&gt;
-    &lt;/ul&gt;    
+    &lt;/ul&gt;
     &lt;&lt;/nobr&gt;&gt;
     &lt;&lt;/widget&gt;&gt;
     
@@ -3194,6 +3238,30 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
         &lt;&lt;set _infectedExtended.push(_idx)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
+/* Check whether the player&#39;s authority figure is sick */
+&lt;&lt;set _authoritySick to false&gt;&gt;
+&lt;&lt;if $hoh is 3&gt;&gt;
+    /* For servants, the master/mistress is in $NPCsMaster — check if they are among the infected */
+    &lt;&lt;for _idx range _infectedMaster&gt;&gt;
+        &lt;&lt;if $NPCsMaster[_idx].relationship is &quot;master&quot; or $NPCsMaster[_idx].relationship is &quot;mistress&quot;&gt;&gt;
+            &lt;&lt;set _authoritySick to true&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+&lt;&lt;elseif $hoh is 0 or $hoh is 2&gt;&gt;
+    /* For children/those living with parents, check if the parent in $NPCs is currently infected */
+    &lt;&lt;for _npc range $NPCs&gt;&gt;
+        &lt;&lt;if _npc.health is &quot;infected&quot; and ($gender is &quot;male&quot; and (_npc.relationship is &quot;father&quot; or _npc.relationship is &quot;step-father&quot;) or $gender isnot &quot;male&quot; and (_npc.relationship is &quot;father&quot; or _npc.relationship is &quot;step-father&quot; or _npc.relationship is &quot;mother&quot; or _npc.relationship is &quot;step-mother&quot;))&gt;&gt;
+            &lt;&lt;set _authoritySick to true&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+&lt;&lt;elseif $hoh is 4&gt;&gt;
+    /* For married women, check if the husband in $NPCs is currently infected */
+    &lt;&lt;for _npc range $NPCs&gt;&gt;
+        &lt;&lt;if _npc.health is &quot;infected&quot; and _npc.relationship is &quot;husband&quot;&gt;&gt;
+            &lt;&lt;set _authoritySick to true&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 &lt;span id=&quot;other-hh-choice&quot;&gt;
 &lt;&lt;if _infectedMaster.length gte 1&gt;&gt;Word reaches you that plague has struck your $masterTitle&#39;s &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;. Your
@@ -3213,7 +3281,7 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
     &lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
     &lt;br&gt;
-    As a good Christian, it is your duty to look after the poor, sick, and needy. But as a good Christian, you also know it is a sin to needlessly risk your life. Do you&lt;&lt;if $agenum lte 15&gt;&gt; convince your household to&lt;&lt;/if&gt;&gt;:&lt;ul&gt;
+    As a good Christian, it is your duty to look after the poor, sick, and needy. But as a good Christian, you also know it is a sin to needlessly risk your life. &lt;&lt;if $hoh is 0&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;With your &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;father&lt;&lt;else&gt;&gt;parent&lt;&lt;/if&gt;&gt; too ill to make decisions, the responsibility falls to you. Do you&lt;&lt;else&gt;&gt;Do you convince your household to&lt;&lt;/if&gt;&gt;&lt;&lt;elseif $hoh is 2&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;With your &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;father&lt;&lt;else&gt;&gt;parent&lt;&lt;/if&gt;&gt; too ill to make decisions, the responsibility falls to you. Do you&lt;&lt;else&gt;&gt;Do you convince your family to&lt;&lt;/if&gt;&gt;&lt;&lt;elseif $hoh is 3&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;With your $masterTitle too ill to give orders, the decision falls to you. Do you&lt;&lt;else&gt;&gt;Do you convince your $masterTitle to&lt;&lt;/if&gt;&gt;&lt;&lt;elseif $hoh is 4&gt;&gt;&lt;&lt;if _authoritySick&gt;&gt;With your husband too ill to make decisions, you must decide for yourself. Do you&lt;&lt;else&gt;&gt;Do you convince your husband to&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;Do you&lt;&lt;/if&gt;&gt;:&lt;ul&gt;
 &lt;li&gt;&lt;&lt;link &quot;Quarantine with the sick&quot; &quot;Quarantine, Week 1&quot;&gt;&gt;&lt;&lt;swap-to-other-hh&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 3, 0, 10)&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
     &lt;li&gt;&lt;&lt;link &quot;Remain in your own household&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;set _deadOther to []&gt;&gt;&lt;&lt;set _recovOther to []&gt;&gt;&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;&lt;&lt;if $NPCsMaster[_mi].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deadOther.push($NPCsMaster[_mi].relationship + &quot; &quot; + $NPCsMaster[_mi].name)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recovOther.push($NPCsMaster[_mi].relationship + &quot; &quot; + $NPCsMaster[_mi].name)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;&lt;&lt;if $NPCsExtended[_ei].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deadOther.push($NPCsExtended[_ei].relationship + &quot; &quot; + $NPCsExtended[_ei].name)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recovOther.push($NPCsExtended[_ei].relationship + &quot; &quot; + $NPCsExtended[_ei].name)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;check-widowed&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;replace &quot;#other-hh-choice&quot;&gt;&gt;You decide to remain in your own household and pray for the sick.&lt;&lt;if _deadOther.length gt 0&gt;&gt; Despite your prayers, &lt;&lt;for _n, _name range _deadOther&gt;&gt;&lt;&lt;if _deadOther.length eq 1&gt;&gt;your _name has&lt;&lt;elseif _n &lt; _deadOther.length - 1&gt;&gt;your _name, &lt;&lt;else&gt;&gt;and your _name have&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt; died.&lt;&lt;/if&gt;&gt;&lt;&lt;if _recovOther.length gt 0&gt;&gt; Thankfully, &lt;&lt;for _n, _name range _recovOther&gt;&gt;&lt;&lt;if _recovOther.length eq 1&gt;&gt;your _name has&lt;&lt;elseif _n &lt; _recovOther.length - 1&gt;&gt;your _name, &lt;&lt;else&gt;&gt;and your _name have&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt; survived.&lt;&lt;/if&gt;&gt;&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
     &lt;/ul&gt;&lt;/span&gt;
