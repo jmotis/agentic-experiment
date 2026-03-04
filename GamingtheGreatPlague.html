@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.55" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.56" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1671,6 +1671,8 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;set $remedies.Immodium = { name: &quot;an anti-diarrheal posset made of plantain, sorrel, or knot grass&quot;, quantity: 0, cost: 0 }&gt;&gt;
 &lt;&lt;set $decisions to []&gt;&gt;
 &lt;&lt;set $trades to [&quot;mercer&quot;, &quot;draper&quot;, &quot;ironmonger&quot;, &quot;goldsmith&quot;]&gt;&gt;
+&lt;&lt;set $lodger to 0&gt;&gt;
+&lt;&lt;set $lodgerRent to 0&gt;&gt;
 &lt;&lt;set $quarantine to 0&gt;&gt;
 &lt;&lt;set $plagueRevealed to 0&gt;&gt;
 &lt;&lt;set $timeline to [&quot;December 1664&quot;, &quot;January 1665&quot;, &quot;May 1665&quot;, &quot;June 1665&quot;, &quot;July 1665&quot;, &quot;August 1665&quot;, &quot;September 1665&quot;, &quot;October 1665&quot;, &quot;November 1665&quot;, &quot;December 1665&quot;, &quot;January 1666&quot;, &quot;February 1666&quot;, &quot;March 1666&quot;, &quot;April 1666&quot;, &quot;May 1666&quot;, &quot;June 1666&quot;, &quot;July 1666&quot;, &quot;August 1666&quot;, &quot;September 1666&quot;, &quot;October 1666&quot;, &quot;November 1666&quot;, &quot;December 1666&quot;
@@ -1919,18 +1921,18 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 
 &lt;&lt;widget &quot;NPCpronouns&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
   &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
-    &lt;&lt;if $NPCs[_i].relationship is &quot;niece&quot; or $NPCs[_i].relationship is &quot;daughter&quot; or $NPCs[_i].relationship is &quot;sister&quot; or $NPCs[_i].relationship is &quot;mother&quot; or $NPCs[_i].relationship is &quot;step-mother&quot; or $NPCs[_i].relationship is &quot;mistress&quot; or $NPCs[_i].relationship is &quot;master&#39;s mother&quot; or $NPCs[_i].relationship is &quot;master&#39;s daughter&quot; or $NPCs[_i].relationship is &quot;master&#39;s granddaughter&quot; or $NPCs[_i].relationship is &quot;master&#39;s sister&quot; or $NPCs[_i].relationship is &quot;female servant&quot;&gt;&gt;
+    &lt;&lt;if $NPCs[_i].relationship is &quot;niece&quot; or $NPCs[_i].relationship is &quot;daughter&quot; or $NPCs[_i].relationship is &quot;sister&quot; or $NPCs[_i].relationship is &quot;mother&quot; or $NPCs[_i].relationship is &quot;step-mother&quot; or $NPCs[_i].relationship is &quot;mistress&quot; or $NPCs[_i].relationship is &quot;master&#39;s mother&quot; or $NPCs[_i].relationship is &quot;master&#39;s daughter&quot; or $NPCs[_i].relationship is &quot;master&#39;s granddaughter&quot; or $NPCs[_i].relationship is &quot;master&#39;s sister&quot; or $NPCs[_i].relationship is &quot;female servant&quot; or $NPCs[_i].relationship is &quot;female lodger&quot; or $NPCs[_i].relationship is &quot;lodger&#39;s wife&quot; or $NPCs[_i].relationship is &quot;lodger&#39;s daughter&quot;&gt;&gt;
       &lt;&lt;set $NPCs[_i].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;she&quot;&gt;&gt;
-    &lt;&lt;elseif $NPCs[_i].relationship is &quot;nephew&quot; or $NPCs[_i].relationship is &quot;son&quot; or $NPCs[_i].relationship is &quot;brother&quot; or $NPCs[_i].relationship is &quot;father&quot; or $NPCs[_i].relationship is &quot;step-father&quot; or $NPCs[_i].relationship is &quot;master&#39;s son&quot; or $NPCs[_i].relationship is &quot;master&#39;s father&quot; or $NPCs[_i].relationship is &quot;master&#39;s grandson&quot; or $NPCs[_i].relationship is &quot;master&#39;s brother&quot; or $NPCs[_i].relationship is &quot;male servant&quot;&gt;&gt;
+    &lt;&lt;elseif $NPCs[_i].relationship is &quot;nephew&quot; or $NPCs[_i].relationship is &quot;son&quot; or $NPCs[_i].relationship is &quot;brother&quot; or $NPCs[_i].relationship is &quot;father&quot; or $NPCs[_i].relationship is &quot;step-father&quot; or $NPCs[_i].relationship is &quot;master&#39;s son&quot; or $NPCs[_i].relationship is &quot;master&#39;s father&quot; or $NPCs[_i].relationship is &quot;master&#39;s grandson&quot; or $NPCs[_i].relationship is &quot;master&#39;s brother&quot; or $NPCs[_i].relationship is &quot;male servant&quot; or $NPCs[_i].relationship is &quot;male lodger&quot; or $NPCs[_i].relationship is &quot;lodger&#39;s son&quot;&gt;&gt;
       &lt;&lt;set $NPCs[_i].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;he&quot;&gt;&gt;
       &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCs[_i].hishers to &quot;theirs&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;they&quot;&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
 
 &lt;&lt;for _e = 0; _e &lt; $NPCsExtended.length; _e++&gt;&gt;
-  &lt;&lt;if $NPCsExtended[_e].relationship is &quot;sister&quot; or $NPCsExtended[_e].relationship is &quot;niece&quot; or $NPCsExtended[_e].relationship is &quot;mother&quot; or $NPCsExtended[_e].relationship is &quot;daughter&quot; or $NPCsExtended[_e].relationship is &quot;step-mother&quot; or $NPCsExtended[_e].relationship is &quot;mistress&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s mother&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s daughter&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s granddaughter&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s sister&quot; or $NPCsExtended[_e].relationship is &quot;female servant&quot;&gt;&gt;
+  &lt;&lt;if $NPCsExtended[_e].relationship is &quot;sister&quot; or $NPCsExtended[_e].relationship is &quot;niece&quot; or $NPCsExtended[_e].relationship is &quot;mother&quot; or $NPCsExtended[_e].relationship is &quot;daughter&quot; or $NPCsExtended[_e].relationship is &quot;step-mother&quot; or $NPCsExtended[_e].relationship is &quot;mistress&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s mother&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s daughter&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s granddaughter&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s sister&quot; or $NPCsExtended[_e].relationship is &quot;female servant&quot; or $NPCsExtended[_e].relationship is &quot;female lodger&quot; or $NPCsExtended[_e].relationship is &quot;lodger&#39;s wife&quot; or $NPCsExtended[_e].relationship is &quot;lodger&#39;s daughter&quot;&gt;&gt;
     &lt;&lt;set $NPCsExtended[_e].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;she&quot;&gt;&gt;
-  &lt;&lt;elseif $NPCsExtended[_e].relationship is &quot;brother&quot; or $NPCsExtended[_e].relationship is &quot;nephew&quot; or $NPCsExtended[_e].relationship is &quot;father&quot; or $NPCsExtended[_e].relationship is &quot;son&quot; or $NPCsExtended[_e].relationship is &quot;step-father&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s son&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s father&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s grandson&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s brother&quot; or $NPCsExtended[_e].relationship is &quot;male servant&quot;&gt;&gt;
+  &lt;&lt;elseif $NPCsExtended[_e].relationship is &quot;brother&quot; or $NPCsExtended[_e].relationship is &quot;nephew&quot; or $NPCsExtended[_e].relationship is &quot;father&quot; or $NPCsExtended[_e].relationship is &quot;son&quot; or $NPCsExtended[_e].relationship is &quot;step-father&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s son&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s father&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s grandson&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s brother&quot; or $NPCsExtended[_e].relationship is &quot;male servant&quot; or $NPCsExtended[_e].relationship is &quot;male lodger&quot; or $NPCsExtended[_e].relationship is &quot;lodger&#39;s son&quot;&gt;&gt;
     &lt;&lt;set $NPCsExtended[_e].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;he&quot;&gt;&gt;
     &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_e].hishers to &quot;their&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;they&quot;&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
@@ -2610,9 +2612,12 @@ You spend the next several weeks living in a field.  Luckily, there is plenty of
 &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;
 Despite being afraid your home will burn, you find yourself in the enviable position of living in one of the few remaining &lt;&lt;defParish &quot;parishes&quot;&gt;&gt; within the city walls. 
 &lt;&lt;/if&gt;&gt;
-There&#39;s so many people homeless that there&#39;s money to be made for someone who&#39;s willing to rent out a few rooms of their house, especially with such rainy weather and the increasing cold. &lt;&lt;if $agenum gte 16&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;You instruct your man of business to make sure none of your tenants are illegally subletting./* NTS insert choices here*/&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;Such activity is beneath your social station, of course, but you are envious of all the people profiting off the disaster.&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt; You open up your house and make a lot of money, but take a hit to your reputation because your neighbors accuse you of profiting off the disaster./*would need to do the money and reputation hits here - add it as a choice?*/&lt;&lt;else&gt;&gt; Not that you have room for such a thing, unfortunately.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+There&#39;s so many people homeless that there&#39;s money to be made for someone who&#39;s willing to rent out a few rooms of their house, especially with such rainy weather and the increasing cold. &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;You instruct your man of business to make sure none of your tenants are illegally subletting.&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;Not that you have room for such a thing, unfortunately.&lt;&lt;/if&gt;&gt;
 
-The weather may be miserable, but every disaster has a silver lining. Between the fires that still &lt;&lt;defSmolder &quot;smolder&quot;&gt;&gt; in the city&#39;s cellars and the rainy weather, &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases are plummeting and you&#39;ve heard that the theatres are finally going to reopen! You greatly look forward to [[November 1666]] 
+The weather may be miserable, but every disaster has a silver lining. Between the fires that still &lt;&lt;defSmolder &quot;smolder&quot;&gt;&gt; in the city&#39;s cellars and the rainy weather, &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases are plummeting and you&#39;ve heard that the theatres are finally going to reopen! &lt;&lt;if $socio isnot &quot;nobles&quot; and $socio isnot &quot;beggars&quot;&gt;&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;&lt;lodger-choice&gt;&gt;
+&lt;&lt;else&gt;&gt;You greatly look forward to [[November 1666]]&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;fumigant&gt;&gt;
@@ -4588,6 +4593,7 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
 &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $income to 4000&gt;&gt;
 &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $income to 17600&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;if $lodger is 1&gt;&gt;&lt;&lt;set $income to $income + $lodgerRent&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;expenses&quot;&gt;&gt;
@@ -6052,6 +6058,112 @@ You have successfully evaded the warder outside your house and managed to bring 
     &lt;&lt;/for&gt;&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;add-lodgers&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+/* Determine lodger capacity by $socio */
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set _lodgerCap to 1&gt;&gt;
+&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;set _lodgerCap to 1&gt;&gt;
+&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _lodgerCap to 3&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _lodgerCap to 5&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;set _lodgerCap to 0&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;if _lodgerCap gt 0&gt;&gt;
+/* Pick a random lodger type that fits capacity */
+&lt;&lt;set _lodgerTypes to []&gt;&gt;
+/* Type 1: single male (1 slot) */
+&lt;&lt;if _lodgerCap gte 1&gt;&gt;&lt;&lt;set _lodgerTypes.push(1)&gt;&gt;&lt;&lt;/if&gt;&gt;
+/* Type 2: single female (1 slot) */
+&lt;&lt;if _lodgerCap gte 1&gt;&gt;&lt;&lt;set _lodgerTypes.push(2)&gt;&gt;&lt;&lt;/if&gt;&gt;
+/* Type 3: widow/widower + 1-2 children (2-3 slots) */
+&lt;&lt;if _lodgerCap gte 2&gt;&gt;&lt;&lt;set _lodgerTypes.push(3)&gt;&gt;&lt;&lt;/if&gt;&gt;
+/* Type 4: husband + wife (2 slots) */
+&lt;&lt;if _lodgerCap gte 2&gt;&gt;&lt;&lt;set _lodgerTypes.push(4)&gt;&gt;&lt;&lt;/if&gt;&gt;
+/* Type 5: husband + wife + 1-3 children (3-5 slots) */
+&lt;&lt;if _lodgerCap gte 3&gt;&gt;&lt;&lt;set _lodgerTypes.push(5)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set _lodgerType to _lodgerTypes.random()&gt;&gt;
+
+&lt;&lt;set _usedLodgerNames to []&gt;&gt;
+
+&lt;&lt;if _lodgerType is 1&gt;&gt;
+/* Single adult male */
+&lt;&lt;set $NPCs.push({name: weightedEither($mNames), agenum: random(16,50), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;male lodger&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;set _lodgerDesc to &quot;a lodger&quot;&gt;&gt;
+
+&lt;&lt;elseif _lodgerType is 2&gt;&gt;
+/* Single adult female */
+&lt;&lt;set $NPCs.push({name: weightedEither($fNames), agenum: random(16,50), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;female lodger&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;set _lodgerDesc to &quot;a lodger&quot;&gt;&gt;
+
+&lt;&lt;elseif _lodgerType is 3&gt;&gt;
+/* Widowed adult + 1-2 children */
+&lt;&lt;set _numKids to random(1, Math.min(2, _lodgerCap - 1))&gt;&gt;
+&lt;&lt;if random(1,2) is 1&gt;&gt;
+&lt;&lt;set _wName to weightedEither($mNames)&gt;&gt;&lt;&lt;set _usedLodgerNames.push(_wName)&gt;&gt;
+&lt;&lt;set $NPCs.push({name: _wName, agenum: random(25,50), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;male lodger&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;set _wName to weightedEither($fNames)&gt;&gt;&lt;&lt;set _usedLodgerNames.push(_wName)&gt;&gt;
+&lt;&lt;set $NPCs.push({name: _wName, agenum: random(25,50), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;female lodger&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;for _lk to 0; _lk lt _numKids; _lk++&gt;&gt;
+&lt;&lt;if random(1,2) is 1&gt;&gt;
+&lt;&lt;set _kName to weightedEither($fNames)&gt;&gt;&lt;&lt;for ; _usedLodgerNames.includes(_kName); &gt;&gt;&lt;&lt;set _kName to weightedEither($fNames)&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set _usedLodgerNames.push(_kName)&gt;&gt;
+&lt;&lt;set $NPCs.push({name: _kName, agenum: random(1,14), age: either(&quot;infant&quot;, &quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;lodger&#39;s daughter&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;set _kName to weightedEither($mNames)&gt;&gt;&lt;&lt;for ; _usedLodgerNames.includes(_kName); &gt;&gt;&lt;&lt;set _kName to weightedEither($mNames)&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set _usedLodgerNames.push(_kName)&gt;&gt;
+&lt;&lt;set $NPCs.push({name: _kName, agenum: random(1,14), age: either(&quot;infant&quot;, &quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;lodger&#39;s son&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _lodgerDesc to &quot;a family of lodgers&quot;&gt;&gt;
+
+&lt;&lt;elseif _lodgerType is 4&gt;&gt;
+/* Husband + wife */
+&lt;&lt;set _hName to weightedEither($mNames)&gt;&gt;&lt;&lt;set _usedLodgerNames.push(_hName)&gt;&gt;
+&lt;&lt;set $NPCs.push({name: _hName, agenum: random(16,50), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;male lodger&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;set _wfName to weightedEither($fNames)&gt;&gt;&lt;&lt;for ; _usedLodgerNames.includes(_wfName); &gt;&gt;&lt;&lt;set _wfName to weightedEither($fNames)&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set _usedLodgerNames.push(_wfName)&gt;&gt;
+&lt;&lt;set $NPCs.push({name: _wfName, agenum: random(16,50), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;lodger&#39;s wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;set _lodgerDesc to &quot;several lodgers&quot;&gt;&gt;
+
+&lt;&lt;elseif _lodgerType is 5&gt;&gt;
+/* Husband + wife + 1-3 children */
+&lt;&lt;set _numKids to random(1, Math.min(3, _lodgerCap - 2))&gt;&gt;
+&lt;&lt;set _hName to weightedEither($mNames)&gt;&gt;&lt;&lt;set _usedLodgerNames.push(_hName)&gt;&gt;
+&lt;&lt;set $NPCs.push({name: _hName, agenum: random(20,50), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;male lodger&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;set _wfName to weightedEither($fNames)&gt;&gt;&lt;&lt;for ; _usedLodgerNames.includes(_wfName); &gt;&gt;&lt;&lt;set _wfName to weightedEither($fNames)&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set _usedLodgerNames.push(_wfName)&gt;&gt;
+&lt;&lt;set $NPCs.push({name: _wfName, agenum: random(20,50), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;lodger&#39;s wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;for _lk to 0; _lk lt _numKids; _lk++&gt;&gt;
+&lt;&lt;if random(1,2) is 1&gt;&gt;
+&lt;&lt;set _kName to weightedEither($fNames)&gt;&gt;&lt;&lt;for ; _usedLodgerNames.includes(_kName); &gt;&gt;&lt;&lt;set _kName to weightedEither($fNames)&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set _usedLodgerNames.push(_kName)&gt;&gt;
+&lt;&lt;set $NPCs.push({name: _kName, agenum: random(1,14), age: either(&quot;infant&quot;, &quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;lodger&#39;s daughter&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;set _kName to weightedEither($mNames)&gt;&gt;&lt;&lt;for ; _usedLodgerNames.includes(_kName); &gt;&gt;&lt;&lt;set _kName to weightedEither($mNames)&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set _usedLodgerNames.push(_kName)&gt;&gt;
+&lt;&lt;set $NPCs.push({name: _kName, agenum: random(1,14), age: either(&quot;infant&quot;, &quot;child&quot;, &quot;adolescent&quot;), relationship: &quot;lodger&#39;s son&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _lodgerDesc to &quot;a family of lodgers&quot;&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;lodger-choice&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+/* Determine monthly rent by $socio */
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set _baseRent to 10&gt;&gt;
+&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;set _baseRent to 10&gt;&gt;
+&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _baseRent to 20&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _baseRent to 40&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;set _baseRent to 0&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+
+/* Set $hoh-aware decision text */
+&lt;&lt;if $hoh is 4&gt;&gt;&lt;&lt;set _decide to &quot;You convince your husband to welcome&quot;&gt;&gt;&lt;&lt;set _decideNot to &quot;You convince your husband not to accept&quot;&gt;&gt;
+&lt;&lt;elseif $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;&lt;&lt;set _decide to &quot;You convince your $masterTitle to welcome&quot;&gt;&gt;&lt;&lt;set _decideNot to &quot;You convince your $masterTitle not to accept&quot;&gt;&gt;
+&lt;&lt;elseif $hoh isnot 1&gt;&gt;&lt;&lt;set _decide to &quot;You convince your family to welcome&quot;&gt;&gt;&lt;&lt;set _decideNot to &quot;You convince your family not to accept&quot;&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;set _decide to &quot;You decide to welcome&quot;&gt;&gt;&lt;&lt;set _decideNot to &quot;You decide not to accept&quot;&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+
+&lt;span id=&quot;lodger&quot;&gt;Do you want to accept lodgers into your home?&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Yes, and charge extra rent&quot;&gt;&gt;&lt;&lt;replace &quot;#lodger&quot;&gt;&gt;&lt;&lt;add-lodgers&gt;&gt;&lt;&lt;set $lodger to 1&gt;&gt;&lt;&lt;set $lodgerRent to _baseRent * 2&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;October 1666: Accepted lodgers at high rent&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;print _decide&gt;&gt; _lodgerDesc to your household. You welcome their rent money even though your reputation takes a hit for profiting off the disaster.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Yes, and charge a low rent&quot;&gt;&gt;&lt;&lt;replace &quot;#lodger&quot;&gt;&gt;&lt;&lt;add-lodgers&gt;&gt;&lt;&lt;set $lodger to 1&gt;&gt;&lt;&lt;set $lodgerRent to _baseRent&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;October 1666: Accepted lodgers at low rent&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;print _decide&gt;&gt; _lodgerDesc to your household. You welcome their rent money as even a little bit extra helps.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#lodger&quot;&gt;&gt;&lt;&lt;print _decideNot&gt;&gt; any lodgers. Things are crowded enough without adding strangers to the household.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="115" name="june-1665-helper-widget" tags="widget" position="1475,325" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; grows worse and the streets are soon filled with coaches and wagons full of people fleeing with their goods to the countryside. The &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMaria &quot;Henrietta Maria&quot;&gt;&gt; moves back to France&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, much to your dismay, and that of your fellow Catholics who flock to her chapel each week&lt;&lt;else&gt;&gt;, much to your relief, and that of all your fellow God-fearing &lt;&lt;defProtestants &quot;Protestants&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;. On June 29th, the King packs up his entire &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; in 148 carriages and moves 12 miles away, to his palace at &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt;.
