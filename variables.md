@@ -98,10 +98,25 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Notes on warder role:** Warders stand guard outside quarantined houses to prevent escape. They earn a flat 48d. per month (not per-corpse), their monthly plague risk is doubled compared to other plague workers, and they take a −1 reputation hit upon accepting the job.
 
 ### `$hoh`
-- **Type:** Integer (boolean-like)
-- **Possible values:** `0` (not head of household), `1` (head of household)
-- **Set by:** `playerAge` widget sets to `1` for young adults, middle-aged adults, and elderly adults. Set to `0` for children/adolescents. Also set to `1` if the player lives alone.
-- **Used for:** Determines whether the player makes household decisions or must convince family
+- **Type:** Integer (head-of-household status flag)
+- **Possible values:** `0`, `1`, `2`, `3`, `4`
+  - `0` — **Child:** Player is under 16 (`$agenum lte 15`) and has no independent legal standing.
+  - `1` — **Independent head of household:** Player is 16+ and runs their own household. Conditions:
+    - Male, `$agenum gte 16`, no father or step-father in `$NPCs`, and either not a servant (`$socio isnot "servants"`) or a servant whose master/mistress lives in a separate household (`$NPCsMaster`).
+    - Female, `$agenum gte 16`, no parent (mother, step-mother, father, step-father) or husband in `$NPCs`, and either not a servant or a servant whose master/mistress lives in a separate household.
+  - `2` — **Living with parents:** Player is 16+ and could be legally independent but currently resides in a parental household. Conditions:
+    - Male, `$agenum gte 16`, father or step-father present in `$NPCs`.
+    - Female, `$agenum gte 16`, any parent (mother, step-mother, father, step-father) present in `$NPCs`.
+    - *Note:* For males, only a father/step-father triggers this status because an adult man living with only his widowed mother is typically the head of that household. For females, any surviving parent in the household maintains parental authority.
+  - `3` — **Servant in master's household:** Player is 16+, `$socio is "servants"`, and lives in the same household as their master/mistress (master/mistress NPC is in `$NPCs`). Conditions:
+    - Male, `$agenum gte 16`, master or mistress present in `$NPCs`.
+    - Female, `$agenum gte 16`, master or mistress present in `$NPCs`.
+  - `4` — **Married woman (coverture):** Player is a married woman whose legal identity is subsumed under her husband's. Conditions:
+    - Female, `$agenum gte 16`, `$relationship is "married"` or husband present in `$NPCs`.
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** Evaluated during character generation (after household NPCs are placed) and reassessed whenever `$socio` or `$relationship` changes, or when a parent NPC in `$NPCs` dies. When multiple conditions overlap, later values take priority (evaluated in ascending order 1→2→3→4), so coverture (4) overrides servant status (3), which overrides parental household (2), which overrides independent (1).
+- **Used for:** Determines whether the player makes household decisions independently or must convince family members. Also affects flee options, will-writing, and other household-level choices.
+- **Dependencies:** `$agenum`, `$gender`, `$socio`, `$relationship`, `$NPCs` (specifically the `relationship` field of NPC objects — checks for `"father"`, `"step-father"`, `"mother"`, `"step-mother"`, `"husband"`, `"master"`, `"mistress"`), `$NPCsMaster`
 
 ### `$disability`
 - **Type:** Integer
