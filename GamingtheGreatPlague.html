@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.41" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.42" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1330,7 +1330,7 @@ Send not to know for whom the church bells toll. They toll for you.&lt;br&gt;&lt
 &lt;br&gt;
   &lt;&lt;case 4&gt;&gt;
     /* NTS: should we have text in this part about the health of the rest of your family, or wait til the end? */
-    &lt;&lt;if $hoh is 1&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;It occurs to you that perhaps you ought to write your will&lt;&lt;if $reputation lte 2&gt;&gt;, but your reputation is so poor that no one can be convinced to bring you the writing materials you need&lt;&lt;/if&gt;&gt;.
+    &lt;&lt;if $hoh gte 1 and $hoh lte 3&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;It occurs to you that perhaps you ought to write your will&lt;&lt;if $reputation lte 2&gt;&gt;, but your reputation is so poor that no one can be convinced to bring you the writing materials you need&lt;&lt;/if&gt;&gt;.
     &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;It occurs to you that perhaps you ought to write your will&lt;&lt;if $reputation lte 2&gt;&gt;, but your reputation is so poor that you can&#39;t convince a &lt;&lt;defScrivener &quot;scrivener&quot;&gt;&gt; to come help you.&lt;&lt;/if&gt;&gt;.
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
