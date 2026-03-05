@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.66" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.67" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1949,18 +1949,18 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 &lt;&lt;widget &quot;NPCpronouns&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
   &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
     &lt;&lt;if $NPCs[_i].relationship is &quot;niece&quot; or $NPCs[_i].relationship is &quot;daughter&quot; or $NPCs[_i].relationship is &quot;sister&quot; or $NPCs[_i].relationship is &quot;mother&quot; or $NPCs[_i].relationship is &quot;step-mother&quot; or $NPCs[_i].relationship is &quot;wife&quot; or $NPCs[_i].relationship is &quot;aunt&quot; or $NPCs[_i].relationship is &quot;widowed aunt&quot; or $NPCs[_i].relationship is &quot;mistress&quot; or $NPCs[_i].relationship is &quot;master&#39;s mother&quot; or $NPCs[_i].relationship is &quot;master&#39;s daughter&quot; or $NPCs[_i].relationship is &quot;master&#39;s granddaughter&quot; or $NPCs[_i].relationship is &quot;master&#39;s sister&quot; or $NPCs[_i].relationship is &quot;female servant&quot; or $NPCs[_i].relationship is &quot;female lodger&quot; or $NPCs[_i].relationship is &quot;lodger&#39;s wife&quot; or $NPCs[_i].relationship is &quot;lodger&#39;s daughter&quot; or $NPCs[_i].relationship is &quot;cousin&#39;s wife&quot; or $NPCs[_i].relationship is &quot;guardian&#39;s wife&quot; or $NPCs[_i].relationship is &quot;friend&#39;s daughter&quot; or $NPCs[_i].relationship is &quot;cousin&#39;s daughter&quot;&gt;&gt;
-      &lt;&lt;set $NPCs[_i].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;she&quot;&gt;&gt;
+      &lt;&lt;set $NPCs[_i].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;she&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].gender to &quot;female&quot;&gt;&gt;
     &lt;&lt;elseif $NPCs[_i].relationship is &quot;nephew&quot; or $NPCs[_i].relationship is &quot;son&quot; or $NPCs[_i].relationship is &quot;brother&quot; or $NPCs[_i].relationship is &quot;father&quot; or $NPCs[_i].relationship is &quot;step-father&quot; or $NPCs[_i].relationship is &quot;husband&quot; or $NPCs[_i].relationship is &quot;uncle&quot; or $NPCs[_i].relationship is &quot;guardian&quot; or $NPCs[_i].relationship is &quot;apprentice&quot; or $NPCs[_i].relationship is &quot;master&#39;s son&quot; or $NPCs[_i].relationship is &quot;master&#39;s father&quot; or $NPCs[_i].relationship is &quot;master&#39;s grandson&quot; or $NPCs[_i].relationship is &quot;master&#39;s brother&quot; or $NPCs[_i].relationship is &quot;male servant&quot; or $NPCs[_i].relationship is &quot;male lodger&quot; or $NPCs[_i].relationship is &quot;lodger&#39;s son&quot; or $NPCs[_i].relationship is &quot;friend&#39;s son&quot; or $NPCs[_i].relationship is &quot;cousin&#39;s son&quot;&gt;&gt;
-      &lt;&lt;set $NPCs[_i].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;he&quot;&gt;&gt;
+      &lt;&lt;set $NPCs[_i].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;he&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].gender to &quot;male&quot;&gt;&gt;
       &lt;&lt;else&gt;&gt;&lt;&lt;if !$NPCs[_i].heshe&gt;&gt;&lt;&lt;set $NPCs[_i].hishers to &quot;their&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;they&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
 
 &lt;&lt;for _e = 0; _e &lt; $NPCsExtended.length; _e++&gt;&gt;
   &lt;&lt;if $NPCsExtended[_e].relationship is &quot;sister&quot; or $NPCsExtended[_e].relationship is &quot;niece&quot; or $NPCsExtended[_e].relationship is &quot;mother&quot; or $NPCsExtended[_e].relationship is &quot;daughter&quot; or $NPCsExtended[_e].relationship is &quot;step-mother&quot; or $NPCsExtended[_e].relationship is &quot;wife&quot; or $NPCsExtended[_e].relationship is &quot;aunt&quot; or $NPCsExtended[_e].relationship is &quot;widowed aunt&quot; or $NPCsExtended[_e].relationship is &quot;mistress&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s mother&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s daughter&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s granddaughter&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s sister&quot; or $NPCsExtended[_e].relationship is &quot;female servant&quot; or $NPCsExtended[_e].relationship is &quot;female lodger&quot; or $NPCsExtended[_e].relationship is &quot;lodger&#39;s wife&quot; or $NPCsExtended[_e].relationship is &quot;lodger&#39;s daughter&quot; or $NPCsExtended[_e].relationship is &quot;cousin&#39;s wife&quot; or $NPCsExtended[_e].relationship is &quot;guardian&#39;s wife&quot; or $NPCsExtended[_e].relationship is &quot;friend&#39;s daughter&quot; or $NPCsExtended[_e].relationship is &quot;cousin&#39;s daughter&quot;&gt;&gt;
-    &lt;&lt;set $NPCsExtended[_e].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;she&quot;&gt;&gt;
+    &lt;&lt;set $NPCsExtended[_e].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;she&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].gender to &quot;female&quot;&gt;&gt;
   &lt;&lt;elseif $NPCsExtended[_e].relationship is &quot;brother&quot; or $NPCsExtended[_e].relationship is &quot;nephew&quot; or $NPCsExtended[_e].relationship is &quot;father&quot; or $NPCsExtended[_e].relationship is &quot;son&quot; or $NPCsExtended[_e].relationship is &quot;step-father&quot; or $NPCsExtended[_e].relationship is &quot;husband&quot; or $NPCsExtended[_e].relationship is &quot;uncle&quot; or $NPCsExtended[_e].relationship is &quot;guardian&quot; or $NPCsExtended[_e].relationship is &quot;apprentice&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s son&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s father&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s grandson&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s brother&quot; or $NPCsExtended[_e].relationship is &quot;male servant&quot; or $NPCsExtended[_e].relationship is &quot;male lodger&quot; or $NPCsExtended[_e].relationship is &quot;lodger&#39;s son&quot; or $NPCsExtended[_e].relationship is &quot;friend&#39;s son&quot; or $NPCsExtended[_e].relationship is &quot;cousin&#39;s son&quot;&gt;&gt;
-    &lt;&lt;set $NPCsExtended[_e].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;he&quot;&gt;&gt;
+    &lt;&lt;set $NPCsExtended[_e].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;he&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].gender to &quot;male&quot;&gt;&gt;
     &lt;&lt;else&gt;&gt;&lt;&lt;if !$NPCsExtended[_e].heshe&gt;&gt;&lt;&lt;set $NPCsExtended[_e].hishers to &quot;their&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;they&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
@@ -1974,27 +1974,27 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
   &lt;&lt;set $servants to random(8,12)&gt;&gt;
   &lt;&lt;for _s to 0; _s lt $servants; _s++&gt;&gt;
     &lt;&lt;if random(1,2) eq 1&gt;&gt;
-      &lt;&lt;set $NPCsServants.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;})&gt;&gt;
+      &lt;&lt;set $NPCsServants.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;, gender: &quot;female&quot;})&gt;&gt;
     &lt;&lt;else&gt;&gt;
-      &lt;&lt;set $NPCsServants.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;})&gt;&gt;
+      &lt;&lt;set $NPCsServants.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;, gender: &quot;male&quot;})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;
   &lt;&lt;set $servants to random(1,3)&gt;&gt;
   &lt;&lt;for _s to 0; _s lt $servants; _s++&gt;&gt;
     &lt;&lt;if random(1,2) eq 1&gt;&gt;
-      &lt;&lt;set $NPCsServants.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;})&gt;&gt;
+      &lt;&lt;set $NPCsServants.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;, gender: &quot;female&quot;})&gt;&gt;
     &lt;&lt;else&gt;&gt;
-      &lt;&lt;set $NPCsServants.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;})&gt;&gt;
+      &lt;&lt;set $NPCsServants.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;, gender: &quot;male&quot;})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
 &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;
   &lt;&lt;set $servants to either(0,1)&gt;&gt;
   &lt;&lt;if $servants gt 0&gt;&gt;
     &lt;&lt;if random(1,2) eq 1&gt;&gt;
-      &lt;&lt;set $NPCsServants.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;})&gt;&gt;
+      &lt;&lt;set $NPCsServants.push({name: weightedEither($fNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;, gender: &quot;female&quot;})&gt;&gt;
     &lt;&lt;else&gt;&gt;
-      &lt;&lt;set $NPCsServants.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;})&gt;&gt;
+      &lt;&lt;set $NPCsServants.push({name: weightedEither($mNames), age: either(&quot;young adult&quot;, &quot;middle-aged adult&quot;), relationship: &quot;servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;, gender: &quot;male&quot;})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -2027,7 +2027,7 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 &lt;&lt;set _masterAgenum to random(30,76)&gt;&gt;
 &lt;&lt;if _masterAgenum gte 60&gt;&gt;&lt;&lt;set _masterAge to &quot;elderly adult&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _masterAge to &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;set _masterNamePool to ($masterGender === &quot;female&quot;) ? $fNames : $mNames&gt;&gt;
-&lt;&lt;set $NPCsMaster.push({name: weightedEither(_masterNamePool), age: _masterAge, agenum: _masterAgenum, relationship: &quot;master&quot;, health: &quot;healthy&quot;, location: $location, heshe: ($masterGender === &quot;female&quot;) ? &quot;she&quot; : &quot;he&quot;, hishers: ($masterGender === &quot;female&quot;) ? &quot;her&quot; : &quot;his&quot;})&gt;&gt;
+&lt;&lt;set $NPCsMaster.push({name: weightedEither(_masterNamePool), age: _masterAge, agenum: _masterAgenum, relationship: &quot;master&quot;, health: &quot;healthy&quot;, location: $location, heshe: ($masterGender === &quot;female&quot;) ? &quot;she&quot; : &quot;he&quot;, hishers: ($masterGender === &quot;female&quot;) ? &quot;her&quot; : &quot;his&quot;, gender: $masterGender})&gt;&gt;
 
 &lt;&lt;if $masterGender is &quot;male&quot; and random(1,20) lte 11&gt;&gt;
     &lt;&lt;set $minAge to _masterAgenum-20&gt;&gt;
@@ -2036,7 +2036,7 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;set $maxAge to _masterAgenum+30&gt;&gt;
     &lt;&lt;setAge&gt;&gt;
-    &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;mistress&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;})&gt;&gt;
+    &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;mistress&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;, gender: &quot;female&quot;})&gt;&gt;
     &lt;&lt;set _mistressAgenum to $NPCAgeNum&gt;&gt;
     &lt;&lt;set _mhhInitsize to 2&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -2058,18 +2058,18 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
                     &lt;&lt;set $maxAge to 100&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
             &lt;&lt;setAge&gt;&gt;
-            &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s mother&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;})&gt;&gt;
+            &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s mother&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;, gender: &quot;female&quot;})&gt;&gt;
             &lt;&lt;set _nomasterMother to false&gt;&gt;
         &lt;&lt;elseif _fRel is &quot;female servant&quot;&gt;&gt;
         	&lt;&lt;set $minAge to 16&gt;&gt;
             &lt;&lt;set $maxAge to 76&gt;&gt;
             &lt;&lt;setAge&gt;&gt;
-             &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;female servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;})&gt;&gt;           
+             &lt;&lt;set $NPCsMaster.push({name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;female servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;, gender: &quot;female&quot;})&gt;&gt;           
         &lt;&lt;else&gt;&gt;
             &lt;&lt;set $minAge to 0&gt;&gt;
             &lt;&lt;set $maxAge to _mistressAgenum-16&gt;&gt;
             &lt;&lt;setAge&gt;&gt;
-            &lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;for ; _usedMasterChildNames.includes(_n); &gt;&gt;&lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set _usedMasterChildNames.push(_n)&gt;&gt;&lt;&lt;set $NPCsMaster.push({name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s daughter&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;})&gt;&gt;
+            &lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;for ; _usedMasterChildNames.includes(_n); &gt;&gt;&lt;&lt;set _n to weightedEither($fNames)&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set _usedMasterChildNames.push(_n)&gt;&gt;&lt;&lt;set $NPCsMaster.push({name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s daughter&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;, gender: &quot;female&quot;})&gt;&gt;
         &lt;&lt;/if&gt;&gt;
    &lt;&lt;else&gt;&gt;
         &lt;&lt;if _nomasterFather&gt;&gt;
@@ -2084,18 +2084,18 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
                     &lt;&lt;set $maxAge to 100&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
             &lt;&lt;setAge&gt;&gt;
-            &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s father&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;})&gt;&gt;
+            &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s father&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;, gender: &quot;male&quot;})&gt;&gt;
             &lt;&lt;set _nomasterFather to false&gt;&gt;
         &lt;&lt;elseif _fRel is &quot;male servant&quot;&gt;&gt;
         	&lt;&lt;set $minAge to 16&gt;&gt;
             &lt;&lt;set $maxAge to 76&gt;&gt;
             &lt;&lt;setAge&gt;&gt;
-             &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;male servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;})&gt;&gt;
+             &lt;&lt;set $NPCsMaster.push({name: weightedEither($mNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;male servant&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;, gender: &quot;male&quot;})&gt;&gt;
         &lt;&lt;else&gt;&gt;
             &lt;&lt;set $minAge to 0&gt;&gt;
             &lt;&lt;set $maxAge to _mistressAgenum-16&gt;&gt;
             &lt;&lt;setAge&gt;&gt;
-            &lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;for ; _usedMasterChildNames.includes(_n); &gt;&gt;&lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set _usedMasterChildNames.push(_n)&gt;&gt;&lt;&lt;set $NPCsMaster.push({name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s son&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;})&gt;&gt;
+            &lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;for ; _usedMasterChildNames.includes(_n); &gt;&gt;&lt;&lt;set _n to weightedEither($mNames)&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set _usedMasterChildNames.push(_n)&gt;&gt;&lt;&lt;set $NPCsMaster.push({name: _n, agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;master&#39;s son&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;, gender: &quot;male&quot;})&gt;&gt;
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;&lt;&lt;/nobr&gt;&gt;
