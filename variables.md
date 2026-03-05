@@ -509,6 +509,26 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Used for:** Whether the player is actively looking for a marriage partner
 - **Dependency:** Interacts with `$wedding`
 
+### `$seekingApprenticeship`
+- **Type:** Integer (boolean-like)
+- **Possible values:** `0` (not seeking), `1` (seeking an apprenticeship)
+- **Set by:** `0` in StoryInit; set to `1` by `apprenticeship-market` widget when the player chooses to seek an apprenticeship; set to `0` when an apprenticeship is accepted via `apprenticeship-offer`
+- **Used for:** Whether the player is actively looking for an apprenticeship. Mutually exclusive with `$seeking` — characters eligible for apprenticeship (single, artisan/merchant, agenum 14–21) are routed to `apprenticeship-market` instead of `marriage-market`.
+- **Dependency:** Interacts with `$apprenticeshipOffer`
+
+### `$apprenticeship`
+- **Type:** Integer
+- **Possible values:** `0` (not apprenticed), `1` through `5` (apprenticeship tier)
+- **Set by:** `0` in StoryInit; set to tier number (1–5) by `apprenticeship-offer` widget when the player accepts an apprenticeship
+- **Used for:** Tracks the player's apprenticeship status and tier. When > 0, the player's social class is displayed as "apprentice" instead of "servants" in the Household Status screen and final stats. Tiers represent: 1 = Placeholder Trade A (£1 fee, artisan master), 2 = Placeholder Trade B (£5, artisan master), 3 = Placeholder Trade C (£10, merchant master), 4 = Placeholder Trade D (£25, merchant master), 5 = Placeholder Trade E (£50, merchant master).
+- **Dependency:** When > 0, gates out `marriage-market` in subsequent months (apprentices do not seek marriage). Also masks `$socio` display in Household Status (pid 74) and `stats-characteristics` (pid 75).
+
+### `$apprenticeshipOffer`
+- **Type:** Integer (random event roll)
+- **Set by:** `random(1, 10)` each month in `random-events` widget
+- **Trigger:** `$apprenticeshipOffer is 1` (10% chance) triggers an apprenticeship offer event
+- **Dependency:** Interacts with `$seekingApprenticeship`. Checked before `$wedding` in the random-events priority cascade.
+
 ---
 
 ## Family / Life Events
