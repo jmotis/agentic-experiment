@@ -681,6 +681,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Used for:** In the `church-services` widget (pid 115), when `$debtForcedAttend is 1` and `$money lt 0`, the player is automatically enrolled in Church of England services (2% plague infection risk) with a message explaining they cannot afford the fine for non-attendance. Once `$money` recovers to &ge; 0, the normal three-way choice (always skip / skip this month / attend) is presented again.
 - **Dependencies:** Interacts with `$skipServices`, `$money`, `$religion`, and `$plagueInfection`.
 
+### `$childServiceOffered`
+- **Type:** Integer (month index)
+- **Possible values:** `-1` (never offered), or a valid `$monthIndex` value (0–21)
+- **Initial value:** `-1` (set in `StoryInit`, pid 10)
+- **Set by:** The `child-service-check` widget (pid 114) sets this to the current `$monthIndex` when the voluntary child-service choice is presented to the player. This prevents the same choice from being offered more than once per month.
+- **Used for:** Gate in the `child-service-check` widget — the widget only fires when `$childServiceOffered isnot $monthIndex`, ensuring the player is not repeatedly asked about putting children into service during the same month.
+- **Dependencies:** Interacts with `$money` (trigger condition: `$money lte 0`), `$socio` (only fires for `"beggars"`, `"day labourers"`, `"artisans"`), `$monthIndex` (comparison key), and `$NPCs` (checks for eligible child/adolescent NPCs).
+
 ### `$timeline`
 - **Type:** Array of strings
 - **Value:** `["December 1664", "January 1665", "May 1665", "June 1665", "July 1665", "August 1665", "September 1665", "October 1665", "November 1665", "December 1665", "January 1666", "February 1666", "March 1666", "April 1666", "May 1666", "June 1666", "July 1666", "August 1666", "September 1666", "October 1666", "November 1666", "December 1666"]`
