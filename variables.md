@@ -121,10 +121,12 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Dependencies:** `$agenum`, `$gender`, `$socio`, `$relationship`, `$NPCs` (specifically the `relationship` field of NPC objects — checks for `"father"`, `"step-father"`, `"mother"`, `"step-mother"`, `"husband"`, `"master"`, `"mistress"`), `$NPCsMaster`
 
 ### `$disability`
-- **Type:** Integer
-- **Possible values:** `0` (no disability), `1`, `2`, `3`, `4`, `5`
-- **Set by:** `random(1, 5)` for random assignment; `0` for no disability
-- **Notes:** Each numeric value corresponds to a different disability condition. Checked with `$disability is 1`, `$disability is 2`, etc.
+- **Type:** Integer or String
+- **Possible values:** `0` (no disability), `"hard of hearing"`, `"crooked back"`, `"weak legs"`, `"speech impediment"`, `"asthma"`, `"epilepsy"`, `"poor eyesight"`
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** Character generation in the `bio` passage (pid 1). Elderly adults (`$age is "elderly adult"`) have a 1-in-3 chance of receiving `"hard of hearing"`. All other characters (and non-hard-of-hearing elderly adults) have a 1-in-10 chance of receiving one of the six general disabilities chosen at random via `either()`.
+- **Used for:** Bio text variants (disabled beggars get a pity-themed intro; disabled merchants/artisans get a "despite your disability" clause). Disabled beggars receive 2× alms from all beggar-choice widget options. Also checked in `beggar-roles` (pid 54) and `navy-volunteer` (pid 102).
+- **Dependencies:** `$age` (determines eligibility for `"hard of hearing"`), `$socio` (determines bio text variant and alms doubling for beggars)
 
 ---
 
