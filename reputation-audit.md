@@ -71,9 +71,7 @@ Starting reputation: **4** (beggars), **6** (default), or **8** (nobles).
 
 | Passage (pid) | Line | Mechanism |
 |---|---|---|
-| `041-storyline-return-widget.txt` (pid 41) | 29 | Adds `_reputationOffset` (arg 3) to `$reputation`; capped at 10 but **no floor check** (see note below) |
-
-> **Note:** The `storyline-return` widget uses `$reputation += _reputationOffset` with a ceiling of 10 but does not clamp to 0. This differs from all other reputation changes which use `Math.clamp(..., 0, 10)`. A code comment on line 32 acknowledges this: *"using math clamp elsewhere, revisit this bit of code and check minimums as well"*.
+| `041-storyline-return-widget.txt` (pid 41) | 29 | Adds `_reputationOffset` (arg 3) to `$reputation`; clamped to 0–10 via `Math.clamp` |
 
 ---
 
@@ -207,7 +205,7 @@ Most decisions record `repBefore: $reputation` and `repDelta` in the `$decisions
 
 ### `storyline-return` widget (pid 41)
 
-This widget accepts an optional 4th argument for reputation offset. The reputation change uses `+=` with a ceiling of 10 but **no floor of 0**, unlike all other reputation changes that use `Math.clamp($reputation ± N, 0, 10)`. This is a known inconsistency acknowledged in a code comment.
+This widget accepts an optional 4th argument for reputation offset. The reputation change uses `Math.clamp($reputation + _reputationOffset, 0, 10)`, consistent with all other reputation changes in the codebase.
 
 ### Church attendance (`115-june-1665-helper-widget.txt`, pid 115)
 
