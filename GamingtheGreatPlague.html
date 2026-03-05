@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.81" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.82" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -6026,7 +6026,7 @@ Unfortunately, you have suffered a miscarriage and are no longer pregnant.
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="114" name="Claude-widgets" tags="widget" position="500,1225" size="100,100">/* all widgets generated via Claude  or other AI should be temporarily placed here then manually moved to new locations as needed */
 
 &lt;&lt;widget &quot;corpse-work&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if ($role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot; or $role is &quot;nurse&quot; or $role is &quot;warder&quot;) and $corpseBuried and $corpseBuried[$parish]&gt;&gt;
+&lt;&lt;if ($role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot; or $role is &quot;warder&quot;) and $corpseBuried and $corpseBuried[$parish]&gt;&gt;
 &lt;&lt;set _cwBuried to $corpseBuried[$parish][$monthIndex]&gt;&gt;
 &lt;&lt;set _cwPlague to $corpsePlague[$parish][$monthIndex]&gt;&gt;
 &lt;&lt;if _cwBuried gt 0&gt;&gt;
@@ -6057,15 +6057,6 @@ You and your fellow searcher&lt;&lt;if _cwCrew gt 2&gt;&gt;s&lt;&lt;/if&gt;&gt; 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Examined plague corpses&quot;, money: _cwPay, repDelta: 0, repBefore: $reputation, infectPct: _cwInfectPct})&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;
-You tended to the sick in your parish this month and were paid &lt;&lt;print _cwPay&gt;&gt;d. by the churchwardens for your service.
-&lt;&lt;if _cwPlague gt 0&gt;&gt; &lt;&lt;print _cwPlague&gt;&gt; of your patients had plague, may the Lord have mercy on their souls and protect you from sickness.&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $playerPlagueStatus is &quot;healthy&quot; and _cwPlague gt 0&gt;&gt;
-&lt;&lt;if random(1, _cwRate) eq 1&gt;&gt;
-&lt;&lt;set $plagueInfection to 1&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Nursed plague patients&quot;, money: _cwPay, repDelta: 0, repBefore: $reputation, infectPct: _cwInfectPct})&gt;&gt;
-&lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif $role is &quot;warder&quot;&gt;&gt;
 &lt;&lt;set _cwWarderPay to 48&gt;&gt;
 &lt;&lt;set $money to Math.clamp($money - _cwPay + _cwWarderPay, 0, Infinity)&gt;&gt;
@@ -6079,6 +6070,33 @@ You stood guard outside quarantined houses this month and were paid &lt;&lt;prin
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+/* Nurse role: patient assignment based on plague deaths, with player choice */
+&lt;&lt;if $role is &quot;nurse&quot; and $corpsePlague and $corpsePlague[$parish]&gt;&gt;
+&lt;&lt;set _nwPlague to $corpsePlague[$parish][$monthIndex]&gt;&gt;
+&lt;&lt;if _nwPlague gt 0 and $playerPlagueStatus is &quot;healthy&quot; and random(1, 100) lte _nwPlague&gt;&gt;
+&lt;span id=&quot;nurse-choice&quot;&gt;The parish officials bring you a new patient, sick with the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. Do you nurse them?&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Do your Christian duty and nurse the sick&quot;&gt;&gt;&lt;&lt;replace &quot;#nurse-choice&quot;&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;
+&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;
+&lt;&lt;set $money += 48&gt;&gt;
+&lt;&lt;if random(1, 2) eq 1&gt;&gt;
+&lt;&lt;set $plagueInfection to 1&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Nursed a plague patient (infected)&quot;, money: 48, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 50})&gt;&gt;
+You tend to your patient as best you can. You were paid 48d. by the churchwardens for your service and your Christian charity does not go unnoticed — but in the days that follow, you begin to feel unwell yourself.
+&lt;&lt;else&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Nursed a plague patient (survived)&quot;, money: 48, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 50})&gt;&gt;
+You tend to your patient as best you can. You were paid 48d. by the churchwardens for your service and your Christian charity does not go unnoticed. By the grace of God, you remain healthy.
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Refuse to nurse the sick&quot;&gt;&gt;&lt;&lt;replace &quot;#nurse-choice&quot;&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;
+&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Refused to nurse a plague patient&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 0})&gt;&gt;
+You refuse the assignment. The parish officials are displeased — your reputation suffers.
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;br&gt;&lt;br&gt;
+&lt;&lt;elseif _nwPlague gt 0&gt;&gt;
+The parish has no patient for you to nurse this month.&lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 /* Bill of Mortality subscription report */
