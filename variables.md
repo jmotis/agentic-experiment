@@ -523,6 +523,13 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Used for:** Tracks the player's apprenticeship status and tier. When > 0, the player's social class is displayed as "apprentice" instead of "servants" in the Household Status screen and final stats. Tiers represent: 1 = Placeholder Trade A (£1 fee, artisan master), 2 = Placeholder Trade B (£5, artisan master), 3 = Placeholder Trade C (£10, merchant master), 4 = Placeholder Trade D (£25, merchant master), 5 = Placeholder Trade E (£50, merchant master).
 - **Dependency:** When > 0, gates out `marriage-market` in subsequent months (apprentices do not seek marriage). Also masks `$socio` display in Household Status (pid 74) and `stats-characteristics` (pid 75).
 
+### `$servantPromotion`
+- **Type:** Integer (boolean-like)
+- **Possible values:** `0` (not promoted), `1` (promoted to apprentice by master)
+- **Set by:** `0` in StoryInit; set to `1` by `promote-servant` widget (pid 92) when the player accepts their master's offer to become an apprentice
+- **Used for:** Tracks whether a servant has been promoted to apprentice status through stellar reputation (reaching 10). When `1`, the player cannot break their contract or leave their master/mistress (contract-breaking options are hidden in the flight-choice widget, pid 64). Works in conjunction with `$apprenticeship` (which is also set to `1` to mask the socio display as "apprentice").
+- **Dependency:** Requires `$socio is "servants"`, `$apprenticeship is 0`, `$reputation gte 10`, `$relationship is "single" or "betrothed"`, and `$agenum` 14–21 to trigger. Sets `$apprenticeship to 1` on acceptance.
+
 ### `$apprenticeshipOffer`
 - **Type:** Integer (random event roll)
 - **Set by:** `random(1, 10)` each month in `random-events` widget
