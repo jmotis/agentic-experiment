@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.83" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.85" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1487,10 +1487,21 @@ The graveyards are beginning to overflow and corpses are being flung into the op
     &lt;br&gt;
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot;&gt;
 //Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
+&lt;br&gt;
+A grieving family offers you a few pence to bury their dead without waiting for the searcher to come and examine the body. Do you &lt;span id=&quot;cb-bribe&quot;&gt;\
+&lt;&lt;link &quot;take the bribe&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $money +=3&gt;&gt;&lt;&lt;replace &quot;#cb-bribe&quot;&gt;&gt;take the bribe&lt;&lt;/replace&gt;&gt;&lt;&lt;append &quot;#july-nav&quot;&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/append&gt;&gt;&lt;&lt;/link&gt;&gt;
+| &lt;&lt;link &quot;refuse and wait for the searcher&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;replace &quot;#cb-bribe&quot;&gt;&gt;refuse and wait for the searcher&lt;&lt;/replace&gt;&gt;&lt;&lt;append &quot;#july-nav&quot;&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/append&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;?
 
     &lt;&lt;elseif $role is &quot;warder&quot;&gt;&gt;You stand watch outside quarantined houses, listening to the cries and pleas of those locked inside. Some beg you to let them out, swearing they are not sick, but you must hold your post.
+    &lt;br&gt;
+    &lt;img src=&quot;https://iiif.wellcomecollection.org/image/wsbkbmqj/full/760%2C/0/default.jpg&quot; width=&quot;100%&quot;&gt;
+    //A plague scene. Wellcome Collection//
+&lt;br&gt;
+Late one night, a desperate mother begs you to look the other way while she passes her healthy children out of the shut-up house. She presses a few coins into your hand. Do you &lt;span id=&quot;wd-bribe&quot;&gt;\
+&lt;&lt;link &quot;look the other way&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $money +=3&gt;&gt;&lt;&lt;replace &quot;#wd-bribe&quot;&gt;&gt;look the other way&lt;&lt;/replace&gt;&gt;&lt;&lt;append &quot;#july-nav&quot;&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/append&gt;&gt;&lt;&lt;/link&gt;&gt;
+| &lt;&lt;link &quot;refuse and hold your post&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;replace &quot;#wd-bribe&quot;&gt;&gt;refuse and hold your post&lt;&lt;/replace&gt;&gt;&lt;&lt;append &quot;#july-nav&quot;&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/append&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;?
 
-    &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;People attempt to bribe you to say that their loved ones died of something other than &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. 
+    &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;People attempt to bribe you to say that their loved ones died of something other than &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;.
     &lt;br&gt;
     &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot;&gt;
     &lt;br&gt;
@@ -1499,14 +1510,21 @@ The graveyards are beginning to overflow and corpses are being flung into the op
     You say &lt;span id=&quot;bribe-yn&quot;&gt;\
 &lt;&lt;link &quot;yes&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $money +=3&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;yes&lt;&lt;/replace&gt;&gt;&lt;&lt;append &quot;#july-nav&quot;&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/append&gt;&gt;&lt;&lt;/link&gt;&gt;
 | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;no&lt;&lt;/replace&gt;&gt;&lt;&lt;append &quot;#july-nav&quot;&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/append&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;.
-    &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;You fear death every day.
+    &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;You fear death every day. You pray to God each morning for the strength to do your duty, and each night you pray for the souls of those patients who did not survive.
+    &lt;br&gt;
+    &lt;img src=&quot;https://iiif.wellcomecollection.org/image/ddddaws6/full/760%2C/0/default.jpg&quot; width=&quot;100%&quot;&gt;
+    //A man consuming many antidotes to the plague during the Great Plague of London. Etching by J. Franklin, 1841. Wellcome Collection//
+&lt;br&gt;
+A mother in one of the shut-up houses begs you to smuggle her healthy infant out before the sickness takes the child too. She offers you what little money she has. Do you &lt;span id=&quot;ns-bribe&quot;&gt;\
+&lt;&lt;link &quot;smuggle the infant out&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $money +=3&gt;&gt;&lt;&lt;replace &quot;#ns-bribe&quot;&gt;&gt;smuggle the infant out&lt;&lt;/replace&gt;&gt;&lt;&lt;append &quot;#july-nav&quot;&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/append&gt;&gt;&lt;&lt;/link&gt;&gt;
+| &lt;&lt;link &quot;refuse — the law is the law&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;replace &quot;#ns-bribe&quot;&gt;&gt;refuse&lt;&lt;/replace&gt;&gt;&lt;&lt;append &quot;#july-nav&quot;&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/append&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;?
     &lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;
 It feels like the church bells are ringing constantly, with each new death or funeral.
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
 The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has followed the King&#39;s household to &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt; and one of his guards dies of plague at the end of the month.&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $role is &quot;searcher&quot;&gt;&gt;&lt;span id=&quot;july-nav&quot;&gt;&lt;/span&gt;&lt;&lt;else&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $role is &quot;searcher&quot; or $role is &quot;corpsebearer&quot; or $role is &quot;warder&quot; or $role is &quot;nurse&quot;&gt;&gt;&lt;span id=&quot;july-nav&quot;&gt;&lt;/span&gt;&lt;&lt;else&gt;&gt;[[Continue to August 1665-&gt;August 1665]]&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="august-1665-helper widget" tags="widget" position="900,650" size="100,100">&lt;&lt;widget &quot;august-1665-helper&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 The city has ordered public &lt;&lt;defFasts &quot;fasts&quot;&gt;&gt; and prayers to help combat the plague. &lt;&lt;if $religion is &quot;Presbyterian&quot;&gt;&gt;You attempt to join a private meeting of your fellow &lt;&lt;defPresbyterians &quot;Presbyterians&quot;&gt;&gt; in &lt;&lt;defCoventGarden &quot;Covent Garden&quot;&gt;&gt;but are too poor and turned away, which is lucky for you because everyone who attends the meeting is arrested. They are told they can be released if they pay £5 each to help care for the poor of the city, but they refuse and so are imprisoned.&lt;&lt;/if&gt;&gt;
@@ -2389,7 +2407,8 @@ The deaths continue in such great numbers that you can hardly believe it.&lt;br&
 &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;You are shocked to see that some bold people have begun attending &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; funerals, as if it were a child’s game or dare. &lt;br&gt;&lt;br&gt;
 &lt;&lt;sep-1665-helper&gt;&gt; 
     &lt;&lt;elseif $role is &quot;warder&quot;&gt;&gt;Some of those locked in their houses have grown desperate and you have had to physically restrain people trying to break out of quarantine.&lt;br&gt;&lt;br&gt;&lt;&lt;sep-1665-helper&gt;&gt; 
-    &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;Some of your patients, furious at being locked in, have been trying to lean out windows to breathe and spit upon the healthy people walking past.&lt;br&gt;&lt;br&gt;&lt;&lt;sep-1665-helper&gt;&gt; 
+    &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;You have examined so many bodies, you sometimes wonder if anyone in your parish will survive.&lt;br&gt;&lt;br&gt;&lt;&lt;sep-1665-helper&gt;&gt;
+    &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;Some of your patients, furious at being locked in, have been trying to lean out windows to breathe and spit upon the healthy people walking past.&lt;br&gt;&lt;br&gt;&lt;&lt;sep-1665-helper&gt;&gt;
     &lt;&lt;else&gt;&gt;
     &lt;span id=&quot;gossip&quot;&gt;Do you continue to go out in the city? &lt;&lt;link &quot;No, better say inside for now&quot;&gt;&gt;&lt;&lt;replace &quot;#gossip&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Sep 1665: Stayed indoors&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You stay indoors. 
     &lt;br&gt;&lt;br&gt;&lt;&lt;sep-1665-helper&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Yes, you still need to go out to conduct business&quot;&gt;&gt;&lt;&lt;replace &quot;#gossip&quot;&gt;&gt;&lt;&lt;set _rate to $parishRate[$parish][$monthIndex]&gt;&gt;&lt;&lt;set _riskPct to Math.round(10000 / _rate) / 100&gt;&gt;&lt;&lt;if random(1, _rate) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Sep 1665: Went out despite the danger&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: _riskPct})&gt;&gt;While out you see that a few brave souls have begun to attend plague funerals.
@@ -4285,9 +4304,15 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
     &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot;&gt;
     //Nathaniel Parr, published by Thomas Astley, Plague in 1665, 1747.//
      
-     &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;The &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; assign you to your first &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; patient to nurse.
+     &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;The &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; assign you to your first &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; patient to nurse. You must tend to the sick in their own homes, bringing them food, changing their linens, and applying what remedies you can. The work is grim and thankless, but someone must care for those whom God has afflicted.
+    &lt;br&gt;
+    &lt;img src=&quot;https://iiif.wellcomecollection.org/image/ddddaws6/full/760%2C/0/default.jpg&quot; width=&quot;100%&quot;&gt;
+    //A man consuming many antidotes to the plague during the Great Plague of London. Etching by J. Franklin, 1841. Wellcome Collection//
 
-     &lt;&lt;elseif $role is &quot;warder&quot;&gt;&gt;As a warder, you stand guard outside the locked up houses of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt;, making sure no one escapes their quarantine. You pray to God that the sickness does not reach you.
+     &lt;&lt;elseif $role is &quot;warder&quot;&gt;&gt;As a warder, you stand guard outside the locked up houses of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt;, making sure no one escapes their quarantine. A great red cross is painted on each door, with the words &quot;Lord have mercy upon us&quot; written above it. You must remain at your post day and night, listening to the pleas and cries of those locked within, and pray to God that the sickness does not reach you through the door.
+    &lt;br&gt;
+    &lt;img src=&quot;https://iiif.wellcomecollection.org/image/wsbkbmqj/full/760%2C/0/default.jpg&quot; width=&quot;100%&quot;&gt;
+    //A plague scene. Wellcome Collection//
      &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt; /* NTS: work text here */
@@ -4303,9 +4328,15 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
     &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot;&gt;
     //Nathaniel Parr, published by Thomas Astley, Plague in 1665, 1747.//
    
-   &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;&lt;&lt;defParish &quot;Parish&quot;&gt;&gt; officials tell you there is a patient for you to nurse.
+   &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;&lt;&lt;defParish &quot;Parish&quot;&gt;&gt; officials tell you there is a patient for you to nurse. You must tend to the sick in their own homes, bringing them food, changing their linens, and applying what remedies you can. The work is grim and thankless, but someone must care for those whom God has afflicted.
+    &lt;br&gt;
+    &lt;img src=&quot;https://iiif.wellcomecollection.org/image/ddddaws6/full/760%2C/0/default.jpg&quot; width=&quot;100%&quot;&gt;
+    //A man consuming many antidotes to the plague during the Great Plague of London. Etching by J. Franklin, 1841. Wellcome Collection//
 
-	&lt;&lt;elseif $role is &quot;warder&quot;&gt;&gt;You stand guard outside the locked up houses of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt;, making sure no one escapes their quarantine. You pray to God that the sickness does not reach you.
+	&lt;&lt;elseif $role is &quot;warder&quot;&gt;&gt;You stand guard outside the locked up houses of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt;. A great red cross is painted on each door, with the words &quot;Lord have mercy upon us&quot; written above it. You must remain at your post day and night, listening to the pleas and cries of those locked within, and pray to God that the sickness does not reach you through the door.
+    &lt;br&gt;
+    &lt;img src=&quot;https://iiif.wellcomecollection.org/image/wsbkbmqj/full/760%2C/0/default.jpg&quot; width=&quot;100%&quot;&gt;
+    //A plague scene. Wellcome Collection//
 	&lt;&lt;/if&gt;&gt;
     
 &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt; /* NTS: work text here */
@@ -6116,6 +6147,32 @@ You refuse the assignment. The parish officials are displeased — your reputati
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;br&gt;&lt;br&gt;
 &lt;&lt;elseif _nwPlague gt 0&gt;&gt;
 The parish has no patient for you to nurse this month.&lt;br&gt;&lt;br&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+/* Warder role: guard a shut-up house, parallel to nurse patient assignment */
+&lt;&lt;if $role is &quot;warder&quot; and $corpsePlague and $corpsePlague[$parish]&gt;&gt;
+&lt;&lt;set _wwPlague to $corpsePlague[$parish][$monthIndex]&gt;&gt;
+&lt;&lt;if _wwPlague gt 0 and $playerPlagueStatus is &quot;healthy&quot; and random(1, 100) lte _wwPlague&gt;&gt;
+&lt;&lt;set _wwRate to $parishRate[$parish][$monthIndex]&gt;&gt;
+&lt;&lt;set _wwInfectPct to Math.round(100 / _wwRate)&gt;&gt;
+&lt;span id=&quot;warder-choice&quot;&gt;A household in your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; has been shut up for the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. The churchwardens ask you to stand guard outside the door. Do you take the assignment?&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Stand guard outside the door&quot;&gt;&gt;&lt;&lt;replace &quot;#warder-choice&quot;&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;
+&lt;&lt;set $money += 48&gt;&gt;
+&lt;&lt;if random(1, _wwRate) eq 1&gt;&gt;
+&lt;&lt;set $plagueInfection to 1&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Guarded a plague house (infected)&quot;, money: 48, repDelta: 0, repBefore: _repBefore, infectPct: _wwInfectPct})&gt;&gt;
+You stand guard outside the marked door, listening to the weeping and prayers within. You were paid 48d. by the churchwardens — but in the days that follow, you begin to feel unwell yourself.
+&lt;&lt;else&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Guarded a plague house (survived)&quot;, money: 48, repDelta: 0, repBefore: _repBefore, infectPct: _wwInfectPct})&gt;&gt;
+You stand guard outside the marked door, listening to the weeping and prayers within. You were paid 48d. by the churchwardens for your service. By the grace of God, you remain healthy.
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Refuse the assignment&quot;&gt;&gt;&lt;&lt;replace &quot;#warder-choice&quot;&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;
+&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Refused to guard a plague house&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 0})&gt;&gt;
+You refuse the assignment. The churchwardens are displeased — your reputation suffers.
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 /* Bill of Mortality subscription report */
