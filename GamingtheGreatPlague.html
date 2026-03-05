@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.72" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.73" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1701,6 +1701,7 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;set $remedies.Immodium = { name: &quot;an anti-diarrheal posset made of plantain, sorrel, or knot grass&quot;, quantity: 0, cost: 0 }&gt;&gt;
 &lt;&lt;set $seekingApprenticeship to 0&gt;&gt;
 &lt;&lt;set $apprenticeship to 0&gt;&gt;
+&lt;&lt;set $servantPromotion to 0&gt;&gt;
 &lt;&lt;set $decisions to []&gt;&gt;
 &lt;&lt;set $trades to [&quot;mercer&quot;, &quot;draper&quot;, &quot;ironmonger&quot;, &quot;goldsmith&quot;]&gt;&gt;
 &lt;&lt;set $lodger to 0&gt;&gt;
@@ -4090,18 +4091,20 @@ You decide to:
     &lt;&lt;if _masterflee is 1&gt;&gt;
         &lt;ul&gt;
             &lt;li&gt;&lt;&lt;link `&quot;Follow your &quot; + $masterTitle + &quot;&#39;s lead and leave the city&quot;` &quot;Fled&quot;&gt;&gt;&lt;&lt;set $fled to 1&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Followed &quot; + $masterTitle + &quot; and fled the city&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-            &lt;li&gt;[[Break your contract and remain in the city-&gt;Stay][$fled to 3; $socio to &quot;beggars&quot;; _repBefore to $reputation; $reputation to Math.clamp($reputation - 2, 0, 10); $NPCsMaster to []; $NPCs to []; $decisions.push({text: &quot;Broke contract and stayed in the city&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
+            &lt;&lt;if $servantPromotion is 0&gt;&gt;&lt;li&gt;[[Break your contract and remain in the city-&gt;Stay][$fled to 3; $socio to &quot;beggars&quot;; _repBefore to $reputation; $reputation to Math.clamp($reputation - 2, 0, 10); $NPCsMaster to []; $NPCs to []; $decisions.push({text: &quot;Broke contract and stayed in the city&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
         &lt;/ul&gt;
     &lt;&lt;else&gt;&gt;
         &lt;ul&gt;
             &lt;li&gt;&lt;&lt;link `&quot;Remain in the city with your &quot; + $masterTitle` &quot;Stay&quot;&gt;&gt;&lt;&lt;set $fled to 0&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Stayed in the city with &quot; + $masterTitle, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-            &lt;li&gt;[[Break your contract and flee the city-&gt;Fled][$fled to 2; $socio to &quot;beggars&quot;; _repBefore to $reputation; $reputation to Math.clamp($reputation - 2, 0, 10); $NPCsMaster to []; $NPCs to []; $decisions.push({text: &quot;Broke contract and fled the city&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
+            &lt;&lt;if $servantPromotion is 0&gt;&gt;&lt;li&gt;[[Break your contract and flee the city-&gt;Fled][$fled to 2; $socio to &quot;beggars&quot;; _repBefore to $reputation; $reputation to Math.clamp($reputation - 2, 0, 10); $NPCsMaster to []; $NPCs to []; $decisions.push({text: &quot;Broke contract and fled the city&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
         &lt;/ul&gt;
     &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;else&gt;&gt;/* late context for servants */
+    &lt;&lt;if $servantPromotion is 0&gt;&gt;
     It&#39;s also not too late to
     &lt;&lt;if $hoh isnot 1&gt;&gt;&lt;&lt;if $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;convince your $masterTitle to &lt;&lt;elseif $hoh is 4&gt;&gt;convince your husband to &lt;&lt;elseif $NPCs.length gt 0&gt;&gt;try to convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;link `&quot;flee the city, even though your &quot; + $masterTitle + &quot; has chosen to stay.&quot;` &quot;Fled&quot;&gt;&gt;&lt;&lt;set $fled to 2&gt;&gt;&lt;&lt;set $socio to &quot;beggars&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;set $NPCs to []&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Broke contract and fled the city&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;/link&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
@@ -5275,7 +5278,26 @@ You can also visit the &#39;&#39;&lt;&lt;defApothecary &quot;Apothecary&quot;&gt
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
-/* placeholder for future widget to promote servant with stellar reputation */</tw-passagedata><tw-passagedata pid="93" name="steward" tags="widget" position="2125,50" size="100,100">&lt;&lt;widget &quot;steward&quot;&gt;&gt;
+/* widget to promote a servant with stellar reputation to apprentice status */
+
+&lt;&lt;widget &quot;promote-servant&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $socio is &quot;servants&quot; and $apprenticeship is 0 and $servantPromotion is 0 and $reputation gte 10 and ($relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;) and $agenum gte 14 and $agenum lte 21&gt;&gt;
+&lt;span id=&quot;promoteServant&quot;&gt;Your $masterTitle is so impressed with your work that &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;she&lt;&lt;else&gt;&gt;he&lt;&lt;/if&gt;&gt; is willing to take you on as an apprentice without paying the regular entrance fine. Do you accept?&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Yes, accept the apprenticeship&quot;&gt;&gt;&lt;&lt;replace &quot;#promoteServant&quot;&gt;&gt;
+&lt;&lt;set $servantPromotion to 1&gt;&gt;
+&lt;&lt;set $apprenticeship to 1&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Promoted from servant to apprentice by &quot; + $masterTitle, money: 0, repDelta: 0, repBefore: _repBefore, infectPct: null})&gt;&gt;
+Your $masterTitle formally takes you on as &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; apprentice. You will continue to live in &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; household, but now you are learning a trade rather than merely serving. It is a remarkable opportunity, earned by your hard work and good reputation.&lt;br&gt;&lt;br&gt;
+&lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No, remain a servant&quot;&gt;&gt;&lt;&lt;replace &quot;#promoteServant&quot;&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Declined apprenticeship offer from &quot; + $masterTitle, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
+You decline your $masterTitle&#39;s generous offer and continue in your current role as a servant.&lt;br&gt;&lt;br&gt;
+&lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;/span&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="93" name="steward" tags="widget" position="2125,50" size="100,100">&lt;&lt;widget &quot;steward&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 Zounds! The steward of &lt;&lt;if $agenum lte 15&gt;&gt;you and &lt;&lt;/if&gt;&gt;your&lt;&lt;if $agenum lte 15&gt;&gt; family&#39;s&lt;&lt;/if&gt;&gt; country estate has died and you must return home to manage affairs yourself.
 &lt;br&gt;&lt;br&gt;
@@ -5847,6 +5869,9 @@ Unfortunately, you have suffered a miscarriage and are no longer pregnant.
 
 /* Servant dismissal for bad reputation */
 &lt;&lt;dismiss-servant&gt;&gt;
+
+/* Servant promotion for stellar reputation */
+&lt;&lt;promote-servant&gt;&gt;
 
 /* Prevent repeat infections */
 &lt;&lt;if $plagueInfection is 1 and $playerPlagueStatus is &quot;recovered&quot;&gt;&gt;
