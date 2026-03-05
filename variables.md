@@ -93,8 +93,8 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 
 ### `$role`
 - **Type:** String
-- **Possible values:** `"0"` (none/default), `"searcher"`, `"nurse"`, `"corpsebearer"`, `"warder"`, `"unemployed"`, `"mercer"`, `"draper"`, `"ironmonger"`, `"goldsmith"`
-- **Set by:** Initially `"0"` for most social classes. **Exception:** `$socio is "merchants"` — `$role` is set during character creation to `either($trades)`, which picks randomly from `["mercer", "draper", "ironmonger", "goldsmith"]`. Changes to a plague worker role when the player takes a plague job, or `"unemployed"` when a servant breaks their contract. Male/nonbinary Church of England members have a 50/50 chance of being assigned `"corpsebearer"` or `"warder"`.
+- **Possible values:** `"0"` (none/default), `"searcher"`, `"nurse"`, `"corpsebearer"`, `"warder"`, `"mercer"`, `"draper"`, `"ironmonger"`, `"goldsmith"`
+- **Set by:** Initially `"0"` for most social classes. **Exception:** `$socio is "merchants"` — `$role` is set during character creation to `either($trades)`, which picks randomly from `["mercer", "draper", "ironmonger", "goldsmith"]`. Changes to a plague worker role when the player takes a plague job. Male/nonbinary Church of England members have a 50/50 chance of being assigned `"corpsebearer"` or `"warder"`.
 - **Dependency:** `$socio` determines which roles are available. `$role` affects income and narrative options.
 - **Notes on plague worker roles:** Only `"searcher"`, `"nurse"`, `"corpsebearer"`, and `"warder"` activate plague-work narrative content and infection risk logic. Merchant trade roles (`"mercer"` etc.) are display-only — no plague work content is implemented for merchants.
 - **Notes on warder role:** Warders stand guard outside quarantined houses to prevent escape. They earn a flat 48d. per month (not per-corpse), their monthly plague risk is doubled compared to other plague workers, and they take a −1 reputation hit upon accepting the job.
