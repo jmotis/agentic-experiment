@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.71" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.72" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1529,7 +1529,9 @@ The city has ordered public &lt;&lt;defFasts &quot;fasts&quot;&gt;&gt; and praye
 		&lt;&lt;/if&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;
-	&lt;&lt;if $agenum gte 16&gt;&gt;
+	&lt;&lt;if ($socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;) and $agenum gte 14 and $agenum lte 21 and $relationship is &quot;single&quot;&gt;&gt;
+		&lt;&lt;apprenticeship-market&gt;&gt;
+	&lt;&lt;elseif $agenum gte 16&gt;&gt;
 		&lt;&lt;marriage-market&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -1697,6 +1699,8 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;set $remedies.Suppository = { name: &quot;a suppository of a fig filled with salt&quot;, quantity: 0 }&gt;&gt;
 &lt;&lt;set $remedies.Cordial = { name: &quot;a cordial tincture to be drunk for two days after infection&quot;, quantity: 0, cost: 12 }&gt;&gt; 
 &lt;&lt;set $remedies.Immodium = { name: &quot;an anti-diarrheal posset made of plantain, sorrel, or knot grass&quot;, quantity: 0, cost: 0 }&gt;&gt;
+&lt;&lt;set $seekingApprenticeship to 0&gt;&gt;
+&lt;&lt;set $apprenticeship to 0&gt;&gt;
 &lt;&lt;set $decisions to []&gt;&gt;
 &lt;&lt;set $trades to [&quot;mercer&quot;, &quot;draper&quot;, &quot;ironmonger&quot;, &quot;goldsmith&quot;]&gt;&gt;
 &lt;&lt;set $lodger to 0&gt;&gt;
@@ -4334,7 +4338,7 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="74" name="Household Status" tags="" position="650,25" size="100,100">Player stats:
 &lt;ul&gt;&lt;li&gt;Name: $name&lt;/li&gt;
 &lt;li&gt;Age: $age&lt;/li&gt;
-&lt;li&gt;Social class: $socio&lt;/li&gt;
+&lt;li&gt;Social class: &lt;&lt;if $apprenticeship gt 0&gt;&gt;apprentice&lt;&lt;else&gt;&gt;$socio&lt;&lt;/if&gt;&gt;&lt;/li&gt;
 &lt;&lt;if $office isnot &quot;&quot;&gt;&gt;&lt;li&gt;Office: $office&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;li&gt;Location: $location&lt;/li&gt;
 &lt;li&gt;Current plague status: $playerPlagueStatus&lt;/li&gt;
@@ -4484,7 +4488,7 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
 &lt;h3&gt;How Your Character&amp;rsquo;s Traits Affected Survival&lt;/h3&gt;
 &lt;table width=90%&gt;&lt;tr&gt;&lt;th width=30%&gt;Trait&lt;/th&gt;&lt;th width=70%&gt;Effect on Your Experience&lt;/th&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;&lt;b&gt;Age: $age&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;Elderly characters faced a 1-in-30 chance of dying from old age each month (~55% cumulative over the game). Historically, the elderly were especially vulnerable to plague and other diseases.&lt;&lt;elseif $age is &quot;child&quot; or $age is &quot;infant&quot;&gt;&gt;As a child, you could not make your own decisions&amp;mdash;your family decided whether to flee, quarantine, or stay. Historically, children and infants were extremely vulnerable; &amp;ldquo;Chrisomes and Infants&amp;rdquo; (infant deaths) was the second-largest cause of death after consumption in normal years.&lt;&lt;else&gt;&gt;As a young or middle-aged adult, you had the best survival odds from non-plague causes. The game does not model the adult non-plague deaths (consumption, dropsy, fever) that were common in this period.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;b&gt;Class: $socio&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;Nobles could afford to flee London and had the best chance of avoiding plague entirely. Historically, the nobility and gentry fled in large numbers, leaving the poor to bear the brunt of the epidemic.&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;Merchants had resources to flee or send their families away, though leaving meant abandoning their businesses. Many merchants stayed to protect their trade.&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;Artisans faced difficult choices about whether to flee (if their reputation allowed) or stay and risk infection. Their middling status meant plague hit them hard.&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;As a servant, your fate was tied to your master&amp;rsquo;s decisions. If your master fled, you went too; if they stayed, so did you. Breaking your contract meant destitution.&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;Day labourers were among the most vulnerable. Many were recruited into dangerous plague work (corpse-bearing, searching, nursing) because they had no other income. Historically, the working poor suffered the highest plague mortality rates.&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;Beggars were the most vulnerable class. With no money, no home security, and no ability to flee, they faced starvation, freezing, and constant plague exposure. Many were forcibly removed from the city.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;b&gt;Class: &lt;&lt;if $apprenticeship gt 0&gt;&gt;apprentice&lt;&lt;else&gt;&gt;$socio&lt;&lt;/if&gt;&gt;&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;if $apprenticeship gt 0&gt;&gt;As an apprentice, your fate was tied to your master&amp;rsquo;s household. Your family invested in your future by securing you an apprenticeship with a London &lt;&lt;if $apprenticeship lte 2&gt;&gt;tradesman&lt;&lt;else&gt;&gt;merchant&lt;&lt;/if&gt;&gt;, hoping it would lead to membership in a livery company and perhaps even Freedom of the City. Historically, apprentices lived and worked alongside their masters, sharing both the opportunities and the dangers of life in plague-stricken London.&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;Nobles could afford to flee London and had the best chance of avoiding plague entirely. Historically, the nobility and gentry fled in large numbers, leaving the poor to bear the brunt of the epidemic.&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;Merchants had resources to flee or send their families away, though leaving meant abandoning their businesses. Many merchants stayed to protect their trade.&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;Artisans faced difficult choices about whether to flee (if their reputation allowed) or stay and risk infection. Their middling status meant plague hit them hard.&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;As a servant, your fate was tied to your master&amp;rsquo;s decisions. If your master fled, you went too; if they stayed, so did you. Breaking your contract meant destitution.&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;Day labourers were among the most vulnerable. Many were recruited into dangerous plague work (corpse-bearing, searching, nursing) because they had no other income. Historically, the working poor suffered the highest plague mortality rates.&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;Beggars were the most vulnerable class. With no money, no home security, and no ability to flee, they faced starvation, freezing, and constant plague exposure. Many were forcibly removed from the city.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;&lt;b&gt;Location: $location&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;Living inside the City walls generally meant lower plague rates. The plague arrived later here (July 1665) and the wealthier, less crowded parishes fared better.&lt;&lt;elseif $location is &quot;in the western suburbs, specifically Westminster&quot; or $location is &quot;in another part of the western suburbs&quot;&gt;&gt;The western suburbs, including St Giles in the Field, were where plague first appeared in London in late 1664. These areas were hit earliest and hardest.&lt;&lt;elseif $location is &quot;in the eastern suburbs&quot;&gt;&gt;The eastern suburbs, including Stepney and Whitechapel, were densely populated and suffered heavily. St Dunstan Stepney recorded more plague deaths than any other parish.&lt;&lt;elseif $location is &quot;in the northern suburbs&quot;&gt;&gt;The northern suburbs included large parishes like St Giles Cripplegate (1,353 plague deaths) and Shoreditch, which were heavily affected.&lt;&lt;elseif $location is &quot;across the river in the southern suburbs&quot;&gt;&gt;Southwark and the parishes south of the Thames were somewhat protected by the river barrier but still suffered significantly, especially St Olave Southwark (829 deaths) and St Saviour Southwark (605 deaths).&lt;&lt;else&gt;&gt;Your location in the Westminster area placed you near the early epicenter of the outbreak.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;&lt;b&gt;Status: $relationship&lt;/b&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;if $relationship is &quot;married&quot; or $relationship is &quot;widowed&quot;&gt;&gt;Married women of childbearing age (16&amp;ndash;40) faced additional risks from pregnancy and childbirth. &amp;ldquo;Childbed&amp;rdquo; (maternal mortality) killed 625 women in 1665. Plague during pregnancy also caused miscarriages.&lt;&lt;elseif $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;Being unmarried meant a smaller household, which could mean fewer people to fall ill in quarantine&amp;mdash;but also fewer people to provide care if you did.&lt;&lt;else&gt;&gt;Your relationship status affected your household composition and therefore your exposure to plague during quarantine.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
@@ -5868,9 +5872,12 @@ Unfortunately, you have suffered a miscarriage and are no longer pregnant.
 &lt;&lt;else&gt;&gt; /* Begin by Initializing Randomizers */
 	&lt;&lt;set $elderly to random(1,30)&gt;&gt;
 	&lt;&lt;set $wedding to random(1,10)&gt;&gt;
+	&lt;&lt;set $apprenticeshipOffer to random(1,10)&gt;&gt;
 	&lt;&lt;set $fever to random(1,20)&gt;&gt;
 	&lt;&lt;if $age is &quot;elderly adult&quot; and $elderly is 1&gt;&gt; /* Old Age */
 		&lt;&lt;elderly&gt;&gt;
+	&lt;&lt;elseif $seekingApprenticeship is 1 and $apprenticeshipOffer is 1&gt;&gt;
+		&lt;&lt;apprenticeship-offer&gt;&gt;
 	&lt;&lt;elseif $seeking is 1 and $wedding is 1&gt;&gt;
 		&lt;&lt;wedding&gt;&gt;
 	&lt;&lt;elseif $pregnant is 4&gt;&gt; /* Pregnancy and Marriage */
@@ -6533,7 +6540,193 @@ You have successfully evaded the warder outside your house and managed to bring 
 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="115" name="june-1665-helper-widget" tags="widget" position="1475,325" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;apprenticeship-market&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+As an unmarried young &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;woman&lt;&lt;else&gt;&gt;man&lt;&lt;/if&gt;&gt; from &lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;a merchant&lt;&lt;else&gt;&gt;an artisan&lt;&lt;/if&gt;&gt; family, your family is considering securing you an apprenticeship with a London merchant or tradesman. An apprenticeship would teach you a trade, connect you to a livery company, and could eventually lead to gaining the Freedom of the City — the right to trade independently within London&#39;s walls.&lt;&lt;if $gender is &quot;female&quot;&gt;&gt; Female apprenticeships are unusual, but not unheard of, especially within family trade networks.&lt;&lt;/if&gt;&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;span id=&quot;apprenticeship&quot;&gt;Are you
+&lt;ul&gt;
+&lt;li&gt;&lt;&lt;link &quot;seeking an apprenticeship&quot;&gt;&gt;&lt;&lt;set $seekingApprenticeship to 1&gt;&gt;&lt;&lt;replace &quot;#apprenticeship&quot;&gt;&gt;You are seeking an apprenticeship and will be looking for a suitable master to take you on.
+
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;content to wait for now&quot;&gt;&gt;&lt;&lt;set $seekingApprenticeship to 0&gt;&gt;&lt;&lt;replace &quot;#apprenticeship&quot;&gt;&gt;You are content to wait for now.
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;/span&gt;
+
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;apprenticeship-offer&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $seekingApprenticeship is 1&gt;&gt;
+Word has spread that you are looking for an apprenticeship&lt;&lt;if $agenum lte 15&gt;&gt; and your family has been making inquiries on your behalf&lt;&lt;/if&gt;&gt;. A contact at church has found several potential masters willing to take you on — for a fee.
+&lt;br&gt;&lt;br&gt;
+
+/* Build list of affordable/reputable tiers */
+&lt;&lt;set _anyAvailable to false&gt;&gt;
+
+&lt;span id=&quot;apprentice-offer&quot;&gt;
+The following opportunities are available to you:
+&lt;ul&gt;
+&lt;&lt;if $money gte 240 and $reputation gte 2&gt;&gt;
+&lt;&lt;set _anyAvailable to true&gt;&gt;
+&lt;li&gt;&lt;&lt;link &quot;Apprentice to a Placeholder Trade A (£1 entry fee)&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice-offer&quot;&gt;&gt;
+&lt;&lt;set $money -= 240&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;
+/* Move existing family to extended */
+&lt;&lt;set _survivingFamily to []&gt;&gt;
+&lt;&lt;for _ai = 0; _ai &lt; $NPCs.length; _ai++&gt;&gt;
+  &lt;&lt;if $NPCs[_ai].health isnot &quot;deceased&quot;&gt;&gt;
+    &lt;&lt;set _survivingFamily.push($NPCs[_ai])&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set $NPCsExtended to $NPCsExtended.concat(_survivingFamily)&gt;&gt;
+&lt;&lt;set $NPCs to []&gt;&gt;
+&lt;&lt;set $NPCsMaster to []&gt;&gt;
+&lt;&lt;addMasterHousehold&gt;&gt;
+&lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
+&lt;&lt;set $NPCsMaster to []&gt;&gt;
+&lt;&lt;NPCpronouns&gt;&gt;
+&lt;&lt;set $socio to &quot;servants&quot;&gt;&gt;
+&lt;&lt;set $masterStatus to &quot;artisans&quot;&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
+&lt;&lt;set $apprenticeship to 1&gt;&gt;
+&lt;&lt;set $seekingApprenticeship to 0&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Apprenticed as a Placeholder Trade A&quot;, money: -240, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;
+Your family scrapes together the £1 entry fee and you are apprenticed to a local tradesman. It is humble work, but honest, and you move into your new $masterTitle&#39;s household to begin learning the trade.
+&lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;if $money gte 1200 and $reputation gte 3&gt;&gt;
+&lt;&lt;set _anyAvailable to true&gt;&gt;
+&lt;li&gt;&lt;&lt;link &quot;Apprentice to a Placeholder Trade B (£5 entry fee)&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice-offer&quot;&gt;&gt;
+&lt;&lt;set $money -= 1200&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;
+&lt;&lt;set _survivingFamily to []&gt;&gt;
+&lt;&lt;for _ai = 0; _ai &lt; $NPCs.length; _ai++&gt;&gt;
+  &lt;&lt;if $NPCs[_ai].health isnot &quot;deceased&quot;&gt;&gt;
+    &lt;&lt;set _survivingFamily.push($NPCs[_ai])&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set $NPCsExtended to $NPCsExtended.concat(_survivingFamily)&gt;&gt;
+&lt;&lt;set $NPCs to []&gt;&gt;
+&lt;&lt;set $NPCsMaster to []&gt;&gt;
+&lt;&lt;addMasterHousehold&gt;&gt;
+&lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
+&lt;&lt;set $NPCsMaster to []&gt;&gt;
+&lt;&lt;NPCpronouns&gt;&gt;
+&lt;&lt;set $socio to &quot;servants&quot;&gt;&gt;
+&lt;&lt;set $masterStatus to &quot;artisans&quot;&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
+&lt;&lt;set $apprenticeship to 2&gt;&gt;
+&lt;&lt;set $seekingApprenticeship to 0&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Apprenticed as a Placeholder Trade B&quot;, money: -1200, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;
+Your family pays the £5 entry fee and you are apprenticed to a respectable tradesman. You move into your new $masterTitle&#39;s household and begin learning a trade with decent prospects.
+&lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;if $money gte 2400 and $reputation gte 4&gt;&gt;
+&lt;&lt;set _anyAvailable to true&gt;&gt;
+&lt;li&gt;&lt;&lt;link &quot;Apprentice to a Placeholder Trade C (£10 entry fee)&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice-offer&quot;&gt;&gt;
+&lt;&lt;set $money -= 2400&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;
+&lt;&lt;set _survivingFamily to []&gt;&gt;
+&lt;&lt;for _ai = 0; _ai &lt; $NPCs.length; _ai++&gt;&gt;
+  &lt;&lt;if $NPCs[_ai].health isnot &quot;deceased&quot;&gt;&gt;
+    &lt;&lt;set _survivingFamily.push($NPCs[_ai])&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set $NPCsExtended to $NPCsExtended.concat(_survivingFamily)&gt;&gt;
+&lt;&lt;set $NPCs to []&gt;&gt;
+&lt;&lt;set $NPCsMaster to []&gt;&gt;
+&lt;&lt;addMasterHousehold&gt;&gt;
+&lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
+&lt;&lt;set $NPCsMaster to []&gt;&gt;
+&lt;&lt;NPCpronouns&gt;&gt;
+&lt;&lt;set $socio to &quot;servants&quot;&gt;&gt;
+&lt;&lt;set $masterStatus to &quot;merchants&quot;&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
+&lt;&lt;set $apprenticeship to 3&gt;&gt;
+&lt;&lt;set $seekingApprenticeship to 0&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Apprenticed as a Placeholder Trade C&quot;, money: -2400, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;
+Your family invests £10 in your future and you are apprenticed to a skilled merchant. You move into your new $masterTitle&#39;s fine household and begin learning a trade with good standing in the city.
+&lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;if $money gte 6000 and $reputation gte 5&gt;&gt;
+&lt;&lt;set _anyAvailable to true&gt;&gt;
+&lt;li&gt;&lt;&lt;link &quot;Apprentice to a Placeholder Trade D (£25 entry fee)&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice-offer&quot;&gt;&gt;
+&lt;&lt;set $money -= 6000&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;
+&lt;&lt;set _survivingFamily to []&gt;&gt;
+&lt;&lt;for _ai = 0; _ai &lt; $NPCs.length; _ai++&gt;&gt;
+  &lt;&lt;if $NPCs[_ai].health isnot &quot;deceased&quot;&gt;&gt;
+    &lt;&lt;set _survivingFamily.push($NPCs[_ai])&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set $NPCsExtended to $NPCsExtended.concat(_survivingFamily)&gt;&gt;
+&lt;&lt;set $NPCs to []&gt;&gt;
+&lt;&lt;set $NPCsMaster to []&gt;&gt;
+&lt;&lt;addMasterHousehold&gt;&gt;
+&lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
+&lt;&lt;set $NPCsMaster to []&gt;&gt;
+&lt;&lt;NPCpronouns&gt;&gt;
+&lt;&lt;set $socio to &quot;servants&quot;&gt;&gt;
+&lt;&lt;set $masterStatus to &quot;merchants&quot;&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
+&lt;&lt;set $apprenticeship to 4&gt;&gt;
+&lt;&lt;set $seekingApprenticeship to 0&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Apprenticed as a Placeholder Trade D&quot;, money: -6000, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;
+Your family makes a substantial investment of £25 and you are apprenticed to a prestigious merchant. You move into your new $masterTitle&#39;s impressive household and begin learning a trade that could lead to real influence in the city.
+&lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;if $money gte 12000 and $reputation gte 6&gt;&gt;
+&lt;&lt;set _anyAvailable to true&gt;&gt;
+&lt;li&gt;&lt;&lt;link &quot;Apprentice to a Placeholder Trade E (£50 entry fee)&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice-offer&quot;&gt;&gt;
+&lt;&lt;set $money -= 12000&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;
+&lt;&lt;set _survivingFamily to []&gt;&gt;
+&lt;&lt;for _ai = 0; _ai &lt; $NPCs.length; _ai++&gt;&gt;
+  &lt;&lt;if $NPCs[_ai].health isnot &quot;deceased&quot;&gt;&gt;
+    &lt;&lt;set _survivingFamily.push($NPCs[_ai])&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set $NPCsExtended to $NPCsExtended.concat(_survivingFamily)&gt;&gt;
+&lt;&lt;set $NPCs to []&gt;&gt;
+&lt;&lt;set $NPCsMaster to []&gt;&gt;
+&lt;&lt;addMasterHousehold&gt;&gt;
+&lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
+&lt;&lt;set $NPCsMaster to []&gt;&gt;
+&lt;&lt;NPCpronouns&gt;&gt;
+&lt;&lt;set $socio to &quot;servants&quot;&gt;&gt;
+&lt;&lt;set $masterStatus to &quot;merchants&quot;&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
+&lt;&lt;set $apprenticeship to 5&gt;&gt;
+&lt;&lt;set $seekingApprenticeship to 0&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Apprenticed as a Placeholder Trade E&quot;, money: -12000, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;
+Your family spends a fortune — £50 — to secure you a place with one of London&#39;s elite livery companies. You move into your new $masterTitle&#39;s grand household and begin your apprenticeship on the surest path to gaining Freedom of the City.
+&lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;if not _anyAvailable&gt;&gt;
+&lt;li&gt;Unfortunately, your family cannot afford any of the available entry fees right now, or your reputation is not yet sufficient. You will need to save more money or build your standing before a master will take you on.&lt;/li&gt;
+&lt;&lt;else&gt;&gt;
+&lt;li&gt;&lt;&lt;link &quot;Decline for now&quot;&gt;&gt;&lt;&lt;replace &quot;#apprentice-offer&quot;&gt;&gt;You decide to wait for a better opportunity. Your search for an apprenticeship continues.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;/ul&gt;
+&lt;/span&gt;
+
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="115" name="june-1665-helper-widget" tags="widget" position="1475,325" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; grows worse and the streets are soon filled with coaches and wagons full of people fleeing with their goods to the countryside. The &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMaria &quot;Henrietta Maria&quot;&gt;&gt; moves back to France&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, much to your dismay, and that of your fellow Catholics who flock to her chapel each week&lt;&lt;else&gt;&gt;, much to your relief, and that of all your fellow God-fearing &lt;&lt;defProtestants &quot;Protestants&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;. On June 29th, the King packs up his entire &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; in 148 carriages and moves 12 miles away, to his palace at &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt;.
     &lt;br&gt;&lt;br&gt;
