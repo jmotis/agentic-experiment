@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.92" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.93" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -5311,10 +5311,26 @@ Then, in September, disaster strikes. Your first hint is a dark cloud rising int
 &lt;&lt;if $fledFromIndex lt 19&gt;&gt;&lt;&lt;fled-cost&gt;&gt;
 
 Finally, you receive word that your home &lt;&lt;if $fireParishes.includes($parish)&gt;&gt;was destroyed. It will cost you a significant amount of time and money to rebuild, and you resign yourself to searching for a new place to live.
-&lt;&lt;set $preFireLocation to $location&gt;&gt;&lt;&lt;set $preFireParish to $parish&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $location to &quot;in the western suburbs, specifically Westminster&quot;&gt;&gt;&lt;&lt;set $parish to weightedEither($WestmParishes)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $location to &quot;in the northern suburbs&quot;&gt;&gt;&lt;&lt;set $parish to weightedEither($nParishes)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $location to &quot;across the river in the southern suburbs&quot;&gt;&gt;&lt;&lt;set $parish to weightedEither($sParishes)&gt;&gt;&lt;&lt;generate-landlord-household&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;remains standing. You thank God for your close escape from disaster and look forward to your return to the city.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
+&lt;&lt;set $preFireLocation to $location&gt;&gt;&lt;&lt;set $preFireParish to $parish&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot; or ($socio is &quot;servants&quot; and ($masterStatus is &quot;nobles&quot; or $masterStatus is &quot;merchants&quot;))&gt;&gt;&lt;&lt;set $location to &quot;in the western suburbs, specifically Westminster&quot;&gt;&gt;&lt;&lt;set $parish to weightedEither($WestmParishes)&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot; or ($socio is &quot;servants&quot; and $masterStatus is &quot;artisans&quot;)&gt;&gt;&lt;&lt;set $location to &quot;in the northern suburbs&quot;&gt;&gt;&lt;&lt;set $parish to weightedEither($nParishes)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $location to &quot;across the river in the southern suburbs&quot;&gt;&gt;&lt;&lt;set $parish to weightedEither($sParishes)&gt;&gt;&lt;&lt;generate-landlord-household&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;remains standing. You thank God for your close escape from disaster and look forward to your return to the city.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
 
 &lt;&lt;fled-cost&gt;&gt;&lt;&lt;/if&gt;&gt;
 
+&lt;&lt;if $preFireLocation neq &quot;&quot;&gt;&gt;
+&lt;&lt;if $fledReturn is &quot;no-plague&quot;&gt;&gt;
+With your home destroyed, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are anxious about returning to a city where you have nowhere to live. There is still plague about and the thought of searching for new lodgings while the sickness lingers is terrifying.&lt;&lt;if $money lte 0&gt;&gt; To make matters worse, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are running out of money and realize you&#39;re going to have to [[return to the city soon to avoid starving-&gt;November 1666]]&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;
+
+&lt;&lt;fled-cost&gt;&gt;
+
+The official Thanksgiving Day for the end of the plague is proclaimed in November, but there are still people dying each week&lt;&lt;if $money lte 0&gt;&gt;. Unfortunately, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are out of money and so are forced to [[return to the city-&gt;December 1666]]&lt;&lt;else&gt;&gt; so you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; hold off returning and resign yourself to another winter in exile, dreading the search for a new home.&lt;br&gt;&lt;br&gt;
+
+&lt;&lt;fled-cost&gt;&gt;
+
+Life may go on for the reckless, but it will not be until 1667 that you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; finally make your way [[back to the city-&gt;December 1666]].
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;
+With your home destroyed, there is nothing to return to but rubble. Still, the official Thanksgiving Day for the end of the plague is proclaimed, and you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; know you must make your way [[back to the city-&gt;November 1666]] and begin rebuilding your life.
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;
 &lt;&lt;if $fledReturn is &quot;no-plague&quot;&gt;&gt;
 While you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; consider making a profit from renting out your residence to those who have been made homeless, you are uncomfortable doing so when you aren&#39;t around to make sure the tenant is taking proper care of your belongings. There is still plague about and who knows what other pestilence they could bring into your home?&lt;&lt;if $money lte 0&gt;&gt; Besides, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are running out of money and realize you&#39;re going to have to [[return to the city soon to avoid starving-&gt;November 1666]]&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;
 
@@ -5328,6 +5344,7 @@ Life may go on for the reckless, but it will not be until 1667 that you&lt;&lt;i
 &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;
 While you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; consider making a profit from renting out your residence to those who have been made homeless, you feel like your house being spared is God&#39;s way of encouraging you to return to the city. Luckily, the official Thanksgiving Day for the end of the plague is proclaimed, and so you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; make your way [[back to the city-&gt;November 1666]].
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="88" name="no-plague" tags="fled" position="1525,1300" size="100,100">&lt;&lt;goto &quot;official-end&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="89" name="Stay" tags="" position="725,1025" size="100,100">&lt;&lt;nobr&gt;&gt;
