@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.74" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.75" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -4036,6 +4036,8 @@ In fact, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif _hasInfectedNPC&gt;&gt;You prepare your household to flee the city. It takes some time to sort out the travel logistics, but finally everything is in order. They will leave tomorrow.&lt;br&gt;&lt;br&gt;
 &lt;&lt;sickFam&gt;&gt;
 &lt;&lt;else&gt;&gt;
+/* Calculate one month&#39;s household income for the one-time flee cost */
+&lt;&lt;income&gt;&gt;
 /* Day Labourers */
 &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;
 &lt;&lt;if _ctx is &quot;initial&quot;&gt;&gt;
@@ -4049,12 +4051,12 @@ In fact, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt;
         &lt;&lt;else&gt;&gt;&lt;li&gt;[[Remain in the city-&gt;Stay][$fled to 4; $decisions.push({text: &quot;Remained in the city&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
         &lt;&lt;/if&gt;&gt;
         &lt;&lt;if $origin isnot &quot;London&quot;&gt;&gt;
-            &lt;&lt;if $hoh is 1&gt;&gt;&lt;li&gt;[[flee the city and return to your place of origin-&gt;Fled][$fled to 6; $decisions.push({text: &quot;Fled back to place of origin&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
-                &lt;&lt;if $NPCs.length gt 0&gt;&gt;&lt;li&gt;[[remain in the city yourself, but send your family back to your place of origin-&gt;Stay][$fled to 5; $decisions.push({text: &quot;Sent family home but stayed&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
-            &lt;&lt;elseif $hoh is 4&gt;&gt;&lt;li&gt;[[convince your husband to flee London and return to your place of origin-&gt;Fled][$fled to 6; $decisions.push({text: &quot;Convinced family to flee London&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
-                &lt;&lt;if $NPCs.length gt 0&gt;&gt;&lt;li&gt;[[remain in the city with your husband, but send the rest of your family back to your place of origin-&gt;Stay][$fled to 5; $decisions.push({text: &quot;Sent family home but stayed&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
-            &lt;&lt;else&gt;&gt;&lt;li&gt;[[try to convince your family to flee London and return to your place of origin-&gt;Fled][$fled to 6; $decisions.push({text: &quot;Convinced family to flee London&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
-                &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;li&gt;[[remain in the city with your &lt;&lt;print _caretakerLabel&gt;&gt;, but send the rest of your family back to your place of origin-&gt;Stay][$fled to 5; $decisions.push({text: &quot;Sent family home but stayed&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+            &lt;&lt;if $hoh is 1&gt;&gt;&lt;li&gt;[[flee the city and return to your place of origin-&gt;Fled][$fled to 6; $money -= $income; $decisions.push({text: &quot;Fled back to place of origin&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
+                &lt;&lt;if $NPCs.length gt 0&gt;&gt;&lt;li&gt;[[remain in the city yourself, but send your family back to your place of origin-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent family home but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+            &lt;&lt;elseif $hoh is 4&gt;&gt;&lt;li&gt;[[convince your husband to flee London and return to your place of origin-&gt;Fled][$fled to 6; $money -= $income; $decisions.push({text: &quot;Convinced family to flee London&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
+                &lt;&lt;if $NPCs.length gt 0&gt;&gt;&lt;li&gt;[[remain in the city with your husband, but send the rest of your family back to your place of origin-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent family home but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+            &lt;&lt;else&gt;&gt;&lt;li&gt;[[try to convince your family to flee London and return to your place of origin-&gt;Fled][$fled to 6; $money -= $income; $decisions.push({text: &quot;Convinced family to flee London&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
+                &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;li&gt;[[remain in the city with your &lt;&lt;print _caretakerLabel&gt;&gt;, but send the rest of your family back to your place of origin-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent family home but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
             &lt;&lt;/if&gt;&gt;
         &lt;&lt;/if&gt;&gt;
     &lt;/ul&gt;
@@ -4062,18 +4064,18 @@ In fact, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;/* late context for day labourers */
 &lt;&lt;if $origin isnot &quot;London&quot;&gt;&gt;
 It&#39;s also not too late to
-    &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try and convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;[[flee the city and join your family back in your home land.-&gt;Fled][$fled to 6; $decisions.push({text: &quot;Fled to join family&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]
+    &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try and convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;[[flee the city and join your family back in your home land.-&gt;Fled][$fled to 6; $money -= $income; $decisions.push({text: &quot;Fled to join family&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: null})]]
     &lt;&lt;elseif $fled is 4&gt;&gt;&lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try and convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-        &lt;&lt;if $NPCs.length gt 0&gt;&gt;[[send your family back to your home land without you-&gt;Stay][$fled to 5; $decisions.push({text: &quot;Sent family home but stayed&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]], or [[flee the city with your family.-&gt;Fled][$fled to 6; $decisions.push({text: &quot;Fled back to place of origin&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]
-        &lt;&lt;else&gt;&gt;[[flee the city and return to your homeland.-&gt;Fled][$fled to 6; $decisions.push({text: &quot;Fled back to place of origin&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]
+        &lt;&lt;if $NPCs.length gt 0&gt;&gt;[[send your family back to your home land without you-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent family home but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]], or [[flee the city with your family.-&gt;Fled][$fled to 6; $money -= $income; $decisions.push({text: &quot;Fled back to place of origin&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: null})]]
+        &lt;&lt;else&gt;&gt;[[flee the city and return to your homeland.-&gt;Fled][$fled to 6; $money -= $income; $decisions.push({text: &quot;Fled back to place of origin&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: null})]]
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
 It&#39;s also not too late to
-    &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try and convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;[[flee London and join your family.-&gt;Fled][$fled to 6; $decisions.push({text: &quot;Fled to join family&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]
+    &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try and convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;[[flee London and join your family.-&gt;Fled][$fled to 6; $money -= $income; $decisions.push({text: &quot;Fled to join family&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: null})]]
     &lt;&lt;elseif $fled is 4&gt;&gt;&lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try and convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-        &lt;&lt;if $NPCs.length gt 0&gt;&gt;[[send your family to some other city where they can find work-&gt;Stay][$fled to 5; $decisions.push({text: &quot;Sent family away but stayed&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]], or [[flee London with your family and find work in another city.-&gt;Fled][$fled to 6; $decisions.push({text: &quot;Fled to find work elsewhere&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]
-        &lt;&lt;else&gt;&gt;[[flee London to some other city where you can find work.-&gt;Fled][$fled to 6; $decisions.push({text: &quot;Fled to find work elsewhere&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]
+        &lt;&lt;if $NPCs.length gt 0&gt;&gt;[[send your family to some other city where they can find work-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent family away but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]], or [[flee London with your family and find work in another city.-&gt;Fled][$fled to 6; $money -= $income; $decisions.push({text: &quot;Fled to find work elsewhere&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: null})]]
+        &lt;&lt;else&gt;&gt;[[flee London to some other city where you can find work.-&gt;Fled][$fled to 6; $money -= $income; $decisions.push({text: &quot;Fled to find work elsewhere&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: null})]]
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 
@@ -4096,14 +4098,14 @@ You decide to:
     &lt;&lt;else&gt;&gt;
         &lt;ul&gt;
             &lt;li&gt;&lt;&lt;link `&quot;Remain in the city with your &quot; + $masterTitle` &quot;Stay&quot;&gt;&gt;&lt;&lt;set $fled to 0&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Stayed in the city with &quot; + $masterTitle, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-            &lt;&lt;if $servantPromotion is 0&gt;&gt;&lt;li&gt;[[Break your contract and flee the city-&gt;Fled][$fled to 2; $socio to &quot;beggars&quot;; _repBefore to $reputation; $reputation to Math.clamp($reputation - 2, 0, 10); $NPCsMaster to []; $NPCs to []; $decisions.push({text: &quot;Broke contract and fled the city&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+            &lt;&lt;if $servantPromotion is 0&gt;&gt;&lt;li&gt;[[Break your contract and flee the city-&gt;Fled][$fled to 2; $socio to &quot;beggars&quot;; _repBefore to $reputation; $reputation to Math.clamp($reputation - 2, 0, 10); $money -= $income; $NPCsMaster to []; $NPCs to []; $decisions.push({text: &quot;Broke contract and fled the city&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
         &lt;/ul&gt;
     &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;else&gt;&gt;/* late context for servants */
     &lt;&lt;if $servantPromotion is 0&gt;&gt;
     It&#39;s also not too late to
-    &lt;&lt;if $hoh isnot 1&gt;&gt;&lt;&lt;if $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;convince your $masterTitle to &lt;&lt;elseif $hoh is 4&gt;&gt;convince your husband to &lt;&lt;elseif $NPCs.length gt 0&gt;&gt;try to convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;link `&quot;flee the city, even though your &quot; + $masterTitle + &quot; has chosen to stay.&quot;` &quot;Fled&quot;&gt;&gt;&lt;&lt;set $fled to 2&gt;&gt;&lt;&lt;set $socio to &quot;beggars&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;set $NPCs to []&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Broke contract and fled the city&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;/link&gt;&gt;
+    &lt;&lt;if $hoh isnot 1&gt;&gt;&lt;&lt;if $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;convince your $masterTitle to &lt;&lt;elseif $hoh is 4&gt;&gt;convince your husband to &lt;&lt;elseif $NPCs.length gt 0&gt;&gt;try to convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;link `&quot;flee the city, even though your &quot; + $masterTitle + &quot; has chosen to stay.&quot;` &quot;Fled&quot;&gt;&gt;&lt;&lt;set $fled to 2&gt;&gt;&lt;&lt;set $socio to &quot;beggars&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $money -= $income&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;set $NPCs to []&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Broke contract and fled the city&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;/link&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -4120,10 +4122,10 @@ You decide to:
     &lt;&lt;if $hoh is 1&gt;&gt;You decide to:&lt;&lt;elseif $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;You convince your $masterTitle to&lt;&lt;elseif $hoh is 4&gt;&gt;You convince your husband to&lt;&lt;else&gt;&gt;You convince your family to&lt;&lt;/if&gt;&gt;
         &lt;ul&gt;
             &lt;li&gt;[[Remain in the city with your entire household-&gt;Stay][$fled to 4; $decisions.push({text: &quot;Remained in the city with household&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
-            &lt;&lt;if $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 1&gt;&gt;&lt;li&gt;[[Remain in the city, but send the rest of your household away.-&gt;Stay][$fled to 5; $money -= 560; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -560, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;elseif $hoh is 0&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;li&gt;[[Remain in the city with your &lt;&lt;print _caretakerLabel&gt;&gt;, but send the rest of your household away.-&gt;Stay][$fled to 5; $money -= 560; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -560, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;elseif $hoh is 3&gt;&gt;&lt;li&gt;[[Remain in the city with your $masterTitle, but send the rest of your household away.-&gt;Stay][$fled to 5; $money -= 560; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -560, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;elseif $hoh is 4&gt;&gt;&lt;li&gt;[[Remain in the city with your husband, but send the rest of your household away.-&gt;Stay][$fled to 5; $money -= 560; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -560, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;else&gt;&gt;&lt;li&gt;[[Remain in the city, but send the rest of your household away.-&gt;Stay][$fled to 5; $money -= 560; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -560, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-            &lt;li&gt;&lt;&lt;if $reputation gt 5&gt;&gt;[[Flee the city with your entire household.-&gt;Fled][_repBefore to $reputation; $reputation to Math.clamp($reputation - 3, 0, 10); $fled to 6; $money -= 1120; $decisions.push({text: &quot;Fled the city with household&quot;, money: -1120, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
+            &lt;&lt;if $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 1&gt;&gt;&lt;li&gt;[[Remain in the city, but send the rest of your household away.-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;elseif $hoh is 0&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;li&gt;[[Remain in the city with your &lt;&lt;print _caretakerLabel&gt;&gt;, but send the rest of your household away.-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;elseif $hoh is 3&gt;&gt;&lt;li&gt;[[Remain in the city with your $masterTitle, but send the rest of your household away.-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;elseif $hoh is 4&gt;&gt;&lt;li&gt;[[Remain in the city with your husband, but send the rest of your household away.-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;else&gt;&gt;&lt;li&gt;[[Remain in the city, but send the rest of your household away.-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+            &lt;li&gt;&lt;&lt;if $reputation gt 5&gt;&gt;[[Flee the city with your entire household.-&gt;Fled][_repBefore to $reputation; $reputation to Math.clamp($reputation - 3, 0, 10); $fled to 6; $money -= $income; $decisions.push({text: &quot;Fled the city with household&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
                 &lt;&lt;else&gt;&gt;
-                    &lt;&lt;if random(1,2) eq 1&gt;&gt;[[Flee the city with your entire household.-&gt;Fled][_repBefore to $reputation; $reputation to Math.clamp($reputation - 3, 0, 10); $fled to 6; $money -= 1120; $decisions.push({text: &quot;Fled the city with household&quot;, money: -1120, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;&lt;else&gt;&gt;[[Flee the city with your entire household.-&gt;Stay][_repBefore to $reputation; $reputation to Math.clamp($reputation - 3, 0, 10); $fled to 7; $money -= 1120; $decisions.push({text: &quot;Attempted to flee but was turned away&quot;, money: -1120, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
+                    &lt;&lt;if random(1,2) eq 1&gt;&gt;[[Flee the city with your entire household.-&gt;Fled][_repBefore to $reputation; $reputation to Math.clamp($reputation - 3, 0, 10); $fled to 6; $money -= $income; $decisions.push({text: &quot;Fled the city with household&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;&lt;else&gt;&gt;[[Flee the city with your entire household.-&gt;Stay][_repBefore to $reputation; $reputation to Math.clamp($reputation - 3, 0, 10); $fled to 7; $money -= $income; $decisions.push({text: &quot;Attempted to flee but was turned away&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
                     &lt;&lt;/if&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
             &lt;/li&gt;
@@ -4133,12 +4135,12 @@ You decide to:
 It&#39;s also not too late to
     &lt;&lt;if $reputation gt 5&gt;&gt;
         &lt;&lt;if $fled is 4&gt;&gt;
-            &lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;convince your $masterTitle to &lt;&lt;elseif $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try to convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;[[flee the city with your household and head to the countryside-&gt;Fled][_repBefore to $reputation; $fled to 6; $reputation to Math.clamp($reputation - 3, 0, 10); $money -= 1120; $decisions.push({text: &quot;Fled the city with household&quot;, money: -1120, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]], or [[send the rest of your household away while you remain behind.-&gt;Stay][$fled to 5; $money -= 560; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -560, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]
-        &lt;&lt;elseif $fled is 5&gt;&gt;[[join the rest of your household in the countryside-&gt;Fled][_repBefore to $reputation; $fled to 6; $money -= 560; $reputation to Math.clamp($reputation - 3, 0, 10); $decisions.push({text: &quot;Fled to join household&quot;, money: -560, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
-        &lt;&lt;elseif $fled is 7&gt;&gt;[[try to flee again, hoping your reputation has improved enough since your last attempt to seek help-&gt;Fled][_repBefore to $reputation; $fled to 6; $money -= 560; $reputation to Math.clamp($reputation - 3, 0, 10); $decisions.push({text: &quot;Fled on second attempt&quot;, money: -560, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
+            &lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;convince your $masterTitle to &lt;&lt;elseif $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try to convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;[[flee the city with your household and head to the countryside-&gt;Fled][_repBefore to $reputation; $fled to 6; $reputation to Math.clamp($reputation - 3, 0, 10); $money -= $income; $decisions.push({text: &quot;Fled the city with household&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]], or [[send the rest of your household away while you remain behind.-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]
+        &lt;&lt;elseif $fled is 5&gt;&gt;[[join the rest of your household in the countryside-&gt;Fled][_repBefore to $reputation; $fled to 6; $money -= $income; $reputation to Math.clamp($reputation - 3, 0, 10); $decisions.push({text: &quot;Fled to join household&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
+        &lt;&lt;elseif $fled is 7&gt;&gt;[[try to flee again, hoping your reputation has improved enough since your last attempt to seek help-&gt;Fled][_repBefore to $reputation; $fled to 6; $money -= $income; $reputation to Math.clamp($reputation - 3, 0, 10); $decisions.push({text: &quot;Fled on second attempt&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;else&gt;&gt;
-        &lt;&lt;if random(1,2) eq 1&gt;&gt;[[flee the city with your entire household-&gt;Fled][_repBefore to $reputation; $reputation to Math.clamp($reputation - 3, 0, 10); $fled to 6; $money -= 1120; $decisions.push({text: &quot;Fled the city with household&quot;, money: -1120, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;&lt;else&gt;&gt;[[Flee the city with your entire household.-&gt;Failed-Flight][_repBefore to $reputation; $reputation to Math.clamp($reputation - 3, 0, 10); $fled to 7; $money -= 1120; $decisions.push({text: &quot;Attempted to flee but was turned away&quot;, money: -1120, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
+        &lt;&lt;if random(1,2) eq 1&gt;&gt;[[flee the city with your entire household-&gt;Fled][_repBefore to $reputation; $reputation to Math.clamp($reputation - 3, 0, 10); $fled to 6; $money -= $income; $decisions.push({text: &quot;Fled the city with household&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;&lt;else&gt;&gt;[[Flee the city with your entire household.-&gt;Failed-Flight][_repBefore to $reputation; $reputation to Math.clamp($reputation - 3, 0, 10); $fled to 7; $money -= $income; $decisions.push({text: &quot;Attempted to flee but was turned away&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -4151,12 +4153,12 @@ your neighbors have begun to flee the city. Many are renting houses in the count
 You decide to:
     &lt;ul&gt;
         &lt;li&gt;[[Remain in the city with your entire household-&gt;Stay][$fled to 4; $decisions.push({text: &quot;Remained in the city with household&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
-        &lt;li&gt;[[Remain in the city, but send the rest of your household away-&gt;Stay][$fled to 5; $money -= 800; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -800, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;
-        &lt;li&gt;[[Flee the city with your entire household.-&gt;Fled][_repBefore to $reputation; $fled to 6; $money -= 1600; $reputation to Math.clamp($reputation - 2, 0, 10); $decisions.push({text: &quot;Fled the city with household&quot;, money: -1600, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
+        &lt;li&gt;[[Remain in the city, but send the rest of your household away-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;
+        &lt;li&gt;[[Flee the city with your entire household.-&gt;Fled][_repBefore to $reputation; $fled to 6; $money -= $income; $reputation to Math.clamp($reputation - 2, 0, 10); $decisions.push({text: &quot;Fled the city with household&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
     &lt;/ul&gt;
 
 &lt;&lt;else&gt;&gt;/* late context for merchants */
-It&#39;s also not too late to &lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;convince your $masterTitle to &lt;&lt;elseif $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try and convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;[[flee to the countryside with your household-&gt;Fled][_repBefore to $reputation; $fled to 6; $money -= 1600; $reputation to Math.clamp($reputation - 2, 0, 10); $decisions.push({text: &quot;Fled the city with household&quot;, money: -1600, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
+It&#39;s also not too late to &lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;convince your $masterTitle to &lt;&lt;elseif $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try and convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;[[flee to the countryside with your household-&gt;Fled][_repBefore to $reputation; $fled to 6; $money -= $income; $reputation to Math.clamp($reputation - 2, 0, 10); $decisions.push({text: &quot;Fled the city with household&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
@@ -4166,12 +4168,12 @@ It&#39;s also not too late to &lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&
 You decide to:
     &lt;ul&gt;
         &lt;li&gt;[[Remain in the city with your entire household-&gt;Stay][$fled to 4; $decisions.push({text: &quot;Remained in the city with household&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
-        &lt;li&gt;[[Remain in the city, but send most of your household away to the countryside-&gt;Stay][$fled to 5; $money -= 5000; $decisions.push({text: &quot;Sent most of household to the countryside&quot;, money: -5000, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;
-        &lt;li&gt;[[Flee the city with your entire household.-&gt;Fled][_repBefore to $reputation; $reputation to Math.clamp($reputation - 1, 0, 10); $fled to 6; $money -= 10000; $decisions.push({text: &quot;Fled the city with household&quot;, money: -10000, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
+        &lt;li&gt;[[Remain in the city, but send most of your household away to the countryside-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent most of household to the countryside&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;
+        &lt;li&gt;[[Flee the city with your entire household.-&gt;Fled][_repBefore to $reputation; $reputation to Math.clamp($reputation - 1, 0, 10); $fled to 6; $money -= $income; $decisions.push({text: &quot;Fled the city with household&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
     &lt;/ul&gt;
 
 &lt;&lt;else&gt;&gt;/* late context for nobles */
-It&#39;s also not too late to &lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;convince your $masterTitle to &lt;&lt;elseif $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try and convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;[[flee to the countryside with your household-&gt;Fled][_repBefore to $reputation; $fled to 6; $money -= 10000; $reputation to Math.clamp($reputation - 1, 0, 10); $decisions.push({text: &quot;Fled the city with household&quot;, money: -10000, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
+It&#39;s also not too late to &lt;&lt;if $hoh isnot 1 and $NPCs.length gt 0&gt;&gt;&lt;&lt;if $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;convince your $masterTitle to &lt;&lt;elseif $hoh is 4&gt;&gt;convince your husband to &lt;&lt;else&gt;&gt;try and convince your family to &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;[[flee to the countryside with your household-&gt;Fled][_repBefore to $reputation; $fled to 6; $money -= $income; $reputation to Math.clamp($reputation - 1, 0, 10); $decisions.push({text: &quot;Fled the city with household&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;/* end infection guard */
@@ -4736,6 +4738,57 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;if $lodger is 1&gt;&gt;&lt;&lt;set $income to $income + $lodgerRent&gt;&gt;&lt;&lt;/if&gt;&gt;
+/* Fled income adjustments */
+&lt;&lt;if ($fled is 6 or $fled is 2) and $socio isnot &quot;nobles&quot; and $socio isnot &quot;servants&quot;&gt;&gt;
+  /* Beggars, day labourers, artisans, merchants receive half income when fled */
+  &lt;&lt;set $income to Math.round($income / 2)&gt;&gt;
+&lt;&lt;elseif $fled is 5&gt;&gt;
+  /* Player sent household away: add back half the income of fled NPCs */
+  &lt;&lt;set _fledNPCIncome to 0&gt;&gt;
+  &lt;&lt;for _fi = 0; _fi &lt; $FledFamily.length; _fi++&gt;&gt;
+    &lt;&lt;if $FledFamily[_fi].health isnot &quot;deceased&quot; and $FledFamily[_fi].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
+        &lt;&lt;if $FledFamily[_fi].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 120&gt;&gt;
+        &lt;&lt;else&gt;&gt;&lt;&lt;set _fledNPCIncome += 96&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;
+        &lt;&lt;if $FledFamily[_fi].relationship is &quot;wife&quot; or $FledFamily[_fi].relationship is &quot;husband&quot;&gt;&gt;
+          &lt;&lt;if $FledFamily[_fi].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += Math.round(17600 * 0.8)&gt;&gt;
+          &lt;&lt;else&gt;&gt;&lt;&lt;set _fledNPCIncome += 17600&gt;&gt;
+          &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;else&gt;&gt;
+        /* day labourers, artisans, merchants */
+        &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set _fBaseRate to 300&gt;&gt;
+        &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _fBaseRate to 800&gt;&gt;
+        &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _fBaseRate to 4000&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+        &lt;&lt;if $FledFamily[_fi].age is &quot;young adult&quot; or $FledFamily[_fi].age is &quot;middle-aged adult&quot; or $FledFamily[_fi].age is &quot;elderly adult&quot;&gt;&gt;
+          &lt;&lt;if $FledFamily[_fi].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += Math.round(_fBaseRate * 0.8)&gt;&gt;
+          &lt;&lt;else&gt;&gt;&lt;&lt;set _fledNPCIncome += _fBaseRate&gt;&gt;
+          &lt;&lt;/if&gt;&gt;
+        &lt;&lt;elseif $socio isnot &quot;merchants&quot;&gt;&gt;
+          &lt;&lt;if $FledFamily[_fi].age is &quot;child&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 40&gt;&gt;
+          &lt;&lt;elseif $FledFamily[_fi].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 80&gt;&gt;
+          &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  /* Fled servants contribute at day labourer rate */
+  &lt;&lt;for _fi = 0; _fi &lt; $FledServants.length; _fi++&gt;&gt;
+    &lt;&lt;if $FledServants[_fi].health isnot &quot;deceased&quot; and $FledServants[_fi].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;if $FledServants[_fi].age is &quot;young adult&quot; or $FledServants[_fi].age is &quot;middle-aged adult&quot; or $FledServants[_fi].age is &quot;elderly adult&quot;&gt;&gt;
+        &lt;&lt;if $FledServants[_fi].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 240&gt;&gt;
+        &lt;&lt;else&gt;&gt;&lt;&lt;set _fledNPCIncome += 300&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;elseif $FledServants[_fi].age is &quot;child&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 40&gt;&gt;
+      &lt;&lt;elseif $FledServants[_fi].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 80&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  &lt;&lt;set $income += Math.round(_fledNPCIncome / 2)&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;expenses&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
@@ -6823,19 +6876,16 @@ The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; grows worse and the streets are
 &lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;fled-cost&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 120, -1000000, 1000000)&gt;&gt;
-&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 300, -1000000, 1000000)&gt;&gt;
-&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, -1000000, 1000000)&gt;&gt;
-&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, -1000000, 1000000)&gt;&gt;
-&lt;&lt;/if&gt;&gt;
+&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;disposable&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;fled-opening&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city, as no one wants to give &lt;&lt;defCharity &quot;charity&quot;&gt;&gt; to a &lt;&lt;defBeggars &quot;beggar&quot;&gt;&gt; from the city&lt;&lt;set $money to Math.clamp($money - 120, -1000000, 1000000)&gt;&gt;
-&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;You&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and the people who normally would be willing to employ you for a day&#39;s labor&lt;&lt;set $money to Math.clamp($money - 300, -1000000, 1000000)&gt;&gt;
+&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;disposable&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city, as no one wants to give &lt;&lt;defCharity &quot;charity&quot;&gt;&gt; to a &lt;&lt;defBeggars &quot;beggar&quot;&gt;&gt; from the city
+&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;You&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and the people who normally would be willing to employ you for a day&#39;s labor
 &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;You dislike being so far from the city
-&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 800, -1000000, 1000000)&gt;&gt;You&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and unable to practice your trade
-&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $money to Math.clamp($money - 2800, -1000000, 1000000)&gt;&gt;It&#39;s deeply irritating to have to pay rent on a country house as well as your home back in the city
+&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;You&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; lose money every day that you&#39;re away from the city and unable to practice your trade
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;It&#39;s deeply irritating to have to pay rent on a country house as well as your home back in the city
 &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;It&#39;s to your great disadvantage to be so far from Court and the centers of power
 &lt;&lt;/if&gt;&gt;, but luckily it&#39;s a price that you&#39;re able to pay for at least a little while to ensure your safety.
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
