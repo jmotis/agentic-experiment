@@ -201,6 +201,18 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Dependency:** Entirely determined by `$location`
 - **Example values:** "St Giles Cripplegate", "St Martin in the Fields", "St Olave Southwark"
 
+### `$preFireLocation`
+- **Type:** String
+- **Possible values:** `""` (default — not displaced), or any `$location` value the player had before the Great Fire
+- **Set by:** September 1666 passage, when a fire-displaced player's old location is saved before reassignment
+- **Used for:** Displayed in sidebar (StoryCaption) when non-empty; used as a flag to detect fire-displaced players (`$preFireLocation neq ""`)
+
+### `$preFireParish`
+- **Type:** String
+- **Possible values:** `""` (default — not displaced), or any `$parish` value the player had before the Great Fire
+- **Set by:** September 1666 passage, when a fire-displaced player's old parish is saved before reassignment
+- **Used for:** Displayed in sidebar (StoryCaption) when non-empty
+
 ### `$hhlocation`
 - **Type:** String
 - **Possible values:** Set to `$origin` (player's place of origin) or `"in the countryside"`
