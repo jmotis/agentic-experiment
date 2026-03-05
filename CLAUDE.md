@@ -72,7 +72,7 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
 ### Passage creation rules
 
 - **Do not create new passages.** The `patch.js` script can only update existing `<tw-passagedata>` elements matched by `pid`. It cannot insert new passages into the HTML. Any new passage added to `passages.json` will be silently ignored during patching and will not appear in the game. Only the Twine editor can create new passages.
-- **New widgets go in the Claude-widgets passage (pid 115).** When you need to define a new `<<widget>>`, append its `<<widget "name">>...<</widget>>` block to the file `passages/115-Claude-widgets.txt`. Do not attempt to create a separate widget passage.
+- **New widgets go in the Claude-widgets passage (pid 114).** When you need to define a new `<<widget>>`, append its `<<widget "name">>...<</widget>>` block to the file `passages/114-Claude-widgets.txt`. Do not attempt to create a separate widget passage.
 
 ### Additional guardrails
 
