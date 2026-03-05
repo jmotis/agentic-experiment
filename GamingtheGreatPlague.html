@@ -1149,7 +1149,7 @@ $(document).on(':passagestart', function (ev) {
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $reputation to 4&gt;&gt;&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $reputation to 8&gt;&gt;&lt;&lt;/if&gt;&gt;
-/* initialize savings*/&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;set $money to $income * 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $role to either($trades)&gt;&gt;&lt;&lt;/if&gt;&gt;
+/* initialize savings*/&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;set $role to either($trades)&gt;&gt;&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $religion is &quot;member of a dissident Protestant church&quot;&gt;&gt;
 &lt;&lt;set $religion to either(&quot;Presbyterian&quot;, &quot;Baptist&quot;, &quot;Quaker&quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $origin is &quot;somewhere else&quot;&gt;&gt;
@@ -4674,7 +4674,7 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
     &lt;&lt;/for&gt;&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;
-  &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $income to Math.round(120 * 0.8)&gt;&gt;
+  &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;&lt;&lt;set $income to Math.round(120 * 0.8)&gt;&gt;
   &lt;&lt;else&gt;&gt;&lt;&lt;set $income to 120&gt;&gt;
   &lt;&lt;/if&gt;&gt;
   /* every NPC contributes, inverted gender: female=base, male=0.8×base */
