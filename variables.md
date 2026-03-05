@@ -511,9 +511,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Notes:** Only relevant when the player has fled the city and chosen one of the two longest stay-away options.
 
 ### `$getaway`
-- **Type:** Array of objects
-- **Used for:** Tracks NPCs who successfully escape during flight events. Objects are pushed into the array and its length is checked.
-- **Dependency:** Populated during the "Fled" passage
+- **Type:** Array of integers (indices into `$NPCs`)
+- **Initial value:** `[]`
+- **Set by:** `smuggle-children` widget (pid 114) — populated with indices of healthy children/infants smuggled out of a shut-up house
+- **Used for:**
+  - Gate-checking the Flight menu link in `storyMenu` (pid 72) — when `$getaway.length gt 0`, the Flight dialog is shown even outside the normal flight time window
+  - Fast-path gate in `orphan-check` (pid 104) — when `$getaway.length gt 0`, smuggled children (health `"safe from harm"`) are moved to `$NPCsExtended` before `$NPCs` is wiped during household reassignment
+- **Cleared by:** Flight dialog (pid 116) and `return-children` widget (pid 114) when children are brought home
+- **Dependency:** Indices correspond to `$NPCs` at the time `smuggle-children` runs. The children themselves are identified by `health is "safe from harm"` for safety.
 
 ### `$beggarsluck`
 - **Type:** Integer (temporary money-quantity variable)
