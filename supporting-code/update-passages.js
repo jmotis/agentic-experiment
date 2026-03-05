@@ -126,14 +126,14 @@ const widgetEncoded = encode(widgetPlain);
 
 const passages = JSON.parse(fs.readFileSync('passages.json', 'utf8'));
 
-// --- Update Claude-widgets (pid 115) ---
-const claudeWidgets = passages.find(p => p.pid === '115');
+// --- Update Claude-widgets (pid 114) ---
+const claudeWidgets = passages.find(p => p.pid === '114');
 if (!claudeWidgets) { console.error('Claude-widgets not found!'); process.exit(1); }
 claudeWidgets.content += '\n' + widgetEncoded;
-console.log('Added NPC-death widget to Claude-widgets (pid 115)');
+console.log('Added NPC-death widget to Claude-widgets (pid 114)');
 
-// --- Update random-events widget (pid 114) ---
-const randomEvents = passages.find(p => p.pid === '114');
+// --- Update random-events widget (pid 113) ---
+const randomEvents = passages.find(p => p.pid === '113');
 if (!randomEvents) { console.error('random-events widget not found!'); process.exit(1); }
 
 const insertMarker = '/* Servant dismissal for bad reputation */';
@@ -146,7 +146,7 @@ randomEvents.content = randomEvents.content.replace(
   insertMarker,
   '/* NPC death from non-plague causes */\n&lt;&lt;NPC-death&gt;&gt;\n\n' + insertMarker
 );
-console.log('Inserted <<NPC-death>> call into random-events widget (pid 114)');
+console.log('Inserted <<NPC-death>> call into random-events widget (pid 113)');
 
 fs.writeFileSync('passages.json', JSON.stringify(passages, null, 2));
 console.log('passages.json updated successfully');
