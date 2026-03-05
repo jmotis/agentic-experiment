@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.63" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.64" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -4626,28 +4626,74 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
-</tw-passagedata><tw-passagedata pid="77" name="money-widgets" tags="widget" position="1200,25" size="100,100">&lt;&lt;widget &quot;income&quot;&gt;&gt;
-&lt;&lt;set _hhSize to $NPCs.length + 1&gt;&gt;
+</tw-passagedata><tw-passagedata pid="77" name="money-widgets" tags="widget" position="1200,25" size="100,100">&lt;&lt;widget &quot;income&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
 &lt;&lt;if $role is &quot;unemployed&quot;&gt;&gt;&lt;&lt;set $income to 0&gt;&gt;
-&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $income to 120&gt;&gt;
-&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $income to 300&gt;&gt;
-&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;set $income to 300&gt;&gt;
-&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $income to 800&gt;&gt;
-&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $income to 4000&gt;&gt;
 &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $income to 17600&gt;&gt;
+&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;
+  &lt;&lt;if $age is &quot;child&quot;&gt;&gt;&lt;&lt;set $income to 40&gt;&gt;
+  &lt;&lt;elseif $age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set $income to 80&gt;&gt;
+  &lt;&lt;else&gt;&gt;&lt;&lt;set $income to 300&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;
+  &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $income to 120&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $income to 300&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $income to 800&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $income to 4000&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+  /* NPC child/adolescent income contributions */
+  &lt;&lt;if $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot;&gt;&gt;
+    &lt;&lt;for _ii = 0; _ii &lt; $NPCs.length; _ii++&gt;&gt;
+      &lt;&lt;if $NPCs[_ii].health isnot &quot;deceased&quot; and $NPCs[_ii].health isnot &quot;deceased-pq&quot;&gt;&gt;
+        &lt;&lt;if $NPCs[_ii].age is &quot;child&quot;&gt;&gt;&lt;&lt;set $income += 40&gt;&gt;
+        &lt;&lt;elseif $NPCs[_ii].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set $income += 80&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;if $lodger is 1&gt;&gt;&lt;&lt;set $income to $income + $lodgerRent&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/widget&gt;&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
-&lt;&lt;widget &quot;expenses&quot;&gt;&gt;
-&lt;&lt;set _hhSize to $NPCs.length + 1&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $expenses to 114&gt;&gt;
-&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $expenses to 240&gt;&gt;
-&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;set $expenses to 220&gt;&gt;
-&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $expenses to 560&gt;&gt;
-&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $expenses to 2800&gt;&gt;
-&lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $expenses to 12800&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/widget&gt;&gt;
+&lt;&lt;widget &quot;expenses&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
+&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;
+  &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set $expenses to 20&gt;&gt;
+  &lt;&lt;else&gt;&gt;&lt;&lt;set $expenses to 220&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;
+  &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set _baseExp to 114&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set _baseExp to 240&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _baseExp to 560&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _baseExp to 2800&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set _baseExp to 12800&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+  /* scale by living NPCs in household */
+  &lt;&lt;set _hhWeight to 1.0&gt;&gt;
+  &lt;&lt;for _ei = 0; _ei &lt; $NPCs.length; _ei++&gt;&gt;
+    &lt;&lt;if $NPCs[_ei].health isnot &quot;deceased&quot; and $NPCs[_ei].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;if $NPCs[_ei].age is &quot;infant&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.2&gt;&gt;
+      &lt;&lt;elseif $NPCs[_ei].age is &quot;child&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.4&gt;&gt;
+      &lt;&lt;elseif $NPCs[_ei].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.6&gt;&gt;
+      &lt;&lt;elseif $NPCs[_ei].age is &quot;young adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.8&gt;&gt;
+      &lt;&lt;elseif $NPCs[_ei].age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 1.0&gt;&gt;
+      &lt;&lt;elseif $NPCs[_ei].age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.8&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  /* also count servants in household */
+  &lt;&lt;for _ei = 0; _ei &lt; $NPCsServants.length; _ei++&gt;&gt;
+    &lt;&lt;if $NPCsServants[_ei].health isnot &quot;deceased&quot; and $NPCsServants[_ei].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;if $NPCsServants[_ei].age is &quot;infant&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.2&gt;&gt;
+      &lt;&lt;elseif $NPCsServants[_ei].age is &quot;child&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.4&gt;&gt;
+      &lt;&lt;elseif $NPCsServants[_ei].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.6&gt;&gt;
+      &lt;&lt;elseif $NPCsServants[_ei].age is &quot;young adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.8&gt;&gt;
+      &lt;&lt;elseif $NPCsServants[_ei].age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 1.0&gt;&gt;
+      &lt;&lt;elseif $NPCsServants[_ei].age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.8&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  &lt;&lt;set $expenses to Math.round(_baseExp * _hhWeight)&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;disposable&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
 &lt;&lt;set _disposable to ($income - $expenses)&gt;&gt;

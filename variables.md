@@ -146,13 +146,15 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 
 ### `$income`
 - **Type:** Integer (monthly income in pence)
-- **Possible values:** `0`, `120`, `300`, `800`, `4000`, `17600`
-- **Dependency:** Set based on `$socio`; changes if the player takes a plague worker role
+- **Base values by `$socio`:** beggars `120`, day labourers `300`, servants `300` (child `40`, adolescent `80`), artisans `800`, merchants `4000`, nobles `17600`
+- **Household scaling:** For day labourers and artisans, living NPC children add `+40` and adolescents add `+80` each. Servant NPC children/adolescents contribute nothing. Merchants and nobles have no NPC income contributions. Beggars have flat income.
+- **Dependency:** Set based on `$socio`, `$age`, `$role`, and living `$NPCs` ages; changes if the player takes a plague worker role
 
 ### `$expenses`
 - **Type:** Integer (monthly expenses in pence)
-- **Possible values:** `0`, `120`, `220`, `240`, `560`, `2800`, `12800`
-- **Dependency:** Set based on `$socio` and household size
+- **Base values by `$socio`:** beggars `114`, day labourers `240`, servants `220` (child/adolescent `20`), artisans `560`, merchants `2800`, nobles `12800`
+- **Household scaling:** For non-servant classes, base is multiplied by total household weight: player = 1.0, plus each living NPC in `$NPCs` and `$NPCsServants` weighted by age (infant 0.2, child 0.4, adolescent 0.6, young adult 0.8, middle-aged adult 1.0, elderly adult 0.8). Servant expenses are flat (no household scaling).
+- **Dependency:** Set based on `$socio`, `$age`, and living members of `$NPCs` and `$NPCsServants`
 
 ### `$pounds`
 - **Type:** Integer (derived display variable)
