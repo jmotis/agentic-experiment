@@ -3404,19 +3404,13 @@ Unfortunately, that&#39;s not how &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; w
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;orphan-check&gt;&gt;
 Now you just have to figure out how to overcome your disgrace and find your way back into the King&#39;s good graces. Groveling will obviously have to be involved, but that won&#39;t be enough. Do you also:&lt;br&gt;
+&lt;ul&gt;
 &lt;&lt;if $hoh is 1&gt;&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;&lt;linkreplace &quot;help him find his next mistress&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;set $money -= $income&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Helped the King find his next mistress&quot;, money: 0 - $income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You hope the King&#39;s favor will be restored soon enough.-&gt;Reconnecting]]&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;linkreplace &quot;give him money to fund the war effort&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;set $money -= $income&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Gave the King money to fund the war effort&quot;, money: 0 - $income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You hope the King&#39;s favor will be restored soon enough.-&gt;Reconnecting]]&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;linkreplace &quot;write a letter to the Queen begging her to intercede on your behalf&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Wrote to the Queen begging her to intercede&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You hope the King&#39;s favor will be restored soon enough.-&gt;Reconnecting]]&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;linkreplace &quot;write a letter to the King with poems composed in his honor&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Wrote poems in the King&#39;s honor&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You hope the King&#39;s favor will be restored soon enough.-&gt;Reconnecting]]&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;linkreplace &quot;help him find his next mistress&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;set $money -= $income&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Helped the King find his next mistress&quot;, money: 0 - $income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You hire an artist to paint portraits of the most beautiful women at court to present to the King and hope it will help restore you to favor.-&gt;Reconnecting]]&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;linkreplace &quot;give him money to fund the war effort&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;set $money -= $income&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Gave the King money to fund the war effort&quot;, money: 0 - $income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You pour money into the war effort and hope it will help restor you to favor.-&gt;Reconnecting]]&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+&lt;li&gt;&lt;&lt;linkreplace &quot;write a letter to the Queen begging her to intercede on your behalf&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Wrote to the Queen begging her to intercede&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You write to the Queen and hope that her favor will help restore you to the King&#39;s favor.-&gt;Reconnecting]]&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;linkreplace &quot;write a letter to the King with poems composed in his honor&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Wrote poems in the King&#39;s honor&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You collect several poems composed in the King&#39;s honor and add a new one of your own, which you send to the King in hopes of regaining his favor.-&gt;Reconnecting]]&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;&lt;else&gt;&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;&lt;linkreplace &quot;write a letter to the Queen begging her to intercede on your behalf&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Wrote to the Queen begging her to intercede&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You hope the King&#39;s favor will be restored soon enough.-&gt;Reconnecting]]&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;linkreplace &quot;write a letter to the King with poems composed in his honor&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Wrote poems in the King&#39;s honor&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You hope the King&#39;s favor will be restored soon enough.-&gt;Reconnecting]]&lt;&lt;/linkreplace&gt;&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/linkreplace&gt;&gt;
 &lt;&lt;/linkreplace&gt;&gt;
@@ -3433,28 +3427,16 @@ The &lt;&lt;defPesthouse &quot;pesthouse&quot;&gt;&gt; is a terrible place to be
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;orphan-check&gt;&gt;
 Now you just have to figure out how to overcome your disgrace when you return home to your neighborhood. You decide to start by:&lt;br&gt;
-&lt;&lt;if $hoh is 1 and $money gte $income&gt;&gt;
-&lt;&lt;linkreplace &quot;giving one month&#39;s income to the poor&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $money -= $income&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Gave one month&#39;s income to the poor as penance&quot;, money: 0 - $income, repDelta: 0, repBefore: _repBefore, infectPct: null})&gt;&gt;
-&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You pray your penance is enough to restore your good name.-&gt;Reconnecting]]
-&lt;&lt;/linkreplace&gt;&gt;
-&lt;&lt;linkreplace &quot;giving one month&#39;s income to the poor //and// performing public penance in church&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $money -= $income&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Gave one month&#39;s income and performed public penance&quot;, money: 0 - $income, repDelta: 0, repBefore: _repBefore, infectPct: null})&gt;&gt;
-&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You pray your penance is enough to restore your good name.-&gt;Reconnecting]]
-&lt;&lt;/linkreplace&gt;&gt;
-&lt;&lt;linkreplace &quot;performing public penance in church&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Performed public penance in church&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
-&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You pray your penance is enough to restore your good name.-&gt;Reconnecting]]
-&lt;&lt;/linkreplace&gt;&gt;
-&lt;&lt;elseif $hoh is 1&gt;&gt;
-&lt;&lt;linkreplace &quot;giving one month&#39;s income to the poor //and// performing public penance in church&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $money -= $income&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Gave one month&#39;s income and performed public penance&quot;, money: 0 - $income, repDelta: 0, repBefore: _repBefore, infectPct: null})&gt;&gt;
-&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You pray your penance is enough to restore your good name.-&gt;Reconnecting]]
-&lt;&lt;/linkreplace&gt;&gt;
-&lt;&lt;linkreplace &quot;performing public penance in church&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Performed public penance in church&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
-&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You pray your penance is enough to restore your good name.-&gt;Reconnecting]]
-&lt;&lt;/linkreplace&gt;&gt;
-&lt;&lt;else&gt;&gt;
-&lt;&lt;linkreplace &quot;performing public penance in church&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Performed public penance in church&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
+&lt;ul&gt;
+&lt;&lt;if $hoh is 1&gt;&gt;
+&lt;&lt;linkreplace &quot;giving one month&#39;s income to the poor&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;set $money -= $income&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Gave one month&#39;s income to the poor as penance&quot;, money: 0 - $income, repDelta: 1, repBefore: _repBefore, infectPct: null})&gt;&gt;
 &lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You pray your penance is enough to restore your good name.-&gt;Reconnecting]]
 &lt;&lt;/linkreplace&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;linkreplace &quot;performing public penance in church&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Performed public penance in church&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
+&lt;&lt;set $pesthouseReparation to 1&gt;&gt;[[You pray your penance is enough to restore your good name.-&gt;Reconnecting]]
+&lt;&lt;/linkreplace&gt;&gt;
+&lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="45" name="deported" tags="" position="1900,650" size="100,100">Since you refuse to work in London, the local authorities decide to have you deported back to $origin.
 &lt;br&gt;
