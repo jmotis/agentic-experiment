@@ -234,6 +234,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Initial value:** `0`
 - **Used for:** Controls whether infected NPC health is displayed as "healthy" (hidden) or "infected" (revealed) in the sidebar
 
+### `$pesthouseReparation`
+- **Type:** Integer (boolean-like)
+- **Possible values:** `0` (default), `1` (player has completed pesthouse/banishment reparation choice)
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** Set to `1` in `YouPesthouse` (pid 44) or `banished` (pid 43) when the player selects a reparation option after surviving plague in the pesthouse or country estate. Reset to `0` in `Reconnecting` (pid 83) after the reparation branch processes.
+- **Used for:** Routes players arriving at `Reconnecting` from pesthouse/banishment through a separate branch that skips quarantine-related checks (infected family, quarantine swap restoration) and instead provides catch-up summaries, funeral choices, and storyline return.
+- **Dependencies:** Checked in `Reconnecting` (pid 83). Set in `YouPesthouse` (pid 44) and `banished` (pid 43).
+
 ### `$quarantine`
 - **Type:** Integer
 - **Range:** 0 -- 6
