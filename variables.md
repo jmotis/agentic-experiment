@@ -147,13 +147,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 ### `$income`
 - **Type:** Integer (monthly income in pence)
 - **Base values by `$socio`:** beggars `120`, day labourers `300`, servants `300` (child `40`, adolescent `80`), artisans `800`, merchants `4000`, nobles `17600`
-- **Household scaling:** For day labourers and artisans, living NPC children add `+40` and adolescents add `+80` each. Servant NPC children/adolescents contribute nothing. Merchants and nobles have no NPC income contributions. Beggars have flat income.
-- **Dependency:** Set based on `$socio`, `$age`, `$role`, and living `$NPCs` ages; changes if the player takes a plague worker role
+- **Gender scaling:** Day labourers, artisans, merchants, servants: adult male = base rate, adult female = 0.8 × base rate (applies to player and NPC adults). Beggars: inverted gender (female = base, male = 0.8 × base) for every NPC regardless of age.
+- **Household scaling:** Day labourers/artisans: NPC adults contribute at gender-based rate, children +40d, adolescents +80d. Servants: NPC adults contribute at gender-based rate, NPC children/adolescents contribute nothing. Merchants: NPC adults contribute at gender-based rate, children/adolescents contribute nothing. Beggars: every NPC contributes at inverted-gender rate. Nobles: flat income.
+- **Dependency:** Set based on `$socio`, `$age`, `$gender`, `$role`, and living `$NPCs` ages/genders; changes if the player takes a plague worker role
 
 ### `$expenses`
 - **Type:** Integer (monthly expenses in pence)
 - **Base values by `$socio`:** beggars `114`, day labourers `240`, servants `220` (child/adolescent `20`), artisans `560`, merchants `2800`, nobles `12800`
-- **Household scaling:** For non-servant classes, base is multiplied by total household weight: player = 1.0, plus each living NPC in `$NPCs` and `$NPCsServants` weighted by age (infant 0.2, child 0.4, adolescent 0.6, young adult 0.8, middle-aged adult 1.0, elderly adult 0.8). Servant expenses are flat (no household scaling).
+- **Household scaling:** Base is multiplied by total household weight: player = 1.0, plus each living NPC in `$NPCs` and `$NPCsServants` weighted by age (infant 0.2, child 0.4, adolescent 0.6, young adult 0.8, middle-aged adult 1.0, elderly adult 0.8). Servant child/adolescent players have flat 20d expenses (no scaling).
 - **Dependency:** Set based on `$socio`, `$age`, and living members of `$NPCs` and `$NPCsServants`
 
 ### `$pounds`
