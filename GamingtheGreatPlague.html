@@ -4121,8 +4121,8 @@ You decide to:
     &lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
     &lt;&lt;set-caretaker&gt;&gt;&lt;&lt;if $hoh is 1&gt;&gt;You decide to:&lt;&lt;else&gt;&gt;You convince your &lt;&lt;if $caretakerLabel isnot &quot;&quot;&gt;&gt;&lt;&lt;print $caretakerLabel&gt;&gt;&lt;&lt;else&gt;&gt;family&lt;&lt;/if&gt;&gt; to&lt;&lt;/if&gt;&gt;
         &lt;ul&gt;
-            &lt;li&gt;[[Remain in the city with your entire household-&gt;Stay][$fled to 4; $decisions.push({text: &quot;Remained in the city with household&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
-            &lt;&lt;if $NPCs.length gt 0&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;li&gt;[[Remain in the city&lt;&lt;if $caretakerLabel isnot &quot;&quot;&gt;&gt; with your &lt;&lt;print $caretakerLabel&gt;&gt;&lt;&lt;/if&gt;&gt;, but send the rest of your household away.-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+            &lt;li&gt;Remain in the city [[with your entire household-&gt;Stay][$fled to 4; $decisions.push({text: &quot;Remained in the city with household&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
+            &lt;&lt;if $NPCs.length gt 0&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;li&gt;Remain in the city&lt;&lt;if $caretakerLabel isnot &quot;&quot;&gt;&gt; with your &lt;&lt;print $caretakerLabel&gt;&gt;&lt;&lt;/if&gt;&gt;, but [[send the rest of your household away.-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent household away but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
             &lt;li&gt;&lt;&lt;if $reputation gt 5&gt;&gt;[[Flee the city with your entire household.-&gt;Fled][_repBefore to $reputation; $reputation to Math.clamp($reputation - 1, 0, 10); $fled to 6; $money -= $income; $decisions.push({text: &quot;Fled the city with household&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
                 &lt;&lt;else&gt;&gt;
                     &lt;&lt;if random(1,2) eq 1&gt;&gt;[[Flee the city with your entire household.-&gt;Fled][_repBefore to $reputation; $reputation to Math.clamp($reputation - 1, 0, 10); $fled to 6; $money -= $income; $decisions.push({text: &quot;Fled the city with household&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]&lt;&lt;else&gt;&gt;[[Flee the city with your entire household.-&gt;Stay][_repBefore to $reputation; $reputation to Math.clamp($reputation - 1, 0, 10); $fled to 7; $money -= $income; $decisions.push({text: &quot;Attempted to flee but was turned away&quot;, money: -$income, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
@@ -6860,13 +6860,7 @@ Although £50 is a small fortune, the goldsmiths are some of the wealthiest and 
   &lt;&lt;set $caretakerLabel to $masterTitle&gt;&gt;
 &lt;&lt;elseif $hoh is 4&gt;&gt;
   &lt;&lt;set $caretakerLabel to &quot;husband&quot;&gt;&gt;
-&lt;&lt;elseif $hoh is 2&gt;&gt;
-  &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;
-    &lt;&lt;set $caretakerLabel to &quot;father&quot;&gt;&gt;
-  &lt;&lt;else&gt;&gt;
-    &lt;&lt;set $caretakerLabel to &quot;parent&quot;&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $hoh is 0&gt;&gt;
+&lt;&lt;elseif $hoh is 0 or $hoh is 2&gt;&gt;
   /* Priority 1: father or step-father */
   &lt;&lt;for _ci to 0; _ci lt $NPCs.length; _ci++&gt;&gt;
     &lt;&lt;if $caretakerLabel is &quot;&quot; and ($NPCs[_ci].relationship is &quot;father&quot; or $NPCs[_ci].relationship is &quot;step-father&quot;) and $NPCs[_ci].health isnot &quot;deceased&quot;&gt;&gt;
