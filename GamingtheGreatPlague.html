@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.3" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.4" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1222,12 +1222,12 @@ $(document).on(':passagestart', function (ev) {
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
-/* sort arrays by age */
+/* sort arrays by household precedence */
 
-&lt;&lt;set $NPCs to $NPCs.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;
-&lt;&lt;set $NPCsMaster to $NPCsMaster.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;
-&lt;&lt;set $NPCsExtended to $NPCsExtended.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;
-&lt;&lt;set $NPCsServants to $NPCsServants.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;
+&lt;&lt;orderNPCs &quot;$NPCs&quot;&gt;&gt;
+&lt;&lt;orderNPCs &quot;$NPCsMaster&quot;&gt;&gt;
+&lt;&lt;orderNPCs &quot;$NPCsExtended&quot;&gt;&gt;
+&lt;&lt;orderNPCs &quot;$NPCsServants&quot;&gt;&gt;
 
 /* determine hoh and set pronouns*/
 &lt;&lt;set-hoh&gt;&gt;
@@ -6227,6 +6227,45 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="114" name="Claude-widgets" tags="widget" position="25,1100" size="100,100">/* all widgets generated via Claude  or other AI should be temporarily placed here then manually moved to new locations as needed */
 
+/* orderNPCs — sorts an NPC array by household precedence instead of raw age.
+   Usage: &lt;&lt;orderNPCs &quot;$NPCs&quot;&gt;&gt;  (pass the variable name as a string)
+   Priority:
+     1. landlord / master
+     2. landlord&#39;s wife / mistress
+     3. relationship includes &quot;father&quot;
+     4. relationship includes &quot;mother&quot;
+     5. relationship includes &quot;uncle&quot;
+     6. relationship includes &quot;aunt&quot;
+     7. guardian / guardian&#39;s wife
+     8. everyone else without &quot;servant&quot; or &quot;lodger&quot; — by age
+     9. servants — by age
+    10. lodgers — by age
+*/
+&lt;&lt;widget &quot;orderNPCs&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;
+&lt;&lt;set _arrName to _args[0]&gt;&gt;
+&lt;&lt;set _arr to State.getVar(_arrName)&gt;&gt;
+&lt;&lt;set _arr to _arr.sort(function(a, b) {
+  var _rel = function(npc) { return (npc.relationship || &quot;&quot;).toLowerCase(); };
+  var _rank = function(npc) {
+    var r = _rel(npc);
+    if (r === &quot;landlord&quot; || r === &quot;master&quot;) return 1;
+    if (r === &quot;landlord&#39;s wife&quot; || r === &quot;mistress&quot;) return 2;
+    if (r.indexOf(&quot;father&quot;) &gt;= 0) return 3;
+    if (r.indexOf(&quot;mother&quot;) &gt;= 0) return 4;
+    if (r.indexOf(&quot;uncle&quot;) &gt;= 0) return 5;
+    if (r.indexOf(&quot;aunt&quot;) &gt;= 0) return 6;
+    if (r === &quot;guardian&quot; || r === &quot;guardian&#39;s wife&quot;) return 7;
+    if (r.indexOf(&quot;servant&quot;) &gt;= 0) return 9;
+    if (r.indexOf(&quot;lodger&quot;) &gt;= 0) return 10;
+    return 8;
+  };
+  var ra = _rank(a), rb = _rank(b);
+  if (ra !== rb) return ra - rb;
+  return (b.agenum || 0) - (a.agenum || 0);
+})&gt;&gt;
+&lt;&lt;run State.setVar(_arrName, _arr)&gt;&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
 &lt;&lt;widget &quot;risk-visualization&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;
 /* ── 1. Compute monthly parish baseline risk ── */
@@ -6961,8 +7000,8 @@ Although £50 is a small fortune, the goldsmiths are some of the wealthiest and 
 /* Concatenate existing household members after landlord&#39;s household */
 &lt;&lt;set $NPCs to $NPCs.concat(_existingNPCs)&gt;&gt;
 
-/* Sort by age descending */
-&lt;&lt;set $NPCs to $NPCs.sort(function(a, b) { return (b.agenum || 0) - (a.agenum || 0); })&gt;&gt;
+/* Sort by household precedence */
+&lt;&lt;orderNPCs &quot;$NPCs&quot;&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="124" name="hoh caretaker" tags="widget" position="275,1100" size="100,100">&lt;&lt;widget &quot;set-hoh&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $agenum lt 16&gt;&gt;
   &lt;&lt;set $hoh to 0&gt;&gt;
@@ -7036,7 +7075,7 @@ Although £50 is a small fortune, the goldsmiths are some of the wealthiest and 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="125" name="sidebar NPCs" tags="widget menu" position="775,275" size="100,100">/* list NPCs in sidebar menu */
 &lt;&lt;widget &quot;ListNPCs&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;set $NPCs to $NPCs.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsMaster to $NPCsMaster.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsExtended to $NPCsExtended.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;set $NPCsServants to $NPCsServants.sort((a, b) =&gt; (b.agenum || 0) - (a.agenum || 0))&gt;&gt;&lt;&lt;/silently&gt;&gt;
+&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCs&quot;&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCsMaster&quot;&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCsExtended&quot;&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCsServants&quot;&gt;&gt;&lt;&lt;/silently&gt;&gt;
 &lt;&lt;set _landlordCount to 0&gt;&gt;&lt;&lt;for _lci range $NPCs&gt;&gt;&lt;&lt;if _lci.relationship.startsWith(&quot;landlord&quot;)&gt;&gt;&lt;&lt;set _landlordCount += 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;
 Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.length&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _hhSize to $NPCs.length - _landlordCount + $NPCsServants.length + $NPCsMaster.length&gt;&gt;&lt;&lt;/if&gt;&gt; _hhSize&lt;br&gt;&lt;br&gt;
 
