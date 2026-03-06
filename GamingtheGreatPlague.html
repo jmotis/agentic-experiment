@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.2" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.3" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3416,6 +3416,8 @@ But at least you didn&#39;t die of plague!
 
 &lt;&lt;stats-cumulative-risk&gt;&gt;
 
+&lt;&lt;risk-visualization&gt;&gt;
+
 &lt;hr&gt;
 
 &lt;h4&gt;The Impact of Your Decisions&lt;/h4&gt;
@@ -6225,6 +6227,193 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="114" name="Claude-widgets" tags="widget" position="25,1100" size="100,100">/* all widgets generated via Claude  or other AI should be temporarily placed here then manually moved to new locations as needed */
 
+&lt;&lt;widget &quot;risk-visualization&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;silently&gt;&gt;
+/* ── 1. Compute monthly parish baseline risk ── */
+&lt;&lt;set _rates to $parishRate[$parish]&gt;&gt;
+&lt;&lt;set _tLen to $timeline.length&gt;&gt;
+&lt;&lt;set _parishPct to []&gt;&gt;
+&lt;&lt;for _i to 0; _i lt _tLen; _i++&gt;&gt;
+&lt;&lt;if _rates[_i] lt 1000&gt;&gt;
+&lt;&lt;set _parishPct.push(Math.round((1.0 / _rates[_i]) * 10000) / 100)&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;set _parishPct.push(0)&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+/* ── 2. Bin decisions by month, split role vs other ── */
+&lt;&lt;set _rolePct to []&gt;&gt;
+&lt;&lt;set _decPct to []&gt;&gt;
+&lt;&lt;for _i to 0; _i lt _tLen; _i++&gt;&gt;
+&lt;&lt;set _rolePct.push(0)&gt;&gt;
+&lt;&lt;set _decPct.push(0)&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+&lt;&lt;set _rolePatterns to [&quot;Transported plague corpses&quot;, &quot;Examined plague corpses&quot;, &quot;Nursed a plague patient&quot;, &quot;Guarded a plague house&quot;]&gt;&gt;
+
+&lt;&lt;for _di to 0; _di lt $decisions.length; _di++&gt;&gt;
+&lt;&lt;set _d to $decisions[_di]&gt;&gt;
+&lt;&lt;if typeof _d is &quot;object&quot; and _d.infectPct neq null and _d.infectPct gt 0&gt;&gt;
+/* Extract month from text (everything before the colon) */
+&lt;&lt;set _colonIdx to _d.text.indexOf(&quot;:&quot;)&gt;&gt;
+&lt;&lt;if _colonIdx gt 0&gt;&gt;
+&lt;&lt;set _monthStr to _d.text.slice(0, _colonIdx)&gt;&gt;
+&lt;&lt;set _mIdx to $timeline.indexOf(_monthStr)&gt;&gt;
+&lt;&lt;if _mIdx gte 0&gt;&gt;
+/* Check if it matches a role pattern */
+&lt;&lt;set _isRole to false&gt;&gt;
+&lt;&lt;for _rp to 0; _rp lt _rolePatterns.length; _rp++&gt;&gt;
+&lt;&lt;if _d.text.indexOf(_rolePatterns[_rp]) gte 0&gt;&gt;&lt;&lt;set _isRole to true&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;if _isRole&gt;&gt;
+&lt;&lt;set _rolePct[_mIdx] to _rolePct[_mIdx] + _d.infectPct&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;set _decPct[_mIdx] to _decPct[_mIdx] + _d.infectPct&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+/* ── 3. Find max total risk for chart scaling ── */
+&lt;&lt;set _maxRisk to 0&gt;&gt;
+&lt;&lt;for _i to 0; _i lt _tLen; _i++&gt;&gt;
+&lt;&lt;set _total to _parishPct[_i] + _rolePct[_i] + _decPct[_i]&gt;&gt;
+&lt;&lt;if _total gt _maxRisk&gt;&gt;&lt;&lt;set _maxRisk to _total&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+/* Round max up to a nice ceiling */
+&lt;&lt;if _maxRisk lt 5&gt;&gt;&lt;&lt;set _chartMax to 5&gt;&gt;
+&lt;&lt;elseif _maxRisk lt 10&gt;&gt;&lt;&lt;set _chartMax to 10&gt;&gt;
+&lt;&lt;elseif _maxRisk lt 20&gt;&gt;&lt;&lt;set _chartMax to 20&gt;&gt;
+&lt;&lt;elseif _maxRisk lt 50&gt;&gt;&lt;&lt;set _chartMax to 50&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;set _chartMax to Math.ceil(_maxRisk / 10) * 10&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+
+/* ── 4. Compute cumulative risk for each layer ── */
+&lt;&lt;set _survParish to 1.0&gt;&gt;
+&lt;&lt;set _survRole to 1.0&gt;&gt;
+&lt;&lt;set _survAll to 1.0&gt;&gt;
+&lt;&lt;for _i to 0; _i lt _tLen; _i++&gt;&gt;
+&lt;&lt;if _parishPct[_i] gt 0&gt;&gt;
+&lt;&lt;set _survParish to _survParish * (1.0 - (_parishPct[_i] / 100))&gt;&gt;
+&lt;&lt;set _survRole to _survRole * (1.0 - (_parishPct[_i] / 100))&gt;&gt;
+&lt;&lt;set _survAll to _survAll * (1.0 - (_parishPct[_i] / 100))&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _rolePct[_i] gt 0&gt;&gt;
+&lt;&lt;set _survRole to _survRole * (1.0 - (_rolePct[_i] / 100))&gt;&gt;
+&lt;&lt;set _survAll to _survAll * (1.0 - (_rolePct[_i] / 100))&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _decPct[_i] gt 0&gt;&gt;
+&lt;&lt;set _survAll to _survAll * (1.0 - (_decPct[_i] / 100))&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _cumParish to Math.round((1.0 - _survParish) * 100)&gt;&gt;
+&lt;&lt;set _cumRole to Math.round((1.0 - _survRole) * 100) - _cumParish&gt;&gt;
+&lt;&lt;if _cumRole lt 0&gt;&gt;&lt;&lt;set _cumRole to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set _cumDec to Math.round((1.0 - _survAll) * 100) - _cumParish - _cumRole&gt;&gt;
+&lt;&lt;if _cumDec lt 0&gt;&gt;&lt;&lt;set _cumDec to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set _cumTotal to _cumParish + _cumRole + _cumDec&gt;&gt;
+
+/* ── 5. Determine which months to show (skip zero-risk months at edges) ── */
+&lt;&lt;set _firstActive to _tLen&gt;&gt;
+&lt;&lt;set _lastActive to 0&gt;&gt;
+&lt;&lt;for _i to 0; _i lt _tLen; _i++&gt;&gt;
+&lt;&lt;set _total to _parishPct[_i] + _rolePct[_i] + _decPct[_i]&gt;&gt;
+&lt;&lt;if _total gt 0&gt;&gt;
+&lt;&lt;if _i lt _firstActive&gt;&gt;&lt;&lt;set _firstActive to _i&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _i gt _lastActive&gt;&gt;&lt;&lt;set _lastActive to _i&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+/* Include one month of padding on each side */
+&lt;&lt;if _firstActive gt 0&gt;&gt;&lt;&lt;set _firstActive to _firstActive - 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _lastActive lt _tLen - 1&gt;&gt;&lt;&lt;set _lastActive to _lastActive + 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set _visCount to _lastActive - _firstActive + 1&gt;&gt;
+
+/* ── 6. Short month labels ── */
+&lt;&lt;set _shortLabels to [&quot;Dec 64&quot;, &quot;Jan 65&quot;, &quot;May 65&quot;, &quot;Jun 65&quot;, &quot;Jul 65&quot;, &quot;Aug 65&quot;, &quot;Sep 65&quot;, &quot;Oct 65&quot;, &quot;Nov 65&quot;, &quot;Dec 65&quot;, &quot;Jan 66&quot;, &quot;Feb 66&quot;, &quot;Mar 66&quot;, &quot;Apr 66&quot;, &quot;May 66&quot;, &quot;Jun 66&quot;, &quot;Jul 66&quot;, &quot;Aug 66&quot;, &quot;Sep 66&quot;, &quot;Oct 66&quot;, &quot;Nov 66&quot;, &quot;Dec 66&quot;]&gt;&gt;
+
+/* ── 7. Check if player has any role/decision risk to show ── */
+&lt;&lt;set _hasRole to false&gt;&gt;
+&lt;&lt;set _hasDec to false&gt;&gt;
+&lt;&lt;for _i to 0; _i lt _tLen; _i++&gt;&gt;
+&lt;&lt;if _rolePct[_i] gt 0&gt;&gt;&lt;&lt;set _hasRole to true&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _decPct[_i] gt 0&gt;&gt;&lt;&lt;set _hasDec to true&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;/silently&gt;&gt;
+
+&lt;h3&gt;Your Plague Risk Over Time&lt;/h3&gt;
+
+&lt;div style=&quot;position: relative; width: 100%; max-width: 600px; margin: 0 auto;&quot;&gt;
+/* ── Y-axis labels ── */
+&lt;div style=&quot;position: relative; height: 200px; margin-left: 40px; margin-bottom: 4px; display: flex; align-items: flex-end;&quot;&gt;
+/* Y-axis tick labels */
+&lt;div style=&quot;position: absolute; left: -40px; top: 0; height: 100%; display: flex; flex-direction: column; justify-content: space-between; font-size: 0.7em; color: #aaa;&quot;&gt;
+&lt;span&gt;&lt;&lt;print _chartMax&gt;&gt;%&lt;/span&gt;
+&lt;span&gt;&lt;&lt;print Math.round(_chartMax / 2)&gt;&gt;%&lt;/span&gt;
+&lt;span&gt;0%&lt;/span&gt;
+&lt;/div&gt;
+
+/* ── Bar container ── */
+&lt;div style=&quot;display: flex; align-items: flex-end; gap: 2px; height: 100%; width: 100%; border-left: 1px solid #555; border-bottom: 1px solid #555; padding: 0 2px;&quot;&gt;
+&lt;&lt;for _i to _firstActive; _i lte _lastActive; _i++&gt;&gt;
+&lt;&lt;set _pH to (_parishPct[_i] / _chartMax) * 200&gt;&gt;
+&lt;&lt;set _rH to (_rolePct[_i] / _chartMax) * 200&gt;&gt;
+&lt;&lt;set _dH to (_decPct[_i] / _chartMax) * 200&gt;&gt;
+&lt;&lt;set _barW to &quot;calc((100% - &quot; + (_visCount * 2) + &quot;px) / &quot; + _visCount + &quot;)&quot;&gt;&gt;
+&lt;div style=&quot;flex: 1; display: flex; flex-direction: column; justify-content: flex-end; min-width: 0;&quot;&gt;
+&lt;&lt;if _decPct[_i] gt 0&gt;&gt;&lt;div title=&quot;&lt;&lt;print _shortLabels[_i]&gt;&gt; decisions: &lt;&lt;print _decPct[_i]&gt;&gt;%&quot; style=&quot;height: &lt;&lt;print _dH&gt;&gt;px; background: #DAA520; min-height: 1px;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _rolePct[_i] gt 0&gt;&gt;&lt;div title=&quot;&lt;&lt;print _shortLabels[_i]&gt;&gt; role: &lt;&lt;print _rolePct[_i]&gt;&gt;%&quot; style=&quot;height: &lt;&lt;print _rH&gt;&gt;px; background: #B22222; min-height: 1px;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _parishPct[_i] gt 0&gt;&gt;&lt;div title=&quot;&lt;&lt;print _shortLabels[_i]&gt;&gt; parish: &lt;&lt;print (Math.round(_parishPct[_i] * 10) / 10)&gt;&gt;%&quot; style=&quot;height: &lt;&lt;print _pH&gt;&gt;px; background: #8B7355; min-height: 1px;&quot;&gt;&lt;/div&gt;&lt;&lt;else&gt;&gt;&lt;div style=&quot;height: 0;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;/div&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+/* ── X-axis labels ── */
+&lt;div style=&quot;display: flex; gap: 2px; margin-left: 40px; padding: 0 2px;&quot;&gt;
+&lt;&lt;for _i to _firstActive; _i lte _lastActive; _i++&gt;&gt;
+&lt;div style=&quot;flex: 1; text-align: center; font-size: 0.6em; color: #aaa; overflow: hidden; white-space: nowrap; min-width: 0;&quot;&gt;&lt;&lt;print _shortLabels[_i]&gt;&gt;&lt;/div&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;/div&gt;
+
+/* ── Legend ── */
+&lt;div style=&quot;display: flex; gap: 12px; margin-top: 12px; margin-left: 40px; flex-wrap: wrap; font-size: 0.85em;&quot;&gt;
+&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #8B7355; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Living in $parish&lt;/div&gt;
+&lt;&lt;if _hasRole&gt;&gt;&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #B22222; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Your role as $role&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _hasDec&gt;&gt;&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #DAA520; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Your other decisions&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+/* ── Cumulative Risk Thermometer ── */
+&lt;h3&gt;Your Cumulative Plague Risk&lt;/h3&gt;
+
+&lt;div style=&quot;width: 100%; max-width: 600px; margin: 0 auto;&quot;&gt;
+&lt;div style=&quot;position: relative; height: 32px; background: #333; border: 1px solid #555; border-radius: 4px; overflow: hidden;&quot;&gt;
+&lt;&lt;if _cumParish gt 0&gt;&gt;&lt;div title=&quot;Parish risk: &lt;&lt;print _cumParish&gt;&gt;%&quot; style=&quot;display: inline-block; height: 100%; width: &lt;&lt;print _cumParish&gt;&gt;%; background: #8B7355; float: left;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _cumRole gt 0&gt;&gt;&lt;div title=&quot;Role risk: +&lt;&lt;print _cumRole&gt;&gt;%&quot; style=&quot;display: inline-block; height: 100%; width: &lt;&lt;print _cumRole&gt;&gt;%; background: #B22222; float: left;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _cumDec gt 0&gt;&gt;&lt;div title=&quot;Decision risk: +&lt;&lt;print _cumDec&gt;&gt;%&quot; style=&quot;display: inline-block; height: 100%; width: &lt;&lt;print _cumDec&gt;&gt;%; background: #DAA520; float: left;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;/div&gt;
+
+/* ── Tick marks ── */
+&lt;div style=&quot;position: relative; height: 14px; font-size: 0.65em; color: #aaa; margin-top: 2px;&quot;&gt;
+&lt;span style=&quot;position: absolute; left: 0;&quot;&gt;0%&lt;/span&gt;
+&lt;span style=&quot;position: absolute; left: 25%; transform: translateX(-50%);&quot;&gt;25%&lt;/span&gt;
+&lt;span style=&quot;position: absolute; left: 50%; transform: translateX(-50%);&quot;&gt;50%&lt;/span&gt;
+&lt;span style=&quot;position: absolute; left: 75%; transform: translateX(-50%);&quot;&gt;75%&lt;/span&gt;
+&lt;span style=&quot;position: absolute; right: 0;&quot;&gt;100%&lt;/span&gt;
+&lt;/div&gt;
+
+/* ── Breakdown text ── */
+&lt;div style=&quot;margin-top: 8px; font-size: 0.9em;&quot;&gt;
+&lt;span style=&quot;color: #8B7355;&quot;&gt;Parish: &lt;&lt;print _cumParish&gt;&gt;%&lt;/span&gt;
+&lt;&lt;if _cumRole gt 0&gt;&gt; + &lt;span style=&quot;color: #B22222;&quot;&gt;Role: &lt;&lt;print _cumRole&gt;&gt;%&lt;/span&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _cumDec gt 0&gt;&gt; + &lt;span style=&quot;color: #DAA520;&quot;&gt;Decisions: &lt;&lt;print _cumDec&gt;&gt;%&lt;/span&gt;&lt;&lt;/if&gt;&gt;
+ = &lt;b&gt;&lt;&lt;print _cumTotal&gt;&gt;%&lt;/b&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;i&gt;For comparison, the average resident of $parish faced a &lt;&lt;print _cumParish&gt;&gt;% cumulative chance of catching plague based on parish infection rates alone.&lt;&lt;if _cumRole + _cumDec gt 0&gt;&gt; Your role and decisions added &lt;&lt;print _cumRole + _cumDec&gt;&gt; percentage points of additional risk.&lt;&lt;/if&gt;&gt;&lt;/i&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 </tw-passagedata><tw-passagedata pid="115" name="june-1665-helper-widget" tags="widget" position="1475,325" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; grows worse and the streets are soon filled with coaches and wagons full of people fleeing with their goods to the countryside. The &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMaria &quot;Henrietta Maria&quot;&gt;&gt; moves back to France&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, much to your dismay, and that of your fellow Catholics who flock to her chapel each week&lt;&lt;else&gt;&gt;, much to your relief, and that of all your fellow God-fearing &lt;&lt;defProtestants &quot;Protestants&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;. On June 29th, the King packs up his entire &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; in 148 carriages and moves 12 miles away, to his palace at &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt;.
