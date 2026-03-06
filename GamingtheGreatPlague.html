@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v2.99" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v2.100" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1848,9 +1848,9 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 &lt;&lt;widget &quot;addNewbornNPC&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
     &lt;&lt;if random(1,2) eq 1&gt;&gt;
-      &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), agenum: 0, age: &quot;infant&quot;, relationship: &quot;daughter&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+      &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), agenum: 0, age: &quot;infant&quot;, relationship: &quot;daughter&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;, gender: &quot;female&quot;})&gt;&gt;
     &lt;&lt;else&gt;&gt;
-      &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), agenum: 0, age: &quot;infant&quot;, relationship: &quot;son&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+      &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), agenum: 0, age: &quot;infant&quot;, relationship: &quot;son&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;, gender: &quot;male&quot;})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
@@ -2205,7 +2205,7 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 
 &lt;&lt;widget &quot;addApprenticeNPC&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
-      &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;apprentice&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+      &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;apprentice&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;, gender: &quot;male&quot;})&gt;&gt;
 &lt;&lt;set $apprentice to 2&gt;&gt;
 &lt;&lt;set $office to &quot;&quot;&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
@@ -2214,9 +2214,9 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 &lt;&lt;widget &quot;addWorkerKidNPC&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
       &lt;&lt;if random(1,2) eq 1&gt;&gt;
-      &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;friend&#39;s daughter&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+      &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;friend&#39;s daughter&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;, gender: &quot;female&quot;})&gt;&gt;
     &lt;&lt;else&gt;&gt;
-      &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;friend&#39;s son&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+      &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;friend&#39;s son&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;, gender: &quot;male&quot;})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;if random(1,9) eq 1&gt;&gt;
       &lt;&lt;set $NPCs.push({ name: $nbNames.pluck(), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;friend&#39;s child&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;they&quot;, hishers: &quot;their&quot;})&gt;&gt;
@@ -2228,9 +2228,9 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 &lt;&lt;widget &quot;addWardNPC&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
  &lt;&lt;if random(1,2) eq 1&gt;&gt;
-      &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;ward&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;})&gt;&gt;
+      &lt;&lt;set $NPCs.push({ name: weightedEither($fNames), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;ward&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;, gender: &quot;female&quot;})&gt;&gt;
     &lt;&lt;else&gt;&gt;
-      &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;ward&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;})&gt;&gt;
+      &lt;&lt;set $NPCs.push({ name: weightedEither($mNames), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;ward&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;, gender: &quot;male&quot;})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
     &lt;&lt;if random(1,9) eq 1&gt;&gt;
       &lt;&lt;set $NPCs.push({ name: $nbNames.pluck(), agenum: random(10,15), age: &quot;adolescent&quot;, relationship: &quot;ward&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;they&quot;, hishers: &quot;their&quot;})&gt;&gt;
