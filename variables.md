@@ -15,14 +15,13 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 5. [Household NPCs](#household-npcs)
 6. [NPC Name Pools](#npc-name-pools)
 7. [NPC Generation Helpers](#npc-generation-helpers)
-8. [Pronoun / Grammar Arrays](#pronoun--grammar-arrays)
-9. [Remedies and Fumigants](#remedies-and-fumigants)
-10. [Fleeing / Flight Status](#fleeing--flight-status)
-11. [Family / Life Events](#family--life-events)
-12. [Random Event Rolls](#random-event-rolls)
-13. [Story / Game State](#story--game-state)
-14. [Plague Worker Variables](#plague-worker-variables)
-15. [Parish Lookup Tables](#parish-lookup-tables)
+8. [Remedies and Fumigants](#remedies-and-fumigants)
+9. [Fleeing / Flight Status](#fleeing--flight-status)
+10. [Family / Life Events](#family--life-events)
+11. [Random Event Rolls](#random-event-rolls)
+12. [Story / Game State](#story--game-state)
+13. [Plague Worker Variables](#plague-worker-variables)
+14. [Parish Lookup Tables](#parish-lookup-tables)
 
 ---
 
@@ -35,10 +34,10 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Used for:** Pronoun selection, name generation, NPC relationship labels, narrative text branching
 
 ### `$birthgender`
-- **Type:** Array (referenced as an array with values like `"son"`, `"daughter"`)
-- **Possible values:** `["daughter", ...]` or checked as `$birthgender is "son"`
-- **Dependency:** Derived from `$gender` during NPC child generation
-- **Used for:** Determining birth-related child relationship labels in NPC generation
+- **Type:** String (briefly an Array during listbox initialization, then replaced by the selected value)
+- **Possible values:** `"son"`, `"daughter"`
+- **Set by:** `<<listbox "$birthgender">>` in the `identity` passage (pid 4). The listbox replaces the initial array with the player's selection.
+- **Used for:** Determining the player's gender (`"son"` &rarr; male, `"daughter"` &rarr; female) and birth-related child relationship labels in NPC generation
 
 ### `$age`
 - **Type:** String
@@ -157,21 +156,6 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Household scaling:** Base is multiplied by total household weight: player = 1.0, plus each living NPC in `$NPCs` and `$NPCsServants` weighted by age (infant 0.2, child 0.4, adolescent 0.6, young adult 0.8, middle-aged adult 1.0, elderly adult 0.8). Servant child/adolescent players have flat 20d expenses (no scaling).
 - **Dependency:** Set based on `$socio`, `$age`, and living members of `$NPCs` and `$NPCsServants`
 
-### `$pounds`
-- **Type:** Integer (derived display variable)
-- **Set by:** `Math.floor(_shillings / 20)` where `_shillings = Math.floor($money / 12)`
-- **Dependency:** Derived from `$money`
-
-### `$shillings`
-- **Type:** Integer (derived display variable)
-- **Set by:** `_shillings - Math.floor($pounds * 20)`
-- **Dependency:** Derived from `$money` and `$pounds`
-
-### `$pence`
-- **Type:** Integer (derived display variable)
-- **Set by:** `$money - (_shillings * 12)`
-- **Dependency:** Derived from `$money`
-
 ---
 
 ## Location / Geography
@@ -268,21 +252,6 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Type:** String
 - **Possible values:** `""` (empty, default), `"master"`, `"extended"`
 - **Used for:** Tracks which other household the player has swapped into during quarantine (master's household or extended family)
-
-### `$searcherbribe`
-- **Type:** String or Integer
-- **Possible values:** `1` (bribed), `"no"` (did not bribe)
-- **Used for:** Tracks whether the player bribed the searcher of the dead
-
-### `$plagueclothes`
-- **Type:** Integer (boolean-like)
-- **Possible values:** `0` (no plague clothes), `1` (has plague clothes)
-- **Used for:** Whether the player purchased or obtained plague-protective clothing
-
-### `$apothecary`
-- **Type:** Integer
-- **Possible values:** `1`
-- **Used for:** Flags that the player has visited the apothecary
 
 ### `$fever`
 - **Type:** Integer (random event roll)
@@ -430,35 +399,6 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Possible values for `$mkidRel`:** `"friend's son"`, `"cousin's son"`, `"cousin"`
 - **Used for:** Relationship labels for children of a new guardian when the player is orphaned
 - **Dependency:** Determined by the type of new guardian (family friend, cousin, or other)
-
-### `$fRelationships`
-- **Type:** Object (weighted map)
-- **Used for:** Weighted relationship labels for female NPC generation in plague worker (nurse/searcher/corpsebearer) contexts. Called via `weightedEither($fRelationships)`.
-- **Notes:** Initialized and used only in the plague worker NPC generation path
-
----
-
-## Pronoun / Grammar Arrays
-
-### `$childRole`
-- **Type:** Array of strings
-- **Value:** `["son", "daughter", "child"]`
-- **Used for:** Indexed by gender for child NPC relationship labels
-
-### `$article`
-- **Type:** Array of strings
-- **Value:** `["a", "an"]`
-- **Used for:** Grammar helper indexed by context
-
-### `$heshe`
-- **Type:** Array of strings
-- **Value:** `["he", "she", "they"]`
-- **Used for:** Subject pronoun selection based on gender index
-
-### `$hishers`
-- **Type:** Array of strings
-- **Value:** `["his", "hers", "theirs"]`
-- **Used for:** Possessive pronoun selection based on gender index
 
 ---
 
@@ -648,12 +588,6 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Trigger:** `$discovery is 1` (10% chance) triggers a discovery event
 - **Used for:** Tracks whether the player was discovered attempting to join the Navy when ineligible
 
-### `$investigate`
-- **Type:** Integer
-- **Possible values:** `0`
-- **Set by:** `$investigate to 0`
-- **Used for:** Resets an investigation state
-
 ### `$impressed`
 - **Type:** Integer
 - **Range:** 0+
@@ -760,25 +694,23 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Used for:** Time offset calculations (e.g., `$monthIndex + _timeOffset`)
 - **Dependency:** Derived from `$timeline` and the current passage name
 
+### `$catchUpSummaries`
+- **Type:** Array of strings (22 elements, one per game month)
+- **Set by:** `StoryInit` (pid 10)
+- **Used for:** Provides brief narrative summaries for each month. Displayed by the `catch-up` widget (pid 106) when the player skips ahead multiple months (e.g., during fled storylines), so they can see what happened in months they missed.
+
 ### `$textGroup`
 - **Type:** Integer
 - **Initial value:** `1`
 - **Modified by:** `$textGroup += 1` after each text block during quarantine/sickness passages
 - **Used for:** Tracks which text block to show next in multi-part quarantine sequences
 
-### `$return`
-- **Type:** Used internally by SugarCube
-- **Notes:** Part of the `<<return>>` macro for navigation back to the previous passage
-
 ### `$args`
 - **Type:** Array (SugarCube built-in)
 - **Notes:** `$args` is used within widgets to access arguments passed to the widget. For example, `$args[0]` retrieves the first argument. This is a SugarCube framework variable, not a game-specific variable.
 
-### `$type`
-- **Type:** Integer (random event type selector)
-- **Set by:** `random(1, 5)`
-- **Possible values:** `1`, `2`, `3`, `4`, `5`
-- **Used for:** Selects which variant of an event to display
+### `$type` *(removed — now uses temporary `_type`)*
+- **Notes:** Previously used in `navy-volunteer` (pid 102) as a global. Replaced with `_type` (temporary variable) since it is only used within a single passage.
 
 ---
 
@@ -885,14 +817,6 @@ These lookup tables provide historical Bills of Mortality burial counts per pari
 ---
 
 ## Variables Used in Commented-Out / Unused Code
-
-### `$shop`
-- **Type:** Used in a commented-out shop widget
-- **Notes:** Part of a `<<shop $player _item 1>>` call in commented-out code. Not active in the current game.
-
-### `$player`
-- **Type:** Used in a commented-out shop widget
-- **Notes:** Referenced alongside `$shop`. Not active in the current game.
 
 ### `$trades`
 - **Type:** Array of strings
