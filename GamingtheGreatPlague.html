@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.0" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.1" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -2183,14 +2183,7 @@ On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of
 You&#39;ve been taken by a press gang&lt;&lt;if $impressed gte 2&gt;&gt; again&lt;&lt;/if&gt;&gt;!
 &lt;&lt;if $agenum lte 15&gt;&gt;
     &lt;br&gt;&lt;br&gt;
-    &lt;&lt;set $socio to &quot;servants&quot;&gt;&gt;
-      &lt;&lt;set $NPCsExtended to $NPCs&gt;&gt;
-      &lt;&lt;set $NPCs to []&gt;&gt;
-      &lt;&lt;set $NPCsMaster to []&gt;&gt;
-      &lt;&lt;addMasterHousehold&gt;&gt;
-      &lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
-      &lt;&lt;set $NPCsMaster to []&gt;&gt;
-      &lt;&lt;NPCpronouns&gt;&gt;
+      &lt;&lt;addMaster&gt;&gt;
       &lt;&lt;set _MasterTrade to either(&quot;baker&quot;, &quot;chandler&quot;, &quot;grocer&quot;, &quot;tailor&quot;, &quot;weaver&quot;)&gt;&gt;
       Luckily, you manage to prove to them that you are too young to be &lt;&lt;defImpressed &quot;impressed&quot;&gt;&gt; into His Majesty&#39;s Navy. They turn you over to your &lt;&lt;defParish &quot;Parish&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt;, who decide that you are at risk of becoming one of the idle poor and have you &lt;&lt;storyline-return &quot;bound into service&quot;&gt;&gt; with a local _MasterTrade&#39;s household.
     &lt;&lt;elseif $agenum gte 55 or $gender isnot &quot;male&quot;&gt;&gt;
@@ -5760,22 +5753,7 @@ You don&#39;t want the hassle of holding office in your parish and pay a fine to
       
     &lt;&lt;elseif $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt;
       /* Beggar/Day Labourer: become a servant in an artisan household */
-      /* Move surviving child/adolescent NPCs to extended family */
-      &lt;&lt;set _survivingKids to []&gt;&gt;
-      &lt;&lt;for _oi = 0; _oi &lt; $NPCs.length; _oi++&gt;&gt;
-        &lt;&lt;if ($NPCs[_oi].age is &quot;child&quot; or $NPCs[_oi].age is &quot;adolescent&quot;) and $NPCs[_oi].health isnot &quot;deceased&quot;&gt;&gt;
-          &lt;&lt;set _survivingKids.push($NPCs[_oi])&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-      &lt;&lt;/for&gt;&gt;
-      &lt;&lt;set $NPCsExtended to $NPCsExtended.concat(_survivingKids)&gt;&gt;
-      &lt;&lt;set $NPCs to []&gt;&gt;
-      &lt;&lt;set $NPCsMaster to []&gt;&gt;
-      &lt;&lt;addMasterHousehold&gt;&gt;
-      &lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
-      &lt;&lt;set $NPCsMaster to []&gt;&gt;
-      &lt;&lt;NPCpronouns&gt;&gt;
-      &lt;&lt;set $socio to &quot;servants&quot;&gt;&gt; /* set last so can differentiate in addMasterHousehold widget */
-      &lt;&lt;set-hoh&gt;&gt;
+      &lt;&lt;addMaster&gt;&gt;
       &lt;&lt;set _MasterTrade to either(&quot;baker&quot;, &quot;chandler&quot;, &quot;grocer&quot;, &quot;tailor&quot;, &quot;weaver&quot;)&gt;&gt;
       &lt;br&gt;&lt;br&gt;Because you have been orphaned, your &lt;&lt;defParish &quot;Parish&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have found you a position as a servant in a local _MasterTrade&#39;s household.&lt;br&gt;&lt;br&gt;
 
@@ -6718,15 +6696,7 @@ You hate to send any of your family away, but you &lt;&lt;if $hoh is 4&gt;&gt;an
   &lt;&lt;/for&gt;&gt;
 
   /* PC becomes a servant in a new household */
-  &lt;&lt;set $NPCs to []&gt;&gt;
-  &lt;&lt;set $NPCsMaster to []&gt;&gt;
-  &lt;&lt;addMasterHousehold&gt;&gt;
-  &lt;&lt;set $NPCs to $NPCsMaster.slice()&gt;&gt;
-  &lt;&lt;set $NPCsMaster to []&gt;&gt;
-  &lt;&lt;NPCpronouns&gt;&gt;
-  &lt;&lt;set $socio to &quot;servants&quot;&gt;&gt;
-  &lt;&lt;set $masterStatus to &quot;artisans&quot;&gt;&gt;
-  &lt;&lt;set-hoh&gt;&gt;
+  &lt;&lt;addMaster&gt;&gt;
   &lt;&lt;set _MasterTrade to either(&quot;baker&quot;, &quot;chandler&quot;, &quot;grocer&quot;, &quot;tailor&quot;, &quot;weaver&quot;)&gt;&gt;
 
   Your household&#39;s debts have grown so great that the &lt;&lt;defParish &quot;parish&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have stepped in.
@@ -6995,7 +6965,7 @@ Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="126" name="add-master widgets" tags="widget" position="275,1225" size="100,100">&lt;&lt;widget &quot;addMaster&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 
-/* Currently set up for apprentices only but could be generalized */
+/* Generalized: used for apprenticeship, forced service, orphan placement, and impressment */
 
 /* Argument 0: Socio of new master (Defaults to &quot;artisans&quot;) */
 &lt;&lt;set _masterSocio to _args[0] || &quot;artisans&quot;&gt;&gt;
@@ -7027,7 +6997,7 @@ Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.
 /* Argument 0: Socio of new master (Defaults to &quot;&quot;) */
 &lt;&lt;set _masterSocio to _args[0] || &quot;&quot;&gt;&gt;
 
-&lt;&lt;if _masterSocio isnot &quot;&quot;&gt;&gt;
+&lt;&lt;if _masterSocio is &quot;&quot;&gt;&gt;
 &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;
 	&lt;&lt;set $masterStatus to either(&quot;artisans&quot;, &quot;merchants&quot;, &quot;nobles&quot;)&gt;&gt;
 &lt;&lt;else&gt;&gt;
