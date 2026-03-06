@@ -6254,10 +6254,11 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
     if (r.indexOf(&quot;mother&quot;) &gt;= 0) return 4;
     if (r.indexOf(&quot;uncle&quot;) &gt;= 0) return 5;
     if (r.indexOf(&quot;aunt&quot;) &gt;= 0) return 6;
-    if (r === &quot;guardian&quot; || r === &quot;guardian&#39;s wife&quot;) return 7;
-    if (r.indexOf(&quot;servant&quot;) &gt;= 0) return 9;
-    if (r.indexOf(&quot;lodger&quot;) &gt;= 0) return 10;
-    return 8;
+    if (r === &quot;guardian&quot; || r === &quot;cousin&quot;) return 7;
+	if (r === &quot;guardian&#39;s wife&quot; || r === &quot;cousin's&#39;s wife&quot;) return 8;
+    if (r.indexOf(&quot;servant&quot;) &gt;= 0) return 10;
+    if (r.indexOf(&quot;lodger&quot;) &gt;= 0) return 11;
+    return 9;
   };
   var ra = _rank(a), rb = _rank(b);
   if (ra !== rb) return ra - rb;
