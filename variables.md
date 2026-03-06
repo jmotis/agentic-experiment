@@ -357,6 +357,13 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Dependency:** Depends on `$masterGender`; only meaningful when `$socio is "servants"`
 - **Used for:** Display term used in all narrative text that references the player's master/mistress (e.g., "Your $masterTitle decides to flee"). The NPC's `relationship` field remains `"master"` regardless of gender for code compatibility.
 
+### `$caretakerLabel`
+- **Type:** String
+- **Possible values:** `""` (empty — player is hoh 1, no caretaker), `"husband"`, `"father"`, `"parent"`, `"master"`, `"mistress"`, or any NPC relationship string (e.g., `"step-father"`, `"mother"`, `"uncle"`, `"aunt"`, `"guardian"`)
+- **Set by:** The `<<set-caretaker>>` widget (pid 124), based on `$hoh`, `$gender`, `$socio`, `$masterTitle`, and living NPCs
+- **Dependency:** Depends on `$hoh`, `$gender`, `$socio`, `$masterTitle`, `$NPCs`
+- **Used for:** Display label for the authority figure who stays with a non-head-of-household PC. Used in flight-choice, quarantine/pesthouse, stay, and child-service passages to avoid branching on `$hoh` at every call site.
+
 ---
 
 ## NPC Name Pools
