@@ -686,9 +686,9 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Type:** Integer (flag)
 - **Possible values:** `0` (not in prison), `1` (in debtor's prison)
 - **Initial value:** `0` (set in `StoryInit`, pid 10)
-- **Set by:** The `prison` widget (pid 58) sets this to `1` when the player is committed to the Fleet (debtor's prison). Set in all code paths where the player is actually imprisoned (direct commitment and refusing Navy recruitment).
-- **Used for:** In `PassageHeader` (pid 11), triggers a 50% infection chance every storyline passage while in prison. If infected in prison, the player is sent to the pesthouse (`YouPesthouse`) instead of being allowed to quarantine at home.
-- **Dependencies:** Interacts with `$plagueInfection`, `$playerPlagueStatus`, and `$debtorPrisonInfected`.
+- **Set by:** The `prison` widget (pid 58) sets this to `1` when the player is committed to the Fleet (debtor's prison). Set in all code paths where the player is actually imprisoned (direct commitment, refusing Navy recruitment, refusing sell option). Reset to `0` by the `debtor-prison-check` widget (pid 58) when the player is released — either because debt improves below the ceiling, or after 3 months via a bequest from a deceased relative.
+- **Used for:** In `PassageHeader` (pid 11), triggers a 50% infection chance every storyline passage while in prison and calls the `debtor-prison-check` widget to evaluate release conditions. If infected in prison, the player is sent to the pesthouse (`YouPesthouse`) instead of being allowed to quarantine at home.
+- **Dependencies:** Interacts with `$plagueInfection`, `$playerPlagueStatus`, `$debtorPrisonInfected`, `$debtorPrisonMonths`, and `$creditorWaitCount`.
 
 ### `$debtorPrisonInfected`
 - **Type:** Integer (flag)
@@ -697,6 +697,22 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Set by:** `PassageHeader` (pid 11) sets this to `1` when a player in debtor's prison (`$inDebtorsPrison is 1`) catches plague via the 50% infection roll.
 - **Used for:** In `random-events` widget (pid 113), routes the infected player directly to the pesthouse (`YouPesthouse`) instead of using the normal `sickPC` widget flow which would allow home quarantine. The flag is cleared back to `0` after routing.
 - **Dependencies:** Interacts with `$inDebtorsPrison`, `$plagueInfection`, `$plagueRevealed`, `$playerPlagueStatus`, `$reputation`.
+
+### `$debtorPrisonMonths`
+- **Type:** Integer (counter)
+- **Possible values:** `0` (not in prison or just entered), `1`, `2`, `3` (triggers bequest release)
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** The `debtor-prison-check` widget (pid 58) increments this by 1 each month while the player remains in debtor's prison and debt still exceeds the ceiling. Reset to `0` when the player is released (via debt improvement, bequest event, or any other release mechanism). Also set to `0` when the player first enters prison.
+- **Used for:** After 3 months in debtor's prison, a distant relative (uncle, aunt, or cousin) dies and leaves a bequest sufficient to zero out the player's debts, triggering automatic release with a &minus;1 reputation penalty.
+- **Dependencies:** Interacts with `$inDebtorsPrison`, `$money`, `$reputation`, `$creditorWaitCount`.
+
+### `$creditorWaitCount`
+- **Type:** Integer (counter)
+- **Possible values:** `0` (no waits), `1`, `2`, `3`+
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** The `prison` widget (pid 58) increments this by 1 each time creditors agree to wait due to the player's reputation being &ge; 6. Reset to `0` when debts are cleared (via sell option, Navy, bequest, or debt improvement).
+- **Used for:** Provides escalating narrative text each time creditors wait (first time: polite patience; second: growing impatience; third+: final warning). Each wait also costs &minus;1 reputation, creating a natural countdown — a player at reputation 8 gets roughly 3 months of grace before reputation drops below 6 and they face harsher consequences (sell option at rep 4–5, or prison/Navy below rep 4).
+- **Dependencies:** Interacts with `$reputation`, `$money`, `$inDebtorsPrison`, `$debtorPrisonMonths`.
 
 ### `$timeline`
 - **Type:** Array of strings
