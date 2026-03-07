@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.10" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.11" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1684,6 +1684,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;set $debtWarned to 0&gt;&gt;
 &lt;&lt;set $debtForcedAttend to 0&gt;&gt;
 &lt;&lt;set $childServiceOffered to -1&gt;&gt;
+&lt;&lt;set $inDebtorsPrison to 0&gt;&gt;
+&lt;&lt;set $debtorPrisonInfected to 0&gt;&gt;
 &lt;&lt;set $disability to 0&gt;&gt;
 &lt;&lt;set $reputation to 6&gt;&gt;
 &lt;&lt;set $office to &quot;&quot;&gt;&gt;
@@ -1785,7 +1787,10 @@ $(document).on(&#39;:passagerender&#39;, function (ev) {
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;if tags().includes(&quot;storyline&quot;)&gt;&gt;&lt;h2&gt;&lt;&lt;print passage()&gt;&gt;, $location&lt;/h2&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if tags().includes(&quot;quarantine&quot;)&gt;&gt;&lt;h2&gt;&lt;&lt;print passage()&gt;&gt;&lt;/h2&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if tags().includes(&quot;storyline&quot;) and visited() lte 1&gt;&gt;&lt;&lt;debt-check&gt;&gt;&lt;&lt;child-service-check&gt;&gt;&lt;&lt;debtor&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if tags().includes(&quot;storyline&quot;) and visited() lte 1&gt;&gt;&lt;&lt;debt-check&gt;&gt;&lt;&lt;child-service-check&gt;&gt;&lt;&lt;noble-child-service-check&gt;&gt;&lt;&lt;debtor&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if tags().includes(&quot;storyline&quot;) and $inDebtorsPrison is 1 and $plagueInfection isnot 1 and $plagueInfection isnot 2 and $playerPlagueStatus isnot &quot;recovered&quot;&gt;&gt;
+&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;set $debtorPrisonInfected to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;silently&gt;&gt;
 &lt;&lt;if $location is &quot;inside the City walls&quot; and hasVisited(&quot;June 1665&quot;)&gt;&gt;&lt;&lt;set $apothecary to 1&gt;&gt; /*this is OBE since currently apothecary set to always show*/
 	&lt;&lt;elseif $location isnot &quot;in another part of the western suburbs&quot;&gt;&gt;
@@ -3505,6 +3510,8 @@ You never have much money to spare, but things have gone more poorly than usual 
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;prison&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+/* Release half the servants for nobles/merchants/artisans to reduce expenses */
+&lt;&lt;removeServants&gt;&gt;
 /* Forced child service: remove children/adolescents/young adults lte 21 for qualifying classes */
 &lt;&lt;forced-child-service&gt;&gt;
 &lt;&lt;if not _forcedServicePC&gt;&gt;
@@ -3559,12 +3566,12 @@ Your $masterTitle learns of your debts and is furious. &lt;&lt;set $socio to &qu
 &lt;&lt;/if&gt;&gt;
 /* Non-independent player with a qualifying HoH NPC — HoH goes to prison */
 &lt;&lt;if _hohNPCName isnot &quot;&quot;&gt;&gt;
-Your household has fallen so far into debt that creditors have demanded someone answer for it. To your distress, your _hohNPCRel, _hohNPCName, is thrown into debtor&#39;s prison. &lt;&lt;if $reputation gte 6&gt;&gt;To your relief, your _hohNPCRel&#39;s creditors agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; due to your family&#39;s good reputation. &lt;&lt;else&gt;&gt;_hohNPCName is committed to the Fleet and forced to reside there until the debts are reduced. &lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;
+Your household has fallen so far into debt that creditors have demanded someone answer for it. To your distress, your _hohNPCRel, _hohNPCName, is thrown into debtor&#39;s prison. &lt;&lt;if $office isnot &quot;&quot;&gt;&gt;Because of this disgrace, the vestry of $parish removes you from your position as $office. &lt;&lt;set $office to &quot;&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $reputation gte 6&gt;&gt;To your relief, your _hohNPCRel&#39;s creditors agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; due to your family&#39;s good reputation. &lt;&lt;else&gt;&gt;_hohNPCName is committed to the Fleet and forced to reside there until the debts are reduced. &lt;&lt;set $inDebtorsPrison to 1&gt;&gt;&lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 /* Independent head of household (hoh 1) or no qualifying NPC found — player goes to prison */
 &lt;&lt;else&gt;&gt;
-To your humiliation, you&#39;ve fallen so far into debt that your creditors have demanded you be thrown in debtor&#39;s prison. &lt;&lt;if $reputation gte 6&gt;&gt;To your relief, your creditors agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; due to your good reputation. &lt;&lt;elseif $gender is &quot;male&quot; and $agenum gte 16 and $agenum lte 59 and ($socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot;)&gt;&gt;&lt;span id=&quot;navy-debtor&quot;&gt;As you are being led to the Fleet, a Navy recruiter stops the guards. He looks you up and down and offers you a deal: volunteer for His Majesty&#39;s Navy and your debts will be forgiven. &lt;&lt;income&gt;&gt;&lt;&lt;set _navyBonus to $income * 2&gt;&gt;You&#39;ll even earn &lt;&lt;print _navyBonus&gt;&gt;d. as a signing bonus—two months&#39; pay.&lt;br&gt;&lt;br&gt;
-&lt;&lt;link &quot;Volunteer for the Navy&quot;&gt;&gt;&lt;&lt;replace &quot;#navy-debtor&quot;&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;set _navyBonus to $income * 2&gt;&gt;&lt;&lt;set $money += _navyBonus&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Volunteered for the Navy to escape debtor&#39;s prison&quot;, money: _navyBonus, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You accept the recruiter&#39;s offer. Your debts are forgiven and you pocket the signing bonus. You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Refuse&quot;&gt;&gt;&lt;&lt;replace &quot;#navy-debtor&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Refused Navy recruitment&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You refuse the recruiter&#39;s offer. You are committed to the Fleet and forced to reside there until you reduce your debts. &lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;&lt;else&gt;&gt;You are committed to the Fleet and forced to reside there until you reduce your debts. &lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;
+To your humiliation, you&#39;ve fallen so far into debt that your creditors have demanded you be thrown in debtor&#39;s prison. &lt;&lt;if $office isnot &quot;&quot;&gt;&gt;Because of this disgrace, the vestry of $parish removes you from your position as $office. &lt;&lt;set $office to &quot;&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $reputation gte 6&gt;&gt;To your relief, your creditors agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; due to your good reputation. &lt;&lt;elseif $gender is &quot;male&quot; and $agenum gte 16 and $agenum lte 59 and ($socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot;)&gt;&gt;&lt;span id=&quot;navy-debtor&quot;&gt;As you are being led to the Fleet, a Navy recruiter stops the guards. He looks you up and down and offers you a deal: volunteer for His Majesty&#39;s Navy and your debts will be forgiven. &lt;&lt;income&gt;&gt;&lt;&lt;set _navyBonus to $income * 2&gt;&gt;You&#39;ll even earn &lt;&lt;print _navyBonus&gt;&gt;d. as a signing bonus—two months&#39; pay.&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Volunteer for the Navy&quot;&gt;&gt;&lt;&lt;replace &quot;#navy-debtor&quot;&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;set _navyBonus to $income * 2&gt;&gt;&lt;&lt;set $money += _navyBonus&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Volunteered for the Navy to escape debtor&#39;s prison&quot;, money: _navyBonus, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You accept the recruiter&#39;s offer. Your debts are forgiven and you pocket the signing bonus. You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Refuse&quot;&gt;&gt;&lt;&lt;replace &quot;#navy-debtor&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Refused Navy recruitment&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You refuse the recruiter&#39;s offer. You are committed to the Fleet and forced to reside there until you reduce your debts. &lt;&lt;set $inDebtorsPrison to 1&gt;&gt;&lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;&lt;else&gt;&gt;You are committed to the Fleet and forced to reside there until you reduce your debts. &lt;&lt;set $inDebtorsPrison to 1&gt;&gt;&lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -6112,7 +6119,15 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 	&lt;&lt;if $pregnant is 4&gt;&gt;
 		&lt;&lt;set $pregnant to 0&gt;&gt;
 	&lt;&lt;/if&gt;&gt;
+	&lt;&lt;if $debtorPrisonInfected is 1&gt;&gt;
+	&lt;&lt;set $debtorPrisonInfected to 0&gt;&gt;
+	&lt;&lt;set $plagueRevealed to 1&gt;&gt;
+	&lt;&lt;set $playerPlagueStatus to &quot;infected&quot;&gt;&gt;
+	&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;
+	The conditions in debtor&#39;s prison are filthy and overcrowded. To your horror, you develop the telltale &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt; of plague. Because you are in prison, you are immediately sent to the [[pesthouse-&gt;YouPesthouse]].
+	&lt;&lt;else&gt;&gt;
 	&lt;&lt;sickPC&gt;&gt;
+	&lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;
 	&lt;&lt;if $pregnant is 4&gt;&gt;
 		&lt;&lt;set $pregnant to 0&gt;&gt;
@@ -6420,6 +6435,199 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 
 &lt;p&gt;&lt;i&gt;For comparison, the average resident of $parish faced a &lt;&lt;print _cumParish&gt;&gt;% cumulative chance of catching plague based on parish infection rates alone.&lt;&lt;if _cumRole + _cumDec gt 0&gt;&gt; Your role and decisions added &lt;&lt;print _cumRole + _cumDec&gt;&gt; percentage points of additional risk.&lt;&lt;/if&gt;&gt;&lt;/i&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* removeServants — releases half the servants (rounded up) from a noble,
+   merchant, or artisan household to reduce expenses. Servants are removed
+   in alternating order: youngest, oldest, youngest, oldest, etc.
+   Removed servants are moved to $NPCsExtended. Produces narrative text
+   listing who was released. */
+&lt;&lt;widget &quot;removeServants&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if ($socio is &quot;nobles&quot; or $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;) and $NPCsServants.length gt 0&gt;&gt;
+
+/* Build list of living servant indices */
+&lt;&lt;set _rsLiving to []&gt;&gt;
+&lt;&lt;for _ri = 0; _ri &lt; $NPCsServants.length; _ri++&gt;&gt;
+  &lt;&lt;if $NPCsServants[_ri].health isnot &quot;deceased&quot; and $NPCsServants[_ri].health isnot &quot;deceased-pq&quot;&gt;&gt;
+    &lt;&lt;set _rsLiving.push(_ri)&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+&lt;&lt;if _rsLiving.length gt 0&gt;&gt;
+/* Number to release: half rounded up */
+&lt;&lt;set _rsToRemove to Math.ceil(_rsLiving.length / 2)&gt;&gt;
+
+/* Sort living servants by agenum ascending (youngest first) */
+&lt;&lt;set _rsLiving.sort(function(a, b) { return ($NPCsServants[a].agenum || 0) - ($NPCsServants[b].agenum || 0); })&gt;&gt;
+
+/* Pick servants in alternating youngest/oldest order */
+&lt;&lt;set _rsPickIndices to []&gt;&gt;
+&lt;&lt;set _rsLow to 0&gt;&gt;
+&lt;&lt;set _rsHigh to _rsLiving.length - 1&gt;&gt;
+&lt;&lt;set _rsPickYoungest to true&gt;&gt;
+&lt;&lt;for ; _rsPickIndices.length lt _rsToRemove; &gt;&gt;
+  &lt;&lt;if _rsPickYoungest&gt;&gt;
+    &lt;&lt;set _rsPickIndices.push(_rsLiving[_rsLow])&gt;&gt;
+    &lt;&lt;set _rsLow += 1&gt;&gt;
+  &lt;&lt;else&gt;&gt;
+    &lt;&lt;set _rsPickIndices.push(_rsLiving[_rsHigh])&gt;&gt;
+    &lt;&lt;set _rsHigh -= 1&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+  &lt;&lt;set _rsPickYoungest to !_rsPickYoungest&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+/* Collect names before removing */
+&lt;&lt;set _rsRemovedNames to []&gt;&gt;
+&lt;&lt;for _ri = 0; _ri &lt; _rsPickIndices.length; _ri++&gt;&gt;
+  &lt;&lt;set _rsRemovedNames.push($NPCsServants[_rsPickIndices[_ri]].name)&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+/* Sort pick indices descending to splice safely */
+&lt;&lt;set _rsPickIndices.sort(function(a, b) { return b - a; })&gt;&gt;
+&lt;&lt;for _ri = 0; _ri &lt; _rsPickIndices.length; _ri++&gt;&gt;
+  &lt;&lt;if $NPCsServants[_rsPickIndices[_ri]].health is &quot;safe from harm&quot;&gt;&gt;&lt;&lt;set $NPCsServants[_rsPickIndices[_ri]].health to &quot;healthy&quot;&gt;&gt;&lt;&lt;set $NPCsServants[_rsPickIndices[_ri]].location to $location&gt;&gt;&lt;&lt;/if&gt;&gt;
+  &lt;&lt;set $NPCsExtended.push($NPCsServants[_rsPickIndices[_ri]])&gt;&gt;
+  &lt;&lt;set $NPCsServants.splice(_rsPickIndices[_ri], 1)&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+To reduce your expenses, you release &lt;&lt;if _rsRemovedNames.length eq 1&gt;&gt;your servant _rsRemovedNames[0]&lt;&lt;else&gt;&gt;&lt;&lt;for _ri = 0; _ri &lt; _rsRemovedNames.length; _ri++&gt;&gt;&lt;&lt;if _ri lt _rsRemovedNames.length - 1&gt;&gt;_rsRemovedNames[_ri], &lt;&lt;else&gt;&gt;and _rsRemovedNames[_ri]&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/if&gt;&gt; from service.&lt;br&gt;&lt;br&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* noble-child-service-check — for merchants and nobles, when $money lte 0,
+   offers to send the youngest non-infant child/adolescent to be a ward of
+   a relative. If the PC is a child/adolescent, uses orphan-widget-style
+   logic to create the new household. Only fires once per month. */
+&lt;&lt;widget &quot;noble-child-service-check&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+
+&lt;&lt;if $money lte 0 and ($socio is &quot;merchants&quot; or $socio is &quot;nobles&quot;) and $childServiceOffered isnot $monthIndex&gt;&gt;
+
+/* Find eligible NPC children/adolescents (not infant, not deceased) */
+&lt;&lt;set _ncsEligible to []&gt;&gt;
+&lt;&lt;for _ni = 0; _ni &lt; $NPCs.length; _ni++&gt;&gt;
+  &lt;&lt;if ($NPCs[_ni].age is &quot;child&quot; or $NPCs[_ni].age is &quot;adolescent&quot;) and $NPCs[_ni].health isnot &quot;deceased&quot;&gt;&gt;
+    &lt;&lt;set _ncsEligible.push(_ni)&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+
+&lt;&lt;if $agenum lte 15&gt;&gt;
+  /* PC is a child/adolescent — offer to send them as a ward */
+  &lt;&lt;set $childServiceOffered to $monthIndex&gt;&gt;
+  &lt;&lt;set-caretaker&gt;&gt;
+
+  &lt;span id=&quot;nobleChildService&quot;&gt;Your family is struggling with mounting debts and &lt;&lt;if $caretakerLabel isnot &quot;&quot;&gt;&gt;your $caretakerLabel suggests sending you to live as a ward with a relative.&lt;&lt;else&gt;&gt;you wonder if you might be better off living as a ward with a relative.&lt;&lt;/if&gt;&gt; Would you like to go?
+  &lt;br&gt;&lt;br&gt;
+  &lt;&lt;link &quot;Become a ward&quot;&gt;&gt;&lt;&lt;replace &quot;#nobleChildService&quot;&gt;&gt;
+  /* Build new guardian household using orphan-widget logic */
+  &lt;&lt;set _newGuardian to either(&quot;uncle&quot;, &quot;widowed aunt&quot;, &quot;cousin&quot;, &quot;family friend&quot;)&gt;&gt;
+  &lt;&lt;set _survivingKids to []&gt;&gt;
+  &lt;&lt;for _oi = 0; _oi &lt; $NPCs.length; _oi++&gt;&gt;
+    &lt;&lt;if ($NPCs[_oi].age is &quot;child&quot; or $NPCs[_oi].age is &quot;adolescent&quot;) and $NPCs[_oi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set _survivingKids.push($NPCs[_oi])&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  /* Move remaining family to extended */
+  &lt;&lt;for _oi = 0; _oi &lt; $NPCs.length; _oi++&gt;&gt;
+    &lt;&lt;if $NPCs[_oi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set _found to false&gt;&gt;
+      &lt;&lt;for _sk = 0; _sk &lt; _survivingKids.length; _sk++&gt;&gt;
+        &lt;&lt;if _survivingKids[_sk] is $NPCs[_oi]&gt;&gt;&lt;&lt;set _found to true&gt;&gt;&lt;&lt;/if&gt;&gt;
+      &lt;&lt;/for&gt;&gt;
+      &lt;&lt;if not _found&gt;&gt;&lt;&lt;set $NPCsExtended.push($NPCs[_oi])&gt;&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  &lt;&lt;set $NPCs to []&gt;&gt;
+
+  &lt;&lt;if _newGuardian isnot &quot;widowed aunt&quot;&gt;&gt;
+    &lt;&lt;set _newGuardianAgenum to random(30,76)&gt;&gt;
+    &lt;&lt;if _newGuardianAgenum gte 60&gt;&gt;&lt;&lt;set _newGuardianAge to &quot;elderly adult&quot;&gt;&gt;
+    &lt;&lt;else&gt;&gt;&lt;&lt;set _newGuardianAge to &quot;middle-aged adult&quot;&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;if _newGuardian is &quot;uncle&quot;&gt;&gt;
+      &lt;&lt;set $NPCs.push({name: weightedEither($mNames), agenum: _newGuardianAgenum, age: _newGuardianAge, relationship: &quot;uncle&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+    &lt;&lt;elseif _newGuardian is &quot;cousin&quot;&gt;&gt;
+      &lt;&lt;set $NPCs.push({name: weightedEither($mNames), agenum: _newGuardianAgenum, age: _newGuardianAge, relationship: &quot;cousin&quot;, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;})&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+      &lt;&lt;set $NPCs.push({name: weightedEither($mNames), agenum: _newGuardianAgenum, age: _newGuardianAge, relationship: &quot;guardian&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;if random(1,2) eq 1&gt;&gt;
+      &lt;&lt;set $minAge to _newGuardianAgenum - 20&gt;&gt;
+      &lt;&lt;if $minAge lte 15&gt;&gt;&lt;&lt;set $minAge to 16&gt;&gt;&lt;&lt;/if&gt;&gt;
+      &lt;&lt;set $maxAge to _newGuardianAgenum + 30&gt;&gt;
+      &lt;&lt;if $maxAge gte 101&gt;&gt;&lt;&lt;set $maxAge to 100&gt;&gt;&lt;&lt;/if&gt;&gt;
+      &lt;&lt;setAge&gt;&gt;
+      &lt;&lt;if _newGuardian is &quot;uncle&quot;&gt;&gt;
+        &lt;&lt;set $NPCs.push({name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;aunt&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+      &lt;&lt;elseif _newGuardian is &quot;cousin&quot;&gt;&gt;
+        &lt;&lt;set $NPCs.push({name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;cousin&#39;s wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+      &lt;&lt;else&gt;&gt;
+        &lt;&lt;set $NPCs.push({name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: &quot;guardian&#39;s wife&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+      &lt;&lt;set _auntAgenum to $NPCAgeNum&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+      &lt;&lt;set _auntAgenum to _newGuardianAgenum&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;else&gt;&gt;
+    &lt;&lt;set _auntAgenum to random(30,76)&gt;&gt;
+    &lt;&lt;if _auntAgenum gte 60&gt;&gt;&lt;&lt;set _newGuardianAge to &quot;elderly adult&quot;&gt;&gt;
+    &lt;&lt;else&gt;&gt;&lt;&lt;set _newGuardianAge to &quot;middle-aged adult&quot;&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;set $NPCs.push({name: weightedEither($fNames), agenum: _auntAgenum, age: _newGuardianAge, relationship: &quot;widowed aunt&quot;, health: &quot;healthy&quot;, location: $location})&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+
+  &lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;
+    &lt;&lt;set _newHHKids to random(1,4)&gt;&gt;
+  &lt;&lt;else&gt;&gt;
+    &lt;&lt;set _newHHKids to random(2,6)&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+  &lt;&lt;for _k to 0; _k lt _newHHKids; _k++&gt;&gt;
+    &lt;&lt;set $minAge to _auntAgenum - 40&gt;&gt;
+    &lt;&lt;if $minAge lte 0&gt;&gt;&lt;&lt;set $minAge to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;set $maxAge to _auntAgenum - 20&gt;&gt;
+    &lt;&lt;setAge&gt;&gt;
+    &lt;&lt;if _newGuardian is &quot;family friend&quot;&gt;&gt;
+      &lt;&lt;set $mkidRel to &quot;friend&#39;s son&quot;&gt;&gt;
+      &lt;&lt;set $fkidRel to &quot;friend&#39;s daughter&quot;&gt;&gt;
+    &lt;&lt;elseif _newGuardian is &quot;cousin&quot;&gt;&gt;
+      &lt;&lt;set $mkidRel to &quot;cousin&#39;s son&quot;&gt;&gt;
+      &lt;&lt;set $fkidRel to &quot;cousin&#39;s daughter&quot;&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+      &lt;&lt;set $mkidRel to &quot;cousin&quot;&gt;&gt;
+      &lt;&lt;set $fkidRel to &quot;cousin&quot;&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;if random(1,2) is 1&gt;&gt;
+      &lt;&lt;set $NPCs.push({name: weightedEither($fNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: $fkidRel, health: &quot;healthy&quot;, location: $location, heshe: &quot;she&quot;, hishers: &quot;her&quot;})&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+      &lt;&lt;set $NPCs.push({name: weightedEither($mNames), agenum: $NPCAgeNum, age: $NPCAge, relationship: $mkidRel, health: &quot;healthy&quot;, location: $location, heshe: &quot;he&quot;, hishers: &quot;his&quot;})&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  &lt;&lt;set $NPCs to $NPCs.concat(_survivingKids)&gt;&gt;
+  &lt;&lt;NPCpronouns&gt;&gt;
+  &lt;&lt;set-hoh&gt;&gt;
+  You have been sent to live as a ward with &lt;&lt;if _newGuardian is &quot;family friend&quot;&gt;&gt;a family friend&lt;&lt;else&gt;&gt;your _newGuardian&lt;&lt;/if&gt;&gt;. &lt;&lt;storyline-return &quot;You hope things will be better here.&quot;&gt;&gt;
+  &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay with your family&quot;&gt;&gt;&lt;&lt;replace &quot;#nobleChildService&quot;&gt;&gt;Times are hard, but you &lt;&lt;storyline-return &quot;don&#39;t want to leave your family.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+  &lt;/span&gt;
+
+&lt;&lt;elseif _ncsEligible.length gt 0&gt;&gt;
+  /* PC is an adult — offer to send youngest non-infant child/adolescent as a ward */
+  /* Sort eligible indices by NPC agenum ascending to find youngest */
+  &lt;&lt;set _ncsEligible.sort(function(a, b) { return ($NPCs[a].agenum || 0) - ($NPCs[b].agenum || 0); })&gt;&gt;
+  &lt;&lt;set _ncsIdx to _ncsEligible[0]&gt;&gt;
+  &lt;&lt;set _ncsName to $NPCs[_ncsIdx].name&gt;&gt;
+  &lt;&lt;set _ncsRel to $NPCs[_ncsIdx].relationship&gt;&gt;
+  &lt;&lt;set $childServiceOffered to $monthIndex&gt;&gt;
+
+  &lt;span id=&quot;nobleChildService&quot;&gt;Your family is struggling with mounting debts and you &lt;&lt;if $hoh is 4&gt;&gt;and your husband&lt;&lt;elseif $hoh is 2&gt;&gt;and your family&lt;&lt;/if&gt;&gt; need to decide whether to send one of the children to live as a ward with a relative, where they would be better provided for.&lt;br&gt;&lt;br&gt;Do you send your _ncsRel, _ncsName, to live as a ward?
+  &lt;br&gt;&lt;br&gt;
+  &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#nobleChildService&quot;&gt;&gt;
+  &lt;&lt;if $NPCs[_ncsIdx].health is &quot;safe from harm&quot;&gt;&gt;&lt;&lt;set $NPCs[_ncsIdx].health to &quot;healthy&quot;&gt;&gt;&lt;&lt;set $NPCs[_ncsIdx].location to $location&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $NPCsExtended.push($NPCs[_ncsIdx])&gt;&gt;&lt;&lt;set $NPCs.splice(_ncsIdx, 1)&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;
+You hate to send any of your family away, but you &lt;&lt;if $hoh is 4&gt;&gt;and your husband&lt;&lt;elseif $hoh is 2&gt;&gt;and your family&lt;&lt;/if&gt;&gt; believe that _ncsRel, _ncsName, will be well cared for as a ward of a relative and that will mean one less mouth to feed at home.&lt;br&gt;&lt;br&gt;
+  &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#nobleChildService&quot;&gt;&gt;Life is hard, but you &lt;&lt;if $hoh is 4&gt;&gt;and your husband&lt;&lt;elseif $hoh is 2&gt;&gt;and your family&lt;&lt;/if&gt;&gt; agree that sending _ncsRel, _ncsName, away is not the answer. You will find another way to make ends meet.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+  &lt;/span&gt;
+
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 </tw-passagedata><tw-passagedata pid="115" name="june-1665-helper-widget" tags="widget" position="1475,325" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
@@ -6759,7 +6967,7 @@ As much as you miss your child&lt;&lt;if _safeKids.length &gt; 1&gt;&gt;ren&lt;&
 </tw-passagedata><tw-passagedata pid="121" name="child-service widgets" tags="widget" position="275,850" size="100,100">&lt;&lt;widget &quot;child-service-check&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 /* Voluntary child service: fires when $money lte 0 for beggars/day labourers/artisans. Offers to put eldest child/adolescent into service, or the PC themselves if they are a child/adolescent. Only fires once per month (tracked by $childServiceOffered). */
 
-&lt;&lt;if $money lte 0 and ($socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot;) and $childServiceOffered isnot $monthIndex&gt;&gt;
+&lt;&lt;if $money lte 0 and ($socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or ($socio is &quot;servants&quot; and $hoh is 1)) and $childServiceOffered isnot $monthIndex&gt;&gt;
 
 /* Find eligible NPC children/adolescents (not infant, not deceased) */
 &lt;&lt;set _csEligible to []&gt;&gt;
@@ -6805,7 +7013,7 @@ You hate to send any of your family away, but you &lt;&lt;if $hoh is 4&gt;&gt;an
 /* Forced child service: called from the prison widget when debt ceiling is exceeded. For beggars/day labourers/artisans, all children, adolescents, and young adults (agenum lte 21 but NOT married/widowed) are removed from the household and put into service by the parish Overseers of the Poor. Infants always remain with their parents. Sets _forcedServicePC to true if the PC themselves is put into service (skips prison logic). */
 
 &lt;&lt;set _forcedServicePC to false&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot;&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or ($socio is &quot;servants&quot; and $hoh is 1)&gt;&gt;
 
 /* Find eligible NPCs: children, adolescents, young adults lte 21; exclude infants and deceased */
 &lt;&lt;set _fsEligible to []&gt;&gt;
