@@ -489,6 +489,13 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Used for:** Tracks whether the player has already been presented with the marriage or apprenticeship choice, preventing the question from being asked again. Value `2` also gates out the marriage-market widget for characters who chose the apprenticeship path.
 - **Dependency:** Checked in January 1665 (pid 9) to determine which widget to show
 
+### `$randomEventCompleted`
+- **Type:** Boolean
+- **Possible values:** `true`, `false`
+- **Set by:** `false` in StoryInit; set to `true` inside `<<storyline-return>>` widget (pid 41) when the time offset is 0 (i.e., the player is returning to the same storyline passage); reset to `false` at the top of `<<random-events>>` widget (pid 113) on reload
+- **Used for:** Guards against re-running the entire `<<random-events>>` widget body when a player returns to a storyline passage after completing a random event. When true, random-events skips all logic (pregnancy tracking, NPC death, priority cascade) and sets `_randomEventFired` to false so the passage's monthly narrative renders.
+- **Dependency:** Works with `<<storyline-return>>` (pid 41) and `<<random-events>>` (pid 113)
+
 ### `$seekingApprenticeship`
 - **Type:** Integer (boolean-like)
 - **Possible values:** `0` (not seeking), `1` (seeking an apprenticeship)
