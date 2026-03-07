@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.18" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.19" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1151,6 +1151,7 @@ $(document).on(':passagestart', function (ev) {
 /* initialize religion and origin*/
 &lt;&lt;if $religion is &quot;member of a dissident Protestant church&quot;&gt;&gt;&lt;&lt;set $religion to either(&quot;Presbyterian&quot;, &quot;Baptist&quot;, &quot;Quaker&quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $origin is &quot;somewhere else&quot;&gt;&gt;&lt;&lt;set $origin to either(&quot;the Holy Roman Empire&quot;, &quot;Italy&quot;, &quot;Spain&quot;, &quot;the Americas&quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $location is &quot;in the western suburbs, specifically Westminster&quot;&gt;&gt;&lt;&lt;set $location to &quot;Westminster&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 /* generate NPC arrays */
 
@@ -1307,7 +1308,7 @@ Either [[create your character-&gt;identity]] or [[automatically generate a char
 
 It&#39;s a great city for &lt;&lt;set _socio = [&quot;day labourers&quot;, &quot;servants&quot;, &quot;artisans&quot;, &quot;merchants&quot;, &quot;nobles&quot;, &quot;beggars&quot;]&gt;&gt;&lt;&lt;listbox &quot;$socio&quot;&gt;&gt;&lt;&lt;optionsfrom _socio&gt;&gt;&lt;&lt;/listbox&gt;&gt; like you to live in.
 
-Your home is &lt;&lt;set _location = [&quot;inside the City walls&quot;, &quot;Westminster&quot;, &quot;in another part of the western suburbs&quot;, &quot;in the northern suburbs&quot;, &quot;in the eastern suburbs&quot;, &quot;across the river in the southern suburbs&quot;]&gt;&gt;&lt;&lt;listbox &quot;$location&quot;&gt;&gt;&lt;&lt;optionsfrom _location&gt;&gt;&lt;&lt;/listbox&gt;&gt;.
+Your home is &lt;&lt;set _location = [&quot;inside the City walls&quot;, &quot;in the western suburbs, specifically Westminster&quot;, &quot;in another part of the western suburbs&quot;, &quot;in the northern suburbs&quot;, &quot;in the eastern suburbs&quot;, &quot;across the river in the southern suburbs&quot;]&gt;&gt;&lt;&lt;listbox &quot;$location&quot;&gt;&gt;&lt;&lt;optionsfrom _location&gt;&gt;&lt;&lt;/listbox&gt;&gt;.
 &lt;br&gt;
 &lt;img src=&quot;https://wesleyan-dac-open-access.s3.amazonaws.com/images/DAC_1940-D1-131_001_OA.jpg&quot; width=&quot;100%&quot;&gt;
 //Map of London, before the Fire of 1666 by Wencelaus Holler. Wesleyan University Davison Art Center.//
@@ -2125,7 +2126,7 @@ a proper funeral.&lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;
   &lt;&lt;set $parish to weightedEither($sParishes)&gt;&gt;
 &lt;&lt;elseif $location is &quot;in another part of the western suburbs&quot;&gt;&gt;
   &lt;&lt;set $parish to weightedEither($wParishes)&gt;&gt;
-&lt;&lt;elseif $location is &quot;Westminster&quot;&gt;&gt;
+&lt;&lt;elseif $location is &quot;in the western suburbs, specifically Westminster&quot;&gt;&gt;
   &lt;&lt;set $parish to weightedEither($WestmParishes)&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
