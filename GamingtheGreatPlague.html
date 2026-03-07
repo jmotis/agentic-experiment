@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.9" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.10" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3423,7 +3423,7 @@ It&#39;s illegal to beg on the highways, but you wonder if you would have better
 
 Do you:
 &lt;ul&gt;
-&lt;li&gt;&lt;&lt;if random(1,3) == 1&gt;&gt;[[beg on the highways, even though you know it&#39;s illegal|impressed][$impressed += 1]]&lt;&lt;else&gt;&gt;[[beg on the highways, even though you know it&#39;s illegal-&gt;begging-success][$reputation to Math.clamp($reputation - 1, 0, 10)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;if random(1,3) == 1&gt;&gt;[[beg on the highways, even though you know it&#39;s illegal|impressed][$impressed += 1]]&lt;&lt;else&gt;&gt;[[beg on the highways, even though you know it&#39;s illegal-&gt;begging-success]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
 &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;li&gt;[[put your trust in the charity of your neighbors-&gt;good-neighbors][$reputation to Math.clamp($reputation + 1, 0, 10)]]&lt;/li&gt;
 &lt;li&gt;&lt;&lt;set _laundryPay to ($disability isnot 0) ? 96 : 48&gt;&gt;&lt;&lt;link &quot;take in extra laundry from your neighbors&quot; $timeline[$monthIndex + 1]&gt;&gt;&lt;&lt;set $money += _laundryPay&gt;&gt;&lt;&lt;set _rate to $parishRate[$parish][$monthIndex]&gt;&gt;&lt;&lt;if random(1, _rate) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Took in extra laundry&quot;, money: _laundryPay, repDelta: 0, repBefore: $reputation, infectPct: Math.round(10000 / _rate) / 100})&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;&lt;li&gt;&lt;&lt;set _linenPay to ($disability isnot 0) ? 64 : 32&gt;&gt;&lt;&lt;link &quot;offer to wash the church linens and sweep clean your church&quot; $timeline[$monthIndex + 1]&gt;&gt;&lt;&lt;set $money += _linenPay&gt;&gt;&lt;&lt;set _rate to $parishRate[$parish][$monthIndex]&gt;&gt;&lt;&lt;if random(1, _rate) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Washed church linens&quot;, money: _linenPay, repDelta: 0, repBefore: $reputation, infectPct: Math.round(10000 / _rate) / 100})&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
