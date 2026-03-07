@@ -1559,8 +1559,15 @@ The city has ordered public &lt;&lt;defFasts &quot;fasts&quot;&gt;&gt; and praye
 	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
-&lt;&lt;if ($socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;) and $agenum gte 14 and $agenum lte 21 and $relationship is &quot;single&quot; and $seekingDecision is 0&gt;&gt;
-&lt;&lt;apprenticeship-market&gt;&gt;&lt;&lt;elseif $agenum gte 16&gt;&gt;&lt;&lt;marriage-market&gt;&gt;
+/* one-time call of do you want to be married and/or apprenticed (mutually exclusive) */
+
+&lt;&lt;if $agenum gte 16 and $seekingDecision is 0&gt;&gt;
+&lt;&lt;marriage-market&gt;&gt;
+&lt;&lt;elseif ($socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;) and $agenum gte 14 and $agenum lte 21 and $relationship is &quot;single&quot; and $seeking is 0 and $seekingDecision isnot 2&gt;&gt;
+&lt;&lt;apprenticeship-market&gt;&gt;
+
+/* passage continues after decisions are made */
+
 &lt;&lt;else&gt;&gt;
 The Christmas festivities end with a great snowfall. It&#39;s bitterly cold and the frost doesn&#39;t break for over two weeks. &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $agenum lte 12&gt;&gt;Your family leaves you safe and warm at home while they attend on the king and queen at Court.&lt;&lt;else&gt;&gt;That isn&#39;t enough to stop you from attending on the king and queen at Court and buying them expensive New Year&#39;s gifts to gain their favor. &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;Freezing rain alternates with snow all winter and rumors swirl about the Dutch fleet.&lt;br&gt;&lt;br&gt;
 
@@ -1803,7 +1810,7 @@ $(document).on(&#39;:passagerender&#39;, function (ev) {
     &lt;&lt;if ndef _infectedMaster&gt;&gt;&lt;&lt;set _infectedMaster = []&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;if ndef _infectedExtended&gt;&gt;&lt;&lt;set _infectedExtended = []&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="december-1664-helper widget" tags="widget" position="1125,325" size="100,100">&lt;&lt;widget &quot;december-1664-helper&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="december-1664-helper widget" tags="widget" position="1000,350" size="100,100">&lt;&lt;widget &quot;december-1664-helper&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;linkappend &quot;But those are worries for the future!&quot;&gt;&gt; For now, it is time to eat, drink, and play games with dice and cards to celebrate the Christmas season. &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;You look forward to gathering with your neighbors in the &lt;&lt;defParish &quot;parish&quot;&gt;&gt; church to celebrate the birth of Jesus Christ.&lt;&lt;elseif $religion is &quot;Catholic&quot;&gt;&gt; You enjoy gathering with your fellow Catholics at the magnificent chapel attached to &lt;&lt;defSomersetHouse &quot;Somerset House&quot;&gt;&gt;, the &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMarias &quot;Henrietta Maria&#39;s&quot;&gt;&gt; London home. &lt;&lt;else&gt;&gt;You might not be able to celebrate as openly as a conforming member of the Church of England, or the &lt;&lt;defPapists &quot;papists&quot;&gt;&gt; who flock to the chapels of the Catholic &lt;&lt;defQueenCatherine &quot;Queen Catherine&quot;&gt;&gt; and &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; &lt;&lt;defHenriettaMaria &quot;Henrietta Maria&quot;&gt;&gt;, but you will still enjoy the holidays in the comfort and privacy of your home.
 &lt;&lt;/if&gt;&gt;
 &lt;br&gt;
@@ -5828,7 +5835,7 @@ Despite everything, court life proceeds as usual. A friend living the countrysid
 As an unmarried adult, you may wish to get married. Marriage brings with it lots of advantages, including a life partner, social connections through their family, (probably) children, and &lt;&lt;if $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot;&gt;&gt;wealth from your &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&#39;s income&lt;&lt;else&gt;&gt;wife&#39;s dowry&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;additional income that will help protect you from &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;starvation&lt;&lt;else&gt;&gt;poverty&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;.&lt;&lt;if $gender is &quot;female&quot;&gt;&gt; The downside is all your property will become your husband&#39;s and you will be legally dependent on him until he dies... or you do.&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
 &lt;span id=&quot;marriage&quot;&gt;Do you wish to seek a &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&lt;&lt;else&gt;&gt;wife&lt;&lt;/if&gt;&gt;? 
-&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;set $seeking to 1&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;&lt;&lt;storyline-return &quot;You are looking to be married soon and will be seeking out a spouse.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $seeking to 0&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;&lt;&lt;storyline-return &quot;You are content to remain single for now.&quot; 0&gt;&gt;
+&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;&lt;&lt;set $seeking to 1&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;storyline-return &quot;You are looking to be married soon and will be seeking out a spouse.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;&lt;&lt;set $seeking to 0&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;storyline-return &quot;You are content to remain single for now.&quot; 0&gt;&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;/span&gt;
 
@@ -5839,12 +5846,9 @@ As an unmarried adult, you may wish to get married. Marriage brings with it lots
 &lt;&lt;nobr&gt;&gt;
 Young people between the ages of 14 and 21 are eligible to be bound as apprentices in the city of London. While it is usually boys who take advantage of this opportunity, there are some girls who also seek apprenticeships. For a period of around 7 years, you would be legally bound to your master and provide &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;him&lt;&lt;/if&gt;&gt; your service. In return you will learn &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; trade, gain connections in &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; social circles, and perhaps eventually even earn your Freedom of the City.
 &lt;br&gt;&lt;br&gt;
-&lt;span id=&quot;apprenticeship&quot;&gt;You are
-&lt;ul&gt;
-&lt;li&gt;&lt;&lt;link &quot;interested in becoming an apprentice&quot;&gt;&gt;&lt;&lt;set $seekingApprenticeship to 1&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;replace &quot;#apprenticeship&quot;&gt;&gt;You are interested in becoming an apprentice and ask for your family to seek out a master for you.
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;content to remain with your family&quot;&gt;&gt;&lt;&lt;set $seekingApprenticeship to 0&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;replace &quot;#apprenticeship&quot;&gt;&gt;You are content to remain with your family and continue working directly to support them.
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;span id=&quot;apprenticeship&quot;&gt;Do you wish to seek an apprenticeship?
+&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;set $seekingApprenticeship to 1&gt;&gt;&lt;&lt;set $seekingDecision to 2&gt;&gt;&lt;&lt;replace &quot;#apprenticeship&quot;&gt;&gt;&lt;&lt;storyline-return &quot;You are interested in becoming an apprentice and ask for your family to seek out a master for you.&quot; 0&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $seekingApprenticeship to 0&gt;&gt;&lt;&lt;set $seekingDecision to 2&gt;&gt;&lt;&lt;replace &quot;#apprenticeship&quot;&gt;&gt;&lt;&lt;storyline-return &quot;You are content to remain with your family and working directly to support them.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;/span&gt;
 
 &lt;&lt;/nobr&gt;&gt;
@@ -6055,9 +6059,7 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
-</tw-passagedata><tw-passagedata pid="111" name="january-1665-helper widget" tags="widget" position="950,350" size="100,100">&lt;&lt;widget &quot;january-1665-helper&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-
-&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="112" name="legacy stats code" tags="" position="2275,1350" size="100,100">/* removed from stats passage */
+</tw-passagedata><tw-passagedata pid="111" name="blank" tags="widget" position="2400,1350" size="100,100"></tw-passagedata><tw-passagedata pid="112" name="legacy stats code" tags="" position="2275,1350" size="100,100">/* removed from stats passage */
 
 &lt;h3&gt;Player Stats&lt;/h3&gt;
 &lt;ul&gt;
