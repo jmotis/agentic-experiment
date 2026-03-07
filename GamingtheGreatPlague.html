@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.12" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.13" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -2817,7 +2817,7 @@ Do you:
 [[stand firm in your refusal to risk your life-&gt;deported][$decisions.push({text: &quot;Stood firm and was deported&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $socio to &quot;beggars&quot;&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;set-hoh&gt;&gt;Because you are no longer working, you quickly run out of money and have to throw yourself on the mercy of your &lt;&lt;defParish &quot;parish&#39;s&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt;.&lt;br&gt;&lt;br&gt;
-&lt;&lt;if $religion is &quot;member of the Church of England&quot; and $agenum gt 16&gt;&gt;They have decided it will be your job to 
+&lt;&lt;if $religion isnot &quot;Catholic&quot; and $skipServices isnot 1 and $agenum gt 16&gt;&gt;They have decided it will be your job to 
 &lt;&lt;if $reputation gte 6&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $role to &quot;searcher&quot;&gt;&gt;look at the corpses and determine if they died of &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; or some other cause of death
 &lt;br&gt;
     &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot;&gt;
@@ -2835,7 +2835,7 @@ Do you:
 &lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
 You have no choice but to &lt;&lt;storyline-return &quot;accept your new role&quot;&gt;&gt;.
-&lt;&lt;else&gt;&gt;&lt;&lt;if $religion isnot &quot;member of the Church of England&quot;&gt;&gt;As you are not a member of the Church of England, the parish cannot assign you to plague work.&lt;&lt;else&gt;&gt;The parish does not consider you old enough for plague work.&lt;&lt;/if&gt;&gt; You have no choice but to &lt;&lt;storyline-return &quot;accept your new situation&quot;&gt;&gt;.
+&lt;&lt;else&gt;&gt;&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;As a Catholic, the parish cannot assign you to plague work.&lt;&lt;elseif $skipServices is 1&gt;&gt;As you have chosen not to attend Church of England services, the parish cannot assign you to plague work.&lt;&lt;else&gt;&gt;The parish does not consider you old enough for plague work.&lt;&lt;/if&gt;&gt; You have no choice but to &lt;&lt;storyline-return &quot;accept your new situation&quot;&gt;&gt;.
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="July 1665" tags="storyline 1665" position="1450,475" size="100,100">&lt;&lt;nobr&gt;&gt;
@@ -3447,7 +3447,7 @@ While this is enough for a little extra bread, you are painfully aware that this
 One of your neighbors &lt;&lt;if $reputation gte 6&gt;&gt;provides you with leftovers from a feast&lt;&lt;else&gt;&gt;&lt;&lt;if _charity is 1&gt;&gt;gives you some moldy bread&lt;&lt;else&gt;&gt;lets you have an old dress, which you sell for a bit of extra bread&lt;&lt;set _rate to $parishRate[$parish][$monthIndex]&gt;&gt;&lt;&lt;if random(1, _rate) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;. Because you didn&#39;t have to spend as much money on food, you manage to save an extra $beggarsluck pence.&lt;&lt;unset $beggarsluck&gt;&gt;
 &lt;&lt;storyline-return&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="54" name="beggar-roles" tags="widget" position="1450,25" size="100,100">&lt;&lt;widget &quot;beggar-roles&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-    &lt;&lt;if $disability is 0 and $religion is &quot;member of the Church of England&quot; and $agenum gt 16&gt;&gt; and the &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have decided it will be your job to
+    &lt;&lt;if $disability is 0 and $religion isnot &quot;Catholic&quot; and $skipServices isnot 1 and $agenum gt 16&gt;&gt; and the &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have decided it will be your job to
         &lt;&lt;if $reputation gte 6&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $role to &quot;searcher&quot;&gt;&gt;look at the corpses and determine if they died of &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; or some other cause of death
         &lt;br&gt;
     &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot;&gt;
@@ -3461,7 +3461,7 @@ One of your neighbors &lt;&lt;if $reputation gte 6&gt;&gt;provides you with left
 //Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
         &lt;&lt;/if&gt;&gt;
         &lt;&lt;/if&gt;&gt;
-    &lt;&lt;elseif $disability is 0&gt;&gt;, but the &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have refused to hire you for plague work&lt;&lt;if $religion isnot &quot;member of the Church of England&quot;&gt;&gt;, as only members of the Church of England may serve in such parish offices&lt;&lt;else&gt;&gt;, as you are not old enough for such work&lt;&lt;/if&gt;&gt;
+    &lt;&lt;elseif $disability is 0&gt;&gt;, but the &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have refused to hire you for plague work&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, as Catholics may not serve in such parish offices&lt;&lt;elseif $skipServices is 1&gt;&gt;, as you have chosen not to attend Church of England services&lt;&lt;elseif $agenum lte 16&gt;&gt;, as you are not old enough for such work&lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;.
     &lt;&lt;if $disability isnot 0&gt;&gt;Many of your neighbors begin to flee the city and those who remain curse at you to leave when you try begging at their doors.&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;You decide to:
@@ -4035,11 +4035,11 @@ In fact, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;
 &lt;&lt;if _ctx is &quot;initial&quot;&gt;&gt;
 &lt;&lt;if $origin isnot &quot;London&quot;&gt;&gt; You still have family back home in $origin and have to consider whether or not to abandon your home and whatever possessions you cannot carry to take refuge with your family.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-    &lt;&lt;if $religion is &quot;member of the Church of England&quot; and $agenum gt 16&gt;&gt;You hear that the local parish officials want to hire you to &lt;&lt;if $reputation gte 6&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;look at plague corpses and determine if they died of plague or some other cause of death&lt;&lt;else&gt;&gt;stand guard outside quarantined houses to prevent anyone from escaping&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;nurse the sick and dying, despite the risk to your own life&lt;&lt;else&gt;&gt;remove the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; corpses if anyone dies&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;.&lt;br&gt;&lt;br&gt;
-&lt;&lt;else&gt;&gt;&lt;&lt;if $religion isnot &quot;member of the Church of England&quot;&gt;&gt;As you are not a member of the Church of England, the parish cannot offer you plague work.&lt;&lt;else&gt;&gt;The parish does not consider you old enough for plague work.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
+    &lt;&lt;if $religion isnot &quot;Catholic&quot; and $skipServices isnot 1 and $agenum gt 16&gt;&gt;You hear that the local parish officials want to hire you to &lt;&lt;if $reputation gte 6&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;look at plague corpses and determine if they died of plague or some other cause of death&lt;&lt;else&gt;&gt;stand guard outside quarantined houses to prevent anyone from escaping&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;nurse the sick and dying, despite the risk to your own life&lt;&lt;else&gt;&gt;remove the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; corpses if anyone dies&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;.&lt;br&gt;&lt;br&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;As a Catholic, the parish cannot offer you plague work.&lt;&lt;elseif $skipServices is 1&gt;&gt;As you have chosen not to attend Church of England services, the parish cannot offer you plague work.&lt;&lt;else&gt;&gt;The parish does not consider you old enough for plague work.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;    You decide to:
     &lt;ul&gt;
-        &lt;&lt;if $religion is &quot;member of the Church of England&quot; and $agenum gt 16&gt;&gt;&lt;li&gt;&lt;&lt;link &quot;accept the job&quot; &quot;Stay&quot;&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Accepted a plague work job&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;if $reputation gte 6&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $role to &quot;searcher&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $role to &quot;warder&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $role to &quot;nurse&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $role to &quot;corpsebearer&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+        &lt;&lt;if $religion isnot &quot;Catholic&quot; and $skipServices isnot 1 and $agenum gt 16&gt;&gt;&lt;li&gt;&lt;&lt;link &quot;accept the job&quot; &quot;Stay&quot;&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Accepted a plague work job&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;if $reputation gte 6&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $role to &quot;searcher&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $role to &quot;warder&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $role to &quot;nurse&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $role to &quot;corpsebearer&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
         &lt;li&gt;[[not accept the job-&gt;Stay][_repBefore to $reputation; $reputation to Math.clamp($reputation - 1, 0, 10); $fled to 4; $decisions.push({text: &quot;Refused the plague work job&quot;, money: 0, repDelta: -1, repBefore: _repBefore, infectPct: null})]]&lt;/li&gt;
         &lt;&lt;else&gt;&gt;&lt;li&gt;[[Remain in the city-&gt;Stay][$fled to 4; $decisions.push({text: &quot;Remained in the city&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
         &lt;&lt;/if&gt;&gt;
@@ -4874,7 +4874,7 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
 &lt;/table&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="79" name="Apothecary" tags="menu" position="650,150" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;
-&lt;&lt;set _hhSize to $NPCs.length + 1&gt;&gt;
+&lt;&lt;set _hhSize to $NPCs.filter(function(n) { return n.health isnot &quot;deceased&quot;; }).length + 1&gt;&gt;
 &lt;&lt;set _celestialPrice to _hhSize*36&gt;&gt;
 &lt;&lt;set _treaclePrice to _hhSize*6&gt;&gt;
 &lt;&lt;set _incensePrice to _hhSize*3&gt;&gt;
@@ -4924,7 +4924,7 @@ Remaining money: &lt;&lt;conversion&gt;&gt;&lt;br&gt;
 
 &lt;&lt;widget &quot;player-treatments&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $NPCs.length gte 1&gt;&gt; /* NTS need to alter so household member is not-deceased */
+&lt;&lt;set _livingNPCs to $NPCs.filter(function(n) { return n.health isnot &quot;deceased&quot;; })&gt;&gt;&lt;&lt;if _livingNPCs.length gte 1&gt;&gt;
 A member of your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;
 &lt;&lt;else&gt;&gt;
     &lt;&lt;if $money gte 12&gt;&gt;
@@ -5487,7 +5487,6 @@ The &lt;&lt;defLordMayor &quot;Lord Mayor&quot;&gt;&gt; has ordered fires to be 
 &lt;br&gt;&lt;br&gt;
 You can continue to try and avoid the plague by visiting the &lt;&lt;defApothecary &quot;Apothecary&quot;&gt;&gt;, or you can:
 &lt;&lt;preventative&gt;&gt;
-/* NTS: text about smuggling children from plague houses */
 
 [[Continue to October 1665-&gt;October 1665]]
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
@@ -6840,7 +6839,7 @@ You return to the Church of England services this month. You cannot afford to pa
 &lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Skipped Church of England services (fined 48d.)&quot;, money: -48, repDelta: _repLoss, repBefore: $reputation, infectPct: null})&gt;&gt;
 &lt;&lt;set $skipServices to 1&gt;&gt;
 &lt;&lt;set $money to Math.clamp($money - 48, -Infinity, Infinity)&gt;&gt;
-You resolve to stop attending services at the Church of England. You are fined 48d. for non-attendance&lt;&lt;if _repLoss is -1&gt;&gt; and your reputation suffers&lt;&lt;/if&gt;&gt;.&lt;br&gt;&lt;br&gt;
+You resolve to stop attending services at the Church of England. You are fined 48d. for non-attendance&lt;&lt;if _repLoss is -1&gt;&gt; and your reputation suffers&lt;&lt;/if&gt;&gt;.&lt;&lt;if $role is &quot;searcher&quot; or $role is &quot;nurse&quot; or $role is &quot;corpsebearer&quot; or $role is &quot;warder&quot;&gt;&gt;&lt;&lt;set $role to &quot;0&quot;&gt;&gt; As you are no longer attending Church of England services, the parish has removed you from your plague work duties.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
 &lt;&lt;resolve-gate&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Skip Church of England services this month&quot;&gt;&gt;&lt;&lt;replace &quot;#churchChoice&quot;&gt;&gt;
 &lt;&lt;set _repLoss to 0&gt;&gt;&lt;&lt;if $churchSkipRepPenalty is 0&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;set $churchSkipRepPenalty to 1&gt;&gt;&lt;&lt;set _repLoss to -1&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Skipped Church of England services (fined 48d.)&quot;, money: -48, repDelta: _repLoss, repBefore: $reputation, infectPct: null})&gt;&gt;
