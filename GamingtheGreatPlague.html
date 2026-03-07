@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.19" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.20" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1527,7 +1527,7 @@ You are grateful to have survived long enough to see [[August 1665]].
 The city has ordered public &lt;&lt;defFasts &quot;fasts&quot;&gt;&gt; and prayers to help combat the plague. &lt;&lt;if $religion is &quot;Presbyterian&quot;&gt;&gt;&lt;&lt;if $money gt 2400&gt;&gt;You hear about a private meeting of your fellow &lt;&lt;defPresbyterians &quot;Presbyterians&quot;&gt;&gt; in &lt;&lt;defCoventGarden &quot;Covent Garden&quot;&gt;&gt;. &lt;span id=&quot;conventicle&quot;&gt;Do you attend? &lt;&lt;link &quot;Yes, I will go&quot;&gt;&gt;&lt;&lt;replace &quot;#conventicle&quot;&gt;&gt;You attend the private meeting, but unfortunately everyone there is arrested. You are told you can be released if you pay £5 to help care for the poor of the city. You have no choice but to pay.&lt;&lt;set $money -= 1200&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Aug 1665: Attended Presbyterian conventicle and was fined £5&quot;, money: -1200, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No, it is too dangerous&quot;&gt;&gt;&lt;&lt;replace &quot;#conventicle&quot;&gt;&gt;You decide not to risk it, which is lucky for you because everyone who attends the meeting is arrested. They are told they can be released if they pay £5 each to help care for the poor of the city, but they refuse and so are imprisoned.&lt;&lt;set $decisions.push({text: &quot;Aug 1665: Avoided Presbyterian conventicle&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;&lt;else&gt;&gt;You attempt to join a private meeting of your fellow &lt;&lt;defPresbyterians &quot;Presbyterians&quot;&gt;&gt; in &lt;&lt;defCoventGarden &quot;Covent Garden&quot;&gt;&gt;but are too poor and turned away, which is lucky for you because everyone who attends the meeting is arrested. They are told they can be released if they pay £5 each to help care for the poor of the city, but they refuse and so are imprisoned.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
         &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
         Afraid of the worsening plague outbreak, the King removes his household even further away to the west, finally settling into the city of &lt;&lt;defSalisbury &quot;Salisbury&quot;&gt;&gt;. Unfortunately, there is no royal palace there and anyone who follows him will have to find their own makeshift lodgings somewhere else in the city.&lt;&lt;/if&gt;&gt;
-        &lt;br&gt;&lt;br&gt;You can continue to try and prevent catching plague by visiting the &lt;&lt;defApothecary &quot;apothecary&quot;&gt;&gt;, or you can:
+        &lt;br&gt;&lt;br&gt;You can continue to try and prevent catching plague by visiting the &#39;&#39;&lt;&lt;defApothecary &quot;Apothecary&quot;&gt;&gt;&#39;&#39; for fumigants and medicines, or you can:
         &lt;&lt;preventative&gt;&gt;
         [[Continue to September 1665-&gt;September 1665]]
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="January 1665" tags="storyline 1665" position="1075,475" size="100,100">&lt;&lt;nobr&gt;&gt;
@@ -4902,7 +4902,18 @@ Remaining money: &lt;&lt;conversion&gt;&gt;&lt;br&gt;
 
 &lt;img src=&quot;https://iiif.wellcomecollection.org/image/L0064305/full/760%2C/0/default.jpg&quot; width=&quot;100%&quot;&gt;</tw-passagedata><tw-passagedata pid="80" name="preventatives-treatments" tags="widget" position="775,150" size="100,100">&lt;&lt;widget &quot;preventative&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;ul&gt;&lt;li&gt;&lt;span id=&quot;church&quot;&gt;&lt;&lt;link &quot;Go to church and pray often&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;set _rate to $parishRate[$parish][$monthIndex]&gt;&gt;&lt;&lt;set _riskPct to Math.round(10000 / _rate) / 100&gt;&gt;&lt;&lt;if random(1, _rate) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Went to church to pray often&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: _riskPct})&gt;&gt;&lt;&lt;replace &quot;#church&quot;&gt;&gt;You go to church and pray regularly through the month. Others admire your piety in the face of such a grave situation!&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;&lt;span id=&quot;eat&quot;&gt;&lt;&lt;link &quot;Avoid eating berries, cabbage, cucumbers, melon, and spinach.&quot;&gt;&gt;&lt;&lt;replace &quot;#eat&quot;&gt;&gt;You avoid eating berries, cabbage, cucumbers, melons, and spinach. Your neighbors swear by it!&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;li&gt;&lt;span id=&quot;eat&quot;&gt;&lt;&lt;link &quot;Avoid eating berries, cabbage, cucumbers, melon, and spinach.&quot;&gt;&gt;&lt;&lt;replace &quot;#eat&quot;&gt;&gt;You avoid eating berries, cabbage, cucumbers, melons, and spinach. Your neighbors swear by it!&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Visit the apothecary&quot;&gt;&gt;&lt;&lt;run Dialog.setup(&quot;Apothecary&quot;, &quot;apothecary&quot;); Dialog.wiki(Story.get(&quot;Apothecary&quot;).text); Dialog.open()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;&lt;if $remedies.Celestial.quantity gt 0&gt;&gt;&lt;&lt;set $remedies.Celestial.quantity -= 1&gt;&gt;You drink &lt;&lt;defCelestialWater &quot;celestial water&quot;&gt;&gt; every morning to protect yourself from infection.&lt;&lt;elseif $remedies.Treacle.quantity gt 0&gt;&gt;&lt;&lt;set $remedies.Treacle.quantity -= 1&gt;&gt;You drink &lt;&lt;defLondonTreacle &quot;London Treacle&quot;&gt;&gt; every morning to protect yourself from infection.&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $fumes.Fancy.quantity gt 0&gt;&gt;
+&lt;br&gt;&lt;br&gt;You fall asleep every night to the lingering perfume of the &lt;&lt;defStGilesPowder &quot;St. Giles Powder&quot;&gt;&gt; you burnt to cleanse your home of miasmas.
+&lt;&lt;elseif $fumes.Generic.quantity gt 0&gt;&gt;
+&lt;br&gt;&lt;br&gt;You fall asleep every night to the lingering sulfurous odor of the &lt;&lt;defCheapFumigants &quot;cheap fumigants&quot;&gt;&gt; you burnt to cleanse your home of miasmas.
+&lt;&lt;elseif $fumes.Purse.quantity gt 0&gt;&gt;
+&lt;br&gt;&lt;br&gt;You fall asleep every night to the perfume of the &lt;&lt;defPurseOfIncense &quot;incense purse&quot;&gt;&gt; you wear to protect yourself from miasmas.
+&lt;&lt;elseif $fumes.Incense.quantity gt 0&gt;&gt;
+&lt;br&gt;&lt;br&gt;You fall asleep every night to the lingering perfume of the incense you burnt to cleanse your home of miasmas.
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
@@ -5293,9 +5304,8 @@ You &lt;&lt;if $hoh is 4&gt;&gt;convince your husband&lt;&lt;elseif $hoh isnot 1
 &lt;&lt;if ($socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;) and $NPCsServants.length gt 0&gt;&gt;
  You send your family to safety in $hhlocation&lt;&lt;if $FledServants.length gt 0&gt;&gt;, along with &lt;&lt;if $FledServants.length eq 1&gt;&gt;your other servant&lt;&lt;else&gt;&gt;your other $FledServants.length servants&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $NPCsServants.length gt 0&gt;&gt;, keeping &lt;&lt;if $NPCsServants.length eq 1&gt;&gt;your servant&lt;&lt;else&gt;&gt;$NPCsServants.length servants&lt;&lt;/if&gt;&gt; with you&lt;&lt;/if&gt;&gt;. You promise to meet them should the situation grow worse.&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
-While you remain in the city, you can take measures to protect yourself&lt;&lt;if $NPCs.length gt 1&gt;&gt; and your household&lt;&lt;/if&gt;&gt; from the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. You can:
+While you remain in the city, you can take measures to protect yourself&lt;&lt;if $NPCs.length gt 1&gt;&gt; and your household&lt;&lt;/if&gt;&gt; from the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. You can visit the &#39;&#39;&lt;&lt;defApothecary &quot;Apothecary&quot;&gt;&gt;&#39;&#39;, who sells fumigants and medicines to prevent you from getting sick or to treat those who have fallen ill. You can also:
     &lt;&lt;preventative&gt;&gt;
-You can also visit the &#39;&#39;&lt;&lt;defApothecary &quot;Apothecary&quot;&gt;&gt;&#39;&#39;, who sells remedies to prevent you from getting sick or to treat those who have fallen ill.
     &lt;&lt;first-plague-day-continue&gt;&gt;
 
 &lt;&lt;/if&gt;&gt;
@@ -5469,7 +5479,7 @@ It&#39;s not a great lead up for [[April 1666]].
 </tw-passagedata><tw-passagedata pid="95" name="sep-1665-helper widget" tags="widget" position="1575,550" size="100,100">&lt;&lt;widget &quot;sep-1665-helper&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 The &lt;&lt;defLordMayor &quot;Lord Mayor&quot;&gt;&gt; has ordered fires to be lit throughout the city, to fill the air with smoke and sweep away any bad air that might be making the plague worse. 
 &lt;br&gt;&lt;br&gt;
-You can continue to try and avoid the plague by visiting the &lt;&lt;defApothecary &quot;Apothecary&quot;&gt;&gt;, or you can:
+You can continue to try and avoid the plague by visiting the &#39;&#39;&lt;&lt;defApothecary &quot;Apothecary&quot;&gt;&gt;&#39;&#39; for fumigants and medicines, or you can:
 &lt;&lt;preventative&gt;&gt;
 
 [[Continue to October 1665-&gt;October 1665]]
