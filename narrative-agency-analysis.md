@@ -9,9 +9,11 @@ This report analyzes where and how player identity and choices shape the narrati
 1. [Character Creation: What Players Choose vs. What's Randomized](#1-character-creation)
 2. [Monthly Storyline Decision Map](#2-monthly-storyline-decisions)
 3. [Major Branching Pathways](#3-major-branching-pathways)
-4. [How Identity Variables Gate Choices](#4-identity-gating)
-5. [Agency Spectrum by Social Class](#5-agency-by-class)
-6. [Summary Findings](#6-summary)
+4. [Random Events and Life Milestones](#4-random-events)
+5. [Economic and Social Systems](#5-economic-systems)
+6. [How Identity Variables Gate Choices](#6-identity-gating)
+7. [Agency Spectrum by Social Class](#7-agency-by-class)
+8. [Summary Findings](#8-summary)
 
 ---
 
@@ -71,6 +73,11 @@ Each month presents narrative text and typically one or two explicit player choi
 | Volunteer (disguised) | Female beggars, non-Quaker | Disguise as man / No | Same, with gender-disguise narrative |
 
 **Conditional narrative**: Dutch-origin characters see text about fearing neighbors. Children ≤12 see modified text about not remembering pre-Restoration life.
+
+**Helper widget (seasonal gating)**: Christmas feast choice + religion-branched church attendance:
+- Church of England → parish church celebration
+- Catholic → Somerset House chapel gathering
+- Dissident Protestant → private home celebration
 
 ### January 1665
 Every social class gets a **different decision entirely**:
@@ -318,7 +325,154 @@ Players who refuse plague work face escalating consequences:
 
 ---
 
-## 4. How Identity Variables Gate Choices {#4-identity-gating}
+## 4. Random Events and Life Milestones {#4-random-events}
+
+Beyond the monthly storyline decisions, a **priority cascade** system fires random events each month. The first matching condition triggers, so plague always takes precedence over life events. Player identity determines which events can fire and what choices appear.
+
+### Priority Cascade Order
+
+1. **Player plague infection** → Sickness sequence (no choice)
+2. **Family plague infection** → Quarantine sequence
+3. **Master/extended household infection** → Household sickness handling
+4. **Elderly death** → 1-in-30 chance if elderly (automatic, no choice)
+5. **Apprenticeship offer** → 1-in-10 chance if seeking (active choice)
+6. **Wedding** → 1-in-10 chance if seeking (active choice)
+7. **Pregnancy realization** → Month 4 of pregnancy (automatic)
+8. **Miscarriage** → Age-scaled probability (automatic)
+9. **Birth** → Month 9 of pregnancy (active choice for celebration)
+10. **Fever** → 1-in-20 chance (class-specific consequences)
+11. **Class-specific events** → Nobles: steward death; day labourers: accidents; beggars: run-over; merchants: parish office
+12. **NPC death (non-plague)** → Triggers household succession
+13. **Servant dismissal** → If rep ≤ 2 and servant, 50% chance
+14. **Servant promotion** → If rep = 10 and servant aged 14–21
+
+If no event fires: default monthly narrative + church services.
+
+### Wedding System (Active Choice)
+
+When a marriage match is found, players choose the ceremony type:
+
+| Wedding Type | Cost | Reputation | Plague Risk | Notes |
+|-------------|------|------------|-------------|-------|
+| Parish church | 48d | +2 | High (3 weeks of banns + ceremony) | Public gathering |
+| Private license | 96d | 0 | Low (small home ceremony) | Costs more, safer |
+| Fleet prison elopement | 72d | -1 | Lowest (tavern marriage) | Social stigma |
+
+### Pregnancy, Birth, and Miscarriage (Mostly Automatic)
+
+- **Pregnancy trigger**: 1-in-10 monthly chance for married/betrothed females age 16–40 (no player choice)
+- **Miscarriage**: Age-scaled probability — 10% for women ≤25, rising to 40% at age 40+ (automatic)
+- **Plague during pregnancy**: Silently causes miscarriage (automatic)
+- **Birth**: 1-in-30 maternal death chance; 1-in-4 stillbirth chance (both automatic)
+- **Birth celebration** (active choice if live birth):
+  - Host celebration: costs vary by class (nobles 2400d, merchants 480d, artisans 120d, others 6d), higher plague risk
+  - Quick baptism: 6d, minimal risk
+
+### Apprenticeship System (Active Choice, Heavily Gated)
+
+When an apprenticeship offer triggers, eligibility depends on reputation and money:
+
+| Trade | Entry Fee | Rep Required | Class Outcome |
+|-------|-----------|-------------|---------------|
+| Baker | 240d | > 2 | Remains artisan |
+| Weaver | 1200d | > 3 | Remains artisan |
+| Draper | 2400d | > 4 | Upgrades to merchant |
+| Mercer | 6000d | > 5 | Upgrades to merchant |
+| Goldsmith | 12000d | > 6 | Upgrades to merchant |
+
+Rep ≤ 2: no one will take the player. Money below 240d: can't afford any fee. This is one of the few mechanisms for **upward social mobility** in the game.
+
+### Plague Worker Bribe Scenarios (July 1665 Helper Widget)
+
+Plague workers face role-specific moral dilemmas with **active choices**:
+
+| Role | Bribe Scenario | Accept Cost | Refuse |
+|------|---------------|-------------|--------|
+| Corpsebearer | Skip searcher examination of a corpse | -2 rep | No penalty |
+| Warder | Let a child escape quarantined house | -2 rep | No penalty |
+| Searcher | Misreport a plague death as non-plague | -2 rep | No penalty |
+| Nurse | Smuggle a baby out of infected house | -2 rep | No penalty |
+
+These create compelling moral conflicts — the "right" historical action (accepting bribes was common) costs reputation, while the mechanically optimal choice (refuse) is historically less realistic.
+
+### Parish Office (Conditional Offer)
+
+Offered only to **Church of England males, age ≥ 30, reputation ≥ 8** with no current office:
+- **Accept**: Churchwarden or Overseer of the Poor (+1 rep)
+- **Decline**: Pay 24d fine
+
+Office is **automatically removed** if reputation drops to ≤ 4 (-1 rep penalty).
+
+---
+
+## 5. Economic and Social Systems {#5-economic-systems}
+
+### Income Disparity (Automatic, No Choice)
+
+Income is calculated automatically each month, with dramatic class and gender gaps:
+
+| Class | Male Monthly Income | Female Monthly Income | Ratio |
+|-------|--------------------|-----------------------|-------|
+| Nobles | 17,600d | 14,080d | 80% |
+| Merchants | 4,000d | 3,200d | 80% |
+| Artisans | 800d | 640d | 80% |
+| Day labourers | 300d | 240d | 80% |
+| Servants (adult) | 300d (M) / 240d (F) | — | 80% |
+| Beggars | 120d (×0.8 = 96d for males) | 120d | Inverted |
+
+**Key design note**: Female characters earn 80% of male equivalents across all classes except beggars, where the ratio inverts. This reflects historical wage disparities without player choice.
+
+**Fled penalty**: Beggars, day labourers, artisans, and merchants receive half income while fled from London.
+
+### Debt System (Automatic Consequences)
+
+When money falls below the class-specific debt ceiling:
+- **Servants with rep ≥ 6**: Master pays off debt (-2 rep)
+- **Servants with rep < 6**: Dismissed → downgraded to day labourer
+- **Non-servants, rep ≥ 6**: Creditors grant extension
+- **Non-servants, rep < 6**: Debtor's prison (-2 rep, 50% plague infection risk)
+- **Forced child service**: Parish forcibly places all children ≤21 (unmarried) into service
+
+**Quarantine debt escape** (active choice): If debt ceiling exceeded during quarantine and player isn't infected, option to break quarantine for half-income work (50% success; failure = caught and fined 12d).
+
+### Beggar Survival Options (Active Choice When Money ≤ 12d)
+
+| Option | Gating | Income | Risk |
+|--------|--------|--------|------|
+| Highway begging (illegal) | All beggars | 6–10d (doubled if disabled) | 1-in-3 impressment; -1 rep |
+| Laundry work | Female only | 48d (96d if disabled) | None |
+| Church linen washing | Church of England only | 32d (64d if disabled) | None |
+| Hope and survive | All | None | None |
+
+**Good neighbors** (rep ≥ 6): Receive feast leftovers or old clothing, earn 2–6d (doubled if disabled). **Disability as economic advantage**: Disabled beggars consistently earn double from charity and begging — one of the few places disability provides a mechanical benefit.
+
+### Child Smuggling (Active Choice, Rep > 5)
+
+Available to parents (hoh 1 or 4) during quarantine with reputation ≥ 6:
+- **Accept neighbor offer**: Healthy children sent to countryside safety; -1 rep
+- **Decline**: Children remain at home, subject to infection
+
+After plague ends, a **return-children** choice appears: bring them home now or keep them safe longer.
+
+### Lodger System (Post-Fire, October 1666+)
+
+Non-displaced characters inside City walls can take in fire refugees:
+
+| Class | Lodger Capacity |
+|-------|----------------|
+| Day labourers / servants | 1 |
+| Artisans | 3 |
+| Merchants | 5 |
+| Nobles / beggars | 0 |
+
+**Active choice** on rent:
+- High rent (+2d/unit): -1 rep (seen as profiteering)
+- Base rent: 0 rep (charitable)
+- Refuse: 0 rep
+
+---
+
+## 6. How Identity Variables Gate Choices {#6-identity-gating}
 
 ### Social Class (`$socio`)
 The single most pervasive gating variable. Every monthly decision diverges by class. Determines:
@@ -374,14 +528,18 @@ The single most pervasive gating variable. Every monthly decision diverges by cl
 - **Non-plague workers**: Get standard civilian narrative with curfew/funeral choices
 
 ### Head of Household (`$hoh`)
-- **Self (1)**: Can make independent decisions, write will, control finances
-- **Master (3)**: Master's decisions constrain servant's options (flight, housing)
-- **Husband (4)**: Can "convince" household; modified persuasion text for wife characters
-- **Dependent (0, 2)**: Must follow caretaker; limited independence in crisis decisions
+The HOH system implements **coverture** (married women under husband's legal authority) and **service** (servants under master's authority). It subtly changes narrative voice to reflect who "really" makes decisions:
+- **Self (1)**: "You decide to..." — full independent agency
+- **Dependent on father (2)**: "Your father decides..." — constrained
+- **Servant under master (3)**: "Your master decides..." — master controls flight, housing
+- **Under husband/coverture (4)**: "You convince your husband to..." — mediated agency; player still chooses, but text frames it as persuasion
+- **Child dependent (0)**: "Your _caretakerLabel decides..." — minimal agency
+
+This creates a **narrative illusion of constrained agency**: the player still clicks choices, but the game's language reminds them their character's authority is mediated through social hierarchies. A married woman "convinces" her husband; a servant "follows" their master — even when the player is the one choosing.
 
 ---
 
-## 5. Agency Spectrum by Social Class {#5-agency-by-class}
+## 7. Agency Spectrum by Social Class {#7-agency-by-class}
 
 Ranked from least to most player agency:
 
@@ -392,6 +550,8 @@ Ranked from least to most player agency:
 - Breaking contract downgrades to beggar (-2 reputation)
 - Cannot independently decide housing, flight timing, or financial allocation
 - Head-of-household is master, not player
+- **Automatic dismissal**: Rep ≤ 2 triggers 50% monthly chance of being dismissed to day labourer
+- **Automatic promotion**: Rep = 10 and age 14–21 → offered apprenticeship (one of the few upward mobility paths)
 
 ### Beggars (Low Agency)
 - Work refusal → jail → deportation pipeline with few exits
@@ -433,7 +593,7 @@ Ranked from least to most player agency:
 
 ---
 
-## 6. Summary Findings {#6-summary}
+## 8. Summary Findings {#8-summary}
 
 ### Where Players Have the Most Agency
 
