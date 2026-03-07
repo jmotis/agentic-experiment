@@ -475,17 +475,25 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Used for:** Holds a small random pence amount that is immediately added to `$money` and then `<<unset>>`. It is a display variable only (shown in the passage text as the amount earned/saved) and is never checked in a conditional.
 - **Dependency:** Only set when `$socio is "beggars"` and the player takes a begging or charity action.
 
-### `$seeking`
+### `$seekingMarriage`
 - **Type:** Integer (boolean-like)
 - **Possible values:** `0` (not seeking), `1` (seeking a spouse)
+- **Set by:** Set to `1` or `0` by `marriage-market` widget (pid 107) when the player chooses whether to seek a spouse; `<<unset>>` by `wedding` widget (pid 108) when the player marries
 - **Used for:** Whether the player is actively looking for a marriage partner
-- **Dependency:** Interacts with `$wedding`
+- **Dependency:** Interacts with `$wedding` and `$seekingDecision`
+
+### `$seekingDecision`
+- **Type:** Integer
+- **Possible values:** `0` (no decision yet), `1` (marriage decision made), `2` (apprenticeship decision made)
+- **Set by:** `0` in StoryInit; set to `1` by `marriage-market` widget (pid 107) when the player makes a marriage decision; set to `2` by `apprenticeship-market` widget (pid 107) when the player makes an apprenticeship decision
+- **Used for:** Tracks whether the player has already been presented with the marriage or apprenticeship choice, preventing the question from being asked again. Value `2` also gates out the marriage-market widget for characters who chose the apprenticeship path.
+- **Dependency:** Checked in January 1665 (pid 9) to determine which widget to show
 
 ### `$seekingApprenticeship`
 - **Type:** Integer (boolean-like)
 - **Possible values:** `0` (not seeking), `1` (seeking an apprenticeship)
 - **Set by:** `0` in StoryInit; set to `1` by `apprenticeship-market` widget when the player chooses to seek an apprenticeship; set to `0` when an apprenticeship is accepted via `apprenticeship-offer`
-- **Used for:** Whether the player is actively looking for an apprenticeship. Mutually exclusive with `$seeking` — characters eligible for apprenticeship (single, artisan/merchant, agenum 14–21) are routed to `apprenticeship-market` instead of `marriage-market`.
+- **Used for:** Whether the player is actively looking for an apprenticeship. Mutually exclusive with `$seekingMarriage` — characters eligible for apprenticeship (single, artisan/merchant, agenum 14–21) are routed to `apprenticeship-market` instead of `marriage-market`.
 - **Dependency:** Interacts with `$apprenticeshipOffer`
 
 ### `$apprenticeship`
@@ -529,7 +537,7 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Type:** Integer (random event roll)
 - **Set by:** `random(1, 10)`
 - **Trigger:** `$wedding is 1` (10% chance) triggers a wedding event
-- **Dependency:** Interacts with `$seeking`
+- **Dependency:** Interacts with `$seekingMarriage`
 
 ### `$elderly`
 - **Type:** Integer (random event roll)
