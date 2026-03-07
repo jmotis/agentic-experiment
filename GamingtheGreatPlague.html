@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.11" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.12" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1686,6 +1686,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;set $childServiceOffered to -1&gt;&gt;
 &lt;&lt;set $inDebtorsPrison to 0&gt;&gt;
 &lt;&lt;set $debtorPrisonInfected to 0&gt;&gt;
+&lt;&lt;set $debtorPrisonMonths to 0&gt;&gt;
+&lt;&lt;set $creditorWaitCount to 0&gt;&gt;
 &lt;&lt;set $disability to 0&gt;&gt;
 &lt;&lt;set $reputation to 6&gt;&gt;
 &lt;&lt;set $office to &quot;&quot;&gt;&gt;
@@ -1788,6 +1790,7 @@ $(document).on(&#39;:passagerender&#39;, function (ev) {
 &lt;&lt;if tags().includes(&quot;storyline&quot;)&gt;&gt;&lt;h2&gt;&lt;&lt;print passage()&gt;&gt;, $location&lt;/h2&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if tags().includes(&quot;quarantine&quot;)&gt;&gt;&lt;h2&gt;&lt;&lt;print passage()&gt;&gt;&lt;/h2&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if tags().includes(&quot;storyline&quot;) and visited() lte 1&gt;&gt;&lt;&lt;debt-check&gt;&gt;&lt;&lt;child-service-check&gt;&gt;&lt;&lt;noble-child-service-check&gt;&gt;&lt;&lt;debtor&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if tags().includes(&quot;storyline&quot;) and visited() lte 1 and $inDebtorsPrison is 1&gt;&gt;&lt;&lt;debtor-prison-check&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if tags().includes(&quot;storyline&quot;) and $inDebtorsPrison is 1 and $plagueInfection isnot 1 and $plagueInfection isnot 2 and $playerPlagueStatus isnot &quot;recovered&quot;&gt;&gt;
 &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;set $debtorPrisonInfected to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -3566,16 +3569,104 @@ Your $masterTitle learns of your debts and is furious. &lt;&lt;set $socio to &qu
 &lt;&lt;/if&gt;&gt;
 /* Non-independent player with a qualifying HoH NPC — HoH goes to prison */
 &lt;&lt;if _hohNPCName isnot &quot;&quot;&gt;&gt;
-Your household has fallen so far into debt that creditors have demanded someone answer for it. To your distress, your _hohNPCRel, _hohNPCName, is thrown into debtor&#39;s prison. &lt;&lt;if $office isnot &quot;&quot;&gt;&gt;Because of this disgrace, the vestry of $parish removes you from your position as $office. &lt;&lt;set $office to &quot;&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $reputation gte 6&gt;&gt;To your relief, your _hohNPCRel&#39;s creditors agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; due to your family&#39;s good reputation. &lt;&lt;else&gt;&gt;_hohNPCName is committed to the Fleet and forced to reside there until the debts are reduced. &lt;&lt;set $inDebtorsPrison to 1&gt;&gt;&lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;
+Your household has fallen so far into debt that creditors have demanded someone answer for it. To your distress, your _hohNPCRel, _hohNPCName, is thrown into debtor&#39;s prison. &lt;&lt;if $office isnot &quot;&quot;&gt;&gt;Because of this disgrace, the vestry of $parish removes you from your position as $office. &lt;&lt;set $office to &quot;&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $reputation gte 6&gt;&gt;&lt;&lt;set $creditorWaitCount += 1&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Creditors agreed to wait (reputation -1)&quot;, money: 0, repDelta: -1, repBefore: $reputation + 1, infectPct: null})&gt;&gt;&lt;&lt;if $creditorWaitCount is 1&gt;&gt;To your relief, your _hohNPCRel&#39;s creditors agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; due to your family&#39;s good reputation. &lt;&lt;elseif $creditorWaitCount is 2&gt;&gt;Your _hohNPCRel&#39;s creditors are growing impatient, but they agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; — though you sense their patience is wearing thin. &lt;&lt;else&gt;&gt;Your _hohNPCRel&#39;s creditors are furious and barely agree to &lt;&lt;storyline-return &quot;wait&quot;&gt;&gt; — warning that this is the last time. &lt;&lt;/if&gt;&gt;&lt;&lt;elseif $reputation gte 4&gt;&gt;&lt;&lt;debt-sell-option&gt;&gt;&lt;&lt;else&gt;&gt;_hohNPCName is committed to the Fleet and forced to reside there until the debts are reduced. &lt;&lt;set $inDebtorsPrison to 1&gt;&gt;&lt;&lt;set $debtorPrisonMonths to 0&gt;&gt;&lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 /* Independent head of household (hoh 1) or no qualifying NPC found — player goes to prison */
 &lt;&lt;else&gt;&gt;
-To your humiliation, you&#39;ve fallen so far into debt that your creditors have demanded you be thrown in debtor&#39;s prison. &lt;&lt;if $office isnot &quot;&quot;&gt;&gt;Because of this disgrace, the vestry of $parish removes you from your position as $office. &lt;&lt;set $office to &quot;&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $reputation gte 6&gt;&gt;To your relief, your creditors agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; due to your good reputation. &lt;&lt;elseif $gender is &quot;male&quot; and $agenum gte 16 and $agenum lte 59 and ($socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot;)&gt;&gt;&lt;span id=&quot;navy-debtor&quot;&gt;As you are being led to the Fleet, a Navy recruiter stops the guards. He looks you up and down and offers you a deal: volunteer for His Majesty&#39;s Navy and your debts will be forgiven. &lt;&lt;income&gt;&gt;&lt;&lt;set _navyBonus to $income * 2&gt;&gt;You&#39;ll even earn &lt;&lt;print _navyBonus&gt;&gt;d. as a signing bonus—two months&#39; pay.&lt;br&gt;&lt;br&gt;
-&lt;&lt;link &quot;Volunteer for the Navy&quot;&gt;&gt;&lt;&lt;replace &quot;#navy-debtor&quot;&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;set _navyBonus to $income * 2&gt;&gt;&lt;&lt;set $money += _navyBonus&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Volunteered for the Navy to escape debtor&#39;s prison&quot;, money: _navyBonus, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You accept the recruiter&#39;s offer. Your debts are forgiven and you pocket the signing bonus. You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Refuse&quot;&gt;&gt;&lt;&lt;replace &quot;#navy-debtor&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Refused Navy recruitment&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You refuse the recruiter&#39;s offer. You are committed to the Fleet and forced to reside there until you reduce your debts. &lt;&lt;set $inDebtorsPrison to 1&gt;&gt;&lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;&lt;else&gt;&gt;You are committed to the Fleet and forced to reside there until you reduce your debts. &lt;&lt;set $inDebtorsPrison to 1&gt;&gt;&lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;
+To your humiliation, you&#39;ve fallen so far into debt that your creditors have demanded you be thrown in debtor&#39;s prison. &lt;&lt;if $office isnot &quot;&quot;&gt;&gt;Because of this disgrace, the vestry of $parish removes you from your position as $office. &lt;&lt;set $office to &quot;&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $reputation gte 6&gt;&gt;&lt;&lt;set $creditorWaitCount += 1&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Creditors agreed to wait (reputation -1)&quot;, money: 0, repDelta: -1, repBefore: $reputation + 1, infectPct: null})&gt;&gt;&lt;&lt;if $creditorWaitCount is 1&gt;&gt;To your relief, your creditors agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; due to your good reputation. &lt;&lt;elseif $creditorWaitCount is 2&gt;&gt;Your creditors are growing impatient, but they agree to &lt;&lt;storyline-return &quot;wait a little longer&quot;&gt;&gt; — though you sense their patience is wearing thin. &lt;&lt;else&gt;&gt;Your creditors are furious and barely agree to &lt;&lt;storyline-return &quot;wait&quot;&gt;&gt; — warning that this is the last time. &lt;&lt;/if&gt;&gt;&lt;&lt;elseif $reputation gte 4&gt;&gt;&lt;&lt;debt-sell-option&gt;&gt;&lt;&lt;elseif $gender is &quot;male&quot; and $agenum gte 16 and $agenum lte 59 and ($socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;)&gt;&gt;&lt;&lt;debt-navy-option&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;debt-navy-npc-option&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* Sell land (nobles) or goods (non-nobles) to zero out debts — offered when reputation is 4 or 5 */
+&lt;&lt;widget &quot;debt-sell-option&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
+&lt;span id=&quot;debt-sell&quot;&gt;Your creditors are losing patience. However, you still have enough standing that a desperate measure might save you: you could sell some of your family&#39;s land in the countryside to pay off your debts. It would be a humiliation, but better than the Fleet.&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Sell the land&quot;&gt;&gt;&lt;&lt;replace &quot;#debt-sell&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;set $creditorWaitCount to 0&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Sold land to pay off debts&quot;, money: 0, repDelta: -2, repBefore: _repBefore, infectPct: null})&gt;&gt;With a heavy heart, you arrange the sale of some of your family&#39;s land in the countryside. The proceeds are just enough to satisfy your creditors. The loss of property is a stain on your family&#39;s honor, but at least you are free of debt. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Refuse&quot;&gt;&gt;&lt;&lt;replace &quot;#debt-sell&quot;&gt;&gt;You refuse to sell your family&#39;s birthright. &lt;&lt;debt-prison-commit&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;/span&gt;
+&lt;&lt;else&gt;&gt;
+&lt;span id=&quot;debt-sell&quot;&gt;Your creditors are losing patience. However, you still have enough standing that a desperate measure might save you: you could sell all the clothes and household goods you can spare to pay off your debts. You&#39;d be left with barely more than the clothes on your back, but it would be better than the Fleet.&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Sell everything you can&quot;&gt;&gt;&lt;&lt;replace &quot;#debt-sell&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;set $creditorWaitCount to 0&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Sold household goods to pay off debts&quot;, money: 0, repDelta: -2, repBefore: _repBefore, infectPct: null})&gt;&gt;You strip your home of everything you can bear to part with — spare clothing, linens, pewter, even your good shoes — and sell it all. The proceeds are just enough to satisfy your creditors. It is humiliating, but at least you are free of debt. &lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Refuse&quot;&gt;&gt;&lt;&lt;replace &quot;#debt-sell&quot;&gt;&gt;You refuse to sell your belongings. &lt;&lt;debt-prison-commit&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;/span&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* Navy option for eligible PCs (male, 16-59, beggars/day labourers/artisans/merchants) */
+&lt;&lt;widget &quot;debt-navy-option&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;span id=&quot;navy-debtor&quot;&gt;As you are being led to the Fleet, a Navy recruiter stops the guards. He looks you up and down and offers you a deal: volunteer for His Majesty&#39;s Navy and your debts will be forgiven. &lt;&lt;income&gt;&gt;&lt;&lt;set _navyBonus to $income * 2&gt;&gt;You&#39;ll even earn &lt;&lt;print _navyBonus&gt;&gt;d. as a signing bonus—two months&#39; pay.&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Volunteer for the Navy&quot;&gt;&gt;&lt;&lt;replace &quot;#navy-debtor&quot;&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;set _navyBonus to $income * 2&gt;&gt;&lt;&lt;set $money += _navyBonus&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Volunteered for the Navy to escape debtor&#39;s prison&quot;, money: _navyBonus, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You accept the recruiter&#39;s offer. Your debts are forgiven and you pocket the signing bonus. You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Refuse&quot;&gt;&gt;&lt;&lt;replace &quot;#navy-debtor&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Refused Navy recruitment&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You refuse the recruiter&#39;s offer. You are committed to the Fleet and forced to reside there until you reduce your debts. &lt;&lt;set $inDebtorsPrison to 1&gt;&gt;&lt;&lt;set $debtorPrisonMonths to 0&gt;&gt;&lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* Navy NPC substitute option — find an eligible male NPC aged 16-59 (not noble) to send to the Navy */
+&lt;&lt;widget &quot;debt-navy-npc-option&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _navyNPCIdx to -1&gt;&gt;
+&lt;&lt;set _navyNPCName to &quot;&quot;&gt;&gt;
+&lt;&lt;set _navyNPCRel to &quot;&quot;&gt;&gt;
+&lt;&lt;for _ni to 0; _ni lt $NPCs.length; _ni++&gt;&gt;
+  &lt;&lt;if _navyNPCIdx is -1 and $NPCs[_ni].health isnot &quot;deceased&quot; and $NPCs[_ni].health isnot &quot;deceased-pq&quot;&gt;&gt;
+    &lt;&lt;if $NPCs[_ni].gender is &quot;male&quot; and $NPCs[_ni].agenum gte 16 and $NPCs[_ni].agenum lte 59&gt;&gt;
+      &lt;&lt;if $NPCs[_ni].relationship isnot &quot;landlord&quot; and $NPCs[_ni].relationship isnot &quot;master&quot;&gt;&gt;
+        &lt;&lt;set _navyNPCIdx to _ni&gt;&gt;
+        &lt;&lt;set _navyNPCName to $NPCs[_ni].name&gt;&gt;
+        &lt;&lt;set _navyNPCRel to $NPCs[_ni].relationship&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;if _navyNPCIdx isnot -1&gt;&gt;
+&lt;span id=&quot;navy-npc-debtor&quot;&gt;As you face the prospect of the Fleet, a Navy recruiter offers a way out: if your _navyNPCRel, _navyNPCName, volunteers for His Majesty&#39;s Navy, your household&#39;s debts will be forgiven.&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Send him to the Navy&quot;&gt;&gt;&lt;&lt;replace &quot;#navy-npc-debtor&quot;&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;set $creditorWaitCount to 0&gt;&gt;&lt;&lt;if $NPCs[_navyNPCIdx].health is &quot;safe from harm&quot;&gt;&gt;&lt;&lt;set $NPCs[_navyNPCIdx].health to &quot;healthy&quot;&gt;&gt;&lt;&lt;set $NPCs[_navyNPCIdx].location to $location&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $NPCsExtended.push($NPCs[_navyNPCIdx])&gt;&gt;&lt;&lt;set $NPCs.splice(_navyNPCIdx, 1)&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;&lt;&lt;set-hoh&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Sent &quot; + _navyNPCName + &quot; to the Navy to clear debts&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;With a heavy heart, you watch _navyNPCName march away with the recruiter. Your debts are forgiven, but the cost to your family is great. &lt;&lt;storyline-return &quot;You pray for his safe return.&quot;&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Refuse&quot;&gt;&gt;&lt;&lt;replace &quot;#navy-npc-debtor&quot;&gt;&gt;You cannot bear to send _navyNPCName away. You are committed to the Fleet and forced to reside there until you reduce your debts. &lt;&lt;set $inDebtorsPrison to 1&gt;&gt;&lt;&lt;set $debtorPrisonMonths to 0&gt;&gt;&lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;else&gt;&gt;
+You are committed to the Fleet and forced to reside there until you reduce your debts. &lt;&lt;set $inDebtorsPrison to 1&gt;&gt;&lt;&lt;set $debtorPrisonMonths to 0&gt;&gt;&lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* Commit player to prison — used as fallback when sell option is refused */
+&lt;&lt;widget &quot;debt-prison-commit&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $gender is &quot;male&quot; and $agenum gte 16 and $agenum lte 59 and ($socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;)&gt;&gt;&lt;&lt;debt-navy-option&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;debt-navy-npc-option&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* Debtor&#39;s prison monthly check — called from PassageHeader each month while $inDebtorsPrison is 1 */
+&lt;&lt;widget &quot;debtor-prison-check&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+
+/* Recalculate debt ceiling */
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
+&lt;&lt;set _dpCeiling to -60&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;set _dpCeiling to ($income) * -1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+
+/* Determine if debt still exceeds ceiling */
+&lt;&lt;set _dpExceeded to false&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot; and $money lte (_dpCeiling*4)&gt;&gt;&lt;&lt;set _dpExceeded to true&gt;&gt;
+&lt;&lt;elseif ($socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;) and $money lte (_dpCeiling*3)&gt;&gt;&lt;&lt;set _dpExceeded to true&gt;&gt;
+&lt;&lt;elseif $money lte (_dpCeiling*2)&gt;&gt;&lt;&lt;set _dpExceeded to true&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;if not _dpExceeded&gt;&gt;
+/* Debt has improved enough — automatic release */
+&lt;&lt;set $inDebtorsPrison to 0&gt;&gt;
+&lt;&lt;set $debtorPrisonMonths to 0&gt;&gt;
+&lt;&lt;set $creditorWaitCount to 0&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Released from debtor&#39;s prison (debts reduced)&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
+Your debts have been reduced enough that your creditors have agreed to release you from the Fleet. You return home, chastened but free.&lt;br&gt;&lt;br&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;set $debtorPrisonMonths += 1&gt;&gt;
+&lt;&lt;if $debtorPrisonMonths gte 3&gt;&gt;
+/* After 3 months, a distant relative dies and leaves a bequest */
+&lt;&lt;set $inDebtorsPrison to 0&gt;&gt;
+&lt;&lt;set $debtorPrisonMonths to 0&gt;&gt;
+&lt;&lt;set $creditorWaitCount to 0&gt;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;
+&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;
+&lt;&lt;set $money to 0&gt;&gt;
+&lt;&lt;set _relType to either(&quot;uncle&quot;, &quot;aunt&quot;, &quot;cousin&quot;)&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Released from prison via inheritance from deceased &quot; + _relType, money: 0, repDelta: -1, repBefore: _repBefore, infectPct: null})&gt;&gt;
+Word reaches you in prison that a distant _relType has died. To your astonishment, the bequest is just enough to settle your debts. Your creditors accept the payment and you are released from the Fleet. You emerge into the daylight, thinner and humbled, but free. &lt;&lt;set $reputation to Math.clamp($reputation, 0, 10)&gt;&gt;&lt;br&gt;&lt;br&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 /* cancel subscriptions if in debt */
 &lt;&lt;widget &quot;debt-check&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
