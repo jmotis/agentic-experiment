@@ -136,7 +136,7 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Range:** -10000000 to 10000000 (clamped)
 - **Initial values by `$socio`:** Starting capital equals one month's income at the character's socio level. Beggars start with `0`.
   - `"beggars"`: `0`
-  - `"servants"`: `60` (male adult) or `40` (female adult), `0` (child/adolescent)
+  - `"servants"`: `60` (male adult) or `40` (female adult), `60` (male child/adolescent) or `40` (female child/adolescent)
   - `"day labourers"`: household income (varies by composition)
   - `"artisans"`: `800`
   - `"merchants"`: `4000`
@@ -152,8 +152,8 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 
 ### `$expenses`
 - **Type:** Integer (monthly expenses in pence)
-- **Nobles:** `11200` per household + `120` per family member (including PC) + `60` per servant
-- **Merchants:** `2800` per household + `120` per family member (including PC) + `60` per servant
+- **Nobles:** `12000` per household + `240` per family member (including PC) + `60` per servant
+- **Merchants:** `2800` per household + `90` per family member (including PC) + `40` per servant
 - **Artisans:** `560` per household + `60` per family member (including PC) + `40` per servant
 - **Servants:** `20` per person in the household. Child/adolescent or living-with-master servants pay `20` (PC only).
 - **Day labourers:** `60` per household + `20` per person in the household
