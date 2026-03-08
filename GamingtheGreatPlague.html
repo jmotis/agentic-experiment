@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.37" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.38" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1235,13 +1235,14 @@ $(document).on(':passagestart', function (ev) {
 &lt;&lt;set-hoh&gt;&gt;
 &lt;&lt;NPCpronouns&gt;&gt;
 
-/* initialize savings*/
+/* initialize savings — one month income, beggars start with nothing */
 &lt;&lt;income&gt;&gt;
-&lt;&lt;expenses&gt;&gt;
-&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;income&gt;&gt;
-&lt;&lt;elseif $socio is &quot;artisans&quot; or $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;income&gt;&gt;
-&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;set $role to either($trades)&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
+  &lt;&lt;set $money to 0&gt;&gt;
+&lt;&lt;else&gt;&gt;
+  &lt;&lt;set $money to $income&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set $role to either($trades)&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;/silently&gt;&gt;
 
@@ -4755,100 +4756,89 @@ Do you:&lt;ul&gt;
 &lt;&lt;/widget&gt;&gt;
 </tw-passagedata><tw-passagedata pid="77" name="money-widgets" tags="widget money" position="1200,25" size="100,100">&lt;&lt;widget &quot;income&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
-  /* Noble PC income — base rate adjusted by gender */
-  &lt;&lt;set _baseRate to 17600&gt;&gt;
-  &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $income to Math.round(_baseRate * 0.8)&gt;&gt;
-  &lt;&lt;else&gt;&gt;&lt;&lt;set $income to _baseRate&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
-  /* Spouse income */
-  &lt;&lt;for _ii = 0; _ii &lt; $NPCs.length; _ii++&gt;&gt;
-    &lt;&lt;if $NPCs[_ii].health isnot &quot;deceased&quot; and $NPCs[_ii].health isnot &quot;deceased-pq&quot;&gt;&gt;
-      &lt;&lt;if $NPCs[_ii].relationship is &quot;wife&quot; or $NPCs[_ii].relationship is &quot;husband&quot;&gt;&gt;
-        &lt;&lt;if $NPCs[_ii].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $income += Math.round(_baseRate * 0.8)&gt;&gt;
-        &lt;&lt;else&gt;&gt;&lt;&lt;set $income += _baseRate&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-  &lt;&lt;/for&gt;&gt;
-  /* NPC servant income at day labourer rate */
-  &lt;&lt;for _ii = 0; _ii &lt; $NPCsServants.length; _ii++&gt;&gt;
-    &lt;&lt;if $NPCsServants[_ii].health isnot &quot;deceased&quot; and $NPCsServants[_ii].health isnot &quot;deceased-pq&quot;&gt;&gt;
-      &lt;&lt;if $NPCsServants[_ii].age is &quot;young adult&quot; or $NPCsServants[_ii].age is &quot;middle-aged adult&quot; or $NPCsServants[_ii].age is &quot;elderly adult&quot;&gt;&gt;
-        &lt;&lt;if $NPCsServants[_ii].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $income += 240&gt;&gt;
-        &lt;&lt;else&gt;&gt;&lt;&lt;set $income += 300&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-      &lt;&lt;elseif $NPCsServants[_ii].age is &quot;child&quot;&gt;&gt;&lt;&lt;set $income += 40&gt;&gt;
-      &lt;&lt;elseif $NPCsServants[_ii].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set $income += 80&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-  &lt;&lt;/for&gt;&gt;
+  /* Noble income — flat rate regardless of household */
+  &lt;&lt;set $income to 17600&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;
+  /* Merchant income — flat rate regardless of household */
+  &lt;&lt;set $income to 4000&gt;&gt;
+&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;
+  /* Artisan income — flat rate regardless of household */
+  &lt;&lt;set $income to 800&gt;&gt;
 &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;
-  &lt;&lt;if $age is &quot;child&quot;&gt;&gt;&lt;&lt;set $income to 40&gt;&gt;
-  &lt;&lt;elseif $age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set $income to 80&gt;&gt;
-  &lt;&lt;elseif $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $income to 240&gt;&gt;
-  &lt;&lt;else&gt;&gt;&lt;&lt;set $income to 300&gt;&gt;
+  /* Servant income — 60d (male) or 40d (female) per adult */
+  &lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot; or $age is &quot;elderly adult&quot;&gt;&gt;
+    &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;&lt;&lt;set $income to 60&gt;&gt;
+    &lt;&lt;else&gt;&gt;&lt;&lt;set $income to 40&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;else&gt;&gt;
+    &lt;&lt;set $income to 0&gt;&gt;
   &lt;&lt;/if&gt;&gt;
-  /* NPC adult servant income — only if NOT living in master&#39;s household */
+  /* NPC adult income — only if NOT living in master&#39;s household */
   &lt;&lt;if $hoh isnot 3 and $hoh isnot 0&gt;&gt;
     &lt;&lt;for _ii = 0; _ii &lt; $NPCs.length; _ii++&gt;&gt;
-      &lt;&lt;if $NPCs[_ii].health isnot &quot;deceased&quot; and $NPCs[_ii].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;if $NPCs[_ii].health isnot &quot;deceased&quot; and $NPCs[_ii].health isnot &quot;deceased-pq&quot; and !$NPCs[_ii].relationship.startsWith(&quot;landlord&quot;)&gt;&gt;
         &lt;&lt;if $NPCs[_ii].age is &quot;young adult&quot; or $NPCs[_ii].age is &quot;middle-aged adult&quot; or $NPCs[_ii].age is &quot;elderly adult&quot;&gt;&gt;
-          &lt;&lt;if $NPCs[_ii].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $income += 240&gt;&gt;
-          &lt;&lt;else&gt;&gt;&lt;&lt;set $income += 300&gt;&gt;
+          &lt;&lt;if $NPCs[_ii].gender is &quot;male&quot;&gt;&gt;&lt;&lt;set $income += 60&gt;&gt;
+          &lt;&lt;else&gt;&gt;&lt;&lt;set $income += 40&gt;&gt;
           &lt;&lt;/if&gt;&gt;
         &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
     &lt;&lt;/for&gt;&gt;
   &lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;
-  &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;&lt;&lt;set $income to Math.round(120 * 0.8)&gt;&gt;
-  &lt;&lt;else&gt;&gt;&lt;&lt;set $income to 120&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
-  /* every NPC contributes, inverted gender: female=base, male=0.8×base */
-  &lt;&lt;for _ii = 0; _ii &lt; $NPCs.length; _ii++&gt;&gt;
-    &lt;&lt;if $NPCs[_ii].health isnot &quot;deceased&quot; and $NPCs[_ii].health isnot &quot;deceased-pq&quot; and !$NPCs[_ii].relationship.startsWith(&quot;landlord&quot;)&gt;&gt;
-      &lt;&lt;if $NPCs[_ii].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $income += 120&gt;&gt;
-      &lt;&lt;else&gt;&gt;&lt;&lt;set $income += 96&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
+  /* Day labourer income — 180d (male) or 120d (female) per adult, 10d per child */
+  &lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot; or $age is &quot;elderly adult&quot;&gt;&gt;
+    &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;&lt;&lt;set $income to 180&gt;&gt;
+    &lt;&lt;else&gt;&gt;&lt;&lt;set $income to 120&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-  &lt;&lt;/for&gt;&gt;
-&lt;&lt;else&gt;&gt;
-  /* day labourers, artisans, merchants */
-  &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set _baseRate to 300&gt;&gt;
-  &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _baseRate to 800&gt;&gt;
-  &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _baseRate to 4000&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
-  &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $income to Math.round(_baseRate * 0.8)&gt;&gt;
-  &lt;&lt;else&gt;&gt;&lt;&lt;set $income to _baseRate&gt;&gt;
+  &lt;&lt;elseif $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;
+    &lt;&lt;set $income to 10&gt;&gt;
+  &lt;&lt;else&gt;&gt;
+    &lt;&lt;set $income to 0&gt;&gt;
   &lt;&lt;/if&gt;&gt;
   /* NPC income contributions */
   &lt;&lt;for _ii = 0; _ii &lt; $NPCs.length; _ii++&gt;&gt;
     &lt;&lt;if $NPCs[_ii].health isnot &quot;deceased&quot; and $NPCs[_ii].health isnot &quot;deceased-pq&quot; and !$NPCs[_ii].relationship.startsWith(&quot;landlord&quot;)&gt;&gt;
       &lt;&lt;if $NPCs[_ii].age is &quot;young adult&quot; or $NPCs[_ii].age is &quot;middle-aged adult&quot; or $NPCs[_ii].age is &quot;elderly adult&quot;&gt;&gt;
-        &lt;&lt;if $NPCs[_ii].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $income += Math.round(_baseRate * 0.8)&gt;&gt;
-        &lt;&lt;else&gt;&gt;&lt;&lt;set $income += _baseRate&gt;&gt;
+        &lt;&lt;if $NPCs[_ii].gender is &quot;male&quot;&gt;&gt;&lt;&lt;set $income += 180&gt;&gt;
+        &lt;&lt;else&gt;&gt;&lt;&lt;set $income += 120&gt;&gt;
         &lt;&lt;/if&gt;&gt;
-      &lt;&lt;elseif $socio isnot &quot;merchants&quot;&gt;&gt;
-        &lt;&lt;if $NPCs[_ii].age is &quot;child&quot;&gt;&gt;&lt;&lt;set $income += 40&gt;&gt;
-        &lt;&lt;elseif $NPCs[_ii].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set $income += 80&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;elseif $NPCs[_ii].age is &quot;child&quot; or $NPCs[_ii].age is &quot;adolescent&quot;&gt;&gt;
+        &lt;&lt;set $income += 10&gt;&gt;
       &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
-  /* NPC servant income at day labourer rate */
-  &lt;&lt;if $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;&gt;&gt;
-    &lt;&lt;for _ii = 0; _ii &lt; $NPCsServants.length; _ii++&gt;&gt;
-      &lt;&lt;if $NPCsServants[_ii].health isnot &quot;deceased&quot; and $NPCsServants[_ii].health isnot &quot;deceased-pq&quot;&gt;&gt;
-        &lt;&lt;if $NPCsServants[_ii].age is &quot;young adult&quot; or $NPCsServants[_ii].age is &quot;middle-aged adult&quot; or $NPCsServants[_ii].age is &quot;elderly adult&quot;&gt;&gt;
-          &lt;&lt;if $NPCsServants[_ii].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $income += 240&gt;&gt;
-          &lt;&lt;else&gt;&gt;&lt;&lt;set $income += 300&gt;&gt;
-          &lt;&lt;/if&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ii].age is &quot;child&quot;&gt;&gt;&lt;&lt;set $income += 40&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ii].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set $income += 80&gt;&gt;
+  /* NPC servant income */
+  &lt;&lt;for _ii = 0; _ii &lt; $NPCsServants.length; _ii++&gt;&gt;
+    &lt;&lt;if $NPCsServants[_ii].health isnot &quot;deceased&quot; and $NPCsServants[_ii].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;if $NPCsServants[_ii].age is &quot;young adult&quot; or $NPCsServants[_ii].age is &quot;middle-aged adult&quot; or $NPCsServants[_ii].age is &quot;elderly adult&quot;&gt;&gt;
+        &lt;&lt;if $NPCsServants[_ii].gender is &quot;male&quot;&gt;&gt;&lt;&lt;set $income += 180&gt;&gt;
+        &lt;&lt;else&gt;&gt;&lt;&lt;set $income += 120&gt;&gt;
         &lt;&lt;/if&gt;&gt;
+      &lt;&lt;elseif $NPCsServants[_ii].age is &quot;child&quot; or $NPCsServants[_ii].age is &quot;adolescent&quot;&gt;&gt;
+        &lt;&lt;set $income += 10&gt;&gt;
       &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;
+  /* Beggar income — 60d per adult, 20d per child/adolescent */
+  &lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot; or $age is &quot;elderly adult&quot;&gt;&gt;
+    &lt;&lt;set $income to 60&gt;&gt;
+  &lt;&lt;elseif $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;
+    &lt;&lt;set $income to 20&gt;&gt;
+  &lt;&lt;else&gt;&gt;
+    &lt;&lt;set $income to 0&gt;&gt;
   &lt;&lt;/if&gt;&gt;
+  /* NPC income contributions */
+  &lt;&lt;for _ii = 0; _ii &lt; $NPCs.length; _ii++&gt;&gt;
+    &lt;&lt;if $NPCs[_ii].health isnot &quot;deceased&quot; and $NPCs[_ii].health isnot &quot;deceased-pq&quot; and !$NPCs[_ii].relationship.startsWith(&quot;landlord&quot;)&gt;&gt;
+      &lt;&lt;if $NPCs[_ii].age is &quot;young adult&quot; or $NPCs[_ii].age is &quot;middle-aged adult&quot; or $NPCs[_ii].age is &quot;elderly adult&quot;&gt;&gt;
+        &lt;&lt;set $income += 60&gt;&gt;
+      &lt;&lt;elseif $NPCs[_ii].age is &quot;child&quot; or $NPCs[_ii].age is &quot;adolescent&quot;&gt;&gt;
+        &lt;&lt;set $income += 20&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;if $lodger is 1&gt;&gt;&lt;&lt;set $income to $income + $lodgerRent&gt;&gt;&lt;&lt;/if&gt;&gt;
 /* Fled income adjustments */
@@ -4858,112 +4848,125 @@ Do you:&lt;ul&gt;
 &lt;&lt;elseif $fled is 5&gt;&gt;
   /* Player sent household away: add back half the income of fled NPCs */
   &lt;&lt;set _fledNPCIncome to 0&gt;&gt;
-  &lt;&lt;for _fi = 0; _fi &lt; $FledFamily.length; _fi++&gt;&gt;
-    &lt;&lt;if $FledFamily[_fi].health isnot &quot;deceased&quot; and $FledFamily[_fi].health isnot &quot;deceased-pq&quot;&gt;&gt;
-      &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
-        &lt;&lt;if $FledFamily[_fi].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 120&gt;&gt;
-        &lt;&lt;else&gt;&gt;&lt;&lt;set _fledNPCIncome += 96&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-      &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;
-        &lt;&lt;if $FledFamily[_fi].relationship is &quot;wife&quot; or $FledFamily[_fi].relationship is &quot;husband&quot;&gt;&gt;
-          &lt;&lt;if $FledFamily[_fi].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += Math.round(17600 * 0.8)&gt;&gt;
-          &lt;&lt;else&gt;&gt;&lt;&lt;set _fledNPCIncome += 17600&gt;&gt;
-          &lt;&lt;/if&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-      &lt;&lt;else&gt;&gt;
-        /* day labourers, artisans, merchants */
-        &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set _fBaseRate to 300&gt;&gt;
-        &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _fBaseRate to 800&gt;&gt;
-        &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _fBaseRate to 4000&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
+  &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;
+    &lt;&lt;for _fi = 0; _fi &lt; $FledFamily.length; _fi++&gt;&gt;
+      &lt;&lt;if $FledFamily[_fi].health isnot &quot;deceased&quot; and $FledFamily[_fi].health isnot &quot;deceased-pq&quot;&gt;&gt;
         &lt;&lt;if $FledFamily[_fi].age is &quot;young adult&quot; or $FledFamily[_fi].age is &quot;middle-aged adult&quot; or $FledFamily[_fi].age is &quot;elderly adult&quot;&gt;&gt;
-          &lt;&lt;if $FledFamily[_fi].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += Math.round(_fBaseRate * 0.8)&gt;&gt;
-          &lt;&lt;else&gt;&gt;&lt;&lt;set _fledNPCIncome += _fBaseRate&gt;&gt;
+          &lt;&lt;if $FledFamily[_fi].gender is &quot;male&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 180&gt;&gt;
+          &lt;&lt;else&gt;&gt;&lt;&lt;set _fledNPCIncome += 120&gt;&gt;
           &lt;&lt;/if&gt;&gt;
-        &lt;&lt;elseif $socio isnot &quot;merchants&quot;&gt;&gt;
-          &lt;&lt;if $FledFamily[_fi].age is &quot;child&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 40&gt;&gt;
-          &lt;&lt;elseif $FledFamily[_fi].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 80&gt;&gt;
+        &lt;&lt;elseif $FledFamily[_fi].age is &quot;child&quot; or $FledFamily[_fi].age is &quot;adolescent&quot;&gt;&gt;
+          &lt;&lt;set _fledNPCIncome += 10&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+    &lt;&lt;for _fi = 0; _fi &lt; $FledServants.length; _fi++&gt;&gt;
+      &lt;&lt;if $FledServants[_fi].health isnot &quot;deceased&quot; and $FledServants[_fi].health isnot &quot;deceased-pq&quot;&gt;&gt;
+        &lt;&lt;if $FledServants[_fi].age is &quot;young adult&quot; or $FledServants[_fi].age is &quot;middle-aged adult&quot; or $FledServants[_fi].age is &quot;elderly adult&quot;&gt;&gt;
+          &lt;&lt;if $FledServants[_fi].gender is &quot;male&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 180&gt;&gt;
+          &lt;&lt;else&gt;&gt;&lt;&lt;set _fledNPCIncome += 120&gt;&gt;
+          &lt;&lt;/if&gt;&gt;
+        &lt;&lt;elseif $FledServants[_fi].age is &quot;child&quot; or $FledServants[_fi].age is &quot;adolescent&quot;&gt;&gt;
+          &lt;&lt;set _fledNPCIncome += 10&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;
+    &lt;&lt;for _fi = 0; _fi &lt; $FledFamily.length; _fi++&gt;&gt;
+      &lt;&lt;if $FledFamily[_fi].health isnot &quot;deceased&quot; and $FledFamily[_fi].health isnot &quot;deceased-pq&quot;&gt;&gt;
+        &lt;&lt;if $FledFamily[_fi].age is &quot;young adult&quot; or $FledFamily[_fi].age is &quot;middle-aged adult&quot; or $FledFamily[_fi].age is &quot;elderly adult&quot;&gt;&gt;
+          &lt;&lt;set _fledNPCIncome += 60&gt;&gt;
+        &lt;&lt;elseif $FledFamily[_fi].age is &quot;child&quot; or $FledFamily[_fi].age is &quot;adolescent&quot;&gt;&gt;
+          &lt;&lt;set _fledNPCIncome += 20&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;
+    &lt;&lt;for _fi = 0; _fi &lt; $FledFamily.length; _fi++&gt;&gt;
+      &lt;&lt;if $FledFamily[_fi].health isnot &quot;deceased&quot; and $FledFamily[_fi].health isnot &quot;deceased-pq&quot;&gt;&gt;
+        &lt;&lt;if $FledFamily[_fi].age is &quot;young adult&quot; or $FledFamily[_fi].age is &quot;middle-aged adult&quot; or $FledFamily[_fi].age is &quot;elderly adult&quot;&gt;&gt;
+          &lt;&lt;if $FledFamily[_fi].gender is &quot;male&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 60&gt;&gt;
+          &lt;&lt;else&gt;&gt;&lt;&lt;set _fledNPCIncome += 40&gt;&gt;
           &lt;&lt;/if&gt;&gt;
         &lt;&lt;/if&gt;&gt;
       &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-  &lt;&lt;/for&gt;&gt;
-  /* Fled servants contribute at day labourer rate */
-  &lt;&lt;for _fi = 0; _fi &lt; $FledServants.length; _fi++&gt;&gt;
-    &lt;&lt;if $FledServants[_fi].health isnot &quot;deceased&quot; and $FledServants[_fi].health isnot &quot;deceased-pq&quot;&gt;&gt;
-      &lt;&lt;if $FledServants[_fi].age is &quot;young adult&quot; or $FledServants[_fi].age is &quot;middle-aged adult&quot; or $FledServants[_fi].age is &quot;elderly adult&quot;&gt;&gt;
-        &lt;&lt;if $FledServants[_fi].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 240&gt;&gt;
-        &lt;&lt;else&gt;&gt;&lt;&lt;set _fledNPCIncome += 300&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-      &lt;&lt;elseif $FledServants[_fi].age is &quot;child&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 40&gt;&gt;
-      &lt;&lt;elseif $FledServants[_fi].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set _fledNPCIncome += 80&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-  &lt;&lt;/for&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+  /* Artisans, merchants, nobles have flat income — no fled NPC contribution */
   &lt;&lt;set $income += Math.round(_fledNPCIncome / 2)&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;expenses&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
 &lt;&lt;if $socio is &quot;servants&quot; and ($age is &quot;child&quot; or $age is &quot;adolescent&quot;)&gt;&gt;
+  /* Child/adolescent servant — just PC expenses */
   &lt;&lt;set $expenses to 20&gt;&gt;
 &lt;&lt;elseif $socio is &quot;servants&quot; and ($hoh is 3 or $hoh is 0)&gt;&gt;
   /* Servant living in master&#39;s household — only PC expenses */
-  &lt;&lt;set $expenses to 220&gt;&gt;
-&lt;&lt;else&gt;&gt;
-  &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set _baseExp to 110&gt;&gt;
-  &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set _baseExp to 240&gt;&gt;
-  &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;set _baseExp to 220&gt;&gt;
-  &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _baseExp to 560&gt;&gt;
-  &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _baseExp to 2800&gt;&gt;
-  &lt;&lt;elseif $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set _baseExp to 11200&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
-  /* scale by living NPCs in household — female NPCs at 0.8× male rate */
-  &lt;&lt;set _hhWeight to 1.0&gt;&gt;
+  &lt;&lt;set $expenses to 20&gt;&gt;
+&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;
+  /* Independent servant household — 20d per person */
+  &lt;&lt;set _hhCount to 1&gt;&gt;
   &lt;&lt;for _ei = 0; _ei &lt; $NPCs.length; _ei++&gt;&gt;
     &lt;&lt;if $NPCs[_ei].health isnot &quot;deceased&quot; and $NPCs[_ei].health isnot &quot;deceased-pq&quot; and !$NPCs[_ei].relationship.startsWith(&quot;landlord&quot;)&gt;&gt;
-      &lt;&lt;set _gMult to 1.0&gt;&gt;&lt;&lt;if $NPCs[_ei].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set _gMult to 0.8&gt;&gt;&lt;&lt;/if&gt;&gt;
-      &lt;&lt;if $NPCs[_ei].age is &quot;infant&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.2 * _gMult&gt;&gt;
-      &lt;&lt;elseif $NPCs[_ei].age is &quot;child&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.4 * _gMult&gt;&gt;
-      &lt;&lt;elseif $NPCs[_ei].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.6 * _gMult&gt;&gt;
-      &lt;&lt;elseif $NPCs[_ei].age is &quot;young adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.8 * _gMult&gt;&gt;
-      &lt;&lt;elseif $NPCs[_ei].age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 1.0 * _gMult&gt;&gt;
-      &lt;&lt;elseif $NPCs[_ei].age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.8 * _gMult&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
+      &lt;&lt;set _hhCount += 1&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
-  /* NPC servants in household */
-  &lt;&lt;set _svExp to 0&gt;&gt;
-  &lt;&lt;if $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot; or $socio is &quot;nobles&quot;&gt;&gt;
-    /* Servant expenses calculated separately at day labourer rate */
-    &lt;&lt;for _ei = 0; _ei &lt; $NPCsServants.length; _ei++&gt;&gt;
-      &lt;&lt;if $NPCsServants[_ei].health isnot &quot;deceased&quot; and $NPCsServants[_ei].health isnot &quot;deceased-pq&quot;&gt;&gt;
-        &lt;&lt;set _gMult to 1.0&gt;&gt;&lt;&lt;if $NPCsServants[_ei].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set _gMult to 0.8&gt;&gt;&lt;&lt;/if&gt;&gt;
-        &lt;&lt;if $NPCsServants[_ei].age is &quot;infant&quot;&gt;&gt;&lt;&lt;set _svExp += Math.round(240 * 0.2 * _gMult)&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ei].age is &quot;child&quot;&gt;&gt;&lt;&lt;set _svExp += Math.round(240 * 0.4 * _gMult)&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ei].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set _svExp += Math.round(240 * 0.6 * _gMult)&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ei].age is &quot;young adult&quot;&gt;&gt;&lt;&lt;set _svExp += Math.round(240 * 0.8 * _gMult)&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ei].age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;set _svExp += Math.round(240 * 1.0 * _gMult)&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ei].age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set _svExp += Math.round(240 * 0.8 * _gMult)&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-  &lt;&lt;else&gt;&gt;
-    /* Non-artisan/merchant/noble: count servants at household rate */
-    &lt;&lt;for _ei = 0; _ei &lt; $NPCsServants.length; _ei++&gt;&gt;
-      &lt;&lt;if $NPCsServants[_ei].health isnot &quot;deceased&quot; and $NPCsServants[_ei].health isnot &quot;deceased-pq&quot;&gt;&gt;
-        &lt;&lt;set _gMult to 1.0&gt;&gt;&lt;&lt;if $NPCsServants[_ei].gender is &quot;female&quot;&gt;&gt;&lt;&lt;set _gMult to 0.8&gt;&gt;&lt;&lt;/if&gt;&gt;
-        &lt;&lt;if $NPCsServants[_ei].age is &quot;infant&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.2 * _gMult&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ei].age is &quot;child&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.4 * _gMult&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ei].age is &quot;adolescent&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.6 * _gMult&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ei].age is &quot;young adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.8 * _gMult&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ei].age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 1.0 * _gMult&gt;&gt;
-        &lt;&lt;elseif $NPCsServants[_ei].age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set _hhWeight += 0.8 * _gMult&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
+  &lt;&lt;for _ei = 0; _ei &lt; $NPCsServants.length; _ei++&gt;&gt;
+    &lt;&lt;if $NPCsServants[_ei].health isnot &quot;deceased&quot; and $NPCsServants[_ei].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;set _hhCount += 1&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  &lt;&lt;set $expenses to 20 * _hhCount&gt;&gt;
+&lt;&lt;elseif $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;
+  /* Base per household */
+  &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set _baseExp to 11200&gt;&gt;&lt;&lt;set _perFamily to 120&gt;&gt;&lt;&lt;set _perServant to 60&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _baseExp to 2800&gt;&gt;&lt;&lt;set _perFamily to 120&gt;&gt;&lt;&lt;set _perServant to 60&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _baseExp to 560&gt;&gt;&lt;&lt;set _perFamily to 60&gt;&gt;&lt;&lt;set _perServant to 40&gt;&gt;
   &lt;&lt;/if&gt;&gt;
-  &lt;&lt;set $expenses to Math.round(_baseExp * _hhWeight) + _svExp&gt;&gt;
+  /* Count living family members (including PC = 1) */
+  &lt;&lt;set _famCount to 1&gt;&gt;
+  &lt;&lt;for _ei = 0; _ei &lt; $NPCs.length; _ei++&gt;&gt;
+    &lt;&lt;if $NPCs[_ei].health isnot &quot;deceased&quot; and $NPCs[_ei].health isnot &quot;deceased-pq&quot; and !$NPCs[_ei].relationship.startsWith(&quot;landlord&quot;)&gt;&gt;
+      &lt;&lt;set _famCount += 1&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  /* Count living servants */
+  &lt;&lt;set _svCount to 0&gt;&gt;
+  &lt;&lt;for _ei = 0; _ei &lt; $NPCsServants.length; _ei++&gt;&gt;
+    &lt;&lt;if $NPCsServants[_ei].health isnot &quot;deceased&quot; and $NPCsServants[_ei].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;set _svCount += 1&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  &lt;&lt;set $expenses to _baseExp + (_perFamily * _famCount) + (_perServant * _svCount)&gt;&gt;
+&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
+  /* Day labourer — 60d per household + 20d per person */
+  &lt;&lt;set _hhCount to 1&gt;&gt;
+  &lt;&lt;for _ei = 0; _ei &lt; $NPCs.length; _ei++&gt;&gt;
+    &lt;&lt;if $NPCs[_ei].health isnot &quot;deceased&quot; and $NPCs[_ei].health isnot &quot;deceased-pq&quot; and !$NPCs[_ei].relationship.startsWith(&quot;landlord&quot;)&gt;&gt;
+      &lt;&lt;set _hhCount += 1&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  &lt;&lt;for _ei = 0; _ei &lt; $NPCsServants.length; _ei++&gt;&gt;
+    &lt;&lt;if $NPCsServants[_ei].health isnot &quot;deceased&quot; and $NPCsServants[_ei].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;set _hhCount += 1&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  &lt;&lt;set $expenses to 60 + (20 * _hhCount)&gt;&gt;
+&lt;&lt;elseif $socio is &quot;beggars&quot;&gt;&gt;
+  /* Beggar — 40d per household + 20d per person */
+  &lt;&lt;set _hhCount to 1&gt;&gt;
+  &lt;&lt;for _ei = 0; _ei &lt; $NPCs.length; _ei++&gt;&gt;
+    &lt;&lt;if $NPCs[_ei].health isnot &quot;deceased&quot; and $NPCs[_ei].health isnot &quot;deceased-pq&quot; and !$NPCs[_ei].relationship.startsWith(&quot;landlord&quot;)&gt;&gt;
+      &lt;&lt;set _hhCount += 1&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  &lt;&lt;for _ei = 0; _ei &lt; $NPCsServants.length; _ei++&gt;&gt;
+    &lt;&lt;if $NPCsServants[_ei].health isnot &quot;deceased&quot; and $NPCsServants[_ei].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;set _hhCount += 1&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  &lt;&lt;set $expenses to 40 + (20 * _hhCount)&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 

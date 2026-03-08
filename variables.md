@@ -133,28 +133,32 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 
 ### `$money`
 - **Type:** Integer (in pence)
-- **Range:** 0 -- effectively unbounded (clamped at 0 on the low end)
-- **Initial values by `$socio`:**
-  - `"beggars"` / `"day labourers"`: `0`
-  - `"servants"`: `0`
-  - `"artisans"`: `10000`
-  - `"merchants"`: varies (higher)
-  - `"nobles"`: varies (highest)
-- **Modified by:** `Math.clamp($money + amount, 0, Infinity)` or direct arithmetic. Income is added and expenses subtracted each month.
-- **Notes:** All monetary values are in pence (12 pence = 1 shilling, 20 shillings = 1 pound). Displayed to the player using `$pounds`, `$shillings`, `$pence`.
+- **Range:** -10000000 to 10000000 (clamped)
+- **Initial values by `$socio`:** Starting capital equals one month's income at the character's socio level. Beggars start with `0`.
+  - `"beggars"`: `0`
+  - `"servants"`: `60` (male adult) or `40` (female adult), `0` (child/adolescent)
+  - `"day labourers"`: household income (varies by composition)
+  - `"artisans"`: `800`
+  - `"merchants"`: `4000`
+  - `"nobles"`: `17600`
+- **Modified by:** `Math.clamp($money + amount, -10000000, 10000000)` or direct arithmetic. Income is added and expenses subtracted each month via the `<<disposable>>` widget.
+- **Notes:** All monetary values are in pence (12 pence = 1 shilling, 20 shillings = 1 pound). Displayed to the player using the `<<conversion>>` widget.
 
 ### `$income`
 - **Type:** Integer (monthly income in pence)
-- **Base values by `$socio`:** beggars `120`, day labourers `300`, servants `300` (child `40`, adolescent `80`), artisans `800`, merchants `4000`, nobles `17600`
-- **Gender scaling:** Day labourers, artisans, merchants, servants: adult male = base rate, adult female = 0.8 × base rate (applies to player and NPC adults). Beggars: inverted gender (female = base, male = 0.8 × base) for every NPC regardless of age.
-- **Household scaling:** Day labourers/artisans: NPC adults contribute at gender-based rate, children +40d, adolescents +80d. Servants: NPC adults contribute at gender-based rate, NPC children/adolescents contribute nothing. Merchants: NPC adults contribute at gender-based rate, children/adolescents contribute nothing. Beggars: every NPC contributes at inverted-gender rate. Nobles: flat income.
-- **Dependency:** Set based on `$socio`, `$age`, `$gender`, `$role`, and living `$NPCs` ages/genders; changes if the player takes a plague worker role
+- **Flat rates:** Artisans `800`, merchants `4000`, nobles `17600` — flat regardless of household size or composition.
+- **Per-person rates:** Servants: `60` (male adult) or `40` (female adult); living-with-master servants only count PC income. Day labourers: `180` (male adult) or `120` (female adult), `10` per child/adolescent. Beggars: `60` per adult, `20` per child/adolescent — no gender distinction.
+- **Dependency:** Set based on `$socio`, `$age`, `$gender`, and (for servants/day labourers/beggars) living `$NPCs` ages/genders; changes if the player takes a plague worker role
 
 ### `$expenses`
 - **Type:** Integer (monthly expenses in pence)
-- **Base values by `$socio`:** beggars `114`, day labourers `240`, servants `220` (child/adolescent `20`), artisans `560`, merchants `2800`, nobles `12800`
-- **Household scaling:** Base is multiplied by total household weight: player = 1.0, plus each living NPC in `$NPCs` and `$NPCsServants` weighted by age (infant 0.2, child 0.4, adolescent 0.6, young adult 0.8, middle-aged adult 1.0, elderly adult 0.8). Servant child/adolescent players have flat 20d expenses (no scaling).
-- **Dependency:** Set based on `$socio`, `$age`, and living members of `$NPCs` and `$NPCsServants`
+- **Nobles:** `11200` per household + `120` per family member (including PC) + `60` per servant
+- **Merchants:** `2800` per household + `120` per family member (including PC) + `60` per servant
+- **Artisans:** `560` per household + `60` per family member (including PC) + `40` per servant
+- **Servants:** `20` per person in the household. Child/adolescent or living-with-master servants pay `20` (PC only).
+- **Day labourers:** `60` per household + `20` per person in the household
+- **Beggars:** `40` per household + `20` per person in the household
+- **Dependency:** Set based on `$socio`, `$age`, `$hoh`, and living members of `$NPCs` and `$NPCsServants`
 
 ---
 
