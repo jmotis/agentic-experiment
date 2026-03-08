@@ -742,14 +742,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Possible values:** `0` (sell option not yet used), `1` (sell option already offered once)
 - **Initial value:** `0` (set in `StoryInit`, pid 10)
 - **Set by:** The `debt-sell-option` widget (pid 58) sets this to `1` the first time the sell option is presented to the player (regardless of whether they sell or refuse).
-- **Used for:** Gates the sell-land/sell-goods option so it is only available once. On subsequent encounters at reputation 4–5, nobles are instead offered two desperate choices (sell London townhouse for game over, or flee the city via the `go quietly` passage), while non-nobles bypass the sell option entirely and proceed directly to prison/Navy.
+- **Used for:** Gates the sell-land/sell-goods option so it is only available once. On subsequent encounters at reputation 4–5, nobles are offered two desperate choices (sell London townhouse for game over, or flee the city via the `go quietly` passage), and non-nobles are offered the choice to face the Fleet or flee the city (game over via the `go quietly` passage).
 - **Dependencies:** Interacts with `$socio`, `$reputation`, `$debtFled`.
 
 ### `$debtFled`
 - **Type:** Integer (flag)
 - **Possible values:** `0` (not fleeing debts), `1` (fled London to escape debts)
 - **Initial value:** `0` (set in `StoryInit`, pid 10)
-- **Set by:** The `debt-sell-option` widget (pid 58) sets this to `1` when a noble chooses the "Flee the city" option on their second encounter with the sell-option threshold.
+- **Set by:** The `debt-sell-option` widget (pid 58) sets this to `1` when a player (noble or non-noble) chooses the "Flee the city" option on their second encounter with the sell-option threshold.
 - **Used for:** The `go quietly` passage (pid 47) checks this flag to display debt-fleeing narrative text instead of the default plague-fleeing text. When `$debtFled is 1`, the passage describes the player slipping away from London to escape creditors rather than fleeing plague.
 - **Dependencies:** Interacts with `$debtSellUsed`, `$origin`.
 
