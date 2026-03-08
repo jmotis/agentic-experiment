@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.35" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.36" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1417,8 +1417,10 @@ Your neighbors shut up the entrances to your house and paint a red cross with th
   &lt;&lt;case 3&gt;&gt;
     &lt;&lt;link &quot;Unfortunately, your fever spikes, you grow weak, and you fear for your life.&quot; `passage()`&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;br&gt;&lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/c/cb/Two_holy_men_lie_side_by_side_affected_by_the_plague_Wellcome_L0073320.jpg&quot; width=&quot;100%&quot; alt=&quot;Drawing of two men lying side by side affected by the plague&quot;&gt;
+&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/c/cb/Two_holy_men_lie_side_by_side_affected_by_the_plague_Wellcome_L0073320.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Drawing of two men lying side by side affected by the plague&quot;&gt;
 //Italian drawing of two men who lie side by side affected by the plague, c. 17th century. Wellcome Images//
+&lt;/div&gt;
 &lt;br&gt;
   &lt;&lt;case 4&gt;&gt;
     &lt;&lt;if $hoh gte 1 and $hoh lte 3&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;It occurs to you that perhaps you ought to write your will&lt;&lt;if $reputation lte 2&gt;&gt;, but your reputation is so poor that no one can be convinced to bring you the writing materials you need&lt;&lt;/if&gt;&gt;.
@@ -1552,39 +1554,57 @@ The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has even followed the King&#39;
 &lt;br&gt;
 &lt;br&gt;
 A man offers you a groat to take his wife away without letting her corpse be examined by a searcher first. Do you take the bribe? &lt;span id=&quot;cb-bribe&quot;&gt;
-&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#cb-bribe&quot;&gt;&gt;With so many dying, it seems pointless to force the few survivors into quarantine. For all you know, the poor woman just died of spotted fever. All the same, you take care &lt;&lt;storyline-return &quot;not to examine the corpse too carefully.&quot; 1 4 -2&gt;&gt;&lt;br&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of a corpse bearer carrying away the dead&quot;&gt;
+&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#cb-bribe&quot;&gt;&gt;With so many dying, it seems pointless to force the few survivors into quarantine. For all you know, the poor woman just died of spotted fever. All the same, you take care &lt;&lt;storyline-return &quot;not to examine the corpse too carefully.&quot; 1 4 -2&gt;&gt;&lt;br&gt;&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Engraving of a corpse bearer carrying away the dead&quot;&gt;
 //Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
+&lt;/div&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
-| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#cb-bribe&quot;&gt;&gt;You insist on waiting for the searcher to examine the corpse and consider reporting the man to your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; clerk, but decide that it was merely his grief speaking rather than an attempt to avoid being quarantined. After the searcher diagnoses the woman as dead from spotted fever, &lt;&lt;storyline-return &quot;you take her corpse away.&quot; 1 0 1&gt;&gt;&lt;br&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of a corpse bearer carrying away the dead&quot;&gt;
-//Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#cb-bribe&quot;&gt;&gt;You insist on waiting for the searcher to examine the corpse and consider reporting the man to your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; clerk, but decide that it was merely his grief speaking rather than an attempt to avoid being quarantined. After the searcher diagnoses the woman as dead from spotted fever, &lt;&lt;storyline-return &quot;you take her corpse away.&quot; 1 0 1&gt;&gt;&lt;br&gt;&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Engraving of a corpse bearer carrying away the dead&quot;&gt;
+//Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
+&lt;/div&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 
 &lt;&lt;elseif $role is &quot;warder&quot;&gt;&gt;You stand watch outside shut up houses to ensure that no one tries to escape. Listening to the pleas of those locked inside with the sick and dying is bad enough. But the worst is when the houses go silent.
     &lt;br&gt;
 
 &lt;br&gt;
 One night, a pair of men approach and offer you a groat to look the other way while they remove something from the house. Do you take the bribe? &lt;span id=&quot;wd-bribe&quot;&gt;
-&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#wd-bribe&quot;&gt;&gt;With so many dying, it seems pointless to pretend that shutting up the houses will stop the spread of plague. You say nothing as a woman inside the house lowers a small child out the window and into the arms of the waiting men. As they spirit the child away, you &lt;&lt;storyline-return &quot;wonder if any of them will survive.&quot; 1 4 -2&gt;&gt;&lt;br&gt;&lt;img src=&quot;https://iiif.wellcomecollection.org/image/V0010606EL/full/1024%2C/0/default.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of a death cart in a London street during the plague&quot;&gt;
-    //A death cart in a street in London during the great plague. Engraving by S. Davenport, 1835, after G. Cruikshank. Wellcome Collection//&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
-| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#wd-bribe&quot;&gt;&gt;You refuse to abandon your duty and the men slip away into the darkness. The next morning, when your replacement comes, you warn him about what happened and hope that he will be &lt;&lt;storyline-return &quot;as diligent as you were.&quot; 1 0 1&gt;&gt;&lt;br&gt;&lt;img src=&quot;https://iiif.wellcomecollection.org/image/V0010606EL/full/1024%2C/0/default.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of a death cart in a London street during the plague&quot;&gt;
-    //A death cart in a street in London during the great plague. Engraving by S. Davenport, 1835, after G. Cruikshank. Wellcome Collection//&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#wd-bribe&quot;&gt;&gt;With so many dying, it seems pointless to pretend that shutting up the houses will stop the spread of plague. You say nothing as a woman inside the house lowers a small child out the window and into the arms of the waiting men. As they spirit the child away, you &lt;&lt;storyline-return &quot;wonder if any of them will survive.&quot; 1 4 -2&gt;&gt;&lt;br&gt;&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://iiif.wellcomecollection.org/image/V0010606EL/full/1024%2C/0/default.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Engraving of a death cart in a London street during the plague&quot;&gt;
+    //A death cart in a street in London during the great plague. Engraving by S. Davenport, 1835, after G. Cruikshank. Wellcome Collection//
+&lt;/div&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#wd-bribe&quot;&gt;&gt;You refuse to abandon your duty and the men slip away into the darkness. The next morning, when your replacement comes, you warn him about what happened and hope that he will be &lt;&lt;storyline-return &quot;as diligent as you were.&quot; 1 0 1&gt;&gt;&lt;br&gt;&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://iiif.wellcomecollection.org/image/V0010606EL/full/1024%2C/0/default.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Engraving of a death cart in a London street during the plague&quot;&gt;
+    //A death cart in a street in London during the great plague. Engraving by S. Davenport, 1835, after G. Cruikshank. Wellcome Collection//
+&lt;/div&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 
     &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;Day in and day out, you examine the corpses of people who have died. There are so many dead of &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; that it has become almost a joyful occasion when you find someone dead of a regular consumption or bad teeth.
     &lt;br&gt;
     &lt;br&gt;
 One day, a woman offers you a groat to say that her son died of spotted fever, despite the obvious tokens of &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; on the poor boy&#39;s body. Do you take the bribe? &lt;span id=&quot;bribe-yn&quot;&gt;
-&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;With so many dying, it seems pointless to try to stop the spread of disease anymore. Besides, you&#39;ve always been troubled by the practice of shutting up the healthy alongside the sick, to later become infected and die themselves. What does it hurt to profit a little while &lt;&lt;storyline-return &quot;maybe saving a life?&quot; 1 4 -2&gt;&gt;&lt;br&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of men loading plague victims onto a cart&quot;&gt;//Nathaniel Parr, Three men loading plague victims from the street onto a cart to left, two of them smoking pipes to protect themselves, a figure with a bundle over his shoulder walking under an arch in the background to right; illustration to a &#39;History of England&#39;, c. 1747, published by Thomas Astley. British Museum.//
+&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;With so many dying, it seems pointless to try to stop the spread of disease anymore. Besides, you&#39;ve always been troubled by the practice of shutting up the healthy alongside the sick, to later become infected and die themselves. What does it hurt to profit a little while &lt;&lt;storyline-return &quot;maybe saving a life?&quot; 1 4 -2&gt;&gt;&lt;br&gt;&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Engraving of men loading plague victims onto a cart&quot;&gt;
+//Nathaniel Parr, Three men loading plague victims from the street onto a cart to left, two of them smoking pipes to protect themselves, a figure with a bundle over his shoulder walking under an arch in the background to right; illustration to a &#39;History of England&#39;, c. 1747, published by Thomas Astley. British Museum.//
+&lt;/div&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
-| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;As distasteful as it is to be the one to declare a household has been stricken by plague, it is your duty to tell the truth as you see it. You report the plague death to your parish clerk and see to it that the woman and her household are &lt;&lt;storyline-return &quot;properly shut up.&quot; 1 0 1&gt;&gt;&lt;br&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of men loading plague victims onto a cart&quot;&gt;//Nathaniel Parr, Three men loading plague victims from the street onto a cart to left, two of them smoking pipes to protect themselves, a figure with a bundle over his shoulder walking under an arch in the background to right; illustration to a &#39;History of England&#39;, c. 1747, published by Thomas Astley. British Museum.//
+| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#bribe-yn&quot;&gt;&gt;As distasteful as it is to be the one to declare a household has been stricken by plague, it is your duty to tell the truth as you see it. You report the plague death to your parish clerk and see to it that the woman and her household are &lt;&lt;storyline-return &quot;properly shut up.&quot; 1 0 1&gt;&gt;&lt;br&gt;&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Engraving of men loading plague victims onto a cart&quot;&gt;
+//Nathaniel Parr, Three men loading plague victims from the street onto a cart to left, two of them smoking pipes to protect themselves, a figure with a bundle over his shoulder walking under an arch in the background to right; illustration to a &#39;History of England&#39;, c. 1747, published by Thomas Astley. British Museum.//
+&lt;/div&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 
 &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;You fear death every day. You pray to God to protect you from harm and to gather up the souls of the innocent children you cannot save here on earth.
     &lt;br&gt;
     &lt;br&gt;
 One day, you are bringing food to a house that was shut up so recently that the quarantine cross painted on the door is still fresh. The woman inside thanks you for your help then offers you a groat to smuggle her baby out in your empty basket. Do you take the bribe? &lt;span id=&quot;ns-bribe&quot;&gt;
-&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#ns-bribe&quot;&gt;&gt;The little boy is perfectly healthy and you can&#39;t bear to condemn him to being shut up to die. You tuck him into your basket and smuggle him out to his waiting aunt, who blesses you and promises to name her &lt;&lt;storyline-return &quot;next child in your honor.&quot; 1 4 -2&gt;&gt;&lt;br&gt;&lt;img src=&quot;https://iiif.wellcomecollection.org/image/V0010610/full/1024%2C/0/default.jpg&quot; width=&quot;100%&quot; alt=&quot;Etching of a man consuming antidotes to the plague&quot;&gt;
-    //A man consuming many antidotes to the plague during the Great Plague of London. Etching by J. Franklin, 1841. Wellcome Collection//&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
-| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#ns-bribe&quot;&gt;&gt;It breaks your heart to say no, but you can&#39;t risk smuggling the little boy out of the house. What if he were to cry and you were to be discovered? Or worse, what if he is already harboring the plague and your attempts to save him only doom whatever family takes him in? You encourage her to put her faith in God and &lt;&lt;storyline-return &quot;hurry away.&quot; 1 0 1&gt;&gt;&lt;br&gt;&lt;img src=&quot;https://iiif.wellcomecollection.org/image/V0010610/full/1024%2C/0/default.jpg&quot; width=&quot;100%&quot; alt=&quot;Etching of a man consuming antidotes to the plague&quot;&gt;
-    //A man consuming many antidotes to the plague during the Great Plague of London. Etching by J. Franklin, 1841. Wellcome Collection//&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#ns-bribe&quot;&gt;&gt;The little boy is perfectly healthy and you can&#39;t bear to condemn him to being shut up to die. You tuck him into your basket and smuggle him out to his waiting aunt, who blesses you and promises to name her &lt;&lt;storyline-return &quot;next child in your honor.&quot; 1 4 -2&gt;&gt;&lt;br&gt;&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://iiif.wellcomecollection.org/image/V0010610/full/1024%2C/0/default.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Etching of a man consuming antidotes to the plague&quot;&gt;
+    //A man consuming many antidotes to the plague during the Great Plague of London. Etching by J. Franklin, 1841. Wellcome Collection//
+&lt;/div&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+| &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#ns-bribe&quot;&gt;&gt;It breaks your heart to say no, but you can&#39;t risk smuggling the little boy out of the house. What if he were to cry and you were to be discovered? Or worse, what if he is already harboring the plague and your attempts to save him only doom whatever family takes him in? You encourage her to put her faith in God and &lt;&lt;storyline-return &quot;hurry away.&quot; 1 0 1&gt;&gt;&lt;br&gt;&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://iiif.wellcomecollection.org/image/V0010610/full/1024%2C/0/default.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Etching of a man consuming antidotes to the plague&quot;&gt;
+    //A man consuming many antidotes to the plague during the Great Plague of London. Etching by J. Franklin, 1841. Wellcome Collection//
+&lt;/div&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;else&gt;&gt;
 You are grateful to have survived long enough to see [[August 1665]].
 &lt;&lt;/if&gt;&gt;
@@ -1656,7 +1676,7 @@ You are not freezing or starving to death, even if you are always cold and hungr
 /* Noble Story */
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;As &lt;&lt;if $agenum lte 15&gt;&gt;the child of &lt;&lt;/if&gt;&gt;a minor noble, you spend much of your time inside at the royal Court of King Charles II in hopes of securing more titles, honor, and riches for yourself and your family&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, especially since &lt;&lt;defQueenCatherine &quot;Queen Catherine&quot;&gt;&gt; and the &lt;&lt;defQueenMother &quot;Queen Mother&quot;&gt;&gt; both share your &lt;&lt;defCatholic &quot;Catholic&quot;&gt;&gt; faith&lt;&lt;/if&gt;&gt;. You fill your days traveling among the royal family&#39;s various London palaces—including attending the &lt;&lt;defQueenMother &quot;Queen Mother&#39;s&quot;&gt;&gt; weekly social circle as faithfully as if it were church—and spending money on the latest fashions and trends. But you can’t help but worry about how the war will impact your life.
 &lt;br&gt;&lt;br&gt;
-&lt;div style=&quot;float:left; max-width:50%; margin:0 1em 0.5em 0;&quot;&gt;
+&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/2/2d/Anthony_van_Dyck_-_Queen_Henrietta_Maria_of_England_-_KMSsp240_-_Statens_Museum_for_Kunst.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Portrait of Queen Henrietta Maria of England&quot;&gt;
 &lt;br&gt;
 //Anthony van Dyck, Queen Henrietta Maria of England, c. 1614-1641.//
@@ -2324,9 +2344,11 @@ You &lt;span id=&quot;decision&quot;&gt;
     &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set _rate to $parishRate[$parish][$monthIndex]&gt;&gt;&lt;&lt;set _riskPct to Math.round(10000 / _rate) / 100&gt;&gt;&lt;&lt;if random(1, _rate) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jun 1665: Sought out war news&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: _riskPct})&gt;&gt;
     You keep your ears open for news of the war. It takes almost a week, but news finally arrives of a great battle that killed many important men, especially on the ship of the &lt;&lt;defDukeOfYork &quot;Duke of York, James Stuart&quot;&gt;&gt;, the current heir to the throne—at least until the King and Queen manage to have children of their own. According to rumor, the battle came so close to killing the Duke that he was covered with blood and the head of a man named Mr. Boyle flew off and struck down the Duke. You happily repeat the rumors to anyone who will listen as bonfires break out in the street and people make merry, freely sharing their food and wine in celebration.
     &lt;br&gt;&lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/9/99/James_II_by_Peter_Lely.jpg&quot; width=&quot;100%&quot; alt=&quot;Portrait of James II, Duke of York&quot;&gt;
+&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/9/99/James_II_by_Peter_Lely.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Portrait of James II, Duke of York&quot;&gt;
 &lt;br&gt;
-//Peter Lely, James II, c. 1650-1675//&lt;br&gt;&lt;br&gt;
+//Peter Lely, James II, c. 1650-1675//
+&lt;/div&gt;
 &lt;&lt;if $agenum gte 16 and $agenum lte 59 and $gender isnot &quot;female&quot; and $socio isnot &quot;nobles&quot; and $socio isnot &quot;merchants&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to be there for the next battle?
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;link &quot;Break your contract with your master and volunteer for the Navy&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jun 1665: Broke contract and volunteered for the navy&quot;, money: 0, repDelta: -2, repBefore: $reputation + 2, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jun 1665: Volunteered for the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/if&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jun 1665: Stayed out of the fighting&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
@@ -3525,15 +3547,19 @@ One of your neighbors &lt;&lt;if $reputation gte 6&gt;&gt;provides you with left
     &lt;&lt;if $disability is 0 and $religion isnot &quot;Catholic&quot; and $skipServices isnot 1 and $agenum gt 16&gt;&gt; and the &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have decided it will be your job to
         &lt;&lt;if $reputation gte 6&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $role to &quot;searcher&quot;&gt;&gt;look at the corpses and determine if they died of &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; or some other cause of death
         &lt;br&gt;
-    &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of men loading plague victims onto a cart&quot;&gt;
+    &lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+    &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Engraving of men loading plague victims onto a cart&quot;&gt;
     //Nathaniel Parr, published by Thomas Astley, Plague in 1665, 1747.//
+    &lt;/div&gt;
         &lt;&lt;else&gt;&gt;&lt;&lt;set $role to &quot;warder&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;stand guard outside quarantined houses to prevent anyone from escaping
         &lt;&lt;/if&gt;&gt;
         &lt;&lt;else&gt;&gt;&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;set $role to &quot;nurse&quot;&gt;&gt;nurse the sick and dying, despite the risk to your own life
         &lt;&lt;else&gt;&gt;&lt;&lt;set $role to &quot;corpsebearer&quot;&gt;&gt;remove the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; corpses if anyone dies
         &lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of a corpse bearer carrying away the dead&quot;&gt;
+&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Engraving of a corpse bearer carrying away the dead&quot;&gt;
 //Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
+&lt;/div&gt;
         &lt;&lt;/if&gt;&gt;
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;elseif $disability is 0&gt;&gt;, but the &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; have refused to hire you for plague work&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, as Catholics may not serve in such parish offices&lt;&lt;elseif $skipServices is 1&gt;&gt;, as you have chosen not to attend Church of England services&lt;&lt;elseif $agenum lte 16&gt;&gt;, as you are not old enough for such work&lt;&lt;/if&gt;&gt;
@@ -4378,18 +4404,24 @@ Do you:&lt;ul&gt;
 &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;&lt;&lt;set _cwCrew to 2&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _cwCrew to random(4, 6)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;As a corpsebearer, every night, you and your fellow corpsebearer&lt;&lt;if _cwCrew gt 2&gt;&gt;s&lt;&lt;/if&gt;&gt; must go round to the locked up houses of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; and call for them to bring out their dead, while praying to God that you remain safe.
 &lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of a corpse bearer carrying away the dead&quot;&gt;
+&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Engraving of a corpse bearer carrying away the dead&quot;&gt;
 //Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
+&lt;/div&gt;
 
      &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;As a searcher, every time you and your fellow searcher&lt;&lt;if _cwCrew gt 2&gt;&gt;s&lt;&lt;/if&gt;&gt; are called to someone&#39;s house to determine a cause of death, you pray to God to protect you. You are starting to have nightmares about seeing &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt; and the tokens of &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; on your neighbors.
     &lt;br&gt;
-    &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of men loading plague victims onto a cart&quot;&gt;
+    &lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+    &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Engraving of men loading plague victims onto a cart&quot;&gt;
     //Nathaniel Parr, published by Thomas Astley, Plague in 1665, 1747.//
+    &lt;/div&gt;
      
      &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;The &lt;&lt;defOverseersOfThePoor &quot;Overseers of the Poor&quot;&gt;&gt; assign you to your first &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; patient to nurse. You must tend to the sick in their own homes, bringing them food, changing their linens, and applying what remedies you can. The work is grim and thankless, but someone must care for those whom God has afflicted.
     &lt;br&gt;
-    &lt;img src=&quot;https://iiif.wellcomecollection.org/image/ddddaws6/full/1024%2C/0/default.jpg&quot; width=&quot;100%&quot; alt=&quot;Etching of a man consuming antidotes to the plague&quot;&gt;
+    &lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+    &lt;img src=&quot;https://iiif.wellcomecollection.org/image/ddddaws6/full/1024%2C/0/default.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Etching of a man consuming antidotes to the plague&quot;&gt;
     //A man consuming many antidotes to the plague during the Great Plague of London. Etching by J. Franklin, 1841. Wellcome Collection//
+    &lt;/div&gt;
 
      &lt;&lt;elseif $role is &quot;warder&quot;&gt;&gt;As a warder, you stand guard outside the locked up houses of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt;, making sure no one escapes their quarantine. A great red cross is painted on each door, with the words &quot;Lord have mercy upon us&quot; written above it. You must remain at your post day and night, listening to the pleas and cries of those locked within, and pray to God that the sickness does not reach you through the door.
     &lt;br&gt;
@@ -5634,10 +5666,11 @@ The Court is plunged into mourning&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt
 
 So much for the city being safe again.&lt;br&gt;
 &lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/d/d4/Catherine_of_Braganza_-_Lely_1663-65.jpg&quot; width=&quot;100%&quot; alt=&quot;Portrait of Queen Catherine of Braganza&quot;&gt;
+&lt;div style=&quot;float:right; max-width:50%; margin:0 0 0.5em 1em;&quot;&gt;
+&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/d/d4/Catherine_of_Braganza_-_Lely_1663-65.jpg&quot; style=&quot;width:100%; height:auto;&quot; alt=&quot;Portrait of Queen Catherine of Braganza&quot;&gt;
 &lt;br&gt;
 //Peter Lely, Catherine of Braganza, 1663-5//
-&lt;br&gt;&lt;br&gt;
+&lt;/div&gt;
 It&#39;s not a great lead up for [[April 1666]].
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 </tw-passagedata><tw-passagedata pid="95" name="sep-1665-helper widget" tags="widget" position="1575,550" size="100,100">&lt;&lt;widget &quot;sep-1665-helper&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
