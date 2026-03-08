@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.33" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.34" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1877,8 +1877,8 @@ On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of
 /* Build a readable list of the dead */
 &lt;&lt;set _deathList to &quot;&quot;&gt;&gt;
 &lt;&lt;for _fi = 0; _fi lt _deadNPCs.length; _fi++&gt;&gt;
-	&lt;&lt;if _fi gt 0 and _deadNPCs.length gt 2&gt;&gt;, &lt;&lt;/if&gt;&gt;
-	&lt;&lt;if _fi gt 0 and _fi is _deadNPCs.length - 1&gt;&gt; and &lt;&lt;/if&gt;&gt;
+	&lt;&lt;if _fi gt 0 and _deadNPCs.length gt 2&gt;&gt;&lt;&lt;set _deathList to _deathList + &quot;, &quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+	&lt;&lt;if _fi gt 0 and _fi is _deadNPCs.length - 1&gt;&gt;&lt;&lt;set _deathList to _deathList + &quot; and &quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 	&lt;&lt;set _deathList to _deathList + _deadNPCs[_fi].label + &quot; &quot; + _deadNPCs[_fi].npc.name&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 
@@ -3318,6 +3318,8 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
     &lt;&lt;set $quarantineSwapped to &quot;extended&quot;&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;set $NPCsServants to []&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
+&lt;&lt;set-caretaker&gt;&gt;
 &lt;&lt;/silently&gt;&gt;&lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="storyline-return widget" tags="widget" position="950,25" size="100,100">&lt;&lt;widget &quot;storyline-return&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
     /* Argument 0: Text for the link (Defaults to &quot;Continue.&quot;) */
@@ -4284,9 +4286,10 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
 Do you:&lt;ul&gt;
 &lt;li&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;[[decide to accept this generous offer.|impressed][$impressed += 1]]&lt;&lt;else&gt;&gt;[[decide to accept this generous offer.|June 1665][$money to Math.clamp($money + 720, -1000000, 1000000); $reputation to Math.clamp($reputation - 1, 0, 10)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
 &lt;li&gt;[[choose to continue working for one of your regular customers instead.|June 1665]]&lt;/li&gt;
-&lt;/ul&gt;    
+&lt;/ul&gt;
+    &lt;&lt;/if&gt;&gt;
 
-/* Servants */ 
+/* Servants */
     &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;You anxiously await your $masterTitle&#39;s decision about whether the &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; will flee or stay.
     &lt;&lt;/if&gt;&gt;
 
@@ -5250,6 +5253,8 @@ Lord be praised, your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; has sur
 &lt;&lt;set $quarantineSwapped to &quot;&quot;&gt;&gt;
 &lt;&lt;set $SavedNPCs to []&gt;&gt;
 &lt;&lt;set $SavedServants to []&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
+&lt;&lt;set-caretaker&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;elseif $quarantineSwapped is &quot;extended&quot;&gt;&gt;
 &lt;&lt;silently&gt;&gt;
@@ -5259,6 +5264,8 @@ Lord be praised, your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; has sur
 &lt;&lt;set $quarantineSwapped to &quot;&quot;&gt;&gt;
 &lt;&lt;set $SavedNPCs to []&gt;&gt;
 &lt;&lt;set $SavedServants to []&gt;&gt;
+&lt;&lt;set-hoh&gt;&gt;
+&lt;&lt;set-caretaker&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
@@ -7173,7 +7180,8 @@ Your &lt;&lt;for _rc, _ri range _flightSafeKids&gt;&gt;&lt;&lt;if _flightSafeKid
 &lt;&lt;/for&gt;&gt;
 
 &lt;&lt;if _smuggleEligible.length gt 0&gt;&gt;&lt;br&gt;&lt;br&gt;
-&lt;span id=&quot;smuggle-choice&quot;&gt;Under the guise of bringing you food, your neighbors offer to help you evade the quarantine and smuggle &lt;&lt;if _smuggleEligible.length eq 1&gt;&gt;your $NPCs[_smuggleEligible[0]].relationship $NPCs[_smuggleEligible[0]].name&lt;&lt;else&gt;&gt;your healthy children&lt;&lt;/if&gt;&gt; out of the house. Do you &lt;&lt;if $hoh is 4&gt;&gt;and your husband &lt;&lt;/if&gt;&gt;accept their offer?&lt;br&gt;&lt;br&gt;
+&lt;&lt;set _smugIdx to _smuggleEligible[0]&gt;&gt;
+&lt;span id=&quot;smuggle-choice&quot;&gt;Under the guise of bringing you food, your neighbors offer to help you evade the quarantine and smuggle &lt;&lt;if _smuggleEligible.length eq 1&gt;&gt;your $NPCs[_smugIdx].relationship $NPCs[_smugIdx].name&lt;&lt;else&gt;&gt;your healthy children&lt;&lt;/if&gt;&gt; out of the house. Do you &lt;&lt;if $hoh is 4&gt;&gt;and your husband &lt;&lt;/if&gt;&gt;accept their offer?&lt;br&gt;&lt;br&gt;
 &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#smuggle-choice&quot;&gt;&gt;
 &lt;&lt;set $getaway = []&gt;&gt;
 &lt;&lt;for _se range _smuggleEligible&gt;&gt;
