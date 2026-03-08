@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.31" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.32" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1548,7 +1548,7 @@ The city has ordered public &lt;&lt;defFasts &quot;fasts&quot;&gt;&gt; and praye
 
 /* one-time call of do you want to be married and/or apprenticed (mutually exclusive) */
 
-&lt;&lt;if $agenum gte 16 and $seekingDecision is 0&gt;&gt;
+&lt;&lt;if $agenum gte 16 and $seekingDecision is 0 and $relationship isnot &quot;married&quot;&gt;&gt;
 &lt;&lt;marriage-market&gt;&gt;
 &lt;&lt;elseif ($socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;) and $agenum gte 14 and $agenum lte 21 and $relationship is &quot;single&quot; and $seekingMarriage is 0 and $seekingDecision isnot 2&gt;&gt;
 &lt;&lt;apprenticeship-market&gt;&gt;
@@ -5869,12 +5869,14 @@ Despite everything, court life proceeds as usual. A friend living the countrysid
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="107" name="seeking widgets" tags="widget" position="2250,300" size="100,100">&lt;&lt;widget &quot;marriage-market&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;else&gt;&gt;
 As an unmarried adult, you may wish to get married. Marriage brings with it lots of advantages, including a life partner, social connections through their family, (probably) children, and &lt;&lt;if $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot;&gt;&gt;wealth from your &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&#39;s income&lt;&lt;else&gt;&gt;wife&#39;s dowry&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;additional income that will help protect you from &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;starvation&lt;&lt;else&gt;&gt;poverty&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;.&lt;&lt;if $gender is &quot;female&quot;&gt;&gt; The downside is all your property will become your husband&#39;s and you will be legally dependent on him until he dies... or you do.&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
-&lt;span id=&quot;marriage&quot;&gt;Do you wish to seek a &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&lt;&lt;else&gt;&gt;wife&lt;&lt;/if&gt;&gt;? 
+&lt;span id=&quot;marriage&quot;&gt;Do you wish to seek a &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&lt;&lt;else&gt;&gt;wife&lt;&lt;/if&gt;&gt;?
 &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;&lt;&lt;set $seekingMarriage to 1&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;storyline-return &quot;You are looking to be married soon and will be seeking out a spouse.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;&lt;&lt;set $seekingMarriage to 0&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;storyline-return &quot;You are content to remain single for now.&quot; 0&gt;&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;/span&gt;
+&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
@@ -6302,7 +6304,7 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 		&lt;&lt;elderly&gt;&gt;
 	&lt;&lt;elseif $seekingApprenticeship is 1 and $apprenticeshipOffer is 1&gt;&gt;
 		&lt;&lt;apprenticeship-offer&gt;&gt;
-	&lt;&lt;elseif $seekingMarriage is 1 and $wedding is 1&gt;&gt;
+	&lt;&lt;elseif $seekingMarriage is 1 and $wedding is 1 and $relationship isnot &quot;married&quot;&gt;&gt;
 		&lt;&lt;wedding&gt;&gt;
 	&lt;&lt;elseif $pregnant is 4&gt;&gt; /* Pregnancy and Marriage */
 		&lt;&lt;pregnant&gt;&gt;
