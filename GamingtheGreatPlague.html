@@ -2289,8 +2289,6 @@ You &lt;span id=&quot;decision&quot;&gt;
 &lt;&lt;corpse-work&gt;&gt;
 &lt;&lt;if not _randomEventFired&gt;&gt;
 &lt;&lt;if $billSubscribed is 0&gt;&gt;&lt;&lt;bill-subscribe&gt;&gt;&lt;&lt;else&gt;&gt;
- /* Beggar &amp; Day Labourer choices */
-/* nts: need text if day labourers don&#39;t have a job */
     &lt;&lt;if $role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot; or $role is &quot;nurse&quot; or $role is &quot;warder&quot;&gt;&gt;
         &lt;&lt;if ndef $textGroup&gt;&gt;&lt;&lt;set $textGroup = 1&gt;&gt;&lt;&lt;/if&gt;&gt;
         &lt;&lt;switch $textGroup&gt;&gt;
@@ -4217,8 +4215,11 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
     &lt;&lt;/if&gt;&gt;
 
 /*Day Labourer*/
-    &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;Many people are beginning to remove their goods to the countryside, though, which makes extra opportunities for you to earn money. /* NTS: Navy passage options? Other options for accepting work? */
-    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;Many people are beginning to remove their goods to the countryside, though, which makes extra opportunities for you to earn money. A man you&#39;ve never met before offers you three times your normal wages to help haul his goods out of the city.&lt;br&gt;
+Do you:&lt;ul&gt;
+&lt;li&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;[[decide to accept this generous offer.|impressed][$impressed += 1]]&lt;&lt;else&gt;&gt;[[decide to accept this generous offer.|June 1665][$money to Math.clamp($money + 720, -1000000, 1000000); $reputation to Math.clamp($reputation - 1, 0, 10)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;li&gt;[[choose to continue working for one of your regular customers instead.|June 1665]]&lt;/li&gt;
+&lt;/ul&gt;    
 
 /* Servants */ 
     &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;You anxiously await your $masterTitle&#39;s decision about whether the &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; will flee or stay.
@@ -4305,8 +4306,7 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
 &lt;/div&gt;</tw-passagedata><tw-passagedata pid="68" name="plague-work" tags="widget" position="1325,25" size="100,100">&lt;&lt;widget &quot;plague-work&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;&lt;&lt;set _cwCrew to 2&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _cwCrew to random(4, 6)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
-	&lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;As a corpsebearer, every night, you and your fellow corpsebearer&lt;&lt;if _cwCrew gt 2&gt;&gt;s&lt;&lt;/if&gt;&gt; must go round to the locked up houses of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; and call for them to bring out their dead, while praying to God that you remain safe.
+&lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;As a corpsebearer, every night, you and your fellow corpsebearer&lt;&lt;if _cwCrew gt 2&gt;&gt;s&lt;&lt;/if&gt;&gt; must go round to the locked up houses of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; and call for them to bring out their dead, while praying to God that you remain safe.
 &lt;br&gt;
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of a corpse bearer carrying away the dead&quot;&gt;
 //Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
@@ -4326,36 +4326,6 @@ Luckily, there are no &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; cases in your
     &lt;img src=&quot;https://iiif.wellcomecollection.org/image/wsbkbmqj/full/1024%2C/0/default.jpg&quot; width=&quot;100%&quot; alt=&quot;Illustration of a plague scene in London&quot;&gt;
     //A plague scene. Wellcome Collection//
      &lt;&lt;/if&gt;&gt;
-
-&lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt; /* NTS: work text here */
-
-&lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
-	&lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;Every night, you and your fellow corpsebearer&lt;&lt;if _cwCrew gt 2&gt;&gt;s&lt;&lt;/if&gt;&gt; go round to the locked up houses of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; and call for them to bring out their dead, while praying to God that you remain safe.
-        &lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of a corpse bearer carrying away the dead&quot;&gt;
-//Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
-    
-    &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;Every time you and your fellow searcher&lt;&lt;if _cwCrew gt 2&gt;&gt;s&lt;&lt;/if&gt;&gt; are called to someone&#39;s house to determine a cause of death, you pray to God to protect you. You are starting to have nightmares about seeing &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt; and the tokens of &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; on your neighbors.
-    &lt;br&gt;
-    &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot; alt=&quot;Engraving of men loading plague victims onto a cart&quot;&gt;
-    //Nathaniel Parr, published by Thomas Astley, Plague in 1665, 1747.//
-   
-   &lt;&lt;elseif $role is &quot;nurse&quot;&gt;&gt;&lt;&lt;defParish &quot;Parish&quot;&gt;&gt; officials tell you there is a patient for you to nurse. You must tend to the sick in their own homes, bringing them food, changing their linens, and applying what remedies you can. The work is grim and thankless, but someone must care for those whom God has afflicted.
-    &lt;br&gt;
-    &lt;img src=&quot;https://iiif.wellcomecollection.org/image/ddddaws6/full/1024%2C/0/default.jpg&quot; width=&quot;100%&quot; alt=&quot;Etching of a man consuming antidotes to the plague&quot;&gt;
-    //A man consuming many antidotes to the plague during the Great Plague of London. Etching by J. Franklin, 1841. Wellcome Collection//
-
-	&lt;&lt;elseif $role is &quot;warder&quot;&gt;&gt;You stand guard outside the locked up houses of your &lt;&lt;defParish &quot;parish&quot;&gt;&gt;. A great red cross is painted on each door, with the words &quot;Lord have mercy upon us&quot; written above it. You must remain at your post day and night, listening to the pleas and cries of those locked within, and pray to God that the sickness does not reach you through the door.
-    &lt;br&gt;
-    &lt;img src=&quot;https://iiif.wellcomecollection.org/image/wsbkbmqj/full/1024%2C/0/default.jpg&quot; width=&quot;100%&quot; alt=&quot;Illustration of a plague scene in London&quot;&gt;
-    //A plague scene. Wellcome Collection//
-	&lt;&lt;/if&gt;&gt;
-    
-&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt; /* NTS: work text here */
-
-&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt; /* NTS: work text here */
-
-&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="69" name="storyLogo" tags="" position="150,150" size="100,100">&lt;a href=&quot;https://rrchnm.org/&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://avatars.githubusercontent.com/u/296531?s=280&amp;v=4&quot; height=&quot;50px&quot; alt=&quot;Roy Rosenzweig Center for History and New Media logo&quot;&gt;&lt;/a&gt;</tw-passagedata><tw-passagedata pid="70" name="gameTitle" tags="" position="25,25" size="100,100">Gaming the Great &lt;&lt;defPlague &quot;Plague&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="71" name="storyAuthor" tags="" position="150,25" size="100,100">&lt;a href=&quot;https://rrchnm.org/&quot;&gt;RRCHNM&lt;/a&gt;</tw-passagedata><tw-passagedata pid="72" name="storyMenu" tags="" position="275,150" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;div class=&quot;status-box&quot;&gt;&lt;&lt;if $reputation gte 9&gt;&gt;&lt;div class=&quot;rep-best&quot;&gt;&#39;&#39;Reputation:&#39;&#39; &lt;br&gt; a worthy soul&lt;/div&gt;&lt;&lt;elseif $reputation gte 6 and $reputation lte 8&gt;&gt;&lt;div class=&quot;rep-good&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;of good credit and quality&lt;/div&gt;&lt;&lt;elseif $reputation gte 3 and $reputation lte 5&gt;&gt;&lt;div class=&quot;rep-poor&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;bad credit is better than none&lt;/div&gt;&lt;&lt;elseif $reputation lte 2&gt;&gt;&lt;div class=&quot;rep-worst&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;a worthless and base rogue&lt;/div&gt;&lt;&lt;/if&gt;&gt;&lt;/div&gt;&lt;br&gt;
 
@@ -5324,25 +5294,23 @@ You &lt;&lt;if $hoh is 4&gt;&gt;convince your husband&lt;&lt;elseif $hoh isnot 1
     &lt;&lt;/if&gt;&gt;
 
 /* Artisans */
-/* NTS: [household fleeing is one time money hit; if character flees, take a money hit each turn until go broke (go down to day laborer timeline) or return] */
-/* NTS: add text about what artisans do immediately after choosing to stay. */
+
 &lt;&lt;if $socio is &quot;artisans&quot;&gt;&gt;
-    &lt;&lt;if $fled is 7&gt;&gt;Despite your efforts to flee the city, your reputation is so poor that no one would take you in elsewhere. You have lost at least two months&#39; of wages for your effort, and are considered in even lower esteem than before.
+    &lt;&lt;if $fled is 7&gt;&gt;Despite your efforts to flee the city, your reputation is so poor that no one would take you in elsewhere. You have wasted at least two months&#39; of wages in the effort and your reputation has plummeted even further.
     &lt;&lt;else&gt;&gt;
-    You decide to remain in the city &lt;&lt;if $fled is 4&gt;&gt;with your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;, despite the danger&lt;&lt;else&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;&lt;if $caretakerLabel isnot &quot;&quot;&gt;&gt;with your &lt;&lt;print $caretakerLabel&gt;&gt;, and send the rest of your &lt;&lt;if $hoh is 3 or $hoh is 4&gt;&gt;household&lt;&lt;else&gt;&gt;family&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;by yourself, and send your family&lt;&lt;/if&gt;&gt; to the countryside away from the danger.&lt;&lt;/if&gt;&gt;
+    You decide to remain in the city &lt;&lt;if $fled is 4&gt;&gt;with your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;, despite the danger&lt;&lt;else&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;&lt;if $caretakerLabel isnot &quot;&quot;&gt;&gt;with your &lt;&lt;print $caretakerLabel&gt;&gt;, and send the rest of your &lt;&lt;if $hoh is 3 or $hoh is 4&gt;&gt;household&lt;&lt;else&gt;&gt;family&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;by yourself, and send your family&lt;&lt;/if&gt;&gt; to the countryside away from the danger.&lt;&lt;/if&gt;&gt; There are fewer customers coming into your shop every day, but you are still earning more than you could if you fled the city.
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
 /* Merchants */
-/* NTS: if either character or household flees, money hit each turn but shouldn’t be so bad as to force them back to the city; if character flees, take a one time reputation hit then do further reputation hits if stay fled after court returns in February; if character stays, small rep bonus for each turn stays in city */
+
 &lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;
-    /* NTS: add text about what merchants do immediately after choosing to stay. */
+    You decide to remain in the city &lt;&lt;if $fled is 4&gt;&gt;with your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;, despite the danger&lt;&lt;else&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;&lt;if $caretakerLabel isnot &quot;&quot;&gt;&gt;with your &lt;&lt;print $caretakerLabel&gt;&gt;, and send the rest of your &lt;&lt;if $hoh is 3 or $hoh is 4&gt;&gt;household&lt;&lt;else&gt;&gt;family&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;by yourself, and send your family&lt;&lt;/if&gt;&gt; to the countryside away from the danger.&lt;&lt;/if&gt;&gt; Your business will not run itself and there is no one you trust to manage it in your absence.
 &lt;&lt;/if&gt;&gt;
 
 /* Nobles */
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;
-    /* NTS: add text about what nobles do immediately after choosing to stay. */
- You help your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; to pack up and leave the city for safety in $hhlocation. You send your family with most of the servants, keeping only $NPCsServants.length for yourself. You promise to meet them should the situation grow worse.&lt;&lt;/if&gt;&gt;
+    You decide to remain in the city &lt;&lt;if $fled is 4&gt;&gt;with your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;, despite the danger&lt;&lt;else&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;&lt;if $caretakerLabel isnot &quot;&quot;&gt;&gt;with your &lt;&lt;print $caretakerLabel&gt;&gt;, and send the rest of your &lt;&lt;if $hoh is 3 or $hoh is 4&gt;&gt;household&lt;&lt;else&gt;&gt;family&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;by yourself. You help your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; to pack up and leave the city for safety in $hhlocation. You send your family with most of the servants, keeping only $NPCsServants.length for yourself. You promise to meet them should the situation grow worse.&lt;&lt;/if&gt;&gt; It is a dangerous gamble, but you are hoping that remaining in the city when most everyone else has fled will advance your reputation and future prospects at court.&lt;&lt;/if&gt;&gt;
 
 /* Merchants/Artisans with servants */
 &lt;&lt;if ($socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;) and $NPCsServants.length gt 0&gt;&gt;
