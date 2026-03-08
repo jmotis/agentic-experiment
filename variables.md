@@ -701,7 +701,7 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Type:** Integer (flag)
 - **Possible values:** `0` (not in prison), `1` (in debtor's prison)
 - **Initial value:** `0` (set in `StoryInit`, pid 10)
-- **Set by:** The `prison` widget (pid 58) sets this to `1` when the player is committed to the Fleet (debtor's prison). Set in all code paths where the player is actually imprisoned (direct commitment, refusing Navy recruitment, refusing sell option). Reset to `0` by the `debtor-prison-check` widget (pid 58) when the player is released — either because debt improves below the ceiling, or after 3 months via a bequest from a deceased relative.
+- **Set by:** The `prison` widget (pid 58) sets this to `1` when the player is committed to the Fleet (debtor's prison). Set in all code paths where the player is actually imprisoned (direct commitment, refusing Navy recruitment, refusing sell option). Reset to `0` by the `debtor-prison-check` widget (pid 58) when the player is released — either because debt improves below the ceiling, or after 3 months via a bequest from a deceased relative (first commitment only). On second+ commitment (`$debtorPrisonCount gte 2`), the player is permanently imprisoned with no release. Also reset to `0` if the player or NPC is impressed into the Navy from prison.
 - **Used for:** In `PassageHeader` (pid 11), triggers a 50% infection chance every storyline passage while in prison and calls the `debtor-prison-check` widget to evaluate release conditions. If infected in prison, the player is sent to the pesthouse (`YouPesthouse`) instead of being allowed to quarantine at home.
 - **Dependencies:** Interacts with `$plagueInfection`, `$playerPlagueStatus`, `$debtorPrisonInfected`, `$debtorPrisonMonths`, and `$creditorWaitCount`.
 
@@ -715,10 +715,10 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 
 ### `$debtorPrisonMonths`
 - **Type:** Integer (counter)
-- **Possible values:** `0` (not in prison or just entered), `1`, `2`, `3` (triggers bequest release)
+- **Possible values:** `0` (not in prison or just entered), `1`, `2`, `3` (triggers bequest release on first commitment)
 - **Initial value:** `0` (set in `StoryInit`, pid 10)
 - **Set by:** The `debtor-prison-check` widget (pid 58) increments this by 1 each month while the player remains in debtor's prison and debt still exceeds the ceiling. Reset to `0` when the player is released (via debt improvement, bequest event, or any other release mechanism). Also set to `0` when the player first enters prison.
-- **Used for:** After 3 months in debtor's prison, a distant relative (uncle, aunt, or cousin) dies and leaves a bequest sufficient to zero out the player's debts, triggering automatic release with a &minus;1 reputation penalty.
+- **Used for:** On first commitment (`$debtorPrisonCount is 1`): after 3 months, a distant relative dies and leaves a bequest, triggering automatic release with a &minus;1 reputation penalty. On second+ commitment (`$debtorPrisonCount gte 2`): the counter still increments but no bequest occurs; the player is permanently imprisoned.
 - **Dependencies:** Interacts with `$inDebtorsPrison`, `$money`, `$reputation`, `$creditorWaitCount`.
 
 ### `$creditorWaitCount`
@@ -728,6 +728,30 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Set by:** The `prison` widget (pid 58) increments this by 1 each time creditors agree to wait due to the player's reputation being &ge; 6. Reset to `0` when debts are cleared (via sell option, Navy, bequest, or debt improvement).
 - **Used for:** Provides escalating narrative text each time creditors wait (first time: polite patience; second: growing impatience; third+: final warning). Each wait also costs &minus;1 reputation, creating a natural countdown — a player at reputation 8 gets roughly 3 months of grace before reputation drops below 6 and they face harsher consequences (sell option at rep 4–5, or prison/Navy below rep 4).
 - **Dependencies:** Interacts with `$reputation`, `$money`, `$inDebtorsPrison`, `$debtorPrisonMonths`.
+
+### `$debtorPrisonCount`
+- **Type:** Integer (counter)
+- **Possible values:** `0` (never committed), `1` (committed once), `2`+ (committed multiple times)
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** Incremented by 1 each time the player or their HoH NPC is actually committed to debtor's prison (i.e., `$inDebtorsPrison` is set to `1`). This happens across multiple code paths in the `prison`, `debt-navy-option`, and `debt-navy-npc-option` widgets (pid 58).
+- **Used for:** Controls two mechanics: (1) The `debt-sell-option` widget uses `$debtSellUsed` (see below) to limit the sell option, while the second-time noble options (sell townhouse / flee London) are gated on `$debtSellUsed gte 1`. (2) The `debtor-prison-check` widget checks `$debtorPrisonCount gte 2` to determine whether the player is permanently imprisoned (no inheritance release on second+ commitment).
+- **Dependencies:** Interacts with `$inDebtorsPrison`, `$debtorPrisonMonths`, `$debtSellUsed`.
+
+### `$debtSellUsed`
+- **Type:** Integer (flag)
+- **Possible values:** `0` (sell option not yet used), `1` (sell option already offered once)
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** The `debt-sell-option` widget (pid 58) sets this to `1` the first time the sell option is presented to the player (regardless of whether they sell or refuse).
+- **Used for:** Gates the sell-land/sell-goods option so it is only available once. On subsequent encounters at reputation 4–5, nobles are offered two desperate choices (sell London townhouse for game over, or flee the city via the `go quietly` passage), and non-nobles are offered the choice to face the Fleet or flee the city (game over via the `go quietly` passage).
+- **Dependencies:** Interacts with `$socio`, `$reputation`, `$debtFled`.
+
+### `$debtFled`
+- **Type:** Integer (flag)
+- **Possible values:** `0` (not fleeing debts), `1` (fled London to escape debts)
+- **Initial value:** `0` (set in `StoryInit`, pid 10)
+- **Set by:** The `debt-sell-option` widget (pid 58) sets this to `1` when a player (noble or non-noble) chooses the "Flee the city" option on their second encounter with the sell-option threshold.
+- **Used for:** The `go quietly` passage (pid 47) checks this flag to display debt-fleeing narrative text instead of the default plague-fleeing text. When `$debtFled is 1`, the passage describes the player slipping away from London to escape creditors rather than fleeing plague.
+- **Dependencies:** Interacts with `$debtSellUsed`, `$origin`.
 
 ### `$timeline`
 - **Type:** Array of strings
