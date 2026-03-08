@@ -454,6 +454,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Used for:** Records which timeline index the player fled from, so that the Fled passage can hide return options that would send the player backwards in time (preventing time-travel bug)
 - **Dependency:** Derived from `$monthIndex`
 
+### `$followedCourt`
+- **Type:** Integer (boolean-like)
+- **Possible values:** `0` (did not follow the court), `1` (following the court)
+- **Set by:** `0` in StoryInit; set to `1` in the noble flight choice (pid 64) when the player chooses "Follow the court to the countryside"; reset to `0` by court-return (pid 86) return links and by the `fled-broke` widget (pid 115) when the player runs out of money
+- **Used for:** Adds 4,800d per month to noble expenses while following the court (in the `expenses` widget, pid 77). Also branches the `fled-opening` narrative text (pid 115) to reflect the higher cost of following the court versus fleeing to a country estate.
+- **Dependency:** Only meaningful when `$socio is "nobles"` and `$fled is 6`. Nobles who choose "Follow the court" are sent directly to the court-return passage (pid 86) and automatically return in February 1666.
+- **Notes:** Nobles who choose the country estate option instead go to the Fled passage (pid 63) and choose their own return timing.
+
 ### `$fledReturn`
 - **Type:** String
 - **Possible values:** `"official"`, `"no-plague"`
