@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.43" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.44" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1640,6 +1640,8 @@ The city has ordered public &lt;&lt;defFasts &quot;fasts&quot;&gt;&gt; and praye
 &lt;&lt;marriage-market&gt;&gt;
 &lt;&lt;elseif ($socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;) and $agenum gte 14 and $agenum lte 21 and $relationship is &quot;single&quot; and $seekingMarriage is 0 and $seekingDecision isnot 2&gt;&gt;
 &lt;&lt;apprenticeship-market&gt;&gt;
+&lt;&lt;elseif $socio is &quot;nobles&quot; and $agenum gte 16 and $seekingDecision is 1 and $seekingDecision isnot 3&gt;&gt;
+&lt;&lt;preferment-market&gt;&gt;
 
 /* passage continues after decisions are made */
 
@@ -1825,6 +1827,8 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;set $remedies.Cordial = { name: &quot;a cordial tincture to be drunk for two days after infection&quot;, quantity: 0, cost: 12 }&gt;&gt; 
 &lt;&lt;set $remedies.Immodium = { name: &quot;an anti-diarrheal posset made of plantain, sorrel, or knot grass&quot;, quantity: 0, cost: 0 }&gt;&gt;
 &lt;&lt;set $seekingApprenticeship to 0&gt;&gt;
+&lt;&lt;set $seekingPreferment to 0&gt;&gt;
+&lt;&lt;set $prefermentOffer to 0&gt;&gt;
 &lt;&lt;set $apprenticeship to 0&gt;&gt;
 &lt;&lt;set $servantPromotion to 0&gt;&gt;
 &lt;&lt;set $decisions to []&gt;&gt;
@@ -4946,6 +4950,7 @@ Do you:&lt;ul&gt;
   &lt;&lt;/for&gt;&gt;
   &lt;&lt;set $expenses to _baseExp + (_perFamily * _famCount) + (_perServant * _svCount)&gt;&gt;
   &lt;&lt;if $followedCourt is 1&gt;&gt;&lt;&lt;set $expenses += 4800&gt;&gt;&lt;&lt;/if&gt;&gt;
+  &lt;&lt;if $seekingPreferment is 1&gt;&gt;&lt;&lt;set $expenses += 2400&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
   /* Day labourer — 60d per household + 20d per person */
   &lt;&lt;set _hhCount to 1&gt;&gt;
@@ -6026,6 +6031,17 @@ As an unmarried adult, you may wish to get married. Marriage brings with it lots
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
+&lt;&lt;widget &quot;preferment-market&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+As a member of the nobility, you have the opportunity to seek preferment at Court. By cultivating relationships with powerful courtiers and sending them gifts, you may eventually secure a position that brings honor, influence, and income to your family. This is an expensive undertaking—you will need to spend around £10 a month on gifts to various courtiers—but the rewards of a court position could be well worth the investment.
+&lt;br&gt;&lt;br&gt;
+&lt;span id=&quot;preferment&quot;&gt;Do you wish to seek preferment at Court?
+&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;set $seekingPreferment to 1&gt;&gt;&lt;&lt;set $seekingDecision to 3&gt;&gt;&lt;&lt;replace &quot;#preferment&quot;&gt;&gt;&lt;&lt;storyline-return &quot;You begin cultivating connections at Court, sending gifts to influential courtiers in hopes of securing a position.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $seekingPreferment to 0&gt;&gt;&lt;&lt;set $seekingDecision to 3&gt;&gt;&lt;&lt;replace &quot;#preferment&quot;&gt;&gt;&lt;&lt;storyline-return &quot;You are content with your current standing and see no need to spend money currying favor at Court.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;/span&gt;
+
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
+
 &lt;&lt;widget &quot;apprenticeship-market&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 Young people between the ages of 14 and 21 are eligible to be bound as apprentices in the city of London. While it is usually boys who take advantage of this opportunity, there are some girls who also seek apprenticeships. For a period of around 7 years, you would be legally bound to your master and provide &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;him&lt;&lt;/if&gt;&gt; your service. In return you will learn &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; trade, gain connections in &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; social circles, and eventually become a full member of one of London &lt;&lt;defLiveryCompany &quot;livery company&quot;&gt;&gt;.&lt;&lt;if $gender is &quot;male&quot;&gt;&gt; This will give you the right to vote in local elections, run for office within the city, and perhaps even one day become Lord Mayor of London.&lt;&lt;/if&gt;&gt;
@@ -6460,11 +6476,14 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 	&lt;&lt;set $elderly to random(1,30)&gt;&gt;
 	&lt;&lt;set $wedding to random(1,10)&gt;&gt;
 	&lt;&lt;set $apprenticeshipOffer to random(1,10)&gt;&gt;
+	&lt;&lt;set $prefermentOffer to random(1,10)&gt;&gt;
 	&lt;&lt;set $fever to random(1,20)&gt;&gt;
 	&lt;&lt;if $age is &quot;elderly adult&quot; and $elderly is 1&gt;&gt; /* Old Age */
 		&lt;&lt;elderly&gt;&gt;
 	&lt;&lt;elseif $seekingApprenticeship is 1 and $apprenticeshipOffer is 1&gt;&gt;
 		&lt;&lt;apprenticeship-offer&gt;&gt;
+	&lt;&lt;elseif $seekingPreferment is 1 and $prefermentOffer is 1 and ($fled isnot 6 or $followedCourt is 1 or $monthIndex gte 11)&gt;&gt;
+		&lt;&lt;preferment-offer&gt;&gt;
 	&lt;&lt;elseif $seekingMarriage is 1 and $wedding is 1 and $relationship isnot &quot;married&quot;&gt;&gt;
 		&lt;&lt;wedding&gt;&gt;
 	&lt;&lt;elseif $pregnant is 4&gt;&gt; /* Pregnancy and Marriage */
@@ -6530,6 +6549,34 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 &lt;&lt;/if&gt;&gt; /* end $randomEventCompleted guard */
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="114" name="Claude-widgets" tags="widget" position="25,1100" size="100,100">/* all widgets generated via Claude or other AI should be temporarily placed here then manually moved to new locations as needed */
+
+/* preferment-offer — fires when a noble seeking preferment at court receives
+   an offer for a position. The player can accept (paying 2400 gratuity + 2400
+   purchase price = 4800 total) or decline and keep searching.
+   Guard: if the noble fled to the countryside (not following the court),
+   no offer should appear until February 1666 (monthIndex &gt;= 11). */
+&lt;&lt;widget &quot;preferment-offer&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $seekingPreferment is 1&gt;&gt;
+Your months of gift-giving and flattery at Court have finally borne fruit. A powerful patron has secured you a position as &lt;&lt;set _position to either(&quot;a Groom of the Bedchamber&quot;, &quot;a Gentleman Usher&quot;, &quot;a Clerk of the Privy Council&quot;, &quot;a Commissioner of the Royal Household&quot;)&gt;&gt;_position. However, to finalize the appointment you must pay a gratuity of £10 to your patron and £10 to purchase the position itself—£20 in total.
+&lt;br&gt;&lt;br&gt;
+&lt;span id=&quot;preferment-offer&quot;&gt;
+&lt;&lt;set _repBefore to $reputation&gt;&gt;
+&lt;&lt;if $money gte 4800&gt;&gt;
+Do you wish to accept the position?
+&lt;ul&gt;
+&lt;li&gt;&lt;&lt;link &quot;Accept the position (£20)&quot;&gt;&gt;&lt;&lt;replace &quot;#preferment-offer&quot;&gt;&gt;&lt;&lt;set $seekingPreferment to 0&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Accepted a court position as &quot; + _position, money: -4800, repDelta: 1, repBefore: _repBefore, infectPct: null})&gt;&gt;You pay the £20 and take up your new position as _position. Your family&#39;s honor and influence at Court have grown considerably. &lt;&lt;storyline-return &quot;You look forward to the opportunities ahead.&quot; 0 -4800 1&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Decline and keep searching&quot;&gt;&gt;&lt;&lt;replace &quot;#preferment-offer&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Declined a court position&quot;, money: 0, repDelta: 0, repBefore: _repBefore, infectPct: null})&gt;&gt;You decide this particular position is not right for you and &lt;&lt;storyline-return &quot;continue seeking something better.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Decline and stop seeking preferment&quot;&gt;&gt;&lt;&lt;replace &quot;#preferment-offer&quot;&gt;&gt;&lt;&lt;set $seekingPreferment to 0&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Stopped seeking preferment at court&quot;, money: 0, repDelta: 0, repBefore: _repBefore, infectPct: null})&gt;&gt;You decide that the costs of seeking preferment at Court are too high and &lt;&lt;storyline-return &quot;turn your attention elsewhere.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;&lt;else&gt;&gt;
+Unfortunately, you cannot afford the £20 needed to accept the position right now. You hope another opportunity will come along once you have &lt;&lt;storyline-return &quot;increased your savings.&quot; 0&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;/span&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
 
 /* orderNPCs — sorts an NPC array by household precedence instead of raw age.
    Usage: &lt;&lt;orderNPCs &quot;$NPCs&quot;&gt;&gt;  (pass the variable name as a string)

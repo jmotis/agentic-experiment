@@ -535,6 +535,19 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Trigger:** `$apprenticeshipOffer is 1` (10% chance) triggers an apprenticeship offer event
 - **Dependency:** Interacts with `$seekingApprenticeship`. Checked before `$wedding` in the random-events priority cascade.
 
+### `$seekingPreferment`
+- **Type:** Integer (boolean-like)
+- **Possible values:** `0` (not seeking), `1` (seeking preferment at court)
+- **Set by:** `0` in StoryInit; set to `1` by `preferment-market` widget (pid 107) when a noble player chooses to seek preferment; set to `0` when the player accepts a court position via `preferment-offer` or declines and stops seeking
+- **Used for:** Whether the player is actively seeking preferment at court. Only available to nobles aged 16+. When `1`, adds 2400d/month (£10) to expenses for gift-giving to courtiers. A 1-in-10 monthly random chance triggers a `preferment-offer` event. If the noble fled to the countryside (not following the court), the offer is deferred until February 1666 (`$monthIndex gte 11`) when the court returns, though the monthly gift cost continues.
+- **Dependency:** Interacts with `$prefermentOffer`, `$fled`, `$followedCourt`, `$monthIndex`
+
+### `$prefermentOffer`
+- **Type:** Integer (random event roll)
+- **Set by:** `random(1, 10)` each month in `random-events` widget
+- **Trigger:** `$prefermentOffer is 1` (10% chance) triggers a court position offer event for nobles seeking preferment
+- **Dependency:** Interacts with `$seekingPreferment`. Gated by countryside/court status: fires only if `$fled isnot 6`, or `$followedCourt is 1`, or `$monthIndex gte 11`. Checked after `$apprenticeshipOffer` and before `$wedding` in the random-events priority cascade.
+
 ---
 
 ## Family / Life Events
