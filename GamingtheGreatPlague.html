@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.39" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.40" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1239,6 +1239,8 @@ $(document).on(':passagestart', function (ev) {
 &lt;&lt;income&gt;&gt;
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
   &lt;&lt;set $money to 0&gt;&gt;
+&lt;&lt;elseif $socio is &quot;servants&quot; and ($age is &quot;child&quot; or $age is &quot;adolescent&quot;)&gt;&gt;
+  &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;&lt;&lt;set $money to 60&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $money to 40&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;
   &lt;&lt;set $money to $income&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -4922,8 +4924,8 @@ Do you:&lt;ul&gt;
   &lt;&lt;set $expenses to 20 * _hhCount&gt;&gt;
 &lt;&lt;elseif $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;
   /* Base per household */
-  &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set _baseExp to 11200&gt;&gt;&lt;&lt;set _perFamily to 120&gt;&gt;&lt;&lt;set _perServant to 60&gt;&gt;
-  &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _baseExp to 2800&gt;&gt;&lt;&lt;set _perFamily to 120&gt;&gt;&lt;&lt;set _perServant to 60&gt;&gt;
+  &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set _baseExp to 12000&gt;&gt;&lt;&lt;set _perFamily to 240&gt;&gt;&lt;&lt;set _perServant to 60&gt;&gt;
+  &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;set _baseExp to 2800&gt;&gt;&lt;&lt;set _perFamily to 90&gt;&gt;&lt;&lt;set _perServant to 40&gt;&gt;
   &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set _baseExp to 560&gt;&gt;&lt;&lt;set _perFamily to 60&gt;&gt;&lt;&lt;set _perServant to 40&gt;&gt;
   &lt;&lt;/if&gt;&gt;
   /* Count living family members (including PC = 1) */
