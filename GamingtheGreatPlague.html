@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.25" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.26" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -6377,6 +6377,29 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 
+/* ── 1b. Account for fled months ── */
+&lt;&lt;set _isFled to ($fled is 1 or $fled is 2 or $fled is 6)&gt;&gt;
+&lt;&lt;set _fullParishPct to _parishPct.slice()&gt;&gt;
+&lt;&lt;if _isFled&gt;&gt;
+/* Determine return month by scanning decisions for first month after fledFromIndex */
+&lt;&lt;set _returnIndex to _tLen&gt;&gt;
+&lt;&lt;for _di to 0; _di lt $decisions.length; _di++&gt;&gt;
+&lt;&lt;set _d to $decisions[_di]&gt;&gt;
+&lt;&lt;if typeof _d is &quot;object&quot;&gt;&gt;
+&lt;&lt;set _colonIdx to _d.text.indexOf(&quot;:&quot;)&gt;&gt;
+&lt;&lt;if _colonIdx gt 0&gt;&gt;
+&lt;&lt;set _monthStr to _d.text.slice(0, _colonIdx)&gt;&gt;
+&lt;&lt;set _mIdx to $timeline.indexOf(_monthStr)&gt;&gt;
+&lt;&lt;if _mIdx gt $fledFromIndex and _mIdx lt _returnIndex&gt;&gt;&lt;&lt;set _returnIndex to _mIdx&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+/* Zero out parish risk for months the player was away */
+&lt;&lt;for _i to $fledFromIndex + 1; _i lt _returnIndex; _i++&gt;&gt;
+&lt;&lt;set _parishPct[_i] to 0&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+
 /* ── 2. Bin decisions by month, split role vs other ── */
 &lt;&lt;set _rolePct to []&gt;&gt;
 &lt;&lt;set _decPct to []&gt;&gt;
@@ -6450,11 +6473,22 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 &lt;&lt;if _cumDec lt 0&gt;&gt;&lt;&lt;set _cumDec to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;set _cumTotal to _cumParish + _cumRole + _cumDec&gt;&gt;
 
+/* ── 4b. Compute full parish risk (without fled adjustment) for comparison ── */
+&lt;&lt;set _survFullParish to 1.0&gt;&gt;
+&lt;&lt;for _i to 0; _i lt _tLen; _i++&gt;&gt;
+&lt;&lt;if _fullParishPct[_i] gt 0&gt;&gt;
+&lt;&lt;set _survFullParish to _survFullParish * (1.0 - (_fullParishPct[_i] / 100))&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _cumFullParish to Math.round((1.0 - _survFullParish) * 100)&gt;&gt;
+&lt;&lt;set _fledReduction to _cumFullParish - _cumParish&gt;&gt;
+&lt;&lt;if _fledReduction lt 0&gt;&gt;&lt;&lt;set _fledReduction to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
+
 /* ── 5. Determine which months to show (skip zero-risk months at edges) ── */
 &lt;&lt;set _firstActive to _tLen&gt;&gt;
 &lt;&lt;set _lastActive to 0&gt;&gt;
 &lt;&lt;for _i to 0; _i lt _tLen; _i++&gt;&gt;
-&lt;&lt;set _total to _parishPct[_i] + _rolePct[_i] + _decPct[_i]&gt;&gt;
+&lt;&lt;set _total to _fullParishPct[_i] + _rolePct[_i] + _decPct[_i]&gt;&gt;
 &lt;&lt;if _total gt 0&gt;&gt;
 &lt;&lt;if _i lt _firstActive&gt;&gt;&lt;&lt;set _firstActive to _i&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if _i gt _lastActive&gt;&gt;&lt;&lt;set _lastActive to _i&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -6497,9 +6531,9 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 &lt;&lt;set _dH to (_decPct[_i] / _chartMax) * 200&gt;&gt;
 &lt;&lt;set _barW to &quot;calc((100% - &quot; + (_visCount * 2) + &quot;px) / &quot; + _visCount + &quot;)&quot;&gt;&gt;
 &lt;div style=&quot;flex: 1; display: flex; flex-direction: column; justify-content: flex-end; min-width: 0;&quot;&gt;
-&lt;&lt;if _decPct[_i] gt 0&gt;&gt;&lt;div @title=&quot;_shortLabels[_i] + &#39; decisions: &#39; + _decPct[_i] + &#39;%&#39;&quot; @style=&quot;&#39;height: &#39; + _dH + &#39;px; background: #DAA520; min-height: 1px;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if _rolePct[_i] gt 0&gt;&gt;&lt;div @title=&quot;_shortLabels[_i] + &#39; role: &#39; + _rolePct[_i] + &#39;%&#39;&quot; @style=&quot;&#39;height: &#39; + _rH + &#39;px; background: #B22222; min-height: 1px;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if _parishPct[_i] gt 0&gt;&gt;&lt;div @title=&quot;_shortLabels[_i] + &#39; parish: &#39; + (Math.round(_parishPct[_i] * 10) / 10) + &#39;%&#39;&quot; @style=&quot;&#39;height: &#39; + _pH + &#39;px; background: #8B7355; min-height: 1px;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;else&gt;&gt;&lt;div style=&quot;height: 0;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _decPct[_i] gt 0&gt;&gt;&lt;div @title=&quot;_shortLabels[_i] + &#39; decisions: &#39; + _decPct[_i] + &#39;%&#39;&quot; @style=&quot;&#39;height: &#39; + _dH + &#39;px; background: #e41a1c; min-height: 1px;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _rolePct[_i] gt 0&gt;&gt;&lt;div @title=&quot;_shortLabels[_i] + &#39; role: &#39; + _rolePct[_i] + &#39;%&#39;&quot; @style=&quot;&#39;height: &#39; + _rH + &#39;px; background: #ff7f00; min-height: 1px;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _parishPct[_i] gt 0&gt;&gt;&lt;div @title=&quot;_shortLabels[_i] + &#39; parish: &#39; + (Math.round(_parishPct[_i] * 10) / 10) + &#39;%&#39;&quot; @style=&quot;&#39;height: &#39; + _pH + &#39;px; background: #a65628; min-height: 1px;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;else&gt;&gt;&lt;div style=&quot;height: 0;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
 &lt;/div&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;/div&gt;
@@ -6514,9 +6548,9 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 
 /* ── Legend ── */
 &lt;div style=&quot;display: flex; gap: 12px; margin-top: 12px; margin-left: 40px; flex-wrap: wrap; font-size: 0.85em;&quot;&gt;
-&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #8B7355; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Living in $parish&lt;/div&gt;
-&lt;&lt;if _hasRole&gt;&gt;&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #B22222; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Your role as $role&lt;/div&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if _hasDec&gt;&gt;&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #DAA520; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Your other decisions&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #a65628; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Living in $parish&lt;/div&gt;
+&lt;&lt;if _hasRole&gt;&gt;&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #ff7f00; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Your role as $role&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _hasDec&gt;&gt;&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #e41a1c; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Your other decisions&lt;/div&gt;&lt;&lt;/if&gt;&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 
@@ -6525,9 +6559,9 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 
 &lt;div style=&quot;width: 100%; max-width: 600px; margin: 0 auto;&quot;&gt;
 &lt;div style=&quot;position: relative; height: 32px; background: #333; border: 1px solid #555; border-radius: 4px; overflow: hidden;&quot;&gt;
-&lt;&lt;if _cumParish gt 0&gt;&gt;&lt;div @title=&quot;&#39;Parish risk: &#39; + _cumParish + &#39;%&#39;&quot; @style=&quot;&#39;display: inline-block; height: 100%; width: &#39; + _cumParish + &#39;%; background: #8B7355; float: left;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if _cumRole gt 0&gt;&gt;&lt;div @title=&quot;&#39;Role risk: +&#39; + _cumRole + &#39;%&#39;&quot; @style=&quot;&#39;display: inline-block; height: 100%; width: &#39; + _cumRole + &#39;%; background: #B22222; float: left;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if _cumDec gt 0&gt;&gt;&lt;div @title=&quot;&#39;Decision risk: +&#39; + _cumDec + &#39;%&#39;&quot; @style=&quot;&#39;display: inline-block; height: 100%; width: &#39; + _cumDec + &#39;%; background: #DAA520; float: left;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _cumParish gt 0&gt;&gt;&lt;div @title=&quot;&#39;Parish risk: &#39; + _cumParish + &#39;%&#39;&quot; @style=&quot;&#39;display: inline-block; height: 100%; width: &#39; + _cumParish + &#39;%; background: #a65628; float: left;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _cumRole gt 0&gt;&gt;&lt;div @title=&quot;&#39;Role risk: +&#39; + _cumRole + &#39;%&#39;&quot; @style=&quot;&#39;display: inline-block; height: 100%; width: &#39; + _cumRole + &#39;%; background: #ff7f00; float: left;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _cumDec gt 0&gt;&gt;&lt;div @title=&quot;&#39;Decision risk: +&#39; + _cumDec + &#39;%&#39;&quot; @style=&quot;&#39;display: inline-block; height: 100%; width: &#39; + _cumDec + &#39;%; background: #e41a1c; float: left;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
 &lt;/div&gt;
 
 /* ── Tick marks ── */
@@ -6541,13 +6575,13 @@ You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPC
 
 /* ── Breakdown text ── */
 &lt;div style=&quot;margin-top: 8px; font-size: 0.9em;&quot;&gt;
-&lt;span style=&quot;color: #8B7355;&quot;&gt;Parish: &lt;&lt;print _cumParish&gt;&gt;%&lt;/span&gt;
-&lt;&lt;if _cumRole gt 0&gt;&gt; + &lt;span style=&quot;color: #B22222;&quot;&gt;Role: &lt;&lt;print _cumRole&gt;&gt;%&lt;/span&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if _cumDec gt 0&gt;&gt; + &lt;span style=&quot;color: #DAA520;&quot;&gt;Decisions: &lt;&lt;print _cumDec&gt;&gt;%&lt;/span&gt;&lt;&lt;/if&gt;&gt;
+&lt;span style=&quot;color: #a65628;&quot;&gt;Parish: &lt;&lt;print _cumParish&gt;&gt;%&lt;/span&gt;
+&lt;&lt;if _cumRole gt 0&gt;&gt; + &lt;span style=&quot;color: #ff7f00;&quot;&gt;Role: &lt;&lt;print _cumRole&gt;&gt;%&lt;/span&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _cumDec gt 0&gt;&gt; + &lt;span style=&quot;color: #e41a1c;&quot;&gt;Decisions: &lt;&lt;print _cumDec&gt;&gt;%&lt;/span&gt;&lt;&lt;/if&gt;&gt;
  = &lt;b&gt;&lt;&lt;print _cumTotal&gt;&gt;%&lt;/b&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;i&gt;For comparison, the average resident of $parish faced a &lt;&lt;print _cumParish&gt;&gt;% cumulative chance of catching plague based on parish infection rates alone.&lt;&lt;if _cumRole + _cumDec gt 0&gt;&gt; Your role and decisions added &lt;&lt;print _cumRole + _cumDec&gt;&gt; percentage points of additional risk.&lt;&lt;/if&gt;&gt;&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;&lt;i&gt;For comparison, the average resident of $parish faced a &lt;&lt;print _cumFullParish&gt;&gt;% cumulative chance of catching plague based on parish infection rates alone.&lt;&lt;if _cumRole + _cumDec gt 0 and _fledReduction gt 0&gt;&gt; Your role and decisions added &lt;&lt;print _cumRole + _cumDec&gt;&gt; percentage points of additional risk, while fleeing removed &lt;&lt;print _fledReduction&gt;&gt; percentage points of your parish&#39;s base infection risk.&lt;&lt;elseif _cumRole + _cumDec gt 0&gt;&gt; Your role and decisions added &lt;&lt;print _cumRole + _cumDec&gt;&gt; percentage points of additional risk.&lt;&lt;elseif _fledReduction gt 0&gt;&gt; Fleeing removed &lt;&lt;print _fledReduction&gt;&gt; percentage points of your parish&#39;s base infection risk.&lt;&lt;/if&gt;&gt;&lt;/i&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
