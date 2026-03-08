@@ -137,6 +137,6 @@ This ensures Claude Code has sufficient output capacity for tasks involving larg
 
 ## Git Conventions
 
-- **Primary branch:** `master`
+- **Primary branch:** `main`
 - **Remote:** `origin`
 - The repository has a single initial commit. Keep commit messages descriptive of content changes (e.g., narrative updates, gameplay fixes).
