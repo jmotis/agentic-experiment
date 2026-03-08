@@ -80,6 +80,24 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
 - **Passage matching is by `pid`, not by `name`.** Passage names can change; `pid` is the stable identifier.
 - **Write plain text in passage files.** Passage files in `passages/` contain decoded plain text. Write SugarCube macros as `<<macro>>`, use normal `"` quotes, etc. `patch.js` handles re-encoding to HTML entities automatically.
 - After patching, `passages/` and `passage-index.json` are **transient artifacts** and should not be committed to the repository. Only the updated HTML file should be committed.
+- **Verify external URLs before committing.** If changing image sources, API endpoints, or external links, confirm each URL resolves successfully. For Wikimedia Commons thumbnail URLs, verify the source image dimensions support the requested width — requesting a thumbnail wider than the original produces a 404.
+
+## Impact Analysis (mandatory for state/logic changes)
+
+Before editing any passage that reads or writes a `$variable` or calls a `<<widget>>`:
+
+1. **Find all references.** Run `Grep(pattern="variableName", path="passages/")` after extracting. List every passage that reads, writes, or conditions on the variable.
+2. **Check widget callers.** If modifying a widget, find every passage that invokes it: `Grep(pattern="<<widgetName", path="passages/")`.
+3. **Verify guards.** If adding a condition or guard (e.g., `$relationship isnot "married"`), check whether the same guard is needed at other call sites. A widget may be called from multiple passages.
+4. **Document scope.** Before committing, state which passages were modified AND which were checked-but-not-modified (and why).
+
+## Pre-Commit Verification (mandatory before patching)
+
+1. **Closing-tag audit.** In every modified passage, count opening and closing tags for `<<if>>/<</if>>`, `<<for>>/<</for>>`, `<<link>>/<</link>>`, and `<<widget>>/<</widget>>`. They must match.
+2. **String-building trace.** For any loop that builds a display string (names, lists, descriptions), manually trace the output for 1 item, 2 items, and 3+ items. Verify separators (commas, "and") are concatenated into the string variable, not output as bare inline text.
+3. **Edge cases.** For conditional logic, verify behavior when: arrays are empty, variables are `undefined` or `0`, and boundary values are hit.
+4. **URL/resource check.** If modifying external URLs (images, links), verify each URL resolves before committing.
+5. **Scope completeness.** For visual or layout changes, search for ALL matching elements across the game (e.g., all portrait-oriented images), not just the one that prompted the task. Prefer one thorough commit over incremental fix-ups.
 
 ## Version Control (Game Title)
 
@@ -93,22 +111,29 @@ The game title includes a version number in the format **"Gaming the Great Plagu
 
 The version string is in the `<tw-storydata name="...">` attribute, **not** in passage content. Since `patch.js` only updates passage content (inner text of `<tw-passagedata>` elements), updating the version requires **direct editing of the HTML file**:
 
-1. Open `GamingtheGreatPlague.html` in a text editor.
+1. **Read the current version** from the HTML file before bumping:
+   ```
+   grep -oP 'name="Gaming the Great Plague 2026 v\K[^"]+' GamingtheGreatPlague.html
+   ```
+   Do NOT assume the version from the commit you branched from — a parallel branch may have been merged since then.
 2. Locate the `<tw-storydata>` opening tag (near the beginning of the file).
-3. Find the `name` attribute, which contains the full game title including version (e.g., `name="Gaming the Great Plague 2026 v1.1"`).
-4. Increment the minor version number by 1 (the number after the dot).
-5. Save the file.
-6. Include the new version number in your commit message (e.g., "Update X — bump to v1.2").
+3. Find the `name` attribute and increment the minor version number by 1 from whatever the current value is.
+4. Save the file.
+5. Include the new version number in your **commit subject line** (e.g., "Update X — bump to v1.2").
 
-### Important notes
+### Version numbering rules
 
 - Only increment the **minor** version (the number after the dot). Do not change the major version unless explicitly asked by the user.
 - If multiple passage edits are made in a single session, only bump the version **once** per commit, not once per passage edit.
 - **This is one of the rare exceptions** where direct HTML editing is necessary, since the `<tw-storydata>` attributes cannot be modified through the extract/patch workflow.
+- **Reverts must increment** to a new version — never reuse the reverted version number.
+- **Always include the version in the commit subject line**, not just the body. This ensures versions are visible in `git log --oneline`.
+- **Never skip version numbers.** If a branch has multiple commits that each bump the version, all intermediate versions must be sequential.
+- **Check for collisions before pushing.** If the version you're about to use already exists in `git log`, increment again.
 
-## SugarCube 2 Macro Reference Notes
+## SugarCube 2 Syntax Gotchas
 
-Known limitations and gotchas discovered during development:
+Known limitations and pitfalls discovered during development:
 
 - **No `<<while>>` macro.** SugarCube 2 does not have a `<<while>>` loop. Use a C-style `<<for>>` with only a condition instead:
   ```
@@ -118,6 +143,41 @@ Known limitations and gotchas discovered during development:
   <<for ; _usedNames.includes(_n); >><<set _n to weightedEither($fNames)>><</for>>
   ```
   The body executes as long as the condition is true; if the condition is false on first entry the body is skipped entirely, matching typical while-loop semantics.
+
+- **No `var`/`let`/`const` or named functions inside `<<set>>` or `<<run>>`.** SugarCube's expression parser does not support JavaScript declarations. Use anonymous functions assigned to temp variables:
+  ```
+  /* Wrong — named function inside <<run>> */
+  <<run $arr.sort(function mySort(a,b) { return a - b; })>>
+  /* Correct — anonymous function via <<set>>, then use in sort */
+  <<set _cmp to function(a,b) { return a - b; }>>
+  <<run $arr.sort(_cmp)>>
+  ```
+
+- **`<<print>>` does not work inside HTML attributes.** SugarCube does not process macros within HTML tag attributes — they render as literal text. Use `@` attribute directives instead:
+  ```
+  /* Wrong — <<print>> is literal text inside an attribute */
+  <div style="height: <<print _h>>px">
+  /* Correct — @ directive evaluates a JS expression */
+  <div @style="'height: ' + _h + 'px'">
+  ```
+
+- **Nested bracket indexing fails inline.** Expressions like `$NPCs[$otherArray[0]].name` produce `[object Object]` because SugarCube can't resolve the nested indexing in one pass. Extract the inner index first:
+  ```
+  /* Wrong */
+  $NPCs[_eligibleList[0]].name
+  /* Correct */
+  <<set _idx to _eligibleList[0]>>$NPCs[_idx].name
+  ```
+
+- **`||` treats 0 as falsy.** `_args[1] || 1` will default to 1 when the argument is legitimately 0. Use an explicit `undefined` check:
+  ```
+  /* Wrong — 0 becomes 1 */
+  <<set _offset to _args[1] || 1>>
+  /* Correct */
+  <<set _offset to (typeof _args[1] !== 'undefined') ? _args[1] : 1>>
+  ```
+
+- **Don't confuse `<</macro>>` with `</htmltag>`.** SugarCube macros close with `<</ >>`. HTML tags close with `</ >`. Writing `<</span>>` produces a macro-not-found error.
 
 ## Global Variables Reference
 
