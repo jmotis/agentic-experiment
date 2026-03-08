@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.41" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.42" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -5522,16 +5522,12 @@ While you remain in the city, you can take measures to protect yourself&lt;&lt;i
 &lt;&lt;set _cwPlague to $corpsePlague[$parish][$monthIndex]&gt;&gt;
 &lt;&lt;if _cwBuried gt 0&gt;&gt;
 &lt;&lt;set _cwPay to Math.min(_cwBuried, 60) * 2&gt;&gt;
-&lt;&lt;if $role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot;&gt;&gt;&lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;&lt;&lt;set _cwCrew to 2&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _cwCrew to random(4, 6)&gt;&gt;&lt;&lt;/if&gt;&gt;
-/* Triple crew during peak plague months Aug-Oct 1665 */
-&lt;&lt;if $monthIndex gte 5 and $monthIndex lte 7&gt;&gt;&lt;&lt;set _cwCrew to _cwCrew * 3&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;set _cwPay to Math.trunc(_cwPay / _cwCrew)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;set $money to Math.clamp($money + _cwPay, -Infinity, Infinity)&gt;&gt;
 /* Occupational infection: re-roll parish infection check (doubles effective chance) */
 &lt;&lt;set _cwRate to $parishRate[$parish][$monthIndex]&gt;&gt;
 &lt;&lt;set _cwInfectPct to Math.round(100 / _cwRate)&gt;&gt;
 &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;
-You and your fellow corpsebearer&lt;&lt;if _cwCrew gt 2&gt;&gt;s&lt;&lt;/if&gt;&gt; transported &lt;&lt;print _cwBuried&gt;&gt; corpses this month and you were paid &lt;&lt;print _cwPay&gt;&gt;d. by the churchwardens for your service to the parish.
+You and your fellow corpsebearers transported &lt;&lt;print _cwBuried&gt;&gt; corpses this month and you were paid &lt;&lt;print _cwPay&gt;&gt;d. by the churchwardens for your service to the parish.
 &lt;&lt;if _cwPlague gt 0&gt;&gt; &lt;&lt;print _cwPlague&gt;&gt; of the dead had plague, may the Lord have mercy on their souls and protect you from sickness.&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $playerPlagueStatus is &quot;healthy&quot; and _cwPlague gt 0&gt;&gt;
 &lt;&lt;if random(1, _cwRate) eq 1&gt;&gt;
@@ -5540,7 +5536,7 @@ You and your fellow corpsebearer&lt;&lt;if _cwCrew gt 2&gt;&gt;s&lt;&lt;/if&gt;&
 &lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Transported plague corpses&quot;, money: _cwPay, repDelta: 0, repBefore: $reputation, infectPct: _cwInfectPct})&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;
-You and your fellow searcher&lt;&lt;if _cwCrew gt 2&gt;&gt;s&lt;&lt;/if&gt;&gt; examined &lt;&lt;print _cwBuried&gt;&gt; corpses this month and you were paid &lt;&lt;print _cwPay&gt;&gt;d. by the churchwardens for your service to the parish.
+You and your fellow searchers examined &lt;&lt;print _cwBuried&gt;&gt; corpses this month and you were paid &lt;&lt;print _cwPay&gt;&gt;d. by the churchwardens for your service to the parish.
  You determined &lt;&lt;print _cwPlague&gt;&gt; of the dead had plague, may the Lord have mercy on their souls and protect you from sickness.
 &lt;&lt;if $playerPlagueStatus is &quot;healthy&quot; and _cwPlague gt 0&gt;&gt;
 &lt;&lt;if random(1, _cwRate) eq 1&gt;&gt;
