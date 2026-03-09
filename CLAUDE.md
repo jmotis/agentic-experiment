@@ -178,7 +178,60 @@ Known limitations and pitfalls discovered during development:
   <<set _offset to (typeof _args[1] !== 'undefined') ? _args[1] : 1>>
   ```
 
+- **Don't reverse-engineer pre-clamp values with arithmetic.** After `<<set $reputation to Math.clamp($reputation - 2, 0, 10)>>`, writing `repBefore: $reputation + 2` assumes the clamp didn't fire. If `$reputation` was 0 before and stayed 0, the expression evaluates to 2 — a value it never was. Always capture the value *before* mutation with `<<set _repBefore to $reputation>>` or use the `<<record-decision>>` widget. See the "Recording Decisions" section for details.
+
 - **Don't confuse `<</macro>>` with `</htmltag>`.** SugarCube macros close with `<</ >>`. HTML tags close with `</ >`. Writing `<</span>>` produces a macro-not-found error.
+
+## Recording Decisions (`$decisions.push`)
+
+Every player decision is recorded via `$decisions.push({text, money, repDelta, repBefore, infectPct})`. The `repBefore` field must capture `$reputation` **before** any mutation in that decision block. Three patterns exist; only the first two are correct.
+
+### Preferred: `<<record-decision>>` widget (pid 114)
+
+Use this in `<<link>>`, `<<replace>>`, `<<linkreplace>>`, and `<<set>>` blocks — anywhere a widget call is valid. The widget captures `$reputation`, applies the reputation change via `Math.clamp(0, 10)`, and pushes the decision record with the true `repBefore` and actual clamped `repDelta`.
+
+```
+/* Widget signature */
+<<record-decision text moneyRecord repChange infectPct>>
+
+/* Example — reputation decreases by 1 */
+<<record-decision "May 1666: Declined to celebrate" 0 -1>>
+
+/* Example — with infection percentage */
+<<record-decision "Aug 1666: Celebrated in the streets" 0 1 _riskPct>>
+```
+
+- `text` — decision description string
+- `moneyRecord` — money amount to record (does **not** modify `$money`)
+- `repChange` — intended reputation change (widget applies it)
+- `infectPct` — infection percentage (optional, defaults to `null`)
+
+### Fallback: `_repBefore` temp variable
+
+Use this **only** in `[[link->target][$decisions.push(...)]]` inline setter syntax, where widgets cannot be called.
+
+```
+/* Correct — capture before mutation */
+[[refuse the job->Stay][_repBefore to $reputation; $reputation to Math.clamp($reputation - 1, 0, 10); $decisions.push({text: "Refused the job", money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})]]
+```
+
+### Forbidden: arithmetic reconstruction
+
+**Never** reverse-engineer `repBefore` from `$reputation` after mutation. This breaks when `Math.clamp` actually clamps (e.g., rep was 0, stayed 0, but `$reputation + 2` records 2).
+
+```
+/* WRONG — breaks at clamp boundaries */
+<<set $reputation to Math.clamp($reputation - 2, 0, 10)>>
+<<set $decisions.push({..., repBefore: $reputation + 2, ...})>>
+```
+
+### Decision-recording checklist (for code review)
+
+When reviewing or writing `$decisions.push()` calls:
+
+1. **Is `repBefore` the pre-mutation value?** If `$reputation` is mutated anywhere before the push in the same block, `repBefore: $reputation` captures the wrong (post-mutation) value.
+2. **Is `repDelta` the actual delta, not the intended delta?** Use `$reputation - _repBefore` or let the widget compute it. A hardcoded `repDelta: -2` is wrong if clamping reduced the actual change.
+3. **Could the widget be used instead?** If the push is inside a `<<link>>`, `<<replace>>`, or `<<set>>` block (not an inline `[[...]]` setter), prefer `<<record-decision>>`.
 
 ## Global Variables Reference
 
