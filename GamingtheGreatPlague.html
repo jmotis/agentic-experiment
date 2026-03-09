@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.44" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.45" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1545,7 +1545,7 @@ Your neighbors shut up the entrances to your house and paint a red cross with th
       &lt;&lt;if (_remedyEffect is 0 and random(1,2) is 1) or (_remedyEffect is 1 and random(1,3) is 1)&gt;&gt; But nothing works. At least you will grow too delirious to notice how miserable you are in the hours before your [[death]].
       &lt;&lt;else&gt;&gt;&lt;&lt;set $playerPlagueStatus to &quot;recovered&quot;&gt;&gt; Miraculously, after a few days you feel your fever break and your &lt;&lt;defBuboes &quot;buboes&quot;&gt;&gt; begin to go down. Thanks be to God, you have survived the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;.
       &lt;br&gt;&lt;br&gt;
-      [[Too bad you and your household still have to be for the full 40 days, to make sure you don&#39;t spread the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; to anyone else.-&gt;Reconnecting]]
+      &lt;&lt;link &quot;Too bad you and your household still have to be for the full 40 days, to make sure you don&#39;t spread the plague to anyone else.&quot; &quot;Reconnecting&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;
       &lt;&lt;/if&gt;&gt;
       &lt;&lt;/switch&gt;&gt;&lt;&lt;if def $textGroup&gt;&gt;&lt;&lt;set $textGroup += 1&gt;&gt;&lt;&lt;/if&gt;&gt;
       &lt;&lt;set $quarantine +=1&gt;&gt;&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="7" name="july-1665-helper widget" tags="widget" position="875,500" size="100,100">&lt;&lt;widget &quot;july-1665-helper&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
@@ -1721,14 +1721,14 @@ Do you:&lt;ul&gt;
 &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;Your $masterTitle warns you to keep a sharp eye out to avoid &lt;&lt;if $gender is &quot;male&quot;&gt;&gt;being &lt;&lt;defImpressed &quot;impressed&quot;&gt;&gt; into the Navy yourself. 
 &lt;br&gt;&lt;br&gt;Are you:
 &lt;ul&gt;
-&lt;li&gt;[[careful to heed &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; warning-&gt;May 1665]]&lt;/li&gt;
+&lt;&lt;set _pronoun to ($masterGender is &quot;female&quot;) ? &quot;her&quot; : &quot;his&quot;&gt;&gt;&lt;li&gt;&lt;&lt;link `&quot;careful to heed &quot; + _pronoun + &quot; warning&quot;` &quot;May 1665&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;if random(1,2) is 1&gt;&gt;[[not convinced it would be a worse life and spend as much of your—admittedly little—free time in the streets and alehouses as you did before|impressed][$impressed += 1]]&lt;&lt;else&gt;&gt;[[not convinced it would be a worse life and spend as much of your—admittedly little—free time in the streets and alehouses as you did before|May 1665][$reputation to Math.clamp($reputation - 1, 0, 10)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;else&gt;&gt;being harassed or mistaken for a woman of loose morals.
 &lt;br&gt;Do you:
 &lt;ul&gt;
-&lt;li&gt;[[agree with &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; warning-&gt;May 1665][$reputation to Math.clamp($reputation + 1, 0, 10)]]&lt;/li&gt;
-&lt;li&gt;[[think &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;she&#39;s&lt;&lt;else&gt;&gt;he&#39;s&lt;&lt;/if&gt;&gt; overreacting and spend as much of your—admittedly little—free time in the streets and alehouses as you did before-&gt;May 1665][$reputation to Math.clamp($reputation - 1, 0, 10)]]&lt;/li&gt;
+&lt;&lt;set _pronoun to ($masterGender is &quot;female&quot;) ? &quot;her&quot; : &quot;his&quot;&gt;&gt;&lt;li&gt;&lt;&lt;link `&quot;agree with &quot; + _pronoun + &quot; warning&quot;` &quot;May 1665&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;&lt;set _pronoun to ($masterGender is &quot;female&quot;) ? &quot;she&#39;s&quot; : &quot;he&#39;s&quot;&gt;&gt;&lt;li&gt;&lt;&lt;link `&quot;think &quot; + _pronoun + &quot; overreacting and spend as much of your—admittedly little—free time in the streets and alehouses as you did before&quot;` &quot;May 1665&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -4187,7 +4187,7 @@ You decide to:
             &lt;&lt;elseif $hoh is 4&gt;&gt;&lt;li&gt;[[convince your husband to flee London and return to your place of origin-&gt;Fled][$fled to 6; $money -= $income; $decisions.push({text: &quot;Convinced family to flee London&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
                 &lt;&lt;if $NPCs.length gt 0&gt;&gt;&lt;li&gt;[[remain in the city with your husband, but send the rest of your family back to your place of origin-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent family home but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
             &lt;&lt;else&gt;&gt;&lt;li&gt;[[try to convince your family to flee London and return to your place of origin-&gt;Fled][$fled to 6; $money -= $income; $decisions.push({text: &quot;Convinced family to flee London&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: null})]]&lt;/li&gt;
-                &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;li&gt;[[remain in the city with your &lt;&lt;print $caretakerLabel&gt;&gt;, but send the rest of your family back to your place of origin-&gt;Stay][$fled to 5; $money -= $income; $decisions.push({text: &quot;Sent family home but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0}); $plagueInfection to 0; _infectedFamily to 0]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+                &lt;&lt;if $hoh is 0 and $NPCs.length gt 0&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;li&gt;&lt;&lt;link `&quot;remain in the city with your &quot; + $caretakerLabel + &quot;, but send the rest of your family back to your place of origin&quot;` &quot;Stay&quot;&gt;&gt;&lt;&lt;set $fled to 5&gt;&gt;&lt;&lt;set $money -= $income&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Sent family home but stayed&quot;, money: -$income, repDelta: 0, repBefore: $reputation, infectPct: 0})&gt;&gt;&lt;&lt;set $plagueInfection to 0&gt;&gt;&lt;&lt;set _infectedFamily to 0&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
             &lt;&lt;/if&gt;&gt;
         &lt;&lt;/if&gt;&gt;
     &lt;/ul&gt;
