@@ -68,6 +68,43 @@ Widget calls (e.g., `<<defPlague "plague">>`) produce HTML elements like tooltip
 <<link "make sure you don't spread the plague to anyone" "Reconnecting">><</link>>
 ```
 
+## Widget `<<nobr>>` Requirements
+
+Every widget **must** wrap its entire content in `<<nobr>>...<</nobr>>`, and both the opening and closing tags must be on the **same line** as their corresponding `<<widget>>`/`<</widget>>` tags. Line breaks between these tags leak into the rendered HTML as stray `<br>` elements, causing unwanted vertical spacing.
+
+### Rules
+
+1. `<<nobr>>` must immediately follow the `<<widget>>` tag **on the same line**.
+2. `<</nobr>>` must immediately precede `<</widget>>` **on the same line**.
+3. No exceptions for "data-only" widgets — even `<<set>>` operations can produce invisible `<br>` tags that affect layout in some contexts.
+
+### Why this matters
+
+SugarCube converts newlines to `<br>` tags outside of `<<nobr>>` blocks. A newline between `<<widget>>` and `<<nobr>>` (or between `<</nobr>>` and `<</widget>>`) falls outside the nobr block and renders as a `<br>`. When a widget is called inside a passage, these stray `<br>` tags appear in the page — often as mysterious extra spacing between the header and passage text.
+
+**Wrong — line break between widget and nobr at opening:**
+```
+<<widget "my-widget">>
+<<nobr>>
+...content...
+<</nobr>><</widget>>
+```
+
+**Wrong — line break between nobr and widget at closing:**
+```
+<<widget "my-widget">><<nobr>>
+...content...
+<</nobr>>
+<</widget>>
+```
+
+**Correct — both on the same line:**
+```
+<<widget "my-widget">><<nobr>>
+...content...
+<</nobr>><</widget>>
+```
+
 ### Quick reference
 
 | Technique | Works in `[[ ]]`? | Works in `<<link>>`? |
