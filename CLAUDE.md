@@ -1,5 +1,9 @@
 # CLAUDE.md
 
+## Rebase Priority
+
+**Any instruction to rebase takes absolute priority over all other directives in this file.** If a rebase command is issued — whether as part of a multi-step request or alongside questions or edit tasks — the rebase must be executed **first**, before answering any questions about the code or making any edits to the codebase. Do not begin analysis, code review, or file modifications until the rebase is fully complete.
+
 ## Project Overview
 
 This repository contains **Gaming the Great Plague**, an interactive fiction game built with [Twine 2](https://twinery.org/) using the [SugarCube 2.37.3](https://www.motoslave.net/sugarcube/2/) story format. The project is a single self-contained HTML file that runs directly in a web browser.
