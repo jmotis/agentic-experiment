@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.55" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.56" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -2133,22 +2133,23 @@ a proper funeral.&lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;NPCpronouns&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-  &lt;&lt;for _i = 0; _i &lt; $NPCs.length; _i++&gt;&gt;
-    &lt;&lt;if $NPCs[_i].relationship is &quot;niece&quot; or $NPCs[_i].relationship is &quot;daughter&quot; or $NPCs[_i].relationship is &quot;sister&quot; or $NPCs[_i].relationship is &quot;mother&quot; or $NPCs[_i].relationship is &quot;step-mother&quot; or $NPCs[_i].relationship is &quot;wife&quot; or $NPCs[_i].relationship is &quot;aunt&quot; or $NPCs[_i].relationship is &quot;widowed aunt&quot; or $NPCs[_i].relationship is &quot;mistress&quot; or $NPCs[_i].relationship is &quot;master&#39;s mother&quot; or $NPCs[_i].relationship is &quot;master&#39;s daughter&quot; or $NPCs[_i].relationship is &quot;master&#39;s granddaughter&quot; or $NPCs[_i].relationship is &quot;master&#39;s sister&quot; or $NPCs[_i].relationship is &quot;female servant&quot; or $NPCs[_i].relationship is &quot;female lodger&quot; or $NPCs[_i].relationship is &quot;lodger&#39;s wife&quot; or $NPCs[_i].relationship is &quot;lodger&#39;s daughter&quot; or $NPCs[_i].relationship is &quot;cousin&#39;s wife&quot; or $NPCs[_i].relationship is &quot;guardian&#39;s wife&quot; or $NPCs[_i].relationship is &quot;friend&#39;s daughter&quot; or $NPCs[_i].relationship is &quot;cousin&#39;s daughter&quot; or $NPCs[_i].relationship is &quot;landlord&#39;s wife&quot; or $NPCs[_i].relationship is &quot;landlord&#39;s mother&quot; or $NPCs[_i].relationship is &quot;landlord&#39;s daughter&quot;&gt;&gt;
-      &lt;&lt;set $NPCs[_i].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;she&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].gender to &quot;female&quot;&gt;&gt;
-    &lt;&lt;elseif $NPCs[_i].relationship is &quot;nephew&quot; or $NPCs[_i].relationship is &quot;son&quot; or $NPCs[_i].relationship is &quot;brother&quot; or $NPCs[_i].relationship is &quot;father&quot; or $NPCs[_i].relationship is &quot;step-father&quot; or $NPCs[_i].relationship is &quot;husband&quot; or $NPCs[_i].relationship is &quot;uncle&quot; or $NPCs[_i].relationship is &quot;guardian&quot; or $NPCs[_i].relationship is &quot;apprentice&quot; or $NPCs[_i].relationship is &quot;master&#39;s son&quot; or $NPCs[_i].relationship is &quot;master&#39;s father&quot; or $NPCs[_i].relationship is &quot;master&#39;s grandson&quot; or $NPCs[_i].relationship is &quot;master&#39;s brother&quot; or $NPCs[_i].relationship is &quot;male servant&quot; or $NPCs[_i].relationship is &quot;male lodger&quot; or $NPCs[_i].relationship is &quot;lodger&#39;s son&quot; or $NPCs[_i].relationship is &quot;friend&#39;s son&quot; or $NPCs[_i].relationship is &quot;cousin&#39;s son&quot; or $NPCs[_i].relationship is &quot;cousin&quot; or $NPCs[_i].relationship is &quot;landlord&quot; or $NPCs[_i].relationship is &quot;landlord&#39;s son&quot;&gt;&gt;
-      &lt;&lt;set $NPCs[_i].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;he&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].gender to &quot;male&quot;&gt;&gt;
-      &lt;&lt;else&gt;&gt;&lt;&lt;if !$NPCs[_i].heshe&gt;&gt;&lt;&lt;set $NPCs[_i].hishers to &quot;their&quot;&gt;&gt;&lt;&lt;set $NPCs[_i].heshe to &quot;they&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set _femSuffix to [&quot;daughter&quot;, &quot;mother&quot;, &quot;sister&quot;, &quot;wife&quot;, &quot;niece&quot;, &quot;aunt&quot;, &quot;mistress&quot;]&gt;&gt;
+&lt;&lt;set _maleSuffix to [&quot;son&quot;, &quot;father&quot;, &quot;brother&quot;, &quot;husband&quot;, &quot;nephew&quot;, &quot;uncle&quot;, &quot;apprentice&quot;, &quot;guardian&quot;, &quot;cousin&quot;, &quot;landlord&quot;]&gt;&gt;
+&lt;&lt;set _endsFem to function(r) { return _femSuffix.some(function(s) { return r.endsWith(s); }); }&gt;&gt;
+&lt;&lt;set _endsMale to function(r) { return _maleSuffix.some(function(s) { return r.endsWith(s); }); }&gt;&gt;
+&lt;&lt;set _allArrays to [$NPCs, $NPCsExtended]&gt;&gt;
+&lt;&lt;for _a = 0; _a &lt; _allArrays.length; _a++&gt;&gt;
+  &lt;&lt;for _i = 0; _i &lt; _allArrays[_a].length; _i++&gt;&gt;
+    &lt;&lt;set _npc to _allArrays[_a][_i]&gt;&gt;
+    &lt;&lt;set _rel to _npc.relationship&gt;&gt;
+    &lt;&lt;if _endsFem(_rel) or _rel.startsWith(&quot;female&quot;)&gt;&gt;
+      &lt;&lt;set _npc.hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set _npc.heshe to &quot;she&quot;&gt;&gt;&lt;&lt;set _npc.gender to &quot;female&quot;&gt;&gt;
+    &lt;&lt;elseif _endsMale(_rel) or _rel.startsWith(&quot;male&quot;)&gt;&gt;
+      &lt;&lt;set _npc.hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set _npc.heshe to &quot;he&quot;&gt;&gt;&lt;&lt;set _npc.gender to &quot;male&quot;&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+      &lt;&lt;if !_npc.heshe&gt;&gt;&lt;&lt;set _npc.hishers to &quot;their&quot;&gt;&gt;&lt;&lt;set _npc.heshe to &quot;they&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
-
-&lt;&lt;for _e = 0; _e &lt; $NPCsExtended.length; _e++&gt;&gt;
-  &lt;&lt;if $NPCsExtended[_e].relationship is &quot;sister&quot; or $NPCsExtended[_e].relationship is &quot;niece&quot; or $NPCsExtended[_e].relationship is &quot;mother&quot; or $NPCsExtended[_e].relationship is &quot;daughter&quot; or $NPCsExtended[_e].relationship is &quot;step-mother&quot; or $NPCsExtended[_e].relationship is &quot;wife&quot; or $NPCsExtended[_e].relationship is &quot;aunt&quot; or $NPCsExtended[_e].relationship is &quot;widowed aunt&quot; or $NPCsExtended[_e].relationship is &quot;mistress&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s mother&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s daughter&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s granddaughter&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s sister&quot; or $NPCsExtended[_e].relationship is &quot;female servant&quot; or $NPCsExtended[_e].relationship is &quot;female lodger&quot; or $NPCsExtended[_e].relationship is &quot;lodger&#39;s wife&quot; or $NPCsExtended[_e].relationship is &quot;lodger&#39;s daughter&quot; or $NPCsExtended[_e].relationship is &quot;cousin&#39;s wife&quot; or $NPCsExtended[_e].relationship is &quot;guardian&#39;s wife&quot; or $NPCsExtended[_e].relationship is &quot;friend&#39;s daughter&quot; or $NPCsExtended[_e].relationship is &quot;cousin&#39;s daughter&quot;&gt;&gt;
-    &lt;&lt;set $NPCsExtended[_e].hishers to &quot;her&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;she&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].gender to &quot;female&quot;&gt;&gt;
-  &lt;&lt;elseif $NPCsExtended[_e].relationship is &quot;brother&quot; or $NPCsExtended[_e].relationship is &quot;nephew&quot; or $NPCsExtended[_e].relationship is &quot;father&quot; or $NPCsExtended[_e].relationship is &quot;son&quot; or $NPCsExtended[_e].relationship is &quot;step-father&quot; or $NPCsExtended[_e].relationship is &quot;husband&quot; or $NPCsExtended[_e].relationship is &quot;uncle&quot; or $NPCsExtended[_e].relationship is &quot;guardian&quot; or $NPCsExtended[_e].relationship is &quot;apprentice&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s son&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s father&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s grandson&quot; or $NPCsExtended[_e].relationship is &quot;master&#39;s brother&quot; or $NPCsExtended[_e].relationship is &quot;male servant&quot; or $NPCsExtended[_e].relationship is &quot;male lodger&quot; or $NPCsExtended[_e].relationship is &quot;lodger&#39;s son&quot; or $NPCsExtended[_e].relationship is &quot;friend&#39;s son&quot; or $NPCsExtended[_e].relationship is &quot;cousin&#39;s son&quot; or $NPCsExtended[_e].relationship is &quot;cousin&quot;&gt;&gt;
-    &lt;&lt;set $NPCsExtended[_e].hishers to &quot;his&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;he&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].gender to &quot;male&quot;&gt;&gt;
-    &lt;&lt;else&gt;&gt;&lt;&lt;if !$NPCsExtended[_e].heshe&gt;&gt;&lt;&lt;set $NPCsExtended[_e].hishers to &quot;their&quot;&gt;&gt;&lt;&lt;set $NPCsExtended[_e].heshe to &quot;they&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-	&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
