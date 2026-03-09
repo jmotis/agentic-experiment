@@ -70,12 +70,17 @@ Widget calls (e.g., `<<defPlague "plague">>`) produce HTML elements like tooltip
 
 ## Widget `<<nobr>>` Requirements
 
-Every widget **must** wrap its entire content in `<<nobr>>...<</nobr>>`, and both the opening and closing tags must be on the **same line** as their corresponding `<<widget>>`/`<</widget>>` tags. Line breaks between these tags leak into the rendered HTML as stray `<br>` elements, causing unwanted vertical spacing.
+Every widget **must** wrap its entire content in `<<nobr>>...<</nobr>>` or `<<silently>>...<</silently>>`, and both the opening and closing tags must be on the **same line** as their corresponding `<<widget>>`/`<</widget>>` tags. Line breaks between these tags leak into the rendered HTML as stray `<br>` elements, causing unwanted vertical spacing.
+
+### `<<nobr>>` vs `<<silently>>`
+
+- **`<<nobr>>`** — Strips newlines (preventing `<br>` conversion) but **renders visible output**: text, HTML, macros like `<<print>>`, `<<link>>`, etc. Use this for widgets that produce content the player sees.
+- **`<<silently>>`** — Strips newlines **and suppresses all output**. Any text or HTML inside is discarded; only side effects (like `<<set>>`) take effect. Use this for widgets that only do computation (populating arrays, setting variables) and intentionally produce no visible output.
 
 ### Rules
 
-1. `<<nobr>>` must immediately follow the `<<widget>>` tag **on the same line**.
-2. `<</nobr>>` must immediately precede `<</widget>>` **on the same line**.
+1. `<<nobr>>` (or `<<silently>>`) must immediately follow the `<<widget>>` tag **on the same line**.
+2. `<</nobr>>` (or `<</silently>>`) must immediately precede `<</widget>>` **on the same line**.
 3. No exceptions for "data-only" widgets — even `<<set>>` operations can produce invisible `<br>` tags that affect layout in some contexts.
 
 ### Why this matters
