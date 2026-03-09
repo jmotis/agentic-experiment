@@ -3042,25 +3042,10 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
             &lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;
         /* Check whether the player&#39;s authority figure is among the infected */
+              &lt;&lt;find-authority&gt;&gt;
         &lt;&lt;set _authoritySick to false&gt;&gt;
-        &lt;&lt;if $hoh is 0 or $hoh is 2&gt;&gt;
-            &lt;&lt;for _idx range _infectedFamily&gt;&gt;
-                &lt;&lt;if $NPCs[_idx].relationship is &quot;father&quot; or $NPCs[_idx].relationship is &quot;step-father&quot; or $NPCs[_idx].relationship is &quot;mother&quot; or $NPCs[_idx].relationship is &quot;step-mother&quot; or $NPCs[_idx].relationship is &quot;uncle&quot; or $NPCs[_idx].relationship is &quot;aunt&quot; or $NPCs[_idx].relationship is &quot;widowed aunt&quot; or $NPCs[_idx].relationship is &quot;guardian&quot; or $NPCs[_idx].relationship is &quot;guardian&#39;s wife&quot; or $NPCs[_idx].relationship is &quot;cousin&quot; or $NPCs[_idx].relationship is &quot;cousin&#39;s wife&quot;&gt;&gt;
-                    &lt;&lt;set _authoritySick to true&gt;&gt;
-                &lt;&lt;/if&gt;&gt;
-            &lt;&lt;/for&gt;&gt;
-        &lt;&lt;elseif $hoh is 3&gt;&gt;
-            &lt;&lt;for _idx range _infectedFamily&gt;&gt;
-                &lt;&lt;if $NPCs[_idx].relationship is &quot;master&quot; or $NPCs[_idx].relationship is &quot;mistress&quot;&gt;&gt;
-                    &lt;&lt;set _authoritySick to true&gt;&gt;
-                &lt;&lt;/if&gt;&gt;
-            &lt;&lt;/for&gt;&gt;
-        &lt;&lt;elseif $hoh is 4&gt;&gt;
-            &lt;&lt;for _idx range _infectedFamily&gt;&gt;
-                &lt;&lt;if $NPCs[_idx].relationship is &quot;husband&quot;&gt;&gt;
-                    &lt;&lt;set _authoritySick to true&gt;&gt;
-                &lt;&lt;/if&gt;&gt;
-            &lt;&lt;/for&gt;&gt;
+        &lt;&lt;if _authorityIdx gte 0 and $NPCs[_authorityIdx].health is &quot;infected&quot;&gt;&gt;
+            &lt;&lt;set _authoritySick to true&gt;&gt;
         &lt;&lt;/if&gt;&gt;&lt;&lt;/silently&gt;&gt;
         &lt;&lt;set _allInfected to []&gt;&gt;
         &lt;&lt;for _idx range _infectedFamily&gt;&gt;
@@ -3104,61 +3089,36 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
 &lt;&lt;sickFam&gt;&gt;
 &lt;&lt;else&gt;&gt;&lt;&lt;silently&gt;&gt;
 &lt;&lt;if $origin isnot &quot;London&quot;&gt;&gt;&lt;&lt;set $hhlocation to $origin&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $hhlocation to &quot;in the countryside&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-/* If the player is a child or adolescent, one adult NPC stays behind */
-&lt;&lt;if $hoh is 0&gt;&gt;
-    &lt;&lt;set _stayIdx to -1&gt;&gt;
-    /* Priority 1: father or step-father */
+/* Find the authority figure who stays behind */
+&lt;&lt;find-authority&gt;&gt;
+&lt;&lt;set _stayIdx to _authorityIdx&gt;&gt;
+/* hoh 2: adult living with parents — nobody stays (all family can flee together) */
+&lt;&lt;if $hoh is 2&gt;&gt;&lt;&lt;set _stayIdx to -1&gt;&gt;&lt;&lt;/if&gt;&gt;
+/* hoh 0: if no named authority found by priority, fall back to oldest living adult */
+&lt;&lt;if $hoh is 0 and _stayIdx is -1&gt;&gt;
+    &lt;&lt;set _bestAge to -1&gt;&gt;
     &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
-        &lt;&lt;if _stayIdx is -1 and ($NPCs[_fi].relationship is &quot;father&quot; or $NPCs[_fi].relationship is &quot;step-father&quot;)&gt;&gt;
+        &lt;&lt;if ($NPCs[_fi].age is &quot;young adult&quot; or $NPCs[_fi].age is &quot;middle-aged adult&quot; or $NPCs[_fi].age is &quot;elderly adult&quot;) and $NPCs[_fi].health isnot &quot;deceased&quot; and ($NPCs[_fi].agenum || 0) gt _bestAge&gt;&gt;
+            &lt;&lt;set _bestAge to ($NPCs[_fi].agenum || 0)&gt;&gt;
             &lt;&lt;set _stayIdx to _fi&gt;&gt;
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/for&gt;&gt;
-    /* Priority 2: mother or step-mother */
-    &lt;&lt;if _stayIdx is -1&gt;&gt;
-        &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
-            &lt;&lt;if $NPCs[_fi].relationship is &quot;mother&quot; or $NPCs[_fi].relationship is &quot;step-mother&quot;&gt;&gt;
-                &lt;&lt;set _stayIdx to _fi&gt;&gt;
-            &lt;&lt;/if&gt;&gt;
-        &lt;&lt;/for&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-    /* Priority 3: uncle, aunt, or guardian */
-    &lt;&lt;if _stayIdx is -1&gt;&gt;
-        &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
-            &lt;&lt;if _stayIdx is -1 and ($NPCs[_fi].relationship is &quot;uncle&quot; or $NPCs[_fi].relationship is &quot;aunt&quot; or $NPCs[_fi].relationship is &quot;widowed aunt&quot; or $NPCs[_fi].relationship is &quot;guardian&quot; or $NPCs[_fi].relationship is &quot;guardian&#39;s wife&quot; or $NPCs[_fi].relationship is &quot;cousin&quot; or $NPCs[_fi].relationship is &quot;cousin&#39;s wife&quot;)&gt;&gt;
-                &lt;&lt;set _stayIdx to _fi&gt;&gt;
-            &lt;&lt;/if&gt;&gt;
-        &lt;&lt;/for&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-    /* Priority 4: master or mistress */
-    &lt;&lt;if _stayIdx is -1&gt;&gt;
-        &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
-            &lt;&lt;if $NPCs[_fi].relationship is &quot;master&quot; or $NPCs[_fi].relationship is &quot;mistress&quot;&gt;&gt;
-                &lt;&lt;set _stayIdx to _fi&gt;&gt;
-            &lt;&lt;/if&gt;&gt;
-        &lt;&lt;/for&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-    /* Priority 5: oldest adult by agenum */
-    &lt;&lt;if _stayIdx is -1&gt;&gt;
-        &lt;&lt;set _bestAge to -1&gt;&gt;
-        &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
-            &lt;&lt;if ($NPCs[_fi].age is &quot;young adult&quot; or $NPCs[_fi].age is &quot;middle-aged adult&quot; or $NPCs[_fi].age is &quot;elderly adult&quot;) and ($NPCs[_fi].agenum || 0) gt _bestAge&gt;&gt;
-                &lt;&lt;set _bestAge to ($NPCs[_fi].agenum || 0)&gt;&gt;
-                &lt;&lt;set _stayIdx to _fi&gt;&gt;
-            &lt;&lt;/if&gt;&gt;
-        &lt;&lt;/for&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-    /* Move everyone except the staying adult to FledFamily */
-    &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
-        &lt;&lt;if _fi isnot _stayIdx&gt;&gt;
-            &lt;&lt;set $FledFamily.push($NPCs[_fi])&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-    &lt;&lt;if _stayIdx gte 0&gt;&gt;
-        &lt;&lt;set $NPCs to [$NPCs[_stayIdx]]&gt;&gt;
-    &lt;&lt;else&gt;&gt;
-        &lt;&lt;set $NPCs to []&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+/* Move everyone except the stay-behind to FledFamily */
+&lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
+    &lt;&lt;if _fi isnot _stayIdx&gt;&gt;
+        &lt;&lt;set $FledFamily.push($NPCs[_fi])&gt;&gt;
     &lt;&lt;/if&gt;&gt;
     /* If the child has servants, keep the oldest one */
+	&lt;&lt;/for&gt;&gt;
+&lt;&lt;if _stayIdx gte 0&gt;&gt;
+    &lt;&lt;set $NPCs to [$NPCs[_stayIdx]]&gt;&gt;
+&lt;&lt;else&gt;&gt;
+    &lt;&lt;set $NPCs to []&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+/* Servant handling */
+&lt;&lt;if $hoh is 0&gt;&gt;
+    /* Child PC: keep oldest servant, move rest to FledServants */
     &lt;&lt;if $NPCsServants.length gt 0&gt;&gt;
         &lt;&lt;for _fs = 1; _fs &lt; $NPCsServants.length; _fs++&gt;&gt;
             &lt;&lt;set $FledServants.push($NPCsServants[_fs])&gt;&gt;
@@ -3166,32 +3126,6 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
         &lt;&lt;set $NPCsServants to $NPCsServants.slice(0, 1)&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;
-    /* For hoh 3 (servant in master&#39;s hh) or hoh 4 (coverture), keep the authority figure */
-    &lt;&lt;set _stayIdx to -1&gt;&gt;
-    &lt;&lt;if $hoh is 3&gt;&gt;
-        &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
-            &lt;&lt;if _stayIdx is -1 and ($NPCs[_fi].relationship is &quot;master&quot; or $NPCs[_fi].relationship is &quot;mistress&quot;)&gt;&gt;
-                &lt;&lt;set _stayIdx to _fi&gt;&gt;
-            &lt;&lt;/if&gt;&gt;
-        &lt;&lt;/for&gt;&gt;
-    &lt;&lt;elseif $hoh is 4&gt;&gt;
-        &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
-            &lt;&lt;if _stayIdx is -1 and $NPCs[_fi].relationship is &quot;husband&quot;&gt;&gt;
-                &lt;&lt;set _stayIdx to _fi&gt;&gt;
-            &lt;&lt;/if&gt;&gt;
-        &lt;&lt;/for&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-    /* Move NPCs to FledFamily, keeping any designated stay-behind */
-    &lt;&lt;for _fi = 0; _fi &lt; $NPCs.length; _fi++&gt;&gt;
-        &lt;&lt;if _fi isnot _stayIdx&gt;&gt;
-            &lt;&lt;set $FledFamily.push($NPCs[_fi])&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-    &lt;&lt;if _stayIdx gte 0&gt;&gt;
-        &lt;&lt;set $NPCs to [$NPCs[_stayIdx]]&gt;&gt;
-    &lt;&lt;else&gt;&gt;
-        &lt;&lt;set $NPCs to []&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
     /* For nobles/merchants/artisans, keep 1-2 servants while the rest flee with the family */
     &lt;&lt;if ($socio is &quot;nobles&quot; or $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;) and $NPCsServants.length gt 0&gt;&gt;
         &lt;&lt;set _keepCount to random(1,2)&gt;&gt;
@@ -3273,26 +3207,18 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
 /* Check whether the player&#39;s authority figure is sick */
 &lt;&lt;set _authoritySick to false&gt;&gt;
 &lt;&lt;if $hoh is 3&gt;&gt;
-    /* For servants, the master/mistress is in $NPCsMaster — check if they are among the infected */
+    /* For servants with hoh 3, the master/mistress lives in $NPCs — check if they are among the infected */
     &lt;&lt;for _idx range _infectedMaster&gt;&gt;
-        &lt;&lt;if $NPCsMaster[_idx].relationship is &quot;master&quot; or $NPCsMaster[_idx].relationship is &quot;mistress&quot;&gt;&gt;
+        &lt;&lt;if $NPCs[_idx].relationship is &quot;master&quot; or $NPCs[_idx].relationship is &quot;mistress&quot;&gt;&gt;
             &lt;&lt;set _authoritySick to true&gt;&gt;
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/for&gt;&gt;
-&lt;&lt;elseif $hoh is 0 or $hoh is 2&gt;&gt;
-    /* For children/those living with parents, check if the parent or guardian in $NPCs is currently infected */
-    &lt;&lt;for _npc range $NPCs&gt;&gt;
-        &lt;&lt;if _npc.health is &quot;infected&quot; and ($gender is &quot;male&quot; and (_npc.relationship is &quot;father&quot; or _npc.relationship is &quot;step-father&quot;) or $gender isnot &quot;male&quot; and (_npc.relationship is &quot;father&quot; or _npc.relationship is &quot;step-father&quot; or _npc.relationship is &quot;mother&quot; or _npc.relationship is &quot;step-mother&quot;) or _npc.relationship is &quot;uncle&quot; or _npc.relationship is &quot;aunt&quot; or _npc.relationship is &quot;widowed aunt&quot; or _npc.relationship is &quot;guardian&quot; or _npc.relationship is &quot;guardian&#39;s wife&quot; or _npc.relationship is &quot;cousin&quot; or _npc.relationship is &quot;cousin&#39;s wife&quot;)&gt;&gt;
-            &lt;&lt;set _authoritySick to true&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-&lt;&lt;elseif $hoh is 4&gt;&gt;
-    /* For married women, check if the husband in $NPCs is currently infected */
-    &lt;&lt;for _npc range $NPCs&gt;&gt;
-        &lt;&lt;if _npc.health is &quot;infected&quot; and _npc.relationship is &quot;husband&quot;&gt;&gt;
-            &lt;&lt;set _authoritySick to true&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
+&lt;&lt;else&gt;&gt;
+    /* For all other hoh values, the authority figure is in $NPCs */
+    &lt;&lt;find-authority&gt;&gt;
+    &lt;&lt;if _authorityIdx gte 0 and $NPCs[_authorityIdx].health is &quot;infected&quot;&gt;&gt;
+        &lt;&lt;set _authoritySick to true&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 &lt;span id=&quot;other-hh-choice&quot;&gt;
@@ -6467,6 +6393,58 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 &lt;&lt;/if&gt;&gt; /* end $randomEventCompleted guard */
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="114" name="Claude-widgets" tags="widget" position="25,1100" size="100,100">/* all widgets generated via Claude or other AI should be temporarily placed here then manually moved to new locations as needed */
 
+/* find-authority — sets _authorityIdx to the index in $NPCs of the PC&#39;s
+   authority figure (the living NPC with social/legal authority over the PC),
+   or -1 if none applies.
+
+   hoh 0/2: priority search — father/step-father &gt; mother/step-mother &gt;
+            uncle/aunt/widowed-aunt/guardian/guardian&#39;s-wife/cousin/cousin&#39;s-wife
+   hoh 3:   first living master or mistress in $NPCs
+   hoh 4:   first living husband in $NPCs
+   hoh 1:   always -1 (independent; no authority figure)
+
+   Skips NPCs whose health is &quot;deceased&quot; or &quot;deceased-pq&quot;.
+   Loop variable _fai is consumed and left in scope after the call. */
+&lt;&lt;widget &quot;find-authority&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;
+&lt;&lt;set _authorityIdx to -1&gt;&gt;
+&lt;&lt;if $hoh is 4&gt;&gt;
+  &lt;&lt;for _fai = 0; _fai &lt; $NPCs.length; _fai++&gt;&gt;
+    &lt;&lt;if _authorityIdx is -1 and $NPCs[_fai].relationship is &quot;husband&quot; and $NPCs[_fai].health isnot &quot;deceased&quot; and $NPCs[_fai].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;set _authorityIdx to _fai&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+&lt;&lt;elseif $hoh is 3&gt;&gt;
+  &lt;&lt;for _fai = 0; _fai &lt; $NPCs.length; _fai++&gt;&gt;
+    &lt;&lt;if _authorityIdx is -1 and ($NPCs[_fai].relationship is &quot;master&quot; or $NPCs[_fai].relationship is &quot;mistress&quot;) and $NPCs[_fai].health isnot &quot;deceased&quot; and $NPCs[_fai].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;set _authorityIdx to _fai&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+&lt;&lt;elseif $hoh is 0 or $hoh is 2&gt;&gt;
+  /* Priority 1: father or step-father */
+  &lt;&lt;for _fai = 0; _fai &lt; $NPCs.length; _fai++&gt;&gt;
+    &lt;&lt;if _authorityIdx is -1 and ($NPCs[_fai].relationship is &quot;father&quot; or $NPCs[_fai].relationship is &quot;step-father&quot;) and $NPCs[_fai].health isnot &quot;deceased&quot; and $NPCs[_fai].health isnot &quot;deceased-pq&quot;&gt;&gt;
+      &lt;&lt;set _authorityIdx to _fai&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+  /* Priority 2: mother or step-mother */
+  &lt;&lt;if _authorityIdx is -1&gt;&gt;
+    &lt;&lt;for _fai = 0; _fai &lt; $NPCs.length; _fai++&gt;&gt;
+      &lt;&lt;if _authorityIdx is -1 and ($NPCs[_fai].relationship is &quot;mother&quot; or $NPCs[_fai].relationship is &quot;step-mother&quot;) and $NPCs[_fai].health isnot &quot;deceased&quot; and $NPCs[_fai].health isnot &quot;deceased-pq&quot;&gt;&gt;
+        &lt;&lt;set _authorityIdx to _fai&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+  /* Priority 3: uncle, aunt, or guardian/cousin group */
+  &lt;&lt;if _authorityIdx is -1&gt;&gt;
+    &lt;&lt;for _fai = 0; _fai &lt; $NPCs.length; _fai++&gt;&gt;
+      &lt;&lt;if _authorityIdx is -1 and ($NPCs[_fai].relationship is &quot;uncle&quot; or $NPCs[_fai].relationship is &quot;aunt&quot; or $NPCs[_fai].relationship is &quot;widowed aunt&quot; or $NPCs[_fai].relationship is &quot;guardian&quot; or $NPCs[_fai].relationship is &quot;guardian&#39;s wife&quot; or $NPCs[_fai].relationship is &quot;cousin&quot; or $NPCs[_fai].relationship is &quot;cousin&#39;s wife&quot;) and $NPCs[_fai].health isnot &quot;deceased&quot; and $NPCs[_fai].health isnot &quot;deceased-pq&quot;&gt;&gt;
+        &lt;&lt;set _authorityIdx to _fai&gt;&gt;
+      &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;
+	
 /* preferment-offer — fires when a noble seeking preferment at court receives
    an offer for a position. The player can accept (paying 2400 gratuity + 2400
    purchase price = 4800 total) or decline and keep searching.
@@ -7619,35 +7597,9 @@ Do you wish to apprentice with a
 &lt;&lt;elseif $hoh is 4&gt;&gt;
   &lt;&lt;set $caretakerLabel to &quot;husband&quot;&gt;&gt;
 &lt;&lt;elseif $hoh is 0 or $hoh is 2&gt;&gt;
-  /* Priority 1: father or step-father */
-  &lt;&lt;for _ci to 0; _ci lt $NPCs.length; _ci++&gt;&gt;
-    &lt;&lt;if $caretakerLabel is &quot;&quot; and ($NPCs[_ci].relationship is &quot;father&quot; or $NPCs[_ci].relationship is &quot;step-father&quot;) and $NPCs[_ci].health isnot &quot;deceased&quot;&gt;&gt;
-      &lt;&lt;set $caretakerLabel to $NPCs[_ci].relationship&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-  &lt;&lt;/for&gt;&gt;
-  /* Priority 2: mother or step-mother */
-  &lt;&lt;if $caretakerLabel is &quot;&quot;&gt;&gt;
-    &lt;&lt;for _ci to 0; _ci lt $NPCs.length; _ci++&gt;&gt;
-      &lt;&lt;if $caretakerLabel is &quot;&quot; and ($NPCs[_ci].relationship is &quot;mother&quot; or $NPCs[_ci].relationship is &quot;step-mother&quot;) and $NPCs[_ci].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $caretakerLabel to $NPCs[_ci].relationship&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
-  /* Priority 3: uncle, aunt, or guardian */
-  &lt;&lt;if $caretakerLabel is &quot;&quot;&gt;&gt;
-    &lt;&lt;for _ci to 0; _ci lt $NPCs.length; _ci++&gt;&gt;
-      &lt;&lt;if $caretakerLabel is &quot;&quot; and ($NPCs[_ci].relationship is &quot;uncle&quot; or $NPCs[_ci].relationship is &quot;aunt&quot; or $NPCs[_ci].relationship is &quot;widowed aunt&quot; or $NPCs[_ci].relationship is &quot;guardian&quot; or $NPCs[_ci].relationship is &quot;guardian&#39;s wife&quot; or $NPCs[_ci].relationship is &quot;cousin&quot; or $NPCs[_ci].relationship is &quot;cousin&#39;s wife&quot;) and $NPCs[_ci].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $caretakerLabel to $NPCs[_ci].relationship&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
-  /* Priority 4: master or mistress */
-  &lt;&lt;if $caretakerLabel is &quot;&quot;&gt;&gt;
-    &lt;&lt;for _ci to 0; _ci lt $NPCs.length; _ci++&gt;&gt;
-      &lt;&lt;if $caretakerLabel is &quot;&quot; and ($NPCs[_ci].relationship is &quot;master&quot; or $NPCs[_ci].relationship is &quot;mistress&quot;) and $NPCs[_ci].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $caretakerLabel to $NPCs[_ci].relationship&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
+ &lt;&lt;find-authority&gt;&gt;
+  &lt;&lt;if _authorityIdx gte 0&gt;&gt;
+    &lt;&lt;set $caretakerLabel to $NPCs[_authorityIdx].relationship&gt;&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="125" name="sidebar NPCs" tags="widget menu" position="775,275" size="100,100">/* list NPCs in sidebar menu */
