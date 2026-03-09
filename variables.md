@@ -101,7 +101,7 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 ### `$hoh`
 - **Type:** Integer (head-of-household status flag)
 - **Possible values:** `0`, `1`, `2`, `3`, `4`
-  - `0` — **Child:** Player is under 16 (`$agenum lte 15`) and has no independent legal standing.
+  - `0` — **Child:** Player is under 16 (`$agenum lte 15`) and has no independent legal standing. Exception: child servants with a living master/mistress in `$NPCs` receive `$hoh = 3` instead (see below).
   - `1` — **Independent head of household:** Player is 16+ and runs their own household. Conditions:
     - Male, `$agenum gte 16`, no father or step-father in `$NPCs`, and either not a servant (`$socio isnot "servants"`) or a servant whose master/mistress lives in a separate household (`$NPCsMaster`).
     - Female, `$agenum gte 16`, no parent (mother, step-mother, father, step-father) or husband in `$NPCs`, and either not a servant or a servant whose master/mistress lives in a separate household.
@@ -109,13 +109,12 @@ This document lists all global (story) variables used in **Gaming the Great Plag
     - Male, `$agenum gte 16`, father or step-father present in `$NPCs`.
     - Female, `$agenum gte 16`, any parent (mother, step-mother, father, step-father) present in `$NPCs`.
     - *Note:* For males, only a father/step-father triggers this status because an adult man living with only his widowed mother is typically the head of that household. For females, any surviving parent in the household maintains parental authority.
-  - `3` — **Servant in master's household:** Player is 16+, `$socio is "servants"`, and lives in the same household as their master/mistress (master/mistress NPC is in `$NPCs`). Conditions:
-    - Male, `$agenum gte 16`, master or mistress present in `$NPCs`.
-    - Female, `$agenum gte 16`, master or mistress present in `$NPCs`.
+  - `3` — **Servant in master's household:** Player is a servant (`$socio is "servants"`) living in the same household as their master/mistress (master/mistress NPC is in `$NPCs`). This applies to both adults (`$agenum gte 16`) and children (`$agenum lt 16`) who have a living master/mistress. Conditions:
+    - Any gender, any age, master or mistress present and alive in `$NPCs`.
   - `4` — **Married woman (coverture):** Player is a married woman whose legal identity is subsumed under her husband's. Conditions:
     - Female, `$agenum gte 16`, `$relationship is "married"` or husband present in `$NPCs`.
 - **Initial value:** `0` (set in `StoryInit`, pid 10)
-- **Set by:** Evaluated during character generation (after household NPCs are placed) and reassessed whenever `$socio` or `$relationship` changes, or when a parent NPC in `$NPCs` dies. When multiple conditions overlap, later values take priority (evaluated in ascending order 1→2→3→4), so coverture (4) overrides servant status (3), which overrides parental household (2), which overrides independent (1).
+- **Set by:** Evaluated during character generation (after household NPCs are placed) and reassessed whenever `$socio` or `$relationship` changes, or when a parent NPC in `$NPCs` dies. For children (`$agenum lt 16`), defaults to `0` but overrides to `3` if a living master/mistress is present in `$NPCs`. For adults (`$agenum gte 16`), later values take priority (evaluated in ascending order 1→2→3→4), so coverture (4) overrides servant status (3), which overrides parental household (2), which overrides independent (1).
 - **Used for:** Determines whether the player makes household decisions independently or must convince family members. Also affects flee options, will-writing, and other household-level choices.
 - **Dependencies:** `$agenum`, `$gender`, `$socio`, `$relationship`, `$NPCs` (specifically the `relationship` field of NPC objects — checks for `"father"`, `"step-father"`, `"mother"`, `"step-mother"`, `"husband"`, `"master"`, `"mistress"`), `$NPCsMaster`
 
@@ -147,7 +146,7 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 ### `$income`
 - **Type:** Integer (monthly income in pence)
 - **Flat rates:** Artisans `800`, merchants `4000`, nobles `17600` — flat regardless of household size or composition.
-- **Per-person rates:** Servants: `60` (male adult) or `40` (female adult); living-with-master servants only count PC income. Day labourers: `180` (male adult) or `120` (female adult), `10` per child/adolescent. Beggars: `60` per adult, `20` per child/adolescent — no gender distinction.
+- **Per-person rates:** Servants: `60` (male adult) or `40` (female adult), `0` for child/adolescent; living-with-master servants only count PC income. Day labourers: `180` (male adult) or `120` (female adult), `10` per child/adolescent. Beggars: `60` per adult, `20` per child/adolescent — no gender distinction.
 - **Dependency:** Set based on `$socio`, `$age`, `$gender`, and (for servants/day labourers/beggars) living `$NPCs` ages/genders; changes if the player takes a plague worker role
 
 ### `$expenses`
@@ -155,7 +154,7 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Nobles:** `12000` per household + `240` per family member (including PC) + `60` per servant
 - **Merchants:** `2800` per household + `90` per family member (including PC) + `40` per servant
 - **Artisans:** `560` per household + `60` per family member (including PC) + `40` per servant
-- **Servants:** `20` per person in the household. Child/adolescent or living-with-master servants pay `20` (PC only).
+- **Servants:** `20` per person in the household. Living-with-master adult servants pay `20` (PC only). Child/adolescent servants living with master pay `0` (master covers expenses).
 - **Day labourers:** `60` per household + `20` per person in the household
 - **Beggars:** `40` per household + `20` per person in the household
 - **Dependency:** Set based on `$socio`, `$age`, `$hoh`, and living members of `$NPCs` and `$NPCsServants`

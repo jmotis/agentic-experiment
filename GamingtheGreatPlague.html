@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.49" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.50" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -7551,7 +7551,13 @@ Do you wish to apprentice with a
 &lt;&lt;orderNPCs &quot;$NPCs&quot;&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="124" name="hoh caretaker" tags="widget" position="275,1100" size="100,100">&lt;&lt;widget &quot;set-hoh&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $agenum lt 16&gt;&gt;
+  /* Default to child (0), but check for living master/mistress (3) */
   &lt;&lt;set $hoh to 0&gt;&gt;
+  &lt;&lt;for _shi to 0; _shi lt $NPCs.length; _shi++&gt;&gt;
+    &lt;&lt;if ($NPCs[_shi].relationship is &quot;master&quot; or $NPCs[_shi].relationship is &quot;mistress&quot;) and $NPCs[_shi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set $hoh to 3&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
 &lt;&lt;else&gt;&gt;
   &lt;&lt;set $hoh to 1&gt;&gt;
   /* Check for living with parents (hoh 2) */
