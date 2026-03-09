@@ -47,6 +47,7 @@ This project is authored in the **Twine editor**, not in a traditional code edit
 - **No linting, testing, or build commands** exist for this project.
 - **No `.gitignore`** is configured; be cautious about adding files that shouldn't be tracked.
 - The HTML file contains very long lines (up to ~32K characters) due to embedded minified JavaScript and story data. This is expected.
+- **Explore subagent model selection:** When using the Explore subagent on `.html` files (the game file or extracted passage files), configure it to use **Sonnet** — the game file's complexity requires stronger reasoning than Haiku provides. Haiku is acceptable for exploring `.md` files (e.g., `variables.md`, `README.md`, `CLAUDE.md`).
 
 ## Working with Twine Passage Content
 
