@@ -119,3 +119,161 @@ SugarCube converts newlines to `<br>` tags outside of `<<nobr>>` blocks. A newli
 | `<<if>>`/`<<else>>` | No | No (use ternary + backtick) |
 | `<<print>>` | No | No (use variable + backtick) |
 | Widget calls | No | Only in the link body, not the text argument |
+
+## Text Flow Control
+
+This game uses three techniques to control how text is revealed to the player within a single passage. Each technique keeps the player on the same passage and shows new content when they click a link or make a choice.
+
+### 1. `<<chunkText>>` macro (linear progression)
+
+Use `<<chunkText>>` when a passage needs to show a **fixed sequence of screens** one after another, like a wizard or tutorial. The player clicks "Next" to advance through each section in order, and the final section must navigate to another passage.
+
+`<<chunkText>>` is a custom macro (defined in the HTML file, not a SugarCube built-in). Under the hood it compiles into a `<<switch $textGroup>>` with auto-incrementing cases, so you don't have to manage `$textGroup` yourself.
+
+**Structure:**
+```
+<<chunkText>>
+First screen content.
+<<next>>
+Second screen content.
+<<next>>
+Third screen content.
+<<next "Continue" "NextPassage">>
+Final screen content.
+<</chunkText>>
+```
+
+**`<<next>>` arguments:**
+
+| Arguments | Behavior |
+|-----------|----------|
+| *(none)* | Shows a "Next" link that reloads the current passage (advances to next chunk) |
+| `"Link Text"` | Shows a link with custom text that reloads the current passage |
+| `"Link Text" "PassageName"` | Shows a link that navigates to another passage and unsets `$textGroup`. **Required on the final `<<next>>`** |
+| `".className"` | Wraps the link in a `<span>` with the given CSS class (combinable with other args) |
+
+**Rules:**
+- The **final** `<<next>>` must have both link text and a passage name — `<<chunkText>>` will throw an error otherwise.
+- All sections are linear; you cannot skip, branch, or exit early.
+- `<<silently>>` blocks within a section work normally — they only execute when that section's case is active.
+
+**Current usage:** character creation in `identity` (pid 4).
+
+### 2. Manual `$textGroup` / `<<switch>>` (branching progression)
+
+Use manual `$textGroup` when you need capabilities that `<<chunkText>>` cannot provide:
+
+- **Conditional branching** — different outcomes based on game state (e.g., player dies vs. recovers)
+- **Early exit** — ending the sequence before all cases are reached via `<<unset $textGroup>>`
+- **Variable-length sequences** — using `<<default>>` as a catch-all after the numbered cases
+- **Partial coverage** — applying `$textGroup` to only one code path in a passage while other paths use different techniques
+
+**Structure:**
+```
+<<if ndef $textGroup>><<set $textGroup = 1>><</if>>
+<<switch $textGroup>>
+  <<case 1>>
+    First screen content.
+    <<link "Continue" `passage()`>><</link>>
+  <<case 2>>
+    Second screen content.
+    <<link "Continue" `passage()`>><</link>>
+  <<default>>
+    <<unset $textGroup>>
+    <<if $someCondition>>
+      [[Good ending->GoodPassage]]
+    <<else>>
+      [[Bad ending->BadPassage]]
+    <</if>>
+<</switch>><<if def $textGroup>><<set $textGroup += 1>><</if>>
+```
+
+**Key details:**
+- Initialize with `<<if ndef $textGroup>><<set $textGroup = 1>><</if>>` at the top.
+- Increment with `<<if def $textGroup>><<set $textGroup += 1>><</if>>` at the bottom (after `<</switch>>`).
+- Use `<<unset $textGroup>>` before navigating away so the variable doesn't persist.
+- Links within cases use `` <<link "text" `passage()`>><</link>> `` to reload the current passage and advance to the next case.
+- `$textGroup` is a **global variable**, so only one passage at a time can use this mechanism. Always unset it before leaving.
+
+**Current usage:** `Sickness` (pid 6), `August-1665` (pid 18).
+
+### 3. `<<replace>>` / `<<append>>` (inline reveal)
+
+Use `<<replace>>` when the player makes a **one-time choice** and the result should appear in place without reloading the passage. This is best for binary choices or simple reveals where you don't need multi-step progression.
+
+**Structure:**
+```
+<span id="my-choice">
+  <<link "Option A">><<replace "#my-choice">>
+    You chose A. Here is what happens.
+  <</replace>><</link>>
+  |
+  <<link "Option B">><<replace "#my-choice">>
+    You chose B. Here is what happens.
+  <</replace>><</link>>
+</span>
+```
+
+**Key details:**
+- The `<span id="...">` element is replaced by the content inside `<<replace>>`, so the original links disappear after the player clicks.
+- Each `id` must be unique within the passage.
+- No global variable management is needed — this is purely DOM-based.
+- Can be freely mixed with other flow control techniques in the same passage.
+
+**Current usage:** widespread across monthly passages for inline choices (e.g., curfew decision in `August-1665`, spending choices in helper widgets).
+
+### 4. `<<linkappend>>` / `<<linkreplace>>` (self-contained inline reveal)
+
+These are SugarCube built-in macros that combine a link and an inline reveal into a single construct — no `<span id>` wrapper needed.
+
+#### `<<linkappend>>`
+
+The link text remains visible and the macro's content is **appended** after it when clicked. Use this for "read more" or "continue the narrative" moments.
+
+**Structure:**
+```
+<<linkappend "That is the last good day of the month, though.">>
+  The rest of the month's events unfold here...
+<</linkappend>>
+```
+
+After clicking, the player sees: *That is the last good day of the month, though. The rest of the month's events unfold here...*
+
+The link becomes plain text — it cannot be clicked again.
+
+**Current usage:** narrative continuations in `June-1665` (pid 17), `May-1665` (pid 16), `Quarantine-Continues` (pid 60).
+
+#### `<<linkreplace>>`
+
+The link text **disappears** and is replaced by the macro's content. Use this for choices where the link text itself should not persist (e.g., "accept a purgative drink" becomes a description of what happens).
+
+**Structure:**
+```
+<li><<linkreplace "accept a purgative drink">>
+  You are offered a purgative drink, which induces vomiting.
+<</linkreplace>></li>
+```
+
+After clicking, the link text is gone — only the replacement content remains.
+
+**Current usage:** treatment choices in `preventatives-treatments` (pid 80), penance choices in `YouPesthouse` (pid 44), exploration choices in `banished` (pid 43).
+
+#### `<<linkappend>>` vs `<<replace>>` — when to use which
+
+| Scenario | Technique |
+|----------|-----------|
+| Single link reveals more text after itself | `<<linkappend>>` |
+| Single link swaps itself for different text | `<<linkreplace>>` |
+| Multiple links share one target area (e.g., Option A \| Option B) | `<<replace>>` with `<span id>` |
+| Need to replace content in a different part of the page | `<<replace>>` with `<span id>` |
+
+### When to use which
+
+| Need | Technique |
+|------|-----------|
+| Fixed linear sequence (wizard, tutorial) | `<<chunkText>>` |
+| Multi-step sequence with branching or early exit | Manual `$textGroup` |
+| Single link reveals continuation text | `<<linkappend>>` |
+| Single link swaps itself for result text | `<<linkreplace>>` |
+| Multiple links targeting the same area | `<<replace>>` with `<span id>` |
+| Mix of progression + inline choices in one passage | Manual `$textGroup` + `<<replace>>` |
