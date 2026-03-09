@@ -62,6 +62,7 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
    - **Start with `passage-index.json`** to find the passage you need by name, tag, or pid. Read only the specific passage file(s) relevant to your task.
    - **Passage content is plain text** — SugarCube macros appear as `<<macro>>`, quotes as `"`, etc. Write edits using normal characters, not HTML entities.
    - **Search across all passages** using `Grep(pattern="keyword", path="passages/")`. Results include the filename, so you instantly know which passage matched.
+   - **Read before editing.** `Grep` results do not satisfy the `Edit` tool's read requirement. Before editing any passage file, always call `Read` on it first — even if you already know the content from grep output. When editing multiple files, batch the `Read` calls in parallel before starting edits to avoid repeated round-trips.
 3. **Patch** — When edits are complete, run `node patch.js` to re-encode passage content (back to HTML entities) and write changes into the HTML file.
 
 ### Pre-patch safety rules (mandatory before running `node patch.js`)
