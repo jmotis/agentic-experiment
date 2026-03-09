@@ -222,11 +222,58 @@ Use `<<replace>>` when the player makes a **one-time choice** and the result sho
 
 **Current usage:** widespread across monthly passages for inline choices (e.g., curfew decision in `August-1665`, spending choices in helper widgets).
 
+### 4. `<<linkappend>>` / `<<linkreplace>>` (self-contained inline reveal)
+
+These are SugarCube built-in macros that combine a link and an inline reveal into a single construct — no `<span id>` wrapper needed.
+
+#### `<<linkappend>>`
+
+The link text remains visible and the macro's content is **appended** after it when clicked. Use this for "read more" or "continue the narrative" moments.
+
+**Structure:**
+```
+<<linkappend "That is the last good day of the month, though.">>
+  The rest of the month's events unfold here...
+<</linkappend>>
+```
+
+After clicking, the player sees: *That is the last good day of the month, though. The rest of the month's events unfold here...*
+
+The link becomes plain text — it cannot be clicked again.
+
+**Current usage:** narrative continuations in `June-1665` (pid 17), `May-1665` (pid 16), `Quarantine-Continues` (pid 60).
+
+#### `<<linkreplace>>`
+
+The link text **disappears** and is replaced by the macro's content. Use this for choices where the link text itself should not persist (e.g., "accept a purgative drink" becomes a description of what happens).
+
+**Structure:**
+```
+<li><<linkreplace "accept a purgative drink">>
+  You are offered a purgative drink, which induces vomiting.
+<</linkreplace>></li>
+```
+
+After clicking, the link text is gone — only the replacement content remains.
+
+**Current usage:** treatment choices in `preventatives-treatments` (pid 80), penance choices in `YouPesthouse` (pid 44), exploration choices in `banished` (pid 43).
+
+#### `<<linkappend>>` vs `<<replace>>` — when to use which
+
+| Scenario | Technique |
+|----------|-----------|
+| Single link reveals more text after itself | `<<linkappend>>` |
+| Single link swaps itself for different text | `<<linkreplace>>` |
+| Multiple links share one target area (e.g., Option A \| Option B) | `<<replace>>` with `<span id>` |
+| Need to replace content in a different part of the page | `<<replace>>` with `<span id>` |
+
 ### When to use which
 
 | Need | Technique |
 |------|-----------|
 | Fixed linear sequence (wizard, tutorial) | `<<chunkText>>` |
 | Multi-step sequence with branching or early exit | Manual `$textGroup` |
-| Single inline choice with immediate result | `<<replace>>` |
+| Single link reveals continuation text | `<<linkappend>>` |
+| Single link swaps itself for result text | `<<linkreplace>>` |
+| Multiple links targeting the same area | `<<replace>>` with `<span id>` |
 | Mix of progression + inline choices in one passage | Manual `$textGroup` + `<<replace>>` |
