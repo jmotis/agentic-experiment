@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Gaming the Great Plague 2026 v3.45</title>
+<title>Gaming the Great Plague 2026 v3.49</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -3588,6 +3588,8 @@ Total wealth: $money (&lt;&lt;conversion&gt;&gt;)
 /*set maximum allowable debt*/
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
 &lt;&lt;set _debtCeiling to -60&gt;&gt;
+&lt;&lt;elseif $socio is &quot;servants&quot; and ($age is &quot;child&quot; or $age is &quot;adolescent&quot;)&gt;&gt;
+&lt;&lt;set _debtCeiling to -60&gt;&gt;
 &lt;&lt;else&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;set _debtCeiling to ($income) * -1&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
@@ -3751,6 +3753,8 @@ You are committed to the Fleet. &lt;&lt;if $office isnot &quot;&quot;&gt;&gt;Bec
 /* Recalculate debt ceiling */
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
 &lt;&lt;set _dpCeiling to -60&gt;&gt;
+&lt;&lt;elseif $socio is &quot;servants&quot; and ($age is &quot;child&quot; or $age is &quot;adolescent&quot;)&gt;&gt;
+&lt;&lt;set _dpCeiling to -60&gt;&gt;
 &lt;&lt;else&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;set _dpCeiling to ($income) * -1&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
@@ -3810,6 +3814,7 @@ You are in debt and can no longer afford your recurring expenses.&lt;&lt;if _deb
 &lt;&lt;if $money lt 0&gt;&gt;
 /* Calculate debt ceiling using prorated weekly income/expenses */
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set _qdCeiling to 60&gt;&gt;
+&lt;&lt;elseif $socio is &quot;servants&quot; and ($age is &quot;child&quot; or $age is &quot;adolescent&quot;)&gt;&gt;&lt;&lt;set _qdCeiling to 60&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;
 &lt;&lt;set _qdCeiling to ($income - $expenses) * -1&gt;&gt;
@@ -4887,6 +4892,9 @@ and New Media</tw-passagedata><tw-passagedata pid="72" name="storyMenu" tags="" 
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
   &lt;&lt;set $expenses to 20 * _hhCount&gt;&gt;
+&lt;&lt;elseif $socio is &quot;servants&quot; and ($age is &quot;child&quot; or $age is &quot;adolescent&quot;)&gt;&gt;
+  /* Child/adolescent servant living with master — master covers expenses */
+  &lt;&lt;set $expenses to 0&gt;&gt;
 &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;
     /* Servant living in master&#39;s household — only PC expenses */
   &lt;&lt;set $expenses to 20&gt;&gt;
