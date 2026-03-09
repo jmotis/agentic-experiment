@@ -826,6 +826,12 @@ ul.simple-inventory-list{margin:0 auto;padding:0}.simple-inventory-listing{list-
 #ui-dialog-body.household {
     max-height: 70vh;
     overflow-y: auto;
+}
+
+/* Suppress SugarCube box/arrow icon after hyperlinks */
+a.link-external > img:only-child + ::after,
+a.link-external:has(> img)::after {
+    display: none;
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* adding tooltip behavior modification for mobile*/
 $(document).on('mouseenter', '.def', function() {
     if (!('ontouchstart' in window)) {
@@ -1301,21 +1307,20 @@ But enough about the king! What about you?
 
 Either [[create your character-&gt;identity]] or [[automatically generate a character-&gt;bio]].
 
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/4/48/Claude_de_Jongh_-_View_of_London_Bridge_-_Google_Art_Project_bridge.jpg&quot; width=&quot;100%&quot; alt=&quot;Painting of London Bridge lined with buildings spanning the River Thames&quot;&gt;
-//Claude de Jongh - &quot;View of London Bridge,&quot; 1632.//</tw-passagedata><tw-passagedata pid="4" name="identity" tags="" position="1225,200" size="100,100">&lt;&lt;chunkText&gt;&gt;While infant mortality is common in this era, God granted your parents a healthy &lt;&lt;set $birthgender = [&quot;daughter&quot;,&quot;son&quot;]&gt;&gt;&lt;&lt;listbox &quot;$birthgender&quot;&gt;&gt;&lt;&lt;optionsfrom $birthgender&gt;&gt;&lt;&lt;/listbox&gt;&gt; who not only survived but thrived and you are now a &lt;&lt;set _age = [&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;]&gt;&gt;&lt;&lt;listbox &quot;$age&quot;&gt;&gt;&lt;&lt;optionsfrom _age&gt;&gt;&lt;&lt;/listbox&gt;&gt;.
+&lt;a href=&quot;https://upload.wikimedia.org/wikipedia/commons/4/48/Claude_de_Jongh_-_View_of_London_Bridge_-_Google_Art_Project_bridge.jpg&quot;&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/4/48/Claude_de_Jongh_-_View_of_London_Bridge_-_Google_Art_Project_bridge.jpg&quot; width=&quot;100%&quot; alt=&quot;Painting of London Bridge lined with buildings spanning the River Thames&quot;&gt;&lt;/a&gt;
+//Claude de Jongh - &quot;View of London Bridge,&quot; 1632.//</tw-passagedata><tw-passagedata pid="4" name="identity" tags="" position="1225,200" size="100,100">&lt;&lt;chunkText&gt;&gt;While infant mortality is common in this era, God granted your parents a healthy &lt;&lt;set $birthgender = [&quot;daughter&quot;,&quot;son&quot;]&gt;&gt;&lt;&lt;listbox &quot;$birthgender&quot;&gt;&gt;&lt;&lt;optionsfrom $birthgender&gt;&gt;&lt;&lt;/listbox&gt;&gt; who not only survived but thrived and you are now a &lt;&lt;set _age = [&quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;, &quot;child&quot;, &quot;adolescent&quot;]&gt;&gt;&lt;&lt;listbox &quot;$age&quot;&gt;&gt;&lt;&lt;optionsfrom _age&gt;&gt;&lt;&lt;/listbox&gt;&gt;.
 
 &lt;&lt;next&gt;&gt;&lt;&lt;playerAge&gt;&gt;&lt;&lt;if $agenum lte 15&gt;&gt;While the rich and powerful might get &lt;&lt;defBetrothed &quot;betrothed&quot;&gt;&gt; as children and marry as teenagers, most people wait until their mid or late 20s when they have enough wealth to establish their own &lt;&lt;defHousehold &quot;households&quot;&gt;&gt;. You are currently &lt;&lt;set _relationship = [&quot;single&quot;, &quot;betrothed&quot;]&gt;&gt;&lt;&lt;listbox &quot;$relationship&quot;&gt;&gt;&lt;&lt;optionsfrom _relationship&gt;&gt;&lt;&lt;/listbox&gt;&gt;.&lt;&lt;else&gt;&gt;Most people get married in their mid or late 20s to start a family, and those who are widowed often remarry as well. You are currently &lt;&lt;set _relationship = [&quot;single&quot;, &quot;married&quot;, &quot;widowed&quot;]&gt;&gt;&lt;&lt;listbox &quot;$relationship&quot;&gt;&gt;&lt;&lt;optionsfrom _relationship&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $birthgender is &quot;son&quot;&gt;&gt;&lt;&lt;set $gender to &quot;male&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $gender to &quot;female&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-&lt;&lt;next&gt;&gt;The city has recently settled after the religious upset of the &lt;&lt;defCivilWar &quot;civil war&quot;&gt;&gt;, and now there is relative harmony between &lt;&lt;defCatholic &quot;Catholics&quot;&gt;&gt;, &lt;&lt;defChurchOfEngland &quot;members of the Church of England&quot;&gt;&gt;, and members of &lt;&lt;defDissident &quot;dissident&quot;&gt;&gt; &lt;&lt;defProtestants &quot;Protestant&quot;&gt;&gt; churches. As a devout &lt;&lt;set _religion = [&quot;member of the Church of England&quot;, &quot;member of a dissident Protestant church&quot;, &quot;Catholic&quot;]&gt;&gt;&lt;&lt;listbox &quot;$religion&quot;&gt;&gt;&lt;&lt;optionsfrom _religion&gt;&gt;&lt;&lt;/listbox&gt;&gt;, you know God loves all His children.
+&lt;&lt;next&gt;&gt;The city has recently settled after the religious upset of the &lt;&lt;defCivilWar &quot;civil war&quot;&gt;&gt;, and now there is relative harmony between &lt;&lt;defChurchOfEngland &quot;members of the Church of England&quot;&gt;&gt; and members of &lt;&lt;defDissident &quot;dissident&quot;&gt;&gt; &lt;&lt;defProtestants &quot;Protestant&quot;&gt;&gt; churches. With the king married to a &lt;&lt;defCatholic &quot;Catholic&quot;&gt;&gt; queen, there are even some openly worshipping Catholics! As a devout &lt;&lt;set _religion = [&quot;member of the Church of England&quot;, &quot;member of a dissident Protestant church&quot;, &quot;Catholic&quot;]&gt;&gt;&lt;&lt;listbox &quot;$religion&quot;&gt;&gt;&lt;&lt;optionsfrom _religion&gt;&gt;&lt;&lt;/listbox&gt;&gt;, you know that yours is the only true faith.
 
 &lt;&lt;next &quot;Continue&quot; &quot;bio&quot;&gt;&gt;You are originally from &lt;&lt;set _origin = [&quot;London&quot;, &quot;the English countryside&quot;, &quot;another English town or city&quot;, &quot;Scotland&quot;, &quot;Ireland&quot;, &quot;the Dutch Republic&quot;, &quot;France&quot;, &quot;somewhere else&quot;]&gt;&gt;&lt;&lt;listbox &quot;$origin&quot;&gt;&gt;&lt;&lt;optionsfrom _origin&gt;&gt;&lt;&lt;/listbox&gt;&gt; and currently live in London, the greatest city in all the British Isles. It is a diverse city, with people of all ages, origins, and socioeconomic statuses. The city is home to &lt;&lt;defNoble &quot;nobles&quot;&gt;&gt;, &lt;&lt;defArtisan &quot;artisans&quot;&gt;&gt;, and &lt;&lt;defMerchant &quot;merchants&quot;&gt;&gt;, who employ &lt;&lt;defDayLabourer &quot;day labourers&quot;&gt;&gt; and &lt;&lt;defServant &quot;servants&quot;&gt;&gt; in their households and businesses. And there are also &lt;&lt;defBeggars &quot;beggars&quot;&gt;&gt; living in all 97 &lt;&lt;defParish &quot;parishes&quot;&gt;&gt; within its ancient walls. There are also more parishes spread out around those walls that can be considered part of its suburbs. This includes people living in the city of Westminster and those living across the river Thames, which can only be crossed by boat or by the &lt;&lt;defLondonBridge &quot;London Bridge&quot;&gt;&gt;.
 
 It&#39;s a great city for &lt;&lt;set _socio = [&quot;day labourers&quot;, &quot;servants&quot;, &quot;artisans&quot;, &quot;merchants&quot;, &quot;nobles&quot;, &quot;beggars&quot;]&gt;&gt;&lt;&lt;listbox &quot;$socio&quot;&gt;&gt;&lt;&lt;optionsfrom _socio&gt;&gt;&lt;&lt;/listbox&gt;&gt; like you to live in.
 
-Your home is &lt;&lt;set _location = [&quot;inside the City walls&quot;, &quot;in the western suburbs, specifically Westminster&quot;, &quot;in another part of the western suburbs&quot;, &quot;in the northern suburbs&quot;, &quot;in the eastern suburbs&quot;, &quot;across the river in the southern suburbs&quot;]&gt;&gt;&lt;&lt;listbox &quot;$location&quot;&gt;&gt;&lt;&lt;optionsfrom _location&gt;&gt;&lt;&lt;/listbox&gt;&gt;.
-&lt;br&gt;
-&lt;img src=&quot;https://wesleyan-dac-open-access.s3.amazonaws.com/images/DAC_1940-D1-131_001_OA.jpg&quot; width=&quot;100%&quot; alt=&quot;Panoramic map of London showing the city and River Thames&quot;&gt;
-//Map of London, before the Fire of 1666 by Wencelaus Holler. Wesleyan University Davison Art Center.//
+Your home is &lt;&lt;set _location = [&quot;inside the City walls&quot;, &quot;in the western suburbs, specifically Westminster&quot;, &quot;in another part of the western suburbs&quot;, &quot;in the northern suburbs&quot;, &quot;in the eastern suburbs&quot;, &quot;across the river in the southern suburbs&quot;]&gt;&gt;&lt;&lt;listbox &quot;$location&quot;&gt;&gt;&lt;&lt;optionsfrom _location&gt;&gt;&lt;&lt;/listbox&gt;&gt;.&lt;br&gt;
+&lt;a href=&quot;https://dac-collection.wesleyan.edu/objects-1/info/7197&quot;&gt;&lt;img src=&quot;https://wesleyan-dac-open-access.s3.amazonaws.com/images/DAC_1940-D1-131_001_OA.jpg&quot; width=&quot;100%&quot; alt=&quot;Panoramic map of London showing the city and River Thames&quot;&gt;&lt;/a&gt;
+//Wencelaus Holler - &quot;Map of London, before the Fire of 1666&quot;, ca. 1667//
 &lt;&lt;/chunkText&gt;&gt;</tw-passagedata><tw-passagedata pid="5" name="death" tags="infection-rates" position="500,750" size="100,100">&lt;&lt;nobr&gt;&gt;
 Send not to know for whom the church bells toll. They toll for you.
 &lt;br&gt;&lt;br&gt;
@@ -1790,6 +1795,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;set $SavedNPCs to []&gt;&gt;
 &lt;&lt;set $SavedServants to []&gt;&gt;
 &lt;&lt;set $seekingDecision to 0&gt;&gt;
+&lt;&lt;set $shutUpHouse to 0&gt;&gt;
 &lt;&lt;set $randomEventCompleted to false&gt;&gt;
 &lt;&lt;set $FledFamily = []&gt;&gt;
 &lt;&lt;set $fled to 0&gt;&gt;
@@ -1883,14 +1889,14 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;br&gt;&lt;br&gt;
 On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of good things to come-&gt;January 1665]].
 &lt;br&gt;&lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot; alt=&quot;Illustration of a comet streaking across the night sky&quot;&gt;
+&lt;a href=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot;&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot; alt=&quot;Illustration of a comet streaking across the night sky&quot;&gt;&lt;/a&gt;
 //Great Comet of 1665//
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;
 &lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Dec 1664: Skipped the Christmas feast to save money&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;if $hoh is 4&gt;&gt;You convince your husband&lt;&lt;elseif $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;You convince your $masterTitle&lt;&lt;elseif $hoh isnot 1&gt;&gt;You convince your family&lt;&lt;else&gt;&gt;You decide&lt;&lt;/if&gt;&gt; to save money and forego a large feast for the holiday.
 &lt;br&gt;&lt;br&gt;
 On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of good things to come-&gt;January 1665]].
 &lt;br&gt;&lt;br&gt;
-&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot; alt=&quot;Illustration of a comet streaking across the night sky&quot;&gt;
+&lt;a href=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot;&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot; alt=&quot;Illustration of a comet streaking across the night sky&quot;&gt;&lt;/a&gt;
 //Great Comet of 1665//
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;&lt;/linkappend&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="NPC-funeral widget" tags="widget" position="275,725" size="100,100">&lt;&lt;widget &quot;funeral-choice&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
@@ -2521,10 +2527,10 @@ After six months of travel, the king finally returns the Court to &lt;&lt;defHam
 &lt;&lt;if not _randomEventFired&gt;&gt;
 The king has returned to London! People rejoice and return to their churches, knowing that if the king is willing to move back into his city palace of &lt;&lt;defWhitehall &quot;Whitehall&quot;&gt;&gt;, then the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; outbreak must be almost over. A great snow hides all the graves and it&#39;s as if the last year was all a terrible dream.&lt;br&gt;&lt;br&gt;
 
-And, as if you needed more opportunities to celebrate, it&#39;s almost &lt;&lt;defLent &quot;Lent.&quot;&gt;&gt; &lt;span id= &quot;decision&quot;&gt;Do you want to hold one last feast before it&#39;s time to begin fasting? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;party-costs&gt;&gt;&lt;&lt;set _rate to $parishRate[$parish][$monthIndex]&gt;&gt;&lt;&lt;set _riskPct to Math.round((10000 / _rate) + 200) / 100&gt;&gt;&lt;&lt;if random(1, _rate) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if random(1, 50) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Feb 1666: Held a pre-Lent feast&quot;, money: -_partyCost, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: _riskPct})&gt;&gt;&lt;&lt;if $hoh is 4&gt;&gt;You convince your husband, and you&lt;&lt;elseif $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;You convince your $masterTitle, and you&lt;&lt;elseif $hoh isnot 1&gt;&gt;You convince your family, and you&lt;&lt;else&gt;&gt;You&lt;&lt;/if&gt;&gt; are planning a feast for a few friends. You&#39;re excited about all the things on the menu but especially your favorite dessert &lt;&lt;set _food = [&quot;minced pie&quot;, &quot;sweetmeats&quot;, &quot;currant cake&quot;, &quot;syllabub&quot;, &quot;tansy&quot;]&gt;&gt;&lt;&lt;listbox &quot;$food&quot;&gt;&gt;&lt;&lt;optionsfrom _food&gt;&gt;&lt;&lt;/listbox&gt;&gt;. Feasting costs money though, and things might be tight in the coming months, though your heart and stomach are full.&lt;br&gt;&lt;br&gt;
+And, as if you needed more opportunities to celebrate, it&#39;s almost &lt;&lt;defLent &quot;Lent.&quot;&gt;&gt; &lt;span id= &quot;decision&quot;&gt;Do you want to hold one last feast before it&#39;s time to begin fasting? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;party-costs&gt;&gt;&lt;&lt;set _rate to $parishRate[$parish][$monthIndex]&gt;&gt;&lt;&lt;set _riskPct to Math.round((10000 / _rate) + 200) / 100&gt;&gt;&lt;&lt;if random(1, _rate) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if random(1, 50) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Feb 1666: Held a pre-Lent feast&quot;, money: -_partyCost, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: _riskPct})&gt;&gt;&lt;&lt;if $hoh is 4&gt;&gt;You convince your husband, and you&lt;&lt;elseif $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;You convince your $masterTitle, and you&lt;&lt;elseif $hoh isnot 1&gt;&gt;You convince your family, and you&lt;&lt;else&gt;&gt;You&lt;&lt;/if&gt;&gt; are planning a feast for a few friends. You&#39;re excited about all the things on the menu but especially your favorite dessert &lt;&lt;set _food = [&quot;minced pie&quot;, &quot;sweetmeats&quot;, &quot;currant cake&quot;, &quot;syllabub&quot;, &quot;tansy&quot;]&gt;&gt;&lt;&lt;listbox &quot;$food&quot;&gt;&gt;&lt;&lt;optionsfrom _food&gt;&gt;&lt;&lt;/listbox&gt;&gt;.&lt;br&gt;&lt;br&gt;
 
 Your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; priest hasn&#39;t returned yet, though, and his reputation plummets as the days tick over into [[March 1666]].&lt;br&gt;&lt;br&gt;
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Feb 1666: Skipped the pre-Lent feast&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;if $hoh is 4&gt;&gt;You convince your husband to skip the feast.&lt;&lt;elseif $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;You convince your $masterTitle to skip the feast.&lt;&lt;elseif $hoh isnot 1&gt;&gt;You convince your family to skip the feast.&lt;&lt;else&gt;&gt;You decide against holding a feast.&lt;&lt;/if&gt;&gt; &lt;span id=&quot;church&quot;&gt;Do you instead go to the Queen&#39;s church for Ash Wednesday, the official beginning of Lent? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#church&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;if $religion isnot &quot;Catholic&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Feb 1666: Attended the Queen&#39;s church&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;You instead go to the Queen&#39;s church for Ash Wednesday. &lt;&lt;if $religion isnot &quot;Catholic&quot;&gt;&gt;Unfortunately your neighbors see you going into the Catholic Church and judge you harshly for abandoning your religious principles. &lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;Your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; priest hasn&#39;t returned yet, though, and his reputation plummets as the days tick over into [[March 1666]].&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#church&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Feb 1666: Stayed home for the holiday&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You instead enjoy a quiet holiday inside, safe from the crowds and the plague. &lt;br&gt;&lt;br&gt;Your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; priest hasn&#39;t returned yet, though, and his reputation plummets as the days tick over into [[March 1666]].&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Feb 1666: Skipped the pre-Lent feast&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;if $hoh is 4&gt;&gt;You convince your husband to skip the feast.&lt;&lt;elseif $hoh is 3 or ($hoh is 0 and $socio is &quot;servants&quot;)&gt;&gt;You convince your $masterTitle to skip the feast.&lt;&lt;elseif $hoh isnot 1&gt;&gt;You convince your family to skip the feast.&lt;&lt;else&gt;&gt;You decide against holding a feast.&lt;&lt;/if&gt;&gt; &lt;span id=&quot;church&quot;&gt;Do you instead go to the Queen&#39;s Catholic service for Ash Wednesday, the official beginning of Lent? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#church&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;if $religion isnot &quot;Catholic&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Feb 1666: Attended the Queen&#39;s Catholic service&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;You decide to go to the Queen&#39;s church for Ash Wednesday. &lt;&lt;if $religion isnot &quot;Catholic&quot;&gt;&gt;Unfortunately your neighbors see you entering a Catholic church and judge you harshly for worshipping like a &lt;&lt;defPapist &quot;papists&quot;&gt;&gt;. &lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;Your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; priest hasn&#39;t returned yet, though, and his reputation plummets as the days tick over into [[March 1666]].&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#church&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Feb 1666: Stayed home for the holiday&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;You instead enjoy a quiet holiday inside, safe from the crowds and the plague. &lt;br&gt;&lt;br&gt;Your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; priest hasn&#39;t returned yet, though, and his reputation plummets as the days tick over into [[March 1666]].&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 
 &lt;&lt;/if&gt;&gt;
@@ -3632,12 +3638,10 @@ You never have much money to spare, but things have gone more poorly than usual 
 &lt;&lt;set _hohNPCIdx to -1&gt;&gt;
 &lt;&lt;set _servantHandled to false&gt;&gt;
 /* Servant special case (hoh 3): master/mistress handles the debt or dismisses the servant */
-&lt;&lt;if $hoh is 3&gt;&gt;
-  &lt;&lt;if $reputation gte 6&gt;&gt;
-    &lt;&lt;set _servantHandled to true&gt;&gt;
-Your $masterTitle learns of your debts and, valuing your service, pays them off on your behalf. &lt;&lt;set $money to 0&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: &quot; + $masterTitle.toUpperFirst() + &quot; paid off your debts&quot;, money: 0, repDelta: -2, repBefore: $reputation + 2, infectPct: null})&gt;&gt;You are grateful, but your reputation has suffered for your inability to manage your own affairs. &lt;&lt;storyline-return&gt;&gt;
+&lt;&lt;if $hoh is 3&gt;&gt;With your creditors literally pounding at the door, your $masterTitle discovers you&#39;ve fallen into debt. 
+&lt;&lt;if $reputation gte 6&gt;&gt;&lt;&lt;set _servantHandled to true&gt;&gt;Because you&#39;ve been such a hard worker, your $masterTitle decides to pay them off for you.&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: &quot; + $masterTitle.toUpperFirst() + &quot; paid off your debts&quot;, money: 0, repDelta: -2, repBefore: $reputation, infectPct: null})&gt;&gt;While you are grateful, you are embarassed that the whole household now knows about your &lt;&lt;storyline-return &quot;inability to manage your money.&quot; 0 0 -2&gt;&gt;
   &lt;&lt;else&gt;&gt;
-Your $masterTitle learns of your debts and is furious. &lt;&lt;set $socio to &quot;day labourers&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;&lt;&lt;set $NPCs to $NPCsExtended.slice()&gt;&gt;&lt;&lt;set $NPCsExtended to []&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;&lt;&lt;set-hoh&gt;&gt;Due to your poor reputation, your $masterTitle has dismissed you from service. You will have to hope you can survive as a day labourer.&lt;br&gt;&lt;br&gt;
+&lt;&lt;set $socio to &quot;day labourers&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;&gt;&gt;&lt;&lt;set $NPCs to $NPCsExtended.slice()&gt;&gt;&lt;&lt;set $NPCsExtended to []&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster to []&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;&lt;&lt;set-hoh&gt;&gt;Not only are you embarassed that the whole household found out about your money troubles, but your $masterTitle decides you can no longer be trusted and dismisses you from service. You&#39;ll have to find work as a day labourer if you&#39;re to have any hope of paying off your debts.&lt;br&gt;&lt;br&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 /* After servant dismissal, $hoh has been recalculated — proceed with new status */
@@ -4371,17 +4375,16 @@ Do you:&lt;ul&gt;
 	  
 	  &lt;!-- AUTHOR NAME --&gt;
 	  &lt;h2 class=&quot;story-author&quot; data-passage=&quot;storyAuthor&quot;&gt;&lt;/h2&gt;
-
-	&lt;nav class=&quot;sidebar-nav&quot;&gt;
-	  &lt;ul class=&quot;story-tools&quot;&gt;
+	&lt;nav class=&quot;sidebar-nav&quot;&gt;&lt;ul class=&quot;story-tools&quot;&gt;
 		&lt;li&gt;
 		&lt;span id=&quot;restart-button&quot; class=&quot;lnr lnr-redo&quot; style=&quot;color: white;&quot;&gt;&lt;/span&gt;
 		&lt;span class=&quot;tooltiptext&quot;&gt;Restart&lt;/span&gt;
 		&lt;/li&gt;
-		&lt;li&gt;
+        
+&lt;!--		&lt;li&gt;
 		&lt;span id=&quot;saves-button&quot; class=&quot;lnr lnr-download&quot; style=&quot;color: white;&quot;&gt;&lt;/span&gt;
 		&lt;span class=&quot;tooltiptext&quot;&gt;Saves&lt;/span&gt;
-		&lt;/li&gt;
+		&lt;/li&gt; --&gt;
 		&lt;li&gt;
 		&lt;span id=&quot;settings-button&quot; class=&quot;lnr lnr-cog&quot; style=&quot;color: white;&quot;&gt;&lt;/span&gt;
 		&lt;span class=&quot;tooltiptext&quot;&gt;Settings&lt;/span&gt;
@@ -4432,7 +4435,10 @@ Do you:&lt;ul&gt;
     //A plague scene. Wellcome Collection//
      &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="69" name="storyLogo" tags="" position="150,150" size="100,100">&lt;a href=&quot;https://rrchnm.org/&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://avatars.githubusercontent.com/u/296531?s=280&amp;v=4&quot; height=&quot;50px&quot; alt=&quot;Roy Rosenzweig Center for History and New Media logo&quot;&gt;&lt;/a&gt;</tw-passagedata><tw-passagedata pid="70" name="gameTitle" tags="" position="25,25" size="100,100">Gaming the Great &lt;&lt;defPlague &quot;Plague&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="71" name="storyAuthor" tags="" position="150,25" size="100,100">&lt;a href=&quot;https://rrchnm.org/&quot;&gt;RRCHNM&lt;/a&gt;</tw-passagedata><tw-passagedata pid="72" name="storyMenu" tags="" position="275,150" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;div class=&quot;status-box&quot;&gt;&lt;&lt;if $reputation gte 9&gt;&gt;&lt;div class=&quot;rep-best&quot;&gt;&#39;&#39;Reputation:&#39;&#39; &lt;br&gt; a worthy soul&lt;/div&gt;&lt;&lt;elseif $reputation gte 6 and $reputation lte 8&gt;&gt;&lt;div class=&quot;rep-good&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;of good credit and quality&lt;/div&gt;&lt;&lt;elseif $reputation gte 3 and $reputation lte 5&gt;&gt;&lt;div class=&quot;rep-poor&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;bad credit is better than none&lt;/div&gt;&lt;&lt;elseif $reputation lte 2&gt;&gt;&lt;div class=&quot;rep-worst&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;a worthless and base rogue&lt;/div&gt;&lt;&lt;/if&gt;&gt;&lt;/div&gt;&lt;br&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="69" name="storyLogo" tags="" position="150,150" size="100,100">&lt;a href=&quot;https://rrchnm.org/&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://avatars.githubusercontent.com/u/296531?s=280&amp;v=4&quot; height=&quot;50px&quot; alt=&quot;Roy Rosenzweig Center for History and New Media logo&quot;&gt;&lt;/a&gt;</tw-passagedata><tw-passagedata pid="70" name="gameTitle" tags="" position="25,25" size="100,100">Gaming
+the Great Plague</tw-passagedata><tw-passagedata pid="71" name="storyAuthor" tags="" position="150,25" size="100,100">Roy Rosenzweig
+Center for History
+and New Media</tw-passagedata><tw-passagedata pid="72" name="storyMenu" tags="" position="275,150" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;div class=&quot;status-box&quot;&gt;&lt;&lt;if $reputation gte 9&gt;&gt;&lt;div class=&quot;rep-best&quot;&gt;&#39;&#39;Reputation:&#39;&#39; &lt;br&gt; a worthy soul&lt;/div&gt;&lt;&lt;elseif $reputation gte 6 and $reputation lte 8&gt;&gt;&lt;div class=&quot;rep-good&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;of good credit and quality&lt;/div&gt;&lt;&lt;elseif $reputation gte 3 and $reputation lte 5&gt;&gt;&lt;div class=&quot;rep-poor&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;bad credit is better than none&lt;/div&gt;&lt;&lt;elseif $reputation lte 2&gt;&gt;&lt;div class=&quot;rep-worst&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;a worthless and base rogue&lt;/div&gt;&lt;&lt;/if&gt;&gt;&lt;/div&gt;&lt;br&gt;
 
 &lt;div class=&quot;status-box&quot;&gt;&lt;div class=&quot;income&quot;&gt;&lt;&lt;defDisposableIncome &quot;Disposable Income&quot;&gt;&gt;:&lt;br&gt; /* @@#money; &lt;&lt;= $money&gt;&gt; @@ */ @@ #conversion; &lt;&lt;conversion&gt;&gt; @@&lt;/div&gt;&lt;/div&gt;
 
@@ -4900,10 +4906,7 @@ Do you:&lt;ul&gt;
 &lt;&lt;/silently&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;expenses&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
-&lt;&lt;if $socio is &quot;servants&quot; and ($age is &quot;child&quot; or $age is &quot;adolescent&quot;)&gt;&gt;
-  /* Child/adolescent servant — just PC expenses */
-  &lt;&lt;set $expenses to 20&gt;&gt;
-&lt;&lt;elseif $socio is &quot;servants&quot; and ($hoh is 3 or $hoh is 0)&gt;&gt;
+&lt;&lt;if $socio is &quot;servants&quot; and ($hoh is 3)&gt;&gt;
   /* Servant living in master&#39;s household — only PC expenses */
   &lt;&lt;set $expenses to 20&gt;&gt;
 &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;
@@ -5095,10 +5098,10 @@ The &lt;&lt;defApothecary &quot;apothecary&quot;&gt;&gt; sells items that may he
 &lt;tr&gt;&lt;td&gt;&lt;&lt;defCheapFumigants &quot;Cheap Fumigants&quot;&gt;&gt;&lt;/td&gt;&lt;td&gt;&lt;&lt;conversion _genericfumesPrice&gt;&gt;&lt;/td&gt;&lt;td&gt;$fumes.Generic.quantity&lt;/td&gt;&lt;td&gt;&lt;&lt;if $money gte _genericfumesPrice&gt;&gt;&lt;&lt;link &quot;Buy&quot;&gt;&gt;&lt;&lt;money `-1 * _genericfumesPrice`&gt;&gt;&lt;&lt;set $fumes.Generic.quantity += 1&gt;&gt;&lt;&lt;run $(Dialog.body()).empty(); Dialog.wiki(Story.get(&quot;Apothecary&quot;).text)&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;You don&#39;t have enough to buy this.&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;&lt;br&gt;
 Remaining money: &lt;&lt;conversion&gt;&gt;&lt;br&gt;
-&lt;&lt;link &quot;Close&quot;&gt;&gt;&lt;&lt;run Dialog.close()&gt;&gt;&lt;&lt;/link&gt;&gt;
+/*&lt;&lt;link &quot;Close&quot;&gt;&gt;&lt;&lt;run Dialog.close()&gt;&gt;&lt;&lt;/link&gt;&gt; superfluous code */
 &lt;&lt;/nobr&gt;&gt;
 
-&lt;img src=&quot;https://iiif.wellcomecollection.org/image/L0064305/full/1024%2C/0/default.jpg&quot; width=&quot;100%&quot; alt=&quot;Historical illustration of an apothecary shop&quot;&gt;</tw-passagedata><tw-passagedata pid="80" name="preventatives-treatments" tags="widget" position="775,150" size="100,100">&lt;&lt;widget &quot;preventative&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;a href=&quot;https://iiif.wellcomecollection.org/image/L0064305/full/1024%2C/0/default.jpg&quot;&gt;&lt;img src=&quot;https://iiif.wellcomecollection.org/image/L0064305/full/1024%2C/0/default.jpg&quot; width=&quot;100%&quot; alt=&quot;title page of The Christians Refuge: Or Heavenly Antidotes against the Plague with a frontispiece image of Death and the plea &#39;Lord have Mercy upon us&#39;&quot;&gt;&lt;/a&gt;</tw-passagedata><tw-passagedata pid="80" name="preventatives-treatments" tags="widget" position="775,150" size="100,100">&lt;&lt;widget &quot;preventative&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;span id=&quot;church&quot;&gt;&lt;&lt;link &quot;Go to church and pray often&quot;&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;&lt;&lt;set _rate to $parishRate[$parish][$monthIndex]&gt;&gt;&lt;&lt;set _riskPct to Math.round(10000 / _rate) / 100&gt;&gt;&lt;&lt;if random(1, _rate) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Went to church to pray often&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: _riskPct})&gt;&gt;&lt;&lt;replace &quot;#church&quot;&gt;&gt;You go to church and pray regularly through the month. Others admire your piety in the face of such a grave situation.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;&lt;span id=&quot;eat&quot;&gt;&lt;&lt;link &quot;Avoid eating berries, cabbage, cucumbers, melon, and spinach.&quot;&gt;&gt;&lt;&lt;replace &quot;#eat&quot;&gt;&gt;You avoid eating berries, cabbage, cucumbers, melons, and spinach to keep your humors well-balanced.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
@@ -5516,8 +5519,7 @@ While you remain in the city, you can take measures to protect yourself&lt;&lt;i
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="90" name="Failed-Flight" tags="" position="875,1175" size="100,100">You have attempted to flee the city! Unfortunately, your reputation precedes you, and no one will take you in. You are forced to return to London, shamed, and many shillings poorer.
 
-&lt;&lt;first-plague-day-continue&gt;&gt;</tw-passagedata><tw-passagedata pid="91" name="corpse-work widget" tags="widget" position="25,1225" size="100,100">&lt;&lt;widget &quot;corpse-work&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if ($role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot;) and $corpseBuried and $corpseBuried[$parish]&gt;&gt;
+&lt;&lt;first-plague-day-continue&gt;&gt;</tw-passagedata><tw-passagedata pid="91" name="corpse-work widget" tags="widget" position="25,1225" size="100,100">&lt;&lt;widget &quot;corpse-work&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;if ($role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot;) and $corpseBuried and $corpseBuried[$parish]&gt;&gt;
 &lt;&lt;set _cwBuried to $corpseBuried[$parish][$monthIndex]&gt;&gt;
 &lt;&lt;set _cwPlague to $corpsePlague[$parish][$monthIndex]&gt;&gt;
 &lt;&lt;if _cwBuried gt 0&gt;&gt;
@@ -5549,59 +5551,48 @@ You and your fellow searchers examined &lt;&lt;print _cwBuried&gt;&gt; corpses t
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 /* Nurse role: patient assignment based on plague deaths, with player choice */
-&lt;&lt;if $role is &quot;nurse&quot; and $corpsePlague and $corpsePlague[$parish]&gt;&gt;
+&lt;&lt;if $role is &quot;nurse&quot; and $corpsePlague and $corpsePlague[$parish]&gt;&gt;&lt;&lt;if $shutUpHouse eq 0&gt;&gt;
 &lt;&lt;set _nwPlague to $corpsePlague[$parish][$monthIndex]&gt;&gt;
 &lt;&lt;if _nwPlague gt 0 and $playerPlagueStatus is &quot;healthy&quot; and random(1, 100) lte _nwPlague&gt;&gt;
-&lt;span id=&quot;nurse-choice&quot;&gt;The parish officials bring you a new patient, sick with the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. Do you nurse them?&lt;br&gt;&lt;br&gt;
-&lt;&lt;link &quot;Do your Christian duty and nurse the sick&quot;&gt;&gt;&lt;&lt;replace &quot;#nurse-choice&quot;&gt;&gt;
+&lt;span id=&quot;nurse-choice&quot;&gt;The parish officials order you to nurse a parishioner who is sick with the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. Do your Christian duty and aid the sick?&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#nurse-choice&quot;&gt;&gt;&lt;&lt;set $shutUpHouse to 1&gt;&gt;
 &lt;&lt;set _repBefore to $reputation&gt;&gt;
 &lt;&lt;set $reputation to Math.clamp($reputation + 1, 0, 10)&gt;&gt;
 &lt;&lt;set $money += 48&gt;&gt;
 &lt;&lt;if random(1, 2) eq 1&gt;&gt;
 &lt;&lt;set $plagueInfection to 1&gt;&gt;
-&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Nursed a plague patient (infected)&quot;, money: 48, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 50})&gt;&gt;
-You tend to your patient as best you can. You were paid 48d. by the churchwardens for your service and your Christian charity does not go unnoticed — but in the days that follow, you begin to feel unwell yourself.
-&lt;&lt;else&gt;&gt;
-&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Nursed a plague patient (survived)&quot;, money: 48, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 50})&gt;&gt;
-You tend to your patient as best you can. You were paid 48d. by the churchwardens for your service and your Christian charity does not go unnoticed. By the grace of God, you remain healthy.
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Refuse to nurse the sick&quot;&gt;&gt;&lt;&lt;replace &quot;#nurse-choice&quot;&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Nursed a plague patient (infected)&quot;, money: 48, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 50})&gt;&gt;&lt;&lt;set $shutUpHouse to 0&gt;&gt;&lt;&lt;else&gt;&gt;
+&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Nursed a plague patient (survived)&quot;, money: 48, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 50})&gt;&gt;&lt;&lt;/if&gt;&gt;You bring food and medicines to the shut up house, wash their laundry, and provide what comfort you can as their only link to the outside world. It&#39;s a strange thing, to risk your life for 4 shillings. Your neighbors both thank you for your charity while avoiding you as a potential plague risk.
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#nurse-choice&quot;&gt;&gt;
 &lt;&lt;set _repBefore to $reputation&gt;&gt;
 &lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;
 &lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Refused to nurse a plague patient&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 0})&gt;&gt;
-You refuse the assignment. The parish officials are displeased — your reputation suffers.
+You pretend to feel unwell and beg off nursing the sick, but the churchwardens suspect you&#39;re lying and your reputation suffers for it.
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;br&gt;&lt;br&gt;
-&lt;&lt;elseif _nwPlague gt 0&gt;&gt;
-The parish has no patient for you to nurse this month.&lt;br&gt;&lt;br&gt;
-&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;elseif $shutUpHouse eq 1&gt;&gt;After forty days of guarding your neighbor&#39;s house, the quarantine ends and you are relived to return to your regular work.&lt;&lt;set $shutUpHouse to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 /* Warder role: guard a shut-up house, parallel to nurse patient assignment */
-&lt;&lt;if $role is &quot;warder&quot; and $corpsePlague and $corpsePlague[$parish]&gt;&gt;
+&lt;&lt;if $role is &quot;warder&quot; and $corpsePlague and $corpsePlague[$parish]&gt;&gt;&lt;&lt;if $shutUpHouse eq 0&gt;&gt;
 &lt;&lt;set _wwPlague to $corpsePlague[$parish][$monthIndex]&gt;&gt;
 &lt;&lt;if _wwPlague gt 0 and $playerPlagueStatus is &quot;healthy&quot; and random(1, 100) lte _wwPlague&gt;&gt;
 &lt;&lt;set _wwRate to $parishRate[$parish][$monthIndex]&gt;&gt;
 &lt;&lt;set _wwInfectPct to Math.round(100 / _wwRate)&gt;&gt;
-&lt;span id=&quot;warder-choice&quot;&gt;A household in your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; has been shut up for the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. The churchwardens ask you to stand guard outside the door. Do you take the assignment?&lt;br&gt;&lt;br&gt;
-&lt;&lt;link &quot;Stand guard outside the door&quot;&gt;&gt;&lt;&lt;replace &quot;#warder-choice&quot;&gt;&gt;
+&lt;span id=&quot;warder-choice&quot;&gt;A household in your &lt;&lt;defParish &quot;parish&quot;&gt;&gt; has been shut up for the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;. The churchwardens order you to stand guard outside the door. Do you do as you are told?&lt;br&gt;&lt;br&gt;
+&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#warder-choice&quot;&gt;&gt;&lt;&lt;set $shutUpHouse to 1&gt;&gt;
 &lt;&lt;set _repBefore to $reputation&gt;&gt;
 &lt;&lt;set $money += 48&gt;&gt;
 &lt;&lt;if random(1, _wwRate) eq 1&gt;&gt;
-&lt;&lt;set $plagueInfection to 1&gt;&gt;
+&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;set $shutUpHouse to 0&gt;&gt;
 &lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Guarded a plague house (infected)&quot;, money: 48, repDelta: 0, repBefore: _repBefore, infectPct: _wwInfectPct})&gt;&gt;
-You stand guard outside the marked door, listening to the weeping and prayers within. You were paid 48d. by the churchwardens — but in the days that follow, you begin to feel unwell yourself.
 &lt;&lt;else&gt;&gt;
 &lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Guarded a plague house (survived)&quot;, money: 48, repDelta: 0, repBefore: _repBefore, infectPct: _wwInfectPct})&gt;&gt;
-You stand guard outside the marked door, listening to the weeping and prayers within. You were paid 48d. by the churchwardens for your service. By the grace of God, you remain healthy.
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Refuse the assignment&quot;&gt;&gt;&lt;&lt;replace &quot;#warder-choice&quot;&gt;&gt;
+&lt;&lt;/if&gt;&gt;You and one of your neighbors take turns standing guard outside the shut up house each day. It&#39;s a strange thing, to risk your life for 4 shillings. Your neighbors understand the necessity of what you do, but they also have started to avoid you as a potential plague risk.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#warder-choice&quot;&gt;&gt;
 &lt;&lt;set _repBefore to $reputation&gt;&gt;
 &lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;
 &lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Refused to guard a plague house&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: 0})&gt;&gt;
-You refuse the assignment. The churchwardens are displeased — your reputation suffers.
+You pretend to feel unwell and beg off standing guard, but the churchwardens suspect you&#39;re lying and your reputation suffers for it.
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;br&gt;&lt;br&gt;
-&lt;&lt;elseif _wwPlague gt 0&gt;&gt;
-To your relief, you are not called upon to guard any shut up houses this month.&lt;br&gt;&lt;br&gt;
-&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;elseif $shutUpHouse eq 1&gt;&gt;After forty days of guarding your neighbor&#39;s house, the quarantine ends and you are relived to return to your regular work.&lt;&lt;set $shutUpHouse to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 /* Bill of Mortality subscription report */
 &lt;&lt;if $billSubscribed is 1 and $role isnot &quot;searcher&quot; and $role isnot &quot;corpsebearer&quot; and $corpseBuried and $corpseBuried[$parish]&gt;&gt;
@@ -5695,10 +5686,10 @@ One thing is for certain, though. The weather is so hot that &lt;&lt;defPlague &
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="97" name="accident" tags="widget" position="2375,175" size="100,100">&lt;&lt;widget &quot;accident&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $accident to random(0,5)&gt;&gt;&lt;&lt;if $accident is 1&gt;&gt;Send not to know for whom the church bells toll. They toll for you. 
-&lt;br&gt;&lt;br&gt;Unfortunately you have suffered from a fatal accident &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;while out on a job&lt;&lt;/if&gt;&gt;. &lt;&lt;set $death to random(1,5)&gt;&gt;&lt;&lt;if $death is 1&gt;&gt;You drowned in &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;a brewer&#39;s mash&lt;&lt;else&gt;&gt;a well&lt;&lt;/if&gt;&gt;. &lt;&lt;elseif $death is 2&gt;&gt;You were bitten by a dog. &lt;&lt;elseif $death is 3&gt;&gt;You fell from &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;scaffolding&lt;&lt;else&gt;&gt;a window&lt;&lt;/if&gt;&gt;. &lt;&lt;elseif $death is 4&gt;&gt;You were run over by a cart. &lt;&lt;else&gt;&gt;You fell down a flight of stairs.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;At least you didn&#39;t die of the plague.&lt;br&gt;&lt;br&gt;
+&lt;br&gt;&lt;br&gt;Unfortunately you have suffered from a fatal accident &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;while out on a job&lt;&lt;/if&gt;&gt;. &lt;&lt;set $death to random(1,5)&gt;&gt;&lt;&lt;if $death is 1&gt;&gt;You drowned in &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;a brewer&#39;s mash while attempting to help one of your neighbors make beer&lt;&lt;else&gt;&gt;a well while attempting to draw water for your household&lt;&lt;/if&gt;&gt;. &lt;&lt;elseif $death is 2&gt;&gt;You were bitten by a dog and your wound went bad. &lt;&lt;elseif $death is 3&gt;&gt;You fell from &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;scaffolding while working to replace a man&#39;s roof&lt;&lt;else&gt;&gt;a window while leaning out to see what was causing a commotion in the street&lt;&lt;/if&gt;&gt;. &lt;&lt;elseif $death is 4&gt;&gt;You were run over by an out-of-control cart. &lt;&lt;else&gt;&gt;You fell down a flight of stairs and hit your head.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;At least you didn&#39;t die of the plague.&lt;br&gt;&lt;br&gt;
 &lt;&lt;death-announcement&gt;&gt;
 &lt;&lt;else&gt;&gt;
-You have suffered an accident while&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;out on a job&lt;&lt;else&gt;&gt;running errands&lt;&lt;/if&gt;&gt;, but thanks to God you are still alive. &lt;&lt;set $accident to random(1,5)&gt;&gt;&lt;&lt;if $accident is 1&gt;&gt;You fell from a window. &lt;&lt;elseif $accident is 2&gt;&gt;You were kicked by a horse. &lt;&lt;elseif $accident is 3&gt;&gt;You broke your arm. &lt;&lt;elseif $accident is 4&gt;&gt;You were hit by a wagon wheel. &lt;&lt;else&gt;&gt;You fell in the Thames and a cut on your arm was infected. &lt;&lt;/if&gt;&gt; Fortunately, this is something you can recover from with rest and care. &lt;&lt;if $reputation lte 2&gt;&gt;Unfortunately your reputation is too low for anyone to offer you assistance so you must recover on your own and &lt;&lt;else&gt;&gt;Your &lt;&lt;if $NPCs.length gt 0&gt;&gt;family&lt;&lt;else&gt;&gt;neighbors&lt;&lt;/if&gt;&gt; take good care of you, but &lt;&lt;/if&gt;&gt;you lose money every day you aren&#39;t working.&lt;&lt;set $money -=3&gt;&gt;&lt;br&gt;&lt;br&gt;Soon you are ready to rejoin &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;the other &lt;&lt;defDayLabourer &quot;day labourers&quot;&gt;&gt; in their search for work. &lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;&lt;&lt;else&gt;&gt;your &lt;&lt;print $masterTitle || &quot;master&quot;&gt;&gt;&#39;s household. &lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;&lt;&lt;/if&gt;&gt;
+You have suffered an accident &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;while out on a job&lt;&lt;/if&gt;&gt;, but thanks be to God, you are still alive. &lt;&lt;set $accident to random(1,5)&gt;&gt;&lt;&lt;if $accident is 1&gt;&gt;You fell from a window while leaning out to see what was causing a commotion in the street. &lt;&lt;elseif $accident is 2&gt;&gt;You were kicked by a horse when you passed too close behind it. &lt;&lt;elseif $accident is 3&gt;&gt;You fell down a flight of stairs and broke your arm. &lt;&lt;elseif $accident is 4&gt;&gt;You were hit by the wheel of a wagon as its driver navigated through a crowded street. &lt;&lt;else&gt;&gt;You fell out of a boat while crossing the Thames and breathed some water before your friends managed to haul you to safety. &lt;&lt;/if&gt;&gt; Fortunately, this is something you can recover from with rest and care. &lt;&lt;if $reputation lte 2&gt;&gt;Unfortunately your reputation is too low for anyone to offer you assistance so you must recover on your own and &lt;&lt;else&gt;&gt;Your &lt;&lt;if $NPCs.length gt 0&gt;&gt;family&lt;&lt;else&gt;&gt;neighbors&lt;&lt;/if&gt;&gt; take good care of you, but &lt;&lt;/if&gt;&gt;you lose money every day you aren&#39;t working.&lt;&lt;set $money -=3&gt;&gt;&lt;br&gt;&lt;br&gt;Soon you are ready to rejoin &lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;the other &lt;&lt;defDayLabourer &quot;day labourers&quot;&gt;&gt; in their search for work. &lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;&lt;&lt;else&gt;&gt;your &lt;&lt;print $masterTitle || &quot;master&quot;&gt;&gt;&#39;s household. &lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="98" name="legacy non-binary code" tags="" position="2150,1350" size="100,100">/* from bio but have changed how names are assigned since then */
@@ -6009,10 +6000,7 @@ Despite everything, court life proceeds as usual. A friend living the countrysid
 &lt;&lt;/for&gt;&gt;
 &lt;br&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="107" name="seeking widgets" tags="widget" position="2250,300" size="100,100">&lt;&lt;widget &quot;marriage-market&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;else&gt;&gt;
-As an unmarried adult, you may wish to get married. Marriage brings with it lots of advantages, including a life partner, social connections through their family, (probably) children, and &lt;&lt;if $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot;&gt;&gt;wealth from your &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&#39;s income&lt;&lt;else&gt;&gt;wife&#39;s dowry&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;additional income that will help protect you from &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;starvation&lt;&lt;else&gt;&gt;poverty&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;.&lt;&lt;if $gender is &quot;female&quot;&gt;&gt; The downside is all your property will become your husband&#39;s and you will be legally dependent on him until he dies... or you do.&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="107" name="seeking widgets" tags="widget" position="2250,300" size="100,100">&lt;&lt;widget &quot;marriage-market&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;else&gt;&gt;As an unmarried adult, you may wish to get married. Marriage brings with it lots of advantages, including a life partner, social connections through their family, (probably) children, and &lt;&lt;if $socio is &quot;nobles&quot; or $socio is &quot;merchants&quot;&gt;&gt;wealth from your &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&#39;s income&lt;&lt;else&gt;&gt;wife&#39;s dowry&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;additional income that will help protect you from &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;starvation&lt;&lt;else&gt;&gt;poverty&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;.&lt;&lt;if $gender is &quot;female&quot;&gt;&gt; The downside is all your property will become your husband&#39;s and you will be legally dependent on him until he dies... or you do.&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
 &lt;span id=&quot;marriage&quot;&gt;Do you wish to seek a &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&lt;&lt;else&gt;&gt;wife&lt;&lt;/if&gt;&gt;?
 &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;&lt;&lt;set $seekingMarriage to 1&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;storyline-return &quot;You are looking to be married soon and will be seeking out a spouse.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#marriage&quot;&gt;&gt;&lt;&lt;set $seekingMarriage to 0&gt;&gt;&lt;&lt;set $seekingDecision to 1&gt;&gt;&lt;&lt;storyline-return &quot;You are content to remain single for now.&quot; 0&gt;&gt;
@@ -6023,20 +6011,14 @@ As an unmarried adult, you may wish to get married. Marriage brings with it lots
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
-&lt;&lt;widget &quot;preferment-market&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-As a member of the nobility, you have the opportunity to seek preferment at Court. By cultivating relationships with powerful courtiers and sending them gifts, you may eventually secure a position that brings honor, influence, and income to your family. This is an expensive undertaking—you will need to spend around £10 a month on gifts to various courtiers—but the rewards of a court position could be well worth the investment.
+&lt;&lt;widget &quot;preferment-market&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;Though you are of noble birth, your family remained in England during the &lt;&lt;defInterregnum &quot;Interregnum&quot;&gt;&gt; and so the king prefers to appoint other people to honors and offices that come open at Court. To gain preferment, you&#39;ll need to make influential friends who can advocate on your behalf with the king. It will be expensive, but the rewards could be worth it.
 &lt;br&gt;&lt;br&gt;
 &lt;span id=&quot;preferment&quot;&gt;Do you wish to seek preferment at Court?
-&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;set $seekingPreferment to 1&gt;&gt;&lt;&lt;set $seekingDecision to 3&gt;&gt;&lt;&lt;replace &quot;#preferment&quot;&gt;&gt;&lt;&lt;storyline-return &quot;You begin cultivating connections at Court, sending gifts to influential courtiers in hopes of securing a position.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $seekingPreferment to 0&gt;&gt;&lt;&lt;set $seekingDecision to 3&gt;&gt;&lt;&lt;replace &quot;#preferment&quot;&gt;&gt;&lt;&lt;storyline-return &quot;You are content with your current standing and see no need to spend money currying favor at Court.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;/span&gt;
-
+&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;set $seekingPreferment to 1&gt;&gt;&lt;&lt;set $seekingDecision to 3&gt;&gt;&lt;&lt;replace &quot;#preferment&quot;&gt;&gt;&lt;&lt;storyline-return &quot;You begin to send gifts to some of the king&#39;s favorites, in hopes of gaining their support in the future.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;set $seekingPreferment to 0&gt;&gt;&lt;&lt;set $seekingDecision to 3&gt;&gt;&lt;&lt;replace &quot;#preferment&quot;&gt;&gt;&lt;&lt;storyline-return &quot;You are content with your current status and see no need to spend money chasing after more honors or court office.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
-&lt;&lt;widget &quot;apprenticeship-market&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
-Young people between the ages of 14 and 21 are eligible to be bound as apprentices in the city of London. While it is usually boys who take advantage of this opportunity, there are some girls who also seek apprenticeships. For a period of around 7 years, you would be legally bound to your master and provide &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;him&lt;&lt;/if&gt;&gt; your service. In return you will learn &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; trade, gain connections in &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; social circles, and eventually become a full member of one of London &lt;&lt;defLiveryCompany &quot;livery company&quot;&gt;&gt;.&lt;&lt;if $gender is &quot;male&quot;&gt;&gt; This will give you the right to vote in local elections, run for office within the city, and perhaps even one day become Lord Mayor of London.&lt;&lt;/if&gt;&gt;
+&lt;&lt;widget &quot;apprenticeship-market&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;Young people between the ages of 14 and 21 are eligible to be bound as apprentices in the city of London. While it is usually boys who take advantage of this opportunity, there are some girls who also seek apprenticeships. For a period of around 7 years, you would be legally bound to your master and provide &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;him&lt;&lt;/if&gt;&gt; your service. In return you will learn &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; trade, gain connections in &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; social circles, and eventually become a full member of one of London &lt;&lt;defLiveryCompany &quot;livery company&quot;&gt;&gt;.&lt;&lt;if $gender is &quot;male&quot;&gt;&gt; This will give you the right to vote in local elections, run for office within the city, and perhaps even one day become Lord Mayor of London.&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
 &lt;span id=&quot;apprenticeship&quot;&gt;Do you wish to seek an apprenticeship?
 &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;set $seekingApprenticeship to 1&gt;&gt;&lt;&lt;set $seekingDecision to 2&gt;&gt;&lt;&lt;replace &quot;#apprenticeship&quot;&gt;&gt;&lt;&lt;storyline-return &quot;You are interested in becoming an apprentice and ask for your family to seek out a master for you.&quot; 0&gt;&gt;
@@ -6398,7 +6380,6 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
    still renders. Multi-month events (plague illness, death sequences)
    leave it true to suppress default text and let the event widget own
    the output. */
-
 /* Pregnancy tracking for married women of childbearing age */
 &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;
 	&lt;&lt;if $agenum gte 16 and $agenum lte 40&gt;&gt;
@@ -7416,7 +7397,7 @@ As much as you miss your child&lt;&lt;if _safeKids.length &gt; 1&gt;&gt;ren&lt;&
 &lt;&lt;link &quot;Yes, and charge extra rent&quot;&gt;&gt;&lt;&lt;replace &quot;#lodger&quot;&gt;&gt;&lt;&lt;add-lodgers&gt;&gt;&lt;&lt;set $lodger to 1&gt;&gt;&lt;&lt;set $lodgerRent to _baseRent * 2&gt;&gt;&lt;&lt;set _repBefore to $reputation&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 1, 0, 10)&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;October 1666: Accepted lodgers at high rent&quot;, money: 0, repDelta: $reputation - _repBefore, repBefore: _repBefore, infectPct: null})&gt;&gt;&lt;&lt;print _decide&gt;&gt; _lodgerDesc to your household. You welcome their rent money even though your reputation takes a hit for profiting off the disaster.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Yes, and charge a low rent&quot;&gt;&gt;&lt;&lt;replace &quot;#lodger&quot;&gt;&gt;&lt;&lt;add-lodgers&gt;&gt;&lt;&lt;set $lodger to 1&gt;&gt;&lt;&lt;set $lodgerRent to _baseRent&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;October 1666: Accepted lodgers at low rent&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;print _decide&gt;&gt; _lodgerDesc to your household. You welcome their rent money as even a little bit extra helps.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#lodger&quot;&gt;&gt;&lt;&lt;print _decideNot&gt;&gt; any lodgers. Things are crowded enough without adding strangers to the household.&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 </tw-passagedata><tw-passagedata pid="121" name="child-service widgets" tags="widget" position="275,850" size="100,100">&lt;&lt;widget &quot;child-service-check&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-/* Voluntary child service: fires when $money lte 0 for beggars/day labourers/artisans. Offers to put eldest child/adolescent into service, or the PC themselves if they are a child/adolescent. Only fires once per month (tracked by $childServiceOffered). */
+/* Voluntary child service: fires when $money lt 0 for beggars/day labourers/artisans. Offers to put eldest child/adolescent into service, or the PC themselves if they are a child/adolescent. Only fires once per month (tracked by $childServiceOffered). */
 
 &lt;&lt;if $money lte 0 and ($socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or ($socio is &quot;servants&quot; and $hoh is 1)) and $childServiceOffered isnot $monthIndex&gt;&gt;
 
@@ -7707,11 +7688,8 @@ Do you wish to apprentice with a
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="125" name="sidebar NPCs" tags="widget menu" position="775,275" size="100,100">/* list NPCs in sidebar menu */
-&lt;&lt;widget &quot;ListNPCs&quot;&gt;&gt;
-&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCs&quot;&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCsMaster&quot;&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCsExtended&quot;&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCsServants&quot;&gt;&gt;&lt;&lt;/silently&gt;&gt;
-&lt;&lt;set _landlordCount to 0&gt;&gt;&lt;&lt;for _lci range $NPCs&gt;&gt;&lt;&lt;if _lci.relationship.startsWith(&quot;landlord&quot;)&gt;&gt;&lt;&lt;set _landlordCount += 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;
-Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.length&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _hhSize to $NPCs.length - _landlordCount + $NPCsServants.length + $NPCsMaster.length&gt;&gt;&lt;&lt;/if&gt;&gt; _hhSize&lt;br&gt;&lt;br&gt;
-
+&lt;&lt;widget &quot;ListNPCs&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCs&quot;&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCsMaster&quot;&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCsExtended&quot;&gt;&gt;&lt;&lt;orderNPCs &quot;$NPCsServants&quot;&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;set _landlordCount to 0&gt;&gt;&lt;&lt;for _lci range $NPCs&gt;&gt;&lt;&lt;if _lci.relationship.startsWith(&quot;landlord&quot;)&gt;&gt;&lt;&lt;set _landlordCount += 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.length&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _hhSize to $NPCs.length - _landlordCount + $NPCsServants.length + $NPCsMaster.length&gt;&gt;&lt;&lt;/if&gt;&gt; _hhSize
+&lt;br&gt;&lt;br&gt;
 &#39;&#39;Household:&#39;&#39; &lt;&lt;if $fled is 5&gt;&gt;&#39;&#39;fled to $hhlocation&#39;&#39;&lt;&lt;/if&gt;&gt;&lt;br&gt;
         &lt;&lt;for _i, _idx range $FledFamily&gt;&gt;
         $FledFamily[_i].name, $FledFamily[_i].age &lt;&lt;print $FledFamily[_i].relationship.replace(/^master/, $masterTitle || &quot;master&quot;)&gt;&gt;: &lt;&lt;if $FledFamily[_i].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;elseif $FledFamily[_i].health is &quot;deceased-pq&quot;&gt;&gt;deceased&lt;&lt;else&gt;&gt;$FledFamily[_i].health&lt;&lt;/if&gt;&gt;.&lt;br&gt;
@@ -7724,8 +7702,7 @@ Household size: &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set _hhSize to $FledFamily.
         $NPCs[_li].name, $NPCs[_li].age $NPCs[_li].relationship: &lt;&lt;if $NPCs[_li].health is &quot;deceased-pq&quot;&gt;&gt;deceased&lt;&lt;else&gt;&gt;$NPCs[_li].health&lt;&lt;/if&gt;&gt;.&lt;br&gt;
 &lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-&lt;br&gt;&lt;br&gt;
-        &lt;&lt;if $NPCsExtended.length gt 0&gt;&gt;
+        &lt;&lt;if $NPCsExtended.length gt 0&gt;&gt;&lt;br&gt;
 &#39;&#39;Extended family:&#39;&#39; &lt;br&gt;&lt;&lt;for _e, _idx range $NPCsExtended&gt;&gt;
 	$NPCsExtended[_e].name, $NPCsExtended[_e].age $NPCsExtended[_e].relationship: &lt;&lt;if $NPCsExtended[_e].health is &quot;infected&quot; and $plagueRevealed is 0&gt;&gt;healthy&lt;&lt;elseif $NPCsExtended[_e].health is &quot;deceased-pq&quot;&gt;&gt;deceased&lt;&lt;else&gt;&gt;$NPCsExtended[_e].health&lt;&lt;/if&gt;&gt;&lt;br&gt;
     &lt;&lt;/for&gt;&gt;
