@@ -79,6 +79,7 @@ When asked to **analyze, review, search, or edit** passage text from the Twine f
 
 - **Do not create new passages.** The `patch.js` script can only update existing `<tw-passagedata>` elements matched by `pid`. It cannot insert new passages into the HTML. Any new passage added to `passages.json` will be silently ignored during patching and will not appear in the game. Only the Twine editor can create new passages.
 - **New widgets go in the Claude-widgets passage (pid 114).** When you need to define a new `<<widget>>`, append its `<<widget "name">>...<</widget>>` block to the file `passages/114-Claude-widgets.txt`. Do not attempt to create a separate widget passage.
+- **New `def*` definition widgets go in the glossary-widgets passage (pid 81).** The `def*` widgets in `passages/081-glossary-widgets.txt` are kept in alphabetical order by widget name (case-insensitive, ignoring the `def` prefix). When adding a new definition widget, insert it into the correct alphabetical position — do not append to the end. The `defVar*` dispatcher widgets (e.g., `defVarReligion`, `defVarSocio`, `defVarRelationship`) are exceptions and remain at the end of the file after all alphabetical `def*` entries.
 
 ### Additional guardrails
 
