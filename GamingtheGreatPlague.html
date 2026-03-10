@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.70" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.72" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3958,14 +3958,14 @@ Your neighbors have begun to flee the city. Many are &lt;&lt;if $origin isnot &q
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $origin is &quot;London&quot; and $reputation lte 5&gt;&gt;While you do have a few friends nearby, they are unwilling to take you in. Maybe if you improved your reputation, you&#39;ll be able to convince someone to shelter you but until then you&#39;ll have to &lt;&lt;storyline-return &quot;take your chances in London.&quot;&gt;&gt;
 &lt;&lt;elseif $origin isnot &quot;London&quot;&gt;&gt;You still have family in $origin&lt;&lt;else&gt;&gt;You have several friends in the countryside&lt;&lt;/if&gt;&gt; who would take you in if you wanted to flee.&lt;br&gt;&lt;br&gt;
-&lt;&lt;decision-time&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;decision-time&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $origin is &quot;London&quot; and $reputation lte 5&gt;&gt;While you do have a few friends nearby, they are unwilling to take you in. Maybe if you improved your reputation, you&#39;ll be able to convince someone to shelter you but until then you&#39;ll have to &lt;&lt;storyline-return &quot;take your chances in London.&quot;&gt;&gt;
 &lt;&lt;else&gt;&gt;
 It&#39;s not too late for you to flee.
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;decision-time&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 /* Merchants and Nobles */
 &lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;nobles&quot;&gt;&gt;
