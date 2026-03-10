@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.67" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.68" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1869,12 +1869,6 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;set $debtorPrisonInfected to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;silently&gt;&gt;
-&lt;&lt;if $location is &quot;inside the City walls&quot; and hasVisited(&quot;June 1665&quot;)&gt;&gt;&lt;&lt;set $apothecary to 1&gt;&gt; /*this is OBE since currently apothecary set to always show*/
-	&lt;&lt;elseif $location isnot &quot;in the western suburbs&quot;&gt;&gt;
-		&lt;&lt;if $location isnot &quot;inside the City walls&quot; and passage() is &quot;June 1665&quot;&gt;&gt;&lt;&lt;set $apothecary to 1&gt;&gt;
-		&lt;&lt;/if&gt;&gt;
-	&lt;&lt;elseif $location is &quot;in the western suburbs&quot; and passage() is &quot;May 1665&quot;&gt;&gt;&lt;&lt;set $apothecary to 1&gt;&gt;
-	&lt;&lt;/if&gt;&gt;
     &lt;&lt;if ndef _infectedFamily&gt;&gt;&lt;&lt;set _infectedFamily = []&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;if ndef _infectedServants&gt;&gt;&lt;&lt;set _infectedServants = []&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;if ndef _infectedMaster&gt;&gt;&lt;&lt;set _infectedMaster = []&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -2700,6 +2694,9 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="master-death widget" tags="widget" position="150,725" size="100,100">&lt;&lt;widget &quot;servant-master-death&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;
 &lt;&lt;set _smdSingle to ($relationship is &quot;single&quot; or $relationship is &quot;betrothed&quot;)&gt;&gt;
+/* Select target array: single servants use $NPCs, married use $NPCsMaster */
+&lt;&lt;set _smdTarget to _smdSingle ? &quot;$NPCs&quot; : &quot;$NPCsMaster&quot;&gt;&gt;
+&lt;&lt;set _smdNPCs to State.getVar(_smdTarget)&gt;&gt;
 &lt;&lt;set _smdMasterAlive to false&gt;&gt;
 &lt;&lt;set _smdMasterDied to false&gt;&gt;
 &lt;&lt;set _smdMistressAlive to false&gt;&gt;
@@ -2709,35 +2706,19 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;set _smdMotherAlive to false&gt;&gt;
 &lt;&lt;set _smdMotherIdx to -1&gt;&gt;
 &lt;&lt;set _smdAdultSons to []&gt;&gt;
-&lt;&lt;if _smdSingle&gt;&gt;
-  &lt;&lt;for _sdi = 0; _sdi &lt; $NPCs.length; _sdi++&gt;&gt;
-    &lt;&lt;if $NPCs[_sdi].relationship is &quot;master&quot;&gt;&gt;
-      &lt;&lt;if $NPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;&lt;&lt;set _smdMasterAlive to true&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _smdMasterDied to true&gt;&gt;&lt;&lt;/if&gt;&gt;
-    &lt;&lt;elseif $NPCs[_sdi].relationship is &quot;mistress&quot;&gt;&gt;
-      &lt;&lt;if $NPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;&lt;&lt;set _smdMistressAlive to true&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _smdMistressDied to true&gt;&gt;&lt;&lt;/if&gt;&gt;
-    &lt;&lt;elseif $NPCs[_sdi].relationship is &quot;master&#39;s father&quot; and $NPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
+  &lt;&lt;for _sdi = 0; _sdi &lt; _smdNPCs.length; _sdi++&gt;&gt;
+    &lt;&lt;if _smdNPCs[_sdi].relationship is &quot;master&quot;&gt;&gt;
+      &lt;&lt;if _smdNPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;&lt;&lt;set _smdMasterAlive to true&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _smdMasterDied to true&gt;&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;elseif _smdNPCs[_sdi].relationship is &quot;mistress&quot;&gt;&gt;
+      &lt;&lt;if _smdNPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;&lt;&lt;set _smdMistressAlive to true&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _smdMistressDied to true&gt;&gt;&lt;&lt;/if&gt;&gt;
+    &lt;&lt;elseif _smdNPCs[_sdi].relationship is &quot;master&#39;s father&quot; and _smdNPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
       &lt;&lt;set _smdFatherAlive to true&gt;&gt;&lt;&lt;set _smdFatherIdx to _sdi&gt;&gt;
-    &lt;&lt;elseif $NPCs[_sdi].relationship is &quot;master&#39;s mother&quot; and $NPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
+    &lt;&lt;elseif _smdNPCs[_sdi].relationship is &quot;master&#39;s mother&quot; and _smdNPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
       &lt;&lt;set _smdMotherAlive to true&gt;&gt;&lt;&lt;set _smdMotherIdx to _sdi&gt;&gt;
-    &lt;&lt;elseif $NPCs[_sdi].relationship is &quot;master&#39;s son&quot; and $NPCs[_sdi].health isnot &quot;deceased&quot; and ($NPCs[_sdi].age is &quot;young adult&quot; or $NPCs[_sdi].age is &quot;middle-aged adult&quot; or $NPCs[_sdi].age is &quot;elderly adult&quot;)&gt;&gt;
-      &lt;&lt;set _smdAdultSons.push({idx: _sdi, agenum: ($NPCs[_sdi].agenum || 0)})&gt;&gt;
+    &lt;&lt;elseif _smdNPCs[_sdi].relationship is &quot;master&#39;s son&quot; and _smdNPCs[_sdi].health isnot &quot;deceased&quot; and (_smdNPCs[_sdi].age is &quot;young adult&quot; or _smdNPCs[_sdi].age is &quot;middle-aged adult&quot; or _smdNPCs[_sdi].age is &quot;elderly adult&quot;)&gt;&gt;
+      &lt;&lt;set _smdAdultSons.push({idx: _sdi, agenum: (_smdNPCs[_sdi].agenum || 0)})&gt;&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
-&lt;&lt;else&gt;&gt;
-  &lt;&lt;for _sdi = 0; _sdi &lt; $NPCsMaster.length; _sdi++&gt;&gt;
-    &lt;&lt;if $NPCsMaster[_sdi].relationship is &quot;master&quot;&gt;&gt;
-      &lt;&lt;if $NPCsMaster[_sdi].health isnot &quot;deceased&quot;&gt;&gt;&lt;&lt;set _smdMasterAlive to true&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _smdMasterDied to true&gt;&gt;&lt;&lt;/if&gt;&gt;
-    &lt;&lt;elseif $NPCsMaster[_sdi].relationship is &quot;mistress&quot;&gt;&gt;
-      &lt;&lt;if $NPCsMaster[_sdi].health isnot &quot;deceased&quot;&gt;&gt;&lt;&lt;set _smdMistressAlive to true&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _smdMistressDied to true&gt;&gt;&lt;&lt;/if&gt;&gt;
-    &lt;&lt;elseif $NPCsMaster[_sdi].relationship is &quot;master&#39;s father&quot; and $NPCsMaster[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-      &lt;&lt;set _smdFatherAlive to true&gt;&gt;&lt;&lt;set _smdFatherIdx to _sdi&gt;&gt;
-    &lt;&lt;elseif $NPCsMaster[_sdi].relationship is &quot;master&#39;s mother&quot; and $NPCsMaster[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-      &lt;&lt;set _smdMotherAlive to true&gt;&gt;&lt;&lt;set _smdMotherIdx to _sdi&gt;&gt;
-    &lt;&lt;elseif $NPCsMaster[_sdi].relationship is &quot;master&#39;s son&quot; and $NPCsMaster[_sdi].health isnot &quot;deceased&quot; and ($NPCsMaster[_sdi].age is &quot;young adult&quot; or $NPCsMaster[_sdi].age is &quot;middle-aged adult&quot; or $NPCsMaster[_sdi].age is &quot;elderly adult&quot;)&gt;&gt;
-      &lt;&lt;set _smdAdultSons.push({idx: _sdi, agenum: ($NPCsMaster[_sdi].agenum || 0)})&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-  &lt;&lt;/for&gt;&gt;
-&lt;&lt;/if&gt;&gt;
 &lt;&lt;if _smdAdultSons.length gt 0&gt;&gt;
   &lt;&lt;set _smdAdultSons to _smdAdultSons.sort((a, b) =&gt; b.agenum - a.agenum)&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -2753,25 +2734,14 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;if _smdFatherAlive&gt;&gt;
   /* Master&#39;s father becomes new master;
      surviving master&#39;s sons/daughters become master&#39;s grandsons/granddaughters */
-  &lt;&lt;if _smdSingle&gt;&gt;
-    &lt;&lt;set $NPCs[_smdFatherIdx].relationship to &quot;master&quot;&gt;&gt;
-    &lt;&lt;for _sdi = 0; _sdi &lt; $NPCs.length; _sdi++&gt;&gt;
-      &lt;&lt;if $NPCs[_sdi].relationship is &quot;master&#39;s son&quot; and $NPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCs[_sdi].relationship to &quot;master&#39;s grandson&quot;&gt;&gt;
-      &lt;&lt;elseif $NPCs[_sdi].relationship is &quot;master&#39;s daughter&quot; and $NPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCs[_sdi].relationship to &quot;master&#39;s granddaughter&quot;&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-  &lt;&lt;else&gt;&gt;
-    &lt;&lt;set $NPCsMaster[_smdFatherIdx].relationship to &quot;master&quot;&gt;&gt;
-    &lt;&lt;for _sdi = 0; _sdi &lt; $NPCsMaster.length; _sdi++&gt;&gt;
-      &lt;&lt;if $NPCsMaster[_sdi].relationship is &quot;master&#39;s son&quot; and $NPCsMaster[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCsMaster[_sdi].relationship to &quot;master&#39;s grandson&quot;&gt;&gt;
-      &lt;&lt;elseif $NPCsMaster[_sdi].relationship is &quot;master&#39;s daughter&quot; and $NPCsMaster[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCsMaster[_sdi].relationship to &quot;master&#39;s granddaughter&quot;&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
+  &lt;&lt;set _smdNPCs[_smdFatherIdx].relationship to &quot;master&quot;&gt;&gt;
+  &lt;&lt;for _sdi = 0; _sdi &lt; _smdNPCs.length; _sdi++&gt;&gt;
+    &lt;&lt;if _smdNPCs[_sdi].relationship is &quot;master&#39;s son&quot; and _smdNPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set _smdNPCs[_sdi].relationship to &quot;master&#39;s grandson&quot;&gt;&gt;
+    &lt;&lt;elseif _smdNPCs[_sdi].relationship is &quot;master&#39;s daughter&quot; and _smdNPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set _smdNPCs[_sdi].relationship to &quot;master&#39;s granddaughter&quot;&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
   &lt;&lt;set $masterTitle to &quot;master&quot;&gt;&gt;&lt;&lt;set $masterGender to &quot;male&quot;&gt;&gt;
   &lt;&lt;set _smdSucceeded to true&gt;&gt;
   &lt;&lt;NPCpronouns&gt;&gt;
@@ -2779,25 +2749,14 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 &lt;&lt;elseif _smdMotherAlive&gt;&gt;
   /* Master&#39;s mother becomes new widowed mistress;
      surviving master&#39;s sons/daughters become master&#39;s grandsons/granddaughters */
-  &lt;&lt;if _smdSingle&gt;&gt;
-    &lt;&lt;set $NPCs[_smdMotherIdx].relationship to &quot;mistress&quot;&gt;&gt;
-    &lt;&lt;for _sdi = 0; _sdi &lt; $NPCs.length; _sdi++&gt;&gt;
-      &lt;&lt;if $NPCs[_sdi].relationship is &quot;master&#39;s son&quot; and $NPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCs[_sdi].relationship to &quot;master&#39;s grandson&quot;&gt;&gt;
-      &lt;&lt;elseif $NPCs[_sdi].relationship is &quot;master&#39;s daughter&quot; and $NPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCs[_sdi].relationship to &quot;master&#39;s granddaughter&quot;&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-  &lt;&lt;else&gt;&gt;
-    &lt;&lt;set $NPCsMaster[_smdMotherIdx].relationship to &quot;mistress&quot;&gt;&gt;
-    &lt;&lt;for _sdi = 0; _sdi &lt; $NPCsMaster.length; _sdi++&gt;&gt;
-      &lt;&lt;if $NPCsMaster[_sdi].relationship is &quot;master&#39;s son&quot; and $NPCsMaster[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCsMaster[_sdi].relationship to &quot;master&#39;s grandson&quot;&gt;&gt;
-      &lt;&lt;elseif $NPCsMaster[_sdi].relationship is &quot;master&#39;s daughter&quot; and $NPCsMaster[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCsMaster[_sdi].relationship to &quot;master&#39;s granddaughter&quot;&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
+  &lt;&lt;set _smdNPCs[_smdMotherIdx].relationship to &quot;mistress&quot;&gt;&gt;
+  &lt;&lt;for _sdi = 0; _sdi &lt; _smdNPCs.length; _sdi++&gt;&gt;
+    &lt;&lt;if _smdNPCs[_sdi].relationship is &quot;master&#39;s son&quot; and _smdNPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set _smdNPCs[_sdi].relationship to &quot;master&#39;s grandson&quot;&gt;&gt;
+    &lt;&lt;elseif _smdNPCs[_sdi].relationship is &quot;master&#39;s daughter&quot; and _smdNPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set _smdNPCs[_sdi].relationship to &quot;master&#39;s granddaughter&quot;&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
   &lt;&lt;set $masterTitle to &quot;mistress&quot;&gt;&gt;&lt;&lt;set $masterGender to &quot;female&quot;&gt;&gt;
   &lt;&lt;set _smdSucceeded to true&gt;&gt;
   &lt;&lt;NPCpronouns&gt;&gt;
@@ -2806,25 +2765,14 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
   /* Oldest adult son becomes new master;
      remaining master&#39;s sons/daughters become master&#39;s brothers/sisters */
   &lt;&lt;set _smdSonIdx to _smdAdultSons[0].idx&gt;&gt;
-  &lt;&lt;if _smdSingle&gt;&gt;
-    &lt;&lt;set $NPCs[_smdSonIdx].relationship to &quot;master&quot;&gt;&gt;
-    &lt;&lt;for _sdi = 0; _sdi &lt; $NPCs.length; _sdi++&gt;&gt;
-      &lt;&lt;if $NPCs[_sdi].relationship is &quot;master&#39;s son&quot; and $NPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCs[_sdi].relationship to &quot;master&#39;s brother&quot;&gt;&gt;
-      &lt;&lt;elseif $NPCs[_sdi].relationship is &quot;master&#39;s daughter&quot; and $NPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCs[_sdi].relationship to &quot;master&#39;s sister&quot;&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-  &lt;&lt;else&gt;&gt;
-    &lt;&lt;set $NPCsMaster[_smdSonIdx].relationship to &quot;master&quot;&gt;&gt;
-    &lt;&lt;for _sdi = 0; _sdi &lt; $NPCsMaster.length; _sdi++&gt;&gt;
-      &lt;&lt;if $NPCsMaster[_sdi].relationship is &quot;master&#39;s son&quot; and $NPCsMaster[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCsMaster[_sdi].relationship to &quot;master&#39;s brother&quot;&gt;&gt;
-      &lt;&lt;elseif $NPCsMaster[_sdi].relationship is &quot;master&#39;s daughter&quot; and $NPCsMaster[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
-        &lt;&lt;set $NPCsMaster[_sdi].relationship to &quot;master&#39;s sister&quot;&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
+  &lt;&lt;set _smdNPCs[_smdSonIdx].relationship to &quot;master&quot;&gt;&gt;
+  &lt;&lt;for _sdi = 0; _sdi &lt; _smdNPCs.length; _sdi++&gt;&gt;
+    &lt;&lt;if _smdNPCs[_sdi].relationship is &quot;master&#39;s son&quot; and _smdNPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set _smdNPCs[_sdi].relationship to &quot;master&#39;s brother&quot;&gt;&gt;
+    &lt;&lt;elseif _smdNPCs[_sdi].relationship is &quot;master&#39;s daughter&quot; and _smdNPCs[_sdi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set _smdNPCs[_sdi].relationship to &quot;master&#39;s sister&quot;&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
   &lt;&lt;set $masterTitle to &quot;master&quot;&gt;&gt;&lt;&lt;set $masterGender to &quot;male&quot;&gt;&gt;
   &lt;&lt;set _smdSucceeded to true&gt;&gt;
   &lt;&lt;NPCpronouns&gt;&gt;
@@ -2845,32 +2793,21 @@ Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 /* After a successful succession (not dissolution), prefix deceased non-servants
    with &quot;late &quot;. &quot;mistress&quot; maps to &quot;late master&#39;s wife&quot;; all others prepend &quot;late &quot;. */
 &lt;&lt;if _smdSucceeded&gt;&gt;
-  &lt;&lt;if _smdSingle&gt;&gt;
-    &lt;&lt;for _sdi = 0; _sdi &lt; $NPCs.length; _sdi++&gt;&gt;
-      &lt;&lt;if $NPCs[_sdi].health is &quot;deceased&quot; and $NPCs[_sdi].relationship isnot &quot;male servant&quot; and $NPCs[_sdi].relationship isnot &quot;female servant&quot;&gt;&gt;
-        &lt;&lt;if $NPCs[_sdi].relationship is &quot;mistress&quot;&gt;&gt;
-          &lt;&lt;set $NPCs[_sdi].relationship to &quot;late master&#39;s wife&quot;&gt;&gt;
-        &lt;&lt;else&gt;&gt;
-          &lt;&lt;set $NPCs[_sdi].relationship to &quot;late &quot; + $NPCs[_sdi].relationship&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
+  &lt;&lt;for _sdi = 0; _sdi &lt; _smdNPCs.length; _sdi++&gt;&gt;
+    &lt;&lt;if _smdNPCs[_sdi].health is &quot;deceased&quot; and _smdNPCs[_sdi].relationship isnot &quot;male servant&quot; and _smdNPCs[_sdi].relationship isnot &quot;female servant&quot;&gt;&gt;
+      &lt;&lt;if _smdNPCs[_sdi].relationship is &quot;mistress&quot;&gt;&gt;
+        &lt;&lt;set _smdNPCs[_sdi].relationship to &quot;late master&#39;s wife&quot;&gt;&gt;
+      &lt;&lt;else&gt;&gt;
+        &lt;&lt;set _smdNPCs[_sdi].relationship to &quot;late &quot; + _smdNPCs[_sdi].relationship&gt;&gt;
       &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-  &lt;&lt;else&gt;&gt;
-    &lt;&lt;for _sdi = 0; _sdi &lt; $NPCsMaster.length; _sdi++&gt;&gt;
-      &lt;&lt;if $NPCsMaster[_sdi].health is &quot;deceased&quot; and $NPCsMaster[_sdi].relationship isnot &quot;male servant&quot; and $NPCsMaster[_sdi].relationship isnot &quot;female servant&quot;&gt;&gt;
-        &lt;&lt;if $NPCsMaster[_sdi].relationship is &quot;mistress&quot;&gt;&gt;
-          &lt;&lt;set $NPCsMaster[_sdi].relationship to &quot;late master&#39;s wife&quot;&gt;&gt;
-        &lt;&lt;else&gt;&gt;
-          &lt;&lt;set $NPCsMaster[_sdi].relationship to &quot;late &quot; + $NPCsMaster[_sdi].relationship&gt;&gt;
-        &lt;&lt;/if&gt;&gt;
-      &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/for&gt;&gt;
-  &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;set-hoh&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="widow widget" tags="widget" position="150,850" size="100,100">&lt;&lt;widget &quot;check-widowed&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+</tw-passagedata><tw-passagedata pid="36" name="widow widget" tags="widget" position="150,850" size="100,100">&lt;&lt;widget &quot;check-widowed&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;
   &lt;&lt;for _cwi = 0; _cwi &lt; $NPCs.length; _cwi++&gt;&gt;
     &lt;&lt;if ($NPCs[_cwi].relationship is &quot;husband&quot; or $NPCs[_cwi].relationship is &quot;wife&quot;) and $NPCs[_cwi].health.indexOf(&quot;deceased&quot;) is 0&gt;&gt;
@@ -3038,30 +2975,10 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
     &lt;&lt;widget &quot;check-NPCs&quot;&gt;&gt;
 /* check to see which NPCs are infected across all four arrays */
 &lt;&lt;silently&gt;&gt;
-&lt;&lt;set _infectedFamily = []&gt;&gt;
-&lt;&lt;for _y, _household range $NPCs&gt;&gt;
-    &lt;&lt;if _household.health is &quot;infected&quot;&gt;&gt;
-        &lt;&lt;set _infectedFamily.push(_y)&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-&lt;&lt;/for&gt;&gt;
-&lt;&lt;set _infectedServants = []&gt;&gt;
-&lt;&lt;for _y, _sv range $NPCsServants&gt;&gt;
-    &lt;&lt;if _sv.health is &quot;infected&quot;&gt;&gt;
-        &lt;&lt;set _infectedServants.push(_y)&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-&lt;&lt;/for&gt;&gt;
-&lt;&lt;set _infectedMaster = []&gt;&gt;
-&lt;&lt;for _y, _mh range $NPCsMaster&gt;&gt;
-    &lt;&lt;if _mh.health is &quot;infected&quot;&gt;&gt;
-        &lt;&lt;set _infectedMaster.push(_y)&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-&lt;&lt;/for&gt;&gt;
-&lt;&lt;set _infectedExtended = []&gt;&gt;
-&lt;&lt;for _y, _eh range $NPCsExtended&gt;&gt;
-    &lt;&lt;if _eh.health is &quot;infected&quot;&gt;&gt;
-        &lt;&lt;set _infectedExtended.push(_y)&gt;&gt;
-    &lt;&lt;/if&gt;&gt;
-&lt;&lt;/for&gt;&gt;
+&lt;&lt;check-infected &quot;$NPCs&quot;&gt;&gt;&lt;&lt;set _infectedFamily to _infectedResult&gt;&gt;
+&lt;&lt;check-infected &quot;$NPCsServants&quot;&gt;&gt;&lt;&lt;set _infectedServants to _infectedResult&gt;&gt;
+&lt;&lt;check-infected &quot;$NPCsMaster&quot;&gt;&gt;&lt;&lt;set _infectedMaster to _infectedResult&gt;&gt;
+&lt;&lt;check-infected &quot;$NPCsExtended&quot;&gt;&gt;&lt;&lt;set _infectedExtended to _infectedResult&gt;&gt;
 &lt;&lt;set _anyInfected to (_infectedFamily.length + _infectedServants.length + _infectedMaster.length + _infectedExtended.length) gt 0&gt;&gt;
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
@@ -3479,15 +3396,7 @@ Total wealth: $money (&lt;&lt;conversion&gt;&gt;)
 </tw-passagedata><tw-passagedata pid="57" name="ForgiveMe" tags="" position="1725,775" size="100,100">Forgiveness is a Christian virtue and you are lucky that your neighbors practice it. You publicly apologize and are officially forgiven, though it will take a while longer before your reputation is restored.
 
 &lt;&lt;storyline-return&gt;&gt;</tw-passagedata><tw-passagedata pid="58" name="debtor widgets" tags="widget money" position="2100,175" size="100,100">&lt;&lt;widget &quot;debtor&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-
-/*set maximum allowable debt*/
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
-&lt;&lt;set _debtCeiling to -60&gt;&gt;
-&lt;&lt;elseif $socio is &quot;servants&quot; and ($age is &quot;child&quot; or $age is &quot;adolescent&quot;)&gt;&gt;
-&lt;&lt;set _debtCeiling to -60&gt;&gt;
-&lt;&lt;else&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;set _debtCeiling to ($income) * -1&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-
+&lt;&lt;calculate-ceiling&gt;&gt;
 /* consequences for exceeding debt ceiling */
 &lt;&lt;if $socio is &quot;nobles&quot; and $money lte (_debtCeiling*4)&gt;&gt;
 While nobles are expected to lead a lavish lifestyle, you&#39;ve been spending so far beyond your income that it&#39;s finally caught up to you. &lt;&lt;prison&gt;&gt;
@@ -3646,21 +3555,9 @@ You are committed to the Fleet. &lt;&lt;if $office isnot &quot;&quot;&gt;&gt;Bec
 &lt;&lt;else&gt;&gt;
 
 /* Recalculate debt ceiling */
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
-&lt;&lt;set _dpCeiling to -60&gt;&gt;
-&lt;&lt;elseif $socio is &quot;servants&quot; and ($age is &quot;child&quot; or $age is &quot;adolescent&quot;)&gt;&gt;
-&lt;&lt;set _dpCeiling to -60&gt;&gt;
-&lt;&lt;else&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;set _dpCeiling to ($income) * -1&gt;&gt;
-&lt;&lt;/if&gt;&gt;
+&lt;&lt;calculate-ceiling&gt;&gt;
 
-/* Determine if debt still exceeds ceiling */
-&lt;&lt;set _dpExceeded to false&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot; and $money lte (_dpCeiling*4)&gt;&gt;&lt;&lt;set _dpExceeded to true&gt;&gt;
-&lt;&lt;elseif ($socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;) and $money lte (_dpCeiling*3)&gt;&gt;&lt;&lt;set _dpExceeded to true&gt;&gt;
-&lt;&lt;elseif $money lte (_dpCeiling*2)&gt;&gt;&lt;&lt;set _dpExceeded to true&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-
-&lt;&lt;if not _dpExceeded&gt;&gt;
+&lt;&lt;if not _debtExceeded&gt;&gt;
 /* Debt has improved enough — automatic release */
 &lt;&lt;set $inDebtorsPrison to 0&gt;&gt;
 &lt;&lt;set $debtorPrisonMonths to 0&gt;&gt;
@@ -3703,20 +3600,8 @@ You have fallen into debt and can no longer afford the monthly recusancy fines f
 /* break quarantine if run out of funds */
 &lt;&lt;widget &quot;quarantine-debt-check&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $money lt 0&gt;&gt;
-/* Calculate debt ceiling using prorated weekly income/expenses */
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set _qdCeiling to 60&gt;&gt;
-&lt;&lt;elseif $socio is &quot;servants&quot; and ($age is &quot;child&quot; or $age is &quot;adolescent&quot;)&gt;&gt;&lt;&lt;set _qdCeiling to 60&gt;&gt;
-&lt;&lt;else&gt;&gt;
-&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;
-&lt;&lt;set _qdCeiling to ($income) * -1&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-/* Check if debt exceeds class-based ceiling */
-&lt;&lt;set _qdExceeded to false&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot; and $money lte (_qdCeiling * 4)&gt;&gt;&lt;&lt;set _qdExceeded to true&gt;&gt;
-&lt;&lt;elseif ($socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;) and $money lte (_qdCeiling * 3)&gt;&gt;&lt;&lt;set _qdExceeded to true&gt;&gt;
-&lt;&lt;elseif $money lte (_qdCeiling * 2)&gt;&gt;&lt;&lt;set _qdExceeded to true&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;if _qdExceeded and $playerPlagueStatus isnot &quot;infected&quot; and $playerPlagueStatus isnot &quot;recovered&quot;&gt;&gt;
+&lt;&lt;calculate-ceiling&gt;&gt;
+&lt;&lt;if _debtExceeded and $playerPlagueStatus isnot &quot;infected&quot; and $playerPlagueStatus isnot &quot;recovered&quot;&gt;&gt;
 &lt;br&gt;&lt;br&gt;&lt;span id=&quot;break-quarantine&quot;&gt;You are running desperately low on money. With no income coming in, your debts are mounting. Do you risk breaking quarantine to earn some money?&lt;br&gt;&lt;br&gt;
 &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#break-quarantine&quot;&gt;&gt;There&#39;s no reason for you to be shut up in your house when you are healthy and willing to work. You decide to risk sneaking out one day while the warder is distracted handing off his guard duties to the next man coming on duty.
 &lt;&lt;if random(1,2) is 1&gt;&gt;
@@ -5816,141 +5701,20 @@ You have found a &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;husband&lt;&lt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;set _causeWeights to {fever: 741, cough: 32, colic: 40, convulsions: 825, smallpox: 38, &quot;griping in the guts&quot;: 676, measles: 3, rickets: 171, &quot;spotted fever&quot;: 141, &quot;stopping of the stomach&quot;: 107, teeth: 715, vomiting: 18}&gt;&gt;&lt;&lt;/if&gt;&gt;
 
-/* Track contagion per array (empty string = none triggered yet) */
-&lt;&lt;set _npcContagion to &quot;&quot;&gt;&gt;&lt;&lt;set _masterContagion to &quot;&quot;&gt;&gt;&lt;&lt;set _extendedContagion to &quot;&quot;&gt;&gt;&lt;&lt;set _servantsContagion to &quot;&quot;&gt;&gt;
-
 /* Collect all dead NPCs for a single funeral choice */
 &lt;&lt;set _deadNPCs to []&gt;&gt;
 
-/* === $NPCs (household) === */
-&lt;&lt;for _di = 0; _di lt $NPCs.length; _di++&gt;&gt;&lt;&lt;if $NPCs[_di].health is &quot;healthy&quot;&gt;&gt;&lt;&lt;if $NPCs[_di].age is &quot;infant&quot;&gt;&gt;
-&lt;&lt;if random(1,1000) lte 56&gt;&gt;
-&lt;&lt;set _cause to weightedEither(_causeWeights)&gt;&gt;&lt;&lt;set $NPCs[_di].health to &quot;deceased&quot;&gt;&gt;Your $NPCs[_di].relationship $NPCs[_di].name has died of _cause.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCs[_di], label: &quot;your &quot; + $NPCs[_di].relationship})&gt;&gt;
-&lt;&lt;if (_cause is &quot;smallpox&quot; or _cause is &quot;measles&quot;) and _npcContagion is &quot;&quot;&gt;&gt;&lt;&lt;set _npcContagion to _cause&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $NPCs[_di].age is &quot;child&quot;&gt;&gt;
-&lt;&lt;if random(1,1000) is 1&gt;&gt;
-&lt;&lt;set _cause to weightedEither(_causeWeights)&gt;&gt;&lt;&lt;set $NPCs[_di].health to &quot;deceased&quot;&gt;&gt;Your $NPCs[_di].relationship $NPCs[_di].name has died of _cause.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCs[_di], label: &quot;your &quot; + $NPCs[_di].relationship})&gt;&gt;
-&lt;&lt;if (_cause is &quot;smallpox&quot; or _cause is &quot;measles&quot;) and _npcContagion is &quot;&quot;&gt;&gt;&lt;&lt;set _npcContagion to _cause&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $NPCs[_di].age is &quot;elderly adult&quot;&gt;&gt;
-&lt;&lt;if random(1,100) is 1&gt;&gt;&lt;&lt;set $NPCs[_di].health to &quot;deceased&quot;&gt;&gt;Your $NPCs[_di].relationship $NPCs[_di].name has died of old age.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCs[_di], label: &quot;your &quot; + $NPCs[_di].relationship})&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;
+/* Death rolls for each NPC array */
+&lt;&lt;npc-death-roll &quot;$NPCs&quot; &quot;your &quot; true&gt;&gt;&lt;&lt;set _npcContagion to _ndContagion&gt;&gt;
+&lt;&lt;npc-death-roll &quot;$NPCsMaster&quot; &quot;the &quot; true&gt;&gt;&lt;&lt;set _masterContagion to _ndContagion&gt;&gt;
+&lt;&lt;npc-death-roll &quot;$NPCsExtended&quot; &quot;your &quot; true&gt;&gt;&lt;&lt;set _extendedContagion to _ndContagion&gt;&gt;
+&lt;&lt;npc-death-roll &quot;$NPCsServants&quot; &quot;your &quot; false&gt;&gt;&lt;&lt;set _servantsContagion to _ndContagion&gt;&gt;
 
-/* === $NPCsMaster (master&#39;s household) === */
-&lt;&lt;for _di = 0; _di lt $NPCsMaster.length; _di++&gt;&gt;
-&lt;&lt;if $NPCsMaster[_di].health is &quot;healthy&quot;&gt;&gt;&lt;&lt;if $NPCsMaster[_di].age is &quot;infant&quot;&gt;&gt;
-&lt;&lt;if random(1,1000) lte 56&gt;&gt;
-&lt;&lt;set _cause to weightedEither(_causeWeights)&gt;&gt;&lt;&lt;set $NPCsMaster[_di].health to &quot;deceased&quot;&gt;&gt;The $NPCsMaster[_di].relationship $NPCsMaster[_di].name has died of _cause.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCsMaster[_di], label: &quot;the &quot; + $NPCsMaster[_di].relationship})&gt;&gt;
-&lt;&lt;if (_cause is &quot;smallpox&quot; or _cause is &quot;measles&quot;) and _masterContagion is &quot;&quot;&gt;&gt;&lt;&lt;set _masterContagion to _cause&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $NPCsMaster[_di].age is &quot;child&quot;&gt;&gt;
-&lt;&lt;if random(1,1000) is 1&gt;&gt;
-&lt;&lt;set _cause to weightedEither(_causeWeights)&gt;&gt;&lt;&lt;set $NPCsMaster[_di].health to &quot;deceased&quot;&gt;&gt;The $NPCsMaster[_di].relationship $NPCsMaster[_di].name has died of _cause.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCsMaster[_di], label: &quot;the &quot; + $NPCsMaster[_di].relationship})&gt;&gt;
-&lt;&lt;if (_cause is &quot;smallpox&quot; or _cause is &quot;measles&quot;) and _masterContagion is &quot;&quot;&gt;&gt;&lt;&lt;set _masterContagion to _cause&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $NPCsMaster[_di].age is &quot;elderly adult&quot;&gt;&gt;
-&lt;&lt;if random(1,100) is 1&gt;&gt;&lt;&lt;set $NPCsMaster[_di].health to &quot;deceased&quot;&gt;&gt;The $NPCsMaster[_di].relationship $NPCsMaster[_di].name has died of old age.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCsMaster[_di], label: &quot;the &quot; + $NPCsMaster[_di].relationship})&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/for&gt;&gt;
-
-/* === $NPCsExtended (extended household) === */
-&lt;&lt;for _di = 0; _di lt $NPCsExtended.length; _di++&gt;&gt;&lt;&lt;if $NPCsExtended[_di].health is &quot;healthy&quot;&gt;&gt;
-&lt;&lt;if $NPCsExtended[_di].age is &quot;infant&quot;&gt;&gt;
-&lt;&lt;if random(1,1000) lte 56&gt;&gt;
-&lt;&lt;set _cause to weightedEither(_causeWeights)&gt;&gt;&lt;&lt;set $NPCsExtended[_di].health to &quot;deceased&quot;&gt;&gt;Your $NPCsExtended[_di].relationship $NPCsExtended[_di].name has died of _cause.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCsExtended[_di], label: &quot;your &quot; + $NPCsExtended[_di].relationship})&gt;&gt;
-&lt;&lt;if (_cause is &quot;smallpox&quot; or _cause is &quot;measles&quot;) and _extendedContagion is &quot;&quot;&gt;&gt;&lt;&lt;set _extendedContagion to _cause&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $NPCsExtended[_di].age is &quot;child&quot;&gt;&gt;
-&lt;&lt;if random(1,1000) is 1&gt;&gt;
-&lt;&lt;set _cause to weightedEither(_causeWeights)&gt;&gt;&lt;&lt;set $NPCsExtended[_di].health to &quot;deceased&quot;&gt;&gt;Your $NPCsExtended[_di].relationship $NPCsExtended[_di].name has died of _cause.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCsExtended[_di], label: &quot;your &quot; + $NPCsExtended[_di].relationship})&gt;&gt;
-&lt;&lt;if (_cause is &quot;smallpox&quot; or _cause is &quot;measles&quot;) and _extendedContagion is &quot;&quot;&gt;&gt;&lt;&lt;set _extendedContagion to _cause&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $NPCsExtended[_di].age is &quot;elderly adult&quot;&gt;&gt;
-&lt;&lt;if random(1,100) is 1&gt;&gt;&lt;&lt;set $NPCsExtended[_di].health to &quot;deceased&quot;&gt;&gt;Your $NPCsExtended[_di].relationship $NPCsExtended[_di].name has died of old age.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCsExtended[_di], label: &quot;your &quot; + $NPCsExtended[_di].relationship})&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/for&gt;&gt;
-
-/* === $NPCsServants (servants) === */
-&lt;&lt;for _di = 0; _di lt $NPCsServants.length; _di++&gt;&gt;
-&lt;&lt;if $NPCsServants[_di].health is &quot;healthy&quot;&gt;&gt;&lt;&lt;if $NPCsServants[_di].age is &quot;infant&quot;&gt;&gt;
-&lt;&lt;if random(1,1000) lte 56&gt;&gt;
-&lt;&lt;set _cause to weightedEither(_causeWeights)&gt;&gt;&lt;&lt;set $NPCsServants[_di].health to &quot;deceased&quot;&gt;&gt;Your servant $NPCsServants[_di].name has died of _cause.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCsServants[_di], label: &quot;your servant&quot;})&gt;&gt;
-&lt;&lt;if (_cause is &quot;smallpox&quot; or _cause is &quot;measles&quot;) and _servantsContagion is &quot;&quot;&gt;&gt;&lt;&lt;set _servantsContagion to _cause&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $NPCsServants[_di].age is &quot;child&quot;&gt;&gt;
-&lt;&lt;if random(1,1000) is 1&gt;&gt;
-&lt;&lt;set _cause to weightedEither(_causeWeights)&gt;&gt;&lt;&lt;set $NPCsServants[_di].health to &quot;deceased&quot;&gt;&gt;Your servant $NPCsServants[_di].name has died of _cause.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCsServants[_di], label: &quot;your servant&quot;})&gt;&gt;
-&lt;&lt;if (_cause is &quot;smallpox&quot; or _cause is &quot;measles&quot;) and _servantsContagion is &quot;&quot;&gt;&gt;&lt;&lt;set _servantsContagion to _cause&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif $NPCsServants[_di].age is &quot;elderly adult&quot;&gt;&gt;
-&lt;&lt;if random(1,100) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_di].health to &quot;deceased&quot;&gt;&gt;Your servant $NPCsServants[_di].name has died of old age.&lt;br&gt;
-&lt;&lt;set _deadNPCs.push({npc: $NPCsServants[_di], label: &quot;your servant&quot;})&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/for&gt;&gt;
-
-/* === Contagion: $NPCs === */
-&lt;&lt;if _npcContagion isnot &quot;&quot;&gt;&gt;
-&lt;&lt;set _contagionDead to []&gt;&gt;&lt;&lt;set _contagionSurvived to []&gt;&gt;
-&lt;&lt;for _di = 0; _di lt $NPCs.length; _di++&gt;&gt;&lt;&lt;if $NPCs[_di].health is &quot;healthy&quot;&gt;&gt;
-&lt;&lt;set _cr to random(1,100)&gt;&gt;
-&lt;&lt;if _npcContagion is &quot;smallpox&quot;&gt;&gt;
-&lt;&lt;if _cr lte 30&gt;&gt;&lt;&lt;set $NPCs[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _contagionDead.push(_di)&gt;&gt;
-&lt;&lt;elseif _cr lte 90&gt;&gt;&lt;&lt;set _contagionSurvived.push(_di)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif _npcContagion is &quot;measles&quot;&gt;&gt;
-&lt;&lt;if _cr lte 10&gt;&gt;&lt;&lt;set $NPCs[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _contagionDead.push(_di)&gt;&gt;
-&lt;&lt;elseif _cr lte 90&gt;&gt;&lt;&lt;set _contagionSurvived.push(_di)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;
-&lt;&lt;if _contagionDead.length gt 0&gt;&gt;Tragically, &lt;&lt;for _gi = 0; _gi lt _contagionDead.length; _gi++&gt;&gt;&lt;&lt;if _gi gt 0&gt;&gt; and &lt;&lt;/if&gt;&gt;your $NPCs[_contagionDead[_gi]].relationship $NPCs[_contagionDead[_gi]].name&lt;&lt;/for&gt;&gt; &lt;&lt;if _contagionDead.length eq 1&gt;&gt;has&lt;&lt;else&gt;&gt;have&lt;&lt;/if&gt;&gt; also died of _npcContagion.&lt;br&gt;&lt;&lt;for _gi = 0; _gi lt _contagionDead.length; _gi++&gt;&gt;&lt;&lt;set _deadNPCs.push({npc: $NPCs[_contagionDead[_gi]], label: &quot;your &quot; + $NPCs[_contagionDead[_gi]].relationship})&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if _contagionSurvived.length gt 0&gt;&gt;&lt;&lt;for _gi = 0; _gi lt _contagionSurvived.length; _gi++&gt;&gt;&lt;&lt;if _gi gt 0&gt;&gt; and &lt;&lt;/if&gt;&gt;your $NPCs[_contagionSurvived[_gi]].relationship $NPCs[_contagionSurvived[_gi]].name&lt;&lt;/for&gt;&gt; &lt;&lt;if _contagionSurvived.length eq 1&gt;&gt;has&lt;&lt;else&gt;&gt;have&lt;&lt;/if&gt;&gt; contracted _npcContagion but survived.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-
-/* === Contagion: $NPCsMaster === */
-&lt;&lt;if _masterContagion isnot &quot;&quot;&gt;&gt;
-&lt;&lt;set _contagionDead to []&gt;&gt;&lt;&lt;set _contagionSurvived to []&gt;&gt;
-&lt;&lt;for _di = 0; _di lt $NPCsMaster.length; _di++&gt;&gt;&lt;&lt;if $NPCsMaster[_di].health is &quot;healthy&quot;&gt;&gt;
-&lt;&lt;set _cr to random(1,100)&gt;&gt;
-&lt;&lt;if _masterContagion is &quot;smallpox&quot;&gt;&gt;
-&lt;&lt;if _cr lte 30&gt;&gt;&lt;&lt;set $NPCsMaster[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _contagionDead.push(_di)&gt;&gt;
-&lt;&lt;elseif _cr lte 90&gt;&gt;&lt;&lt;set _contagionSurvived.push(_di)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif _masterContagion is &quot;measles&quot;&gt;&gt;
-&lt;&lt;if _cr lte 10&gt;&gt;&lt;&lt;set $NPCsMaster[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _contagionDead.push(_di)&gt;&gt;
-&lt;&lt;elseif _cr lte 90&gt;&gt;&lt;&lt;set _contagionSurvived.push(_di)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;
-&lt;&lt;if _contagionDead.length gt 0&gt;&gt;Tragically, &lt;&lt;for _gi = 0; _gi lt _contagionDead.length; _gi++&gt;&gt;&lt;&lt;if _gi gt 0&gt;&gt; and &lt;&lt;/if&gt;&gt;the $NPCsMaster[_contagionDead[_gi]].relationship $NPCsMaster[_contagionDead[_gi]].name&lt;&lt;/for&gt;&gt; &lt;&lt;if _contagionDead.length eq 1&gt;&gt;has&lt;&lt;else&gt;&gt;have&lt;&lt;/if&gt;&gt; also died of _masterContagion.&lt;br&gt;&lt;&lt;for _gi = 0; _gi lt _contagionDead.length; _gi++&gt;&gt;&lt;&lt;set _deadNPCs.push({npc: $NPCsMaster[_contagionDead[_gi]], label: &quot;the &quot; + $NPCsMaster[_contagionDead[_gi]].relationship})&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if _contagionSurvived.length gt 0&gt;&gt;&lt;&lt;for _gi = 0; _gi lt _contagionSurvived.length; _gi++&gt;&gt;&lt;&lt;if _gi gt 0&gt;&gt; and &lt;&lt;/if&gt;&gt;the $NPCsMaster[_contagionSurvived[_gi]].relationship $NPCsMaster[_contagionSurvived[_gi]].name&lt;&lt;/for&gt;&gt; &lt;&lt;if _contagionSurvived.length eq 1&gt;&gt;has&lt;&lt;else&gt;&gt;have&lt;&lt;/if&gt;&gt; contracted _masterContagion but survived.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-
-/* === Contagion: $NPCsExtended === */
-&lt;&lt;if _extendedContagion isnot &quot;&quot;&gt;&gt;
-&lt;&lt;set _contagionDead to []&gt;&gt;&lt;&lt;set _contagionSurvived to []&gt;&gt;
-&lt;&lt;for _di = 0; _di lt $NPCsExtended.length; _di++&gt;&gt;&lt;&lt;if $NPCsExtended[_di].health is &quot;healthy&quot;&gt;&gt;
-&lt;&lt;set _cr to random(1,100)&gt;&gt;
-&lt;&lt;if _extendedContagion is &quot;smallpox&quot;&gt;&gt;
-&lt;&lt;if _cr lte 30&gt;&gt;&lt;&lt;set $NPCsExtended[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _contagionDead.push(_di)&gt;&gt;
-&lt;&lt;elseif _cr lte 90&gt;&gt;&lt;&lt;set _contagionSurvived.push(_di)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif _extendedContagion is &quot;measles&quot;&gt;&gt;
-&lt;&lt;if _cr lte 10&gt;&gt;&lt;&lt;set $NPCsExtended[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _contagionDead.push(_di)&gt;&gt;
-&lt;&lt;elseif _cr lte 90&gt;&gt;&lt;&lt;set _contagionSurvived.push(_di)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;
-&lt;&lt;if _contagionDead.length gt 0&gt;&gt;Tragically, &lt;&lt;for _gi = 0; _gi lt _contagionDead.length; _gi++&gt;&gt;&lt;&lt;if _gi gt 0&gt;&gt; and &lt;&lt;/if&gt;&gt;your $NPCsExtended[_contagionDead[_gi]].relationship $NPCsExtended[_contagionDead[_gi]].name&lt;&lt;/for&gt;&gt; &lt;&lt;if _contagionDead.length eq 1&gt;&gt;has&lt;&lt;else&gt;&gt;have&lt;&lt;/if&gt;&gt; also died of _extendedContagion.&lt;br&gt;&lt;&lt;for _gi = 0; _gi lt _contagionDead.length; _gi++&gt;&gt;&lt;&lt;set _deadNPCs.push({npc: $NPCsExtended[_contagionDead[_gi]], label: &quot;your &quot; + $NPCsExtended[_contagionDead[_gi]].relationship})&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if _contagionSurvived.length gt 0&gt;&gt;&lt;&lt;for _gi = 0; _gi lt _contagionSurvived.length; _gi++&gt;&gt;&lt;&lt;if _gi gt 0&gt;&gt; and &lt;&lt;/if&gt;&gt;your $NPCsExtended[_contagionSurvived[_gi]].relationship $NPCsExtended[_contagionSurvived[_gi]].name&lt;&lt;/for&gt;&gt; &lt;&lt;if _contagionSurvived.length eq 1&gt;&gt;has&lt;&lt;else&gt;&gt;have&lt;&lt;/if&gt;&gt; contracted _extendedContagion but survived.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-
-/* === Contagion: $NPCsServants === */
-&lt;&lt;if _servantsContagion isnot &quot;&quot;&gt;&gt;
-&lt;&lt;set _contagionDead to []&gt;&gt;&lt;&lt;set _contagionSurvived to []&gt;&gt;
-&lt;&lt;for _di = 0; _di lt $NPCsServants.length; _di++&gt;&gt;&lt;&lt;if $NPCsServants[_di].health is &quot;healthy&quot;&gt;&gt;
-&lt;&lt;set _cr to random(1,100)&gt;&gt;
-&lt;&lt;if _servantsContagion is &quot;smallpox&quot;&gt;&gt;
-&lt;&lt;if _cr lte 30&gt;&gt;&lt;&lt;set $NPCsServants[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _contagionDead.push(_di)&gt;&gt;
-&lt;&lt;elseif _cr lte 90&gt;&gt;&lt;&lt;set _contagionSurvived.push(_di)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;elseif _servantsContagion is &quot;measles&quot;&gt;&gt;
-&lt;&lt;if _cr lte 10&gt;&gt;&lt;&lt;set $NPCsServants[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _contagionDead.push(_di)&gt;&gt;
-&lt;&lt;elseif _cr lte 90&gt;&gt;&lt;&lt;set _contagionSurvived.push(_di)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;
-&lt;&lt;if _contagionDead.length gt 0&gt;&gt;Tragically, &lt;&lt;for _gi = 0; _gi lt _contagionDead.length; _gi++&gt;&gt;&lt;&lt;if _gi gt 0&gt;&gt; and &lt;&lt;/if&gt;&gt;your servant $NPCsServants[_contagionDead[_gi]].name&lt;&lt;/for&gt;&gt; &lt;&lt;if _contagionDead.length eq 1&gt;&gt;has&lt;&lt;else&gt;&gt;have&lt;&lt;/if&gt;&gt; also died of _servantsContagion.&lt;br&gt;&lt;&lt;for _gi = 0; _gi lt _contagionDead.length; _gi++&gt;&gt;&lt;&lt;set _deadNPCs.push({npc: $NPCsServants[_contagionDead[_gi]], label: &quot;your servant&quot;})&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if _contagionSurvived.length gt 0&gt;&gt;&lt;&lt;for _gi = 0; _gi lt _contagionSurvived.length; _gi++&gt;&gt;&lt;&lt;if _gi gt 0&gt;&gt; and &lt;&lt;/if&gt;&gt;your servant $NPCsServants[_contagionSurvived[_gi]].name&lt;&lt;/for&gt;&gt; &lt;&lt;if _contagionSurvived.length eq 1&gt;&gt;has&lt;&lt;else&gt;&gt;have&lt;&lt;/if&gt;&gt; contracted _servantsContagion but survived.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
+/* Contagion spread for each array */
+&lt;&lt;npc-contagion-spread &quot;$NPCs&quot; &quot;your &quot; true _npcContagion&gt;&gt;
+&lt;&lt;npc-contagion-spread &quot;$NPCsMaster&quot; &quot;the &quot; true _masterContagion&gt;&gt;
+&lt;&lt;npc-contagion-spread &quot;$NPCsExtended&quot; &quot;your &quot; true _extendedContagion&gt;&gt;
+&lt;&lt;npc-contagion-spread &quot;$NPCsServants&quot; &quot;your &quot; false _servantsContagion&gt;&gt;
 &lt;&lt;servant-master-death&gt;&gt;
 &lt;&lt;check-widowed&gt;&gt;
 &lt;&lt;set-hoh&gt;&gt;
@@ -6456,11 +6220,15 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 &lt;&lt;else&gt;&gt;&lt;&lt;set _chartMax to Math.ceil(_maxRisk / 10) * 10&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
-/* ── 4. Compute cumulative risk for each layer ── */
+/* ── 4. Compute cumulative risk for each layer (including full parish for fled comparison) ── */
 &lt;&lt;set _survParish to 1.0&gt;&gt;
 &lt;&lt;set _survRole to 1.0&gt;&gt;
 &lt;&lt;set _survAll to 1.0&gt;&gt;
+&lt;&lt;set _survFullParish to 1.0&gt;&gt;
 &lt;&lt;for _i to 0; _i lt _tLen; _i++&gt;&gt;
+&lt;&lt;if _fullParishPct[_i] gt 0&gt;&gt;
+&lt;&lt;set _survFullParish to _survFullParish * (1.0 - (_fullParishPct[_i] / 100))&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;if _parishPct[_i] gt 0&gt;&gt;
 &lt;&lt;set _survParish to _survParish * (1.0 - (_parishPct[_i] / 100))&gt;&gt;
 &lt;&lt;set _survRole to _survRole * (1.0 - (_parishPct[_i] / 100))&gt;&gt;
@@ -6480,14 +6248,6 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 &lt;&lt;set _cumDec to Math.round((1.0 - _survAll) * 100) - _cumParish - _cumRole&gt;&gt;
 &lt;&lt;if _cumDec lt 0&gt;&gt;&lt;&lt;set _cumDec to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;set _cumTotal to _cumParish + _cumRole + _cumDec&gt;&gt;
-
-/* ── 4b. Compute full parish risk (without fled adjustment) for comparison ── */
-&lt;&lt;set _survFullParish to 1.0&gt;&gt;
-&lt;&lt;for _i to 0; _i lt _tLen; _i++&gt;&gt;
-&lt;&lt;if _fullParishPct[_i] gt 0&gt;&gt;
-&lt;&lt;set _survFullParish to _survFullParish * (1.0 - (_fullParishPct[_i] / 100))&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/for&gt;&gt;
 &lt;&lt;set _cumFullParish to Math.round((1.0 - _survFullParish) * 100)&gt;&gt;
 &lt;&lt;set _fledReduction to _cumFullParish - _cumParish&gt;&gt;
 &lt;&lt;if _fledReduction lt 0&gt;&gt;&lt;&lt;set _fledReduction to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -6881,6 +6641,85 @@ You hate to send any of your family away, but you &lt;&lt;if $hoh is 4&gt;&gt;an
   &lt;&lt;set $money -= _args[0]&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* npc-death-roll — processes natural (non-plague) death rolls for one NPC array.
+   _args[0] = variable name string (e.g. &quot;$NPCs&quot;)
+   _args[1] = label prefix with trailing space (e.g. &quot;your &quot; or &quot;the &quot;)
+   _args[2] = true: use prefix+relationship in text/label; false: use &quot;your servant&quot;
+   Expects: _causeWeights, _deadNPCs already initialized by caller.
+   Sets: _ndContagion (disease name if a contagious death occurred, else &quot;&quot;). */
+&lt;&lt;widget &quot;npc-death-roll&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _ndArr to State.getVar(_args[0])&gt;&gt;
+&lt;&lt;set _ndContagion to &quot;&quot;&gt;&gt;
+&lt;&lt;for _di = 0; _di lt _ndArr.length; _di++&gt;&gt;&lt;&lt;if _ndArr[_di].health is &quot;healthy&quot;&gt;&gt;&lt;&lt;if _ndArr[_di].age is &quot;infant&quot;&gt;&gt;
+&lt;&lt;if random(1,1000) lte 56&gt;&gt;
+&lt;&lt;set _cause to weightedEither(_causeWeights)&gt;&gt;&lt;&lt;set _ndArr[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;if _args[2]&gt;&gt;&lt;&lt;print _args[1].toUpperFirst() + _ndArr[_di].relationship&gt;&gt; _ndArr[_di].name&lt;&lt;else&gt;&gt;Your servant _ndArr[_di].name&lt;&lt;/if&gt;&gt; has died of _cause.&lt;br&gt;
+&lt;&lt;set _deadNPCs.push({npc: _ndArr[_di], label: _args[2] ? _args[1] + _ndArr[_di].relationship : &quot;your servant&quot;})&gt;&gt;
+&lt;&lt;if (_cause is &quot;smallpox&quot; or _cause is &quot;measles&quot;) and _ndContagion is &quot;&quot;&gt;&gt;&lt;&lt;set _ndContagion to _cause&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _ndArr[_di].age is &quot;child&quot;&gt;&gt;
+&lt;&lt;if random(1,1000) is 1&gt;&gt;
+&lt;&lt;set _cause to weightedEither(_causeWeights)&gt;&gt;&lt;&lt;set _ndArr[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;if _args[2]&gt;&gt;&lt;&lt;print _args[1].toUpperFirst() + _ndArr[_di].relationship&gt;&gt; _ndArr[_di].name&lt;&lt;else&gt;&gt;Your servant _ndArr[_di].name&lt;&lt;/if&gt;&gt; has died of _cause.&lt;br&gt;
+&lt;&lt;set _deadNPCs.push({npc: _ndArr[_di], label: _args[2] ? _args[1] + _ndArr[_di].relationship : &quot;your servant&quot;})&gt;&gt;
+&lt;&lt;if (_cause is &quot;smallpox&quot; or _cause is &quot;measles&quot;) and _ndContagion is &quot;&quot;&gt;&gt;&lt;&lt;set _ndContagion to _cause&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _ndArr[_di].age is &quot;elderly adult&quot;&gt;&gt;
+&lt;&lt;if random(1,100) is 1&gt;&gt;&lt;&lt;set _ndArr[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;if _args[2]&gt;&gt;&lt;&lt;print _args[1].toUpperFirst() + _ndArr[_di].relationship&gt;&gt; _ndArr[_di].name&lt;&lt;else&gt;&gt;Your servant _ndArr[_di].name&lt;&lt;/if&gt;&gt; has died of old age.&lt;br&gt;
+&lt;&lt;set _deadNPCs.push({npc: _ndArr[_di], label: _args[2] ? _args[1] + _ndArr[_di].relationship : &quot;your servant&quot;})&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* npc-contagion-spread — spreads a contagious disease (smallpox/measles) to
+   remaining healthy NPCs in one array after an initial death.
+   _args[0] = variable name string (e.g. &quot;$NPCs&quot;)
+   _args[1] = label prefix with trailing space (e.g. &quot;your &quot; or &quot;the &quot;)
+   _args[2] = true: use prefix+relationship; false: use &quot;your servant&quot;
+   _args[3] = contagion disease name (&quot;smallpox&quot;/&quot;measles&quot;), or &quot;&quot; for none
+   Expects: _deadNPCs already initialized by caller. */
+&lt;&lt;widget &quot;npc-contagion-spread&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if _args[3] isnot &quot;&quot;&gt;&gt;
+&lt;&lt;set _ncArr to State.getVar(_args[0])&gt;&gt;
+&lt;&lt;set _contagionDead to []&gt;&gt;&lt;&lt;set _contagionSurvived to []&gt;&gt;
+&lt;&lt;for _di = 0; _di lt _ncArr.length; _di++&gt;&gt;&lt;&lt;if _ncArr[_di].health is &quot;healthy&quot;&gt;&gt;
+&lt;&lt;set _cr to random(1,100)&gt;&gt;
+&lt;&lt;if _args[3] is &quot;smallpox&quot;&gt;&gt;
+&lt;&lt;if _cr lte 30&gt;&gt;&lt;&lt;set _ncArr[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _contagionDead.push(_di)&gt;&gt;
+&lt;&lt;elseif _cr lte 90&gt;&gt;&lt;&lt;set _contagionSurvived.push(_di)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _args[3] is &quot;measles&quot;&gt;&gt;
+&lt;&lt;if _cr lte 10&gt;&gt;&lt;&lt;set _ncArr[_di].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _contagionDead.push(_di)&gt;&gt;
+&lt;&lt;elseif _cr lte 90&gt;&gt;&lt;&lt;set _contagionSurvived.push(_di)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;
+&lt;&lt;if _contagionDead.length gt 0&gt;&gt;Tragically, &lt;&lt;for _gi = 0; _gi lt _contagionDead.length; _gi++&gt;&gt;&lt;&lt;set _idx to _contagionDead[_gi]&gt;&gt;&lt;&lt;if _gi gt 0&gt;&gt; and &lt;&lt;/if&gt;&gt;&lt;&lt;if _args[2]&gt;&gt;&lt;&lt;print _args[1]&gt;&gt;_ncArr[_idx].relationship _ncArr[_idx].name&lt;&lt;else&gt;&gt;your servant _ncArr[_idx].name&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt; &lt;&lt;if _contagionDead.length eq 1&gt;&gt;has&lt;&lt;else&gt;&gt;have&lt;&lt;/if&gt;&gt; also died of &lt;&lt;print _args[3]&gt;&gt;.&lt;br&gt;&lt;&lt;for _gi = 0; _gi lt _contagionDead.length; _gi++&gt;&gt;&lt;&lt;set _idx to _contagionDead[_gi]&gt;&gt;&lt;&lt;set _deadNPCs.push({npc: _ncArr[_idx], label: _args[2] ? _args[1] + _ncArr[_idx].relationship : &quot;your servant&quot;})&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _contagionSurvived.length gt 0&gt;&gt;&lt;&lt;for _gi = 0; _gi lt _contagionSurvived.length; _gi++&gt;&gt;&lt;&lt;set _idx to _contagionSurvived[_gi]&gt;&gt;&lt;&lt;if _gi gt 0&gt;&gt; and &lt;&lt;/if&gt;&gt;&lt;&lt;if _args[2]&gt;&gt;&lt;&lt;print _args[1]&gt;&gt;_ncArr[_idx].relationship _ncArr[_idx].name&lt;&lt;else&gt;&gt;your servant _ncArr[_idx].name&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt; &lt;&lt;if _contagionSurvived.length eq 1&gt;&gt;has&lt;&lt;else&gt;&gt;have&lt;&lt;/if&gt;&gt; contracted &lt;&lt;print _args[3]&gt;&gt; but survived.&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* check-infected — scans one NPC array for infected members.
+   _args[0] = variable name string (e.g. &quot;$NPCs&quot;)
+   Sets: _infectedResult (array of indices where health is &quot;infected&quot;). */
+&lt;&lt;widget &quot;check-infected&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;
+&lt;&lt;set _ciArr to State.getVar(_args[0])&gt;&gt;
+&lt;&lt;set _infectedResult to []&gt;&gt;
+&lt;&lt;for _ci = 0; _ci &lt; _ciArr.length; _ci++&gt;&gt;
+  &lt;&lt;if _ciArr[_ci].health is &quot;infected&quot;&gt;&gt;
+    &lt;&lt;set _infectedResult.push(_ci)&gt;&gt;
+  &lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* calculate-ceiling — computes the debt ceiling and whether debt exceeds it.
+   Sets: _debtCeiling (negative number), _debtExceeded (boolean).
+   Calls &lt;&lt;income&gt;&gt; and &lt;&lt;expenses&gt;&gt; for non-beggar/non-child-servant classes. */
+&lt;&lt;widget &quot;calculate-ceiling&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
+&lt;&lt;set _debtCeiling to -60&gt;&gt;
+&lt;&lt;elseif $socio is &quot;servants&quot; and ($age is &quot;child&quot; or $age is &quot;adolescent&quot;)&gt;&gt;
+&lt;&lt;set _debtCeiling to -60&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;set _debtCeiling to ($income) * -1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;set _debtExceeded to false&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot; and $money lte (_debtCeiling * 4)&gt;&gt;&lt;&lt;set _debtExceeded to true&gt;&gt;
+&lt;&lt;elseif ($socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;) and $money lte (_debtCeiling * 3)&gt;&gt;&lt;&lt;set _debtExceeded to true&gt;&gt;
+&lt;&lt;elseif $money lte (_debtCeiling * 2)&gt;&gt;&lt;&lt;set _debtExceeded to true&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;
 </tw-passagedata><tw-passagedata pid="115" name="june-1665-helper-widget" tags="widget" position="1475,325" size="100,100">&lt;&lt;widget &quot;june-1665-helper&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 The &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; grows worse and the streets are soon filled with coaches and wagons full of people fleeing with their goods to the countryside. The Queen Mother &lt;&lt;defHenriettaMaria &quot;Henrietta Maria&quot;&gt;&gt; moves back to France&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;, much to your dismay, and that of your fellow Catholics who flock to her chapel each week&lt;&lt;else&gt;&gt;, much to your relief, and that of all your fellow God-fearing &lt;&lt;defProtestants &quot;Protestants&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;. On June 29th, the King packs up his entire &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; in 148 carriages and moves 12 miles away, to his palace at &lt;&lt;defHamptonCourt &quot;Hampton Court&quot;&gt;&gt;.
     &lt;br&gt;&lt;br&gt;
