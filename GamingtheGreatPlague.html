@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.87" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.88" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -6398,7 +6398,36 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 &lt;/div&gt;
 &lt;/div&gt;
 
-/* ── Cumulative Risk Thermometer ── */
+/* ── Cumulative Risk Pie Chart ── */
+&lt;&lt;set _cumSafe to 100 - _cumTotal&gt;&gt;
+&lt;&lt;if _cumSafe lt 0&gt;&gt;&lt;&lt;set _cumSafe to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
+/* Build conic-gradient stops */
+&lt;&lt;set _stop1 to _cumParish&gt;&gt;
+&lt;&lt;set _stop2 to _stop1 + _cumRole&gt;&gt;
+&lt;&lt;set _stop3 to _stop2 + _cumDec&gt;&gt;
+&lt;h3&gt;Your Cumulative Plague Risk&lt;/h3&gt;
+
+&lt;div style=&quot;width: 100%; max-width: 600px; margin: 0 auto; text-align: center;&quot;&gt;
+&lt;div @style=&quot;&#39;display: inline-block; width: 200px; height: 200px; border-radius: 50%; background: conic-gradient(#a65628 0% &#39; + _stop1 + &#39;%, #ff7f00 &#39; + _stop1 + &#39;% &#39; + _stop2 + &#39;%, #e41a1c &#39; + _stop2 + &#39;% &#39; + _stop3 + &#39;%, #333 &#39; + _stop3 + &#39;% 100%); border: 1px solid #555;&#39;&quot; @title=&quot;&#39;Total risk: &#39; + _cumTotal + &#39;%&#39;&quot;&gt;&lt;/div&gt;
+
+/* ── Pie chart legend ── */
+&lt;div style=&quot;display: flex; gap: 12px; margin-top: 12px; justify-content: center; flex-wrap: wrap; font-size: 0.85em;&quot;&gt;
+&lt;&lt;if _cumParish gt 0&gt;&gt;&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #a65628; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Parish: &lt;&lt;print _cumParish&gt;&gt;%&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _cumRole gt 0&gt;&gt;&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #ff7f00; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Role: &lt;&lt;print _cumRole&gt;&gt;%&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _cumDec gt 0&gt;&gt;&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #e41a1c; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Decisions: &lt;&lt;print _cumDec&gt;&gt;%&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;div&gt;&lt;span style=&quot;display: inline-block; width: 12px; height: 12px; background: #333; border: 1px solid #555; vertical-align: middle; margin-right: 4px;&quot;&gt;&lt;/span&gt; Safe: &lt;&lt;print _cumSafe&gt;&gt;%&lt;/div&gt;
+&lt;/div&gt;
+
+/* ── Total risk callout ── */
+&lt;div style=&quot;margin-top: 8px; font-size: 0.9em;&quot;&gt;
+Total plague risk: &lt;b&gt;&lt;&lt;print _cumTotal&gt;&gt;%&lt;/b&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;i&gt;For comparison, the average resident of $parish faced a &lt;&lt;print _cumFullParish&gt;&gt;% cumulative chance of catching plague based on parish infection rates alone.&lt;&lt;if _cumRole + _cumDec gt 0 and _fledReduction gt 0&gt;&gt; Your role and decisions added &lt;&lt;print _cumRole + _cumDec&gt;&gt; percentage points of additional risk, while fleeing removed &lt;&lt;print _fledReduction&gt;&gt; percentage points of your parish&#39;s base infection risk.&lt;&lt;elseif _cumRole + _cumDec gt 0&gt;&gt; Your role and decisions added &lt;&lt;print _cumRole + _cumDec&gt;&gt; percentage points of additional risk.&lt;&lt;elseif _fledReduction gt 0&gt;&gt; Fleeing removed &lt;&lt;print _fledReduction&gt;&gt; percentage points of your parish&#39;s base infection risk.&lt;&lt;/if&gt;&gt;&lt;/i&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+/* ── Original Cumulative Risk Thermometer (commented out) ── */
+/*
 &lt;h3&gt;Your Cumulative Plague Risk&lt;/h3&gt;
 
 &lt;div style=&quot;width: 100%; max-width: 600px; margin: 0 auto;&quot;&gt;
@@ -6408,7 +6437,6 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 &lt;&lt;if _cumDec gt 0&gt;&gt;&lt;div @title=&quot;&#39;Decision risk: +&#39; + _cumDec + &#39;%&#39;&quot; @style=&quot;&#39;display: inline-block; height: 100%; width: &#39; + _cumDec + &#39;%; background: #e41a1c; float: left;&#39;&quot;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
 &lt;/div&gt;
 
-/* ── Tick marks ── */
 &lt;div style=&quot;position: relative; height: 14px; font-size: 0.65em; color: #aaa; margin-top: 2px;&quot;&gt;
 &lt;span style=&quot;position: absolute; left: 0;&quot;&gt;0%&lt;/span&gt;
 &lt;span style=&quot;position: absolute; left: 25%; transform: translateX(-50%);&quot;&gt;25%&lt;/span&gt;
@@ -6417,7 +6445,6 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 &lt;span style=&quot;position: absolute; right: 0;&quot;&gt;100%&lt;/span&gt;
 &lt;/div&gt;
 
-/* ── Breakdown text ── */
 &lt;div style=&quot;margin-top: 8px; font-size: 0.9em;&quot;&gt;
 &lt;span style=&quot;color: #a65628;&quot;&gt;Parish: &lt;&lt;print _cumParish&gt;&gt;%&lt;/span&gt;
 &lt;&lt;if _cumRole gt 0&gt;&gt; + &lt;span style=&quot;color: #ff7f00;&quot;&gt;Role: &lt;&lt;print _cumRole&gt;&gt;%&lt;/span&gt;&lt;&lt;/if&gt;&gt;
@@ -6427,6 +6454,7 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 
 &lt;p&gt;&lt;i&gt;For comparison, the average resident of $parish faced a &lt;&lt;print _cumFullParish&gt;&gt;% cumulative chance of catching plague based on parish infection rates alone.&lt;&lt;if _cumRole + _cumDec gt 0 and _fledReduction gt 0&gt;&gt; Your role and decisions added &lt;&lt;print _cumRole + _cumDec&gt;&gt; percentage points of additional risk, while fleeing removed &lt;&lt;print _fledReduction&gt;&gt; percentage points of your parish&#39;s base infection risk.&lt;&lt;elseif _cumRole + _cumDec gt 0&gt;&gt; Your role and decisions added &lt;&lt;print _cumRole + _cumDec&gt;&gt; percentage points of additional risk.&lt;&lt;elseif _fledReduction gt 0&gt;&gt; Fleeing removed &lt;&lt;print _fledReduction&gt;&gt; percentage points of your parish&#39;s base infection risk.&lt;&lt;/if&gt;&gt;&lt;/i&gt;&lt;/p&gt;
 &lt;/div&gt;
+*/
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 /* servant-marriage-moveout — when a servant gets married, they leave their
