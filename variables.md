@@ -447,6 +447,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
   - `7` &mdash; Failed flight attempt (artisans with low reputation; tried to flee but were turned away)
 - **Notes:** Values 0--3 are primarily for servants. Values 4--7 are for other social classes. A value of `5` triggers display of `$FledFamily` instead of `$NPCs` in the sidebar. `$fled` can change over time as the player gets additional flee opportunities.
 
+### `$fledBroke`
+- **Type:** Boolean
+- **Possible values:** `false` (default), `true` (player ran out of money while away)
+- **Initial value:** `false` (set in `StoryInit`, pid 10)
+- **Set by:** The `fled-broke` widget (pid 90) sets this to `true` immediately before `<<goto>>` redirects the player to the return month passage.
+- **Used for:** Displays a "you have run out of money" message at the top of the storyline passage the player is redirected to. The message block resets `$fledBroke` to `false` after display, so it only appears once.
+- **Reset by:** The `<<if $fledBroke>>` block at the top of each monthly storyline passage (pids 20, 22, 24--34) sets it back to `false` after displaying the message.
+
 ### `$fledFromIndex`
 - **Type:** Integer
 - **Set by:** `$monthIndex` at the start of the Fled passage (pid 63)
