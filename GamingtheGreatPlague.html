@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.73" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.74" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3894,11 +3894,11 @@ You have abandoned $parish and been removed from your position as $office.
 
 In fact, you&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;r $masterTitle is&lt;&lt;else&gt;&gt;&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are&lt;&lt;/if&gt;&gt; determined to stay away at least:
 &lt;ul&gt;
-&lt;&lt;if $fledFromIndex lt 7&gt;&gt;&lt;li&gt;[[until the end of the summer, when plague death should start coming down again-&gt;official-end][set $fledReturn to &quot;summer&quot;]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $fledFromIndex lt 9&gt;&gt;&lt;li&gt;[[until the winter, when plague typically goes away-&gt;official-end][set $fledReturn to &quot;winter&quot;]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $fledFromIndex lt 11&gt;&gt;&lt;li&gt;[[until the King and his court decide it&#39;s safe to return to the city-&gt;stay-away sequence][set $fledReturn to &quot;court-return&quot;]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $fledFromIndex lt 21&gt;&gt;&lt;li&gt;[[until the official Day of Thanksgiving for the end of the plague outbreak-&gt;stay-away sequence][set $fledReturn to &quot;official-end&quot;]]&lt;/li&gt;
-&lt;li&gt;[[until there are no more plague deaths in London-&gt;stay-away sequence][set $fledReturn to &quot;official-end&quot;]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 7&gt;&gt;&lt;li&gt;[[until the end of the summer, when plague death should start coming down again-&gt;official-end][$fledReturn to &quot;summer&quot;]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 9&gt;&gt;&lt;li&gt;[[until the winter, when plague typically goes away-&gt;official-end][$fledReturn to &quot;winter&quot;]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 11&gt;&gt;&lt;li&gt;[[until the King and his court decide it&#39;s safe to return to the city-&gt;stay-away sequence][$fledReturn to &quot;court-return&quot;]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $fledFromIndex lt 21&gt;&gt;&lt;li&gt;[[until the official Day of Thanksgiving for the end of the plague outbreak-&gt;stay-away sequence][$fledReturn to &quot;official-end&quot;]]&lt;/li&gt;
+&lt;li&gt;[[until there are no more plague deaths in London-&gt;stay-away sequence][$fledReturn to &quot;official-end&quot;]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;li&gt;[[for good-&gt;go quietly]]&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -5053,7 +5053,7 @@ As soon as the first rumors fly of the king&#39;s entrance into London, you&lt;&
 &lt;&lt;next &quot;Stay away&quot;&gt;&gt;
 When the death tolls top 7,000 a week in August and September, you&#39;re sure you made the right call.
 &lt;br&gt;&lt;br&gt;
-By the beginning of October, death tolls have fallen to half that, though there are still a horrifying number of people dying every week. &lt;&lt;fled-broke &quot;October 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke and $fledReturn is &quot;summer&quot;&gt;&gt;You &lt;&lt;if $hoh isnot 1&gt;&gt;and your $caretakerLabel &lt;&lt;/if&gt;must decide if you are ready to return to the city.
+By the beginning of October, death tolls have fallen to half that, though there are still a horrifying number of people dying every week. &lt;&lt;fled-broke &quot;October 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke and $fledReturn is &quot;summer&quot;&gt;&gt;You &lt;&lt;if $hoh isnot 1&gt;&gt;and your $caretakerLabel &lt;&lt;/if&gt;&gt;must decide if you are ready to return to the city.
 &lt;br&gt;[[Return to London-&gt;October 1665]]&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;&lt;/if&gt;&gt;
 
@@ -5061,7 +5061,7 @@ By the beginning of October, death tolls have fallen to half that, though there 
 &lt;&lt;next &quot;Stay away&quot;&gt;&gt;
 You anxiously watch the fall in the number of deaths each week, thanking God when only a thousand people a week are dying at the beginning of November. 
 &lt;&lt;fled-cost&gt;&gt; /* Nov flight cost */
-At the start of Advent, there are still 200 or 300 odd people dying each week but you are painfully aware that you are missing the Christmas feasting and merrymaking. &lt;&lt;fled-broke &quot;December 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke and $fledReturn is &quot;winter&quot;&gt;&gt;You &lt;&lt;if $hoh isnot 1&gt;&gt;and your $caretakerLabel &lt;&lt;/if&gt;must decide if you are ready to return to the city.
+At the start of Advent, there are still 200 or 300 odd people dying each week but you are painfully aware that you are missing the Christmas feasting and merrymaking. &lt;&lt;fled-broke &quot;December 1665&quot;&gt;&gt;&lt;&lt;if not _fledBroke and $fledReturn is &quot;winter&quot;&gt;&gt;You &lt;&lt;if $hoh isnot 1&gt;&gt;and your $caretakerLabel &lt;&lt;/if&gt;&gt;must decide if you are ready to return to the city.
 &lt;br&gt;[[Return to London-&gt;December 1665]]&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;&lt;/if&gt;&gt;
 
@@ -5070,7 +5070,7 @@ At the start of Advent, there are still 200 or 300 odd people dying each week bu
 You reconcile yourself to a Christmas spent away from the City.
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;fled-cost&gt;&gt; /* Jan flight cost */
-When the New Year dawns, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are desperately homesick. You hear the King and court have returned to &lt;&lt;defHamptonCourt &quot;Hampton Court Palace&quot;&gt;&gt;, near to the city, and rumors begin to fly about the king&#39;s entrance into London. &lt;&lt;fled-broke &quot;February 1666&quot;&gt;&gt;&lt;&lt;if not _fledBroke and  $fledReturn is &quot;court-return&quot;&gt;&gt;You &lt;&lt;if $hoh isnot 1&gt;&gt;and your $caretakerLabel &lt;&lt;/if&gt;must decide if you are ready to return to the city.
+When the New Year dawns, you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; are desperately homesick. You hear the King and court have returned to &lt;&lt;defHamptonCourt &quot;Hampton Court Palace&quot;&gt;&gt;, near to the city, and rumors begin to fly about the king&#39;s entrance into London. &lt;&lt;fled-broke &quot;February 1666&quot;&gt;&gt;&lt;&lt;if not _fledBroke and  $fledReturn is &quot;court-return&quot;&gt;&gt;You &lt;&lt;if $hoh isnot 1&gt;&gt;and your $caretakerLabel &lt;&lt;/if&gt;&gt;must decide if you are ready to return to the city.
 &lt;br&gt;[[Return to London-&gt;February 1666]]&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;&lt;/if&gt;&gt;
 
@@ -5130,13 +5130,13 @@ While you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; co
 &lt;&lt;next &quot;Stay away&quot;&gt;&gt;
 The official Thanksgiving Day for the end of the plague is proclaimed in November, even though there are still people dying each week. &lt;&lt;if $fireParishes.includes($preFireParish)&gt;&gt;With your home destroyed, there is nothing to return to but rubble. But you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; know you must make begin rebuilding your life at some point. &lt;&lt;/if&gt;&gt;
 
-&lt;&lt;fled-broke &quot;December 1666&quot;&gt;&gt;&lt;&lt;if not _fledBroke and $fledReturn is &quot;official-end&quot;&gt;&gt;You &lt;&lt;if $hoh isnot 1&gt;&gt;and your $caretakerLabel &lt;&lt;/if&gt;must decide if you are ready to return to the city.
+&lt;&lt;fled-broke &quot;December 1666&quot;&gt;&gt;&lt;&lt;if not _fledBroke and $fledReturn is &quot;official-end&quot;&gt;&gt;You &lt;&lt;if $hoh isnot 1&gt;&gt;and your $caretakerLabel &lt;&lt;/if&gt;&gt;must decide if you are ready to return to the city.
 &lt;br&gt;[[Return to London-&gt;November 1666]]&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;if $fledFromIndex lt 21&gt;&gt;&lt;&lt;fled-cost&gt;&gt; /* Dec flight cost */
 &lt;&lt;next &quot;Stay away for good&quot; &quot;go quietly&quot;&gt;&gt;
-Life may have already gone on for the reckless, but it is only at the end of 1666 that you&lt;&lt;if $hoh isnot 1&gt;&gt;and your $caretakerLabel &lt;&lt;/if&gt;finally consider making your way back to the city.
+Life may have already gone on for the reckless, but it is only at the end of 1666 that you&lt;&lt;if $hoh isnot 1&gt;&gt; and your $caretakerLabel &lt;&lt;/if&gt;&gt;finally consider making your way back to the city.
 &lt;br&gt;[[Return to London-&gt;December 1666]]
 &lt;br&gt;
 
@@ -5196,7 +5196,7 @@ You know the plague will only worsen as the weather warms and &lt;&lt;storyline-
 
 &lt;&lt;if _fleeInfected&gt;&gt;You prepare to flee the city. It takes some time to sort out the travel logistics, but finally everything is in order. You will leave tomorrow. &lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _hasInfectedNPC&gt;&gt;You prepare your household to flee the city. It takes some time to sort out the travel logistics, but finally everything is in order. They will leave tomorrow.&lt;br&gt;&lt;br&gt;&lt;&lt;sickFam&gt;&gt;
-&lt;&lt;nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;set _fleeBlocked to false&gt;&gt;
 &lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;check-NPCs&gt;&gt;&lt;&lt;set _fleeBlocked to (_infectedFamily.length + _infectedServants.length) gt 0&gt;&gt;&lt;&lt;/silently&gt;&gt;
@@ -5210,7 +5210,7 @@ You know the plague will only worsen as the weather warms and &lt;&lt;storyline-
 &lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;&lt;&lt;disposable&gt;&gt;
 &lt;&lt;if $followedCourt is 1&gt;&gt; /* costs 2x as much to follow Court */
 	&lt;&lt;disposable&gt;&gt;
-&lt;&lt;if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;fled-broke&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
