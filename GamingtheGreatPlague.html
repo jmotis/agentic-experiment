@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.92" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.93" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1293,12 +1293,14 @@ If that doesn&#39;t sound right, you can refresh the game and start again.
 /*&lt;&lt;click &quot;click this link to try again&quot;&gt;&gt;&lt;&lt;script&gt;&gt;Engine.play()&lt;&lt;/script&gt;&gt;&lt;&lt;/click&gt;&gt;.*/
 &lt;&lt;/nobr&gt;&gt;
 </tw-passagedata><tw-passagedata pid="2" name="December 1664" tags="storyline 1665" position="1250,350" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if not _headerEventActive&gt;&gt;
 It is December 1664 and you are looking forward to the Christmas holidays. You are&lt;&lt;if $agenum lte 12&gt;&gt;n&#39;t&lt;&lt;/if&gt;&gt; old enough to remember the days before King Charles II was &lt;&lt;defRestoration &quot;restored to his rightful throne&quot;&gt;&gt;, when Christmas was banned as &lt;&lt;defBlasphemous &quot;blasphemous&quot;&gt;&gt;, and it makes the weeks of celebration and feasting all the merrier.&lt;br&gt;&lt;br&gt;
 
 &lt;&lt;linkappend &quot;Not everything is perfect, though.&quot;&gt;&gt; Rumors swirl throughout the city about the possibility of a coming war with the Dutch Republic after several Dutch ships were captured and brought into &lt;&lt;defPortsmouth &quot;Portsmouth&quot;&gt;&gt; as prizes. &lt;&lt;if $origin is &quot;the Dutch Republic&quot;&gt;&gt;You make merry with your neighbors even while you fear they will turn against you in the months ahead. &lt;&lt;/if&gt;&gt;Worse, it is common knowledge that &lt;&lt;defPlague &quot;plague&quot;&gt;&gt; has been spreading in the Dutch fleet for months, though it hasn&#39;t yet reached English shores.&lt;br&gt;&lt;br&gt;
 
 &lt;&lt;december-1664-helper&gt;&gt;
 &lt;&lt;/linkappend&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="start" tags="" position="1075,200" size="100,100">This is a text-based adventure game. Click the underlined teal text to advance in the game. Hover over (or tap on mobile) the bold purple text for definitions. Check out the sidebar/menu for information on your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; and inventory, to visit the &lt;&lt;defApothecary &quot;apothecary&quot;&gt;&gt;, or to restart the game. Best of luck surviving!
 
 The year is 1664 and you are a resident of the great city of London in England. After decades of &lt;&lt;defCivilWar &quot;civil war&quot;&gt;&gt; and &lt;&lt;defCommonwealth &quot;experimental government&quot;&gt;&gt;, the merry monarch King Charles II was restored to the thrones of England, Scotland, and Ireland just four years ago and (most of) the kingdoms rejoiced.
@@ -1641,7 +1643,9 @@ The city has ordered public &lt;&lt;defFasts &quot;fasts&quot;&gt;&gt; and praye
 
 /* one-time call of do you want to be married and/or apprenticed (mutually exclusive) */
 
-&lt;&lt;if $agenum gte 16 and $seekingDecision is 0 and $relationship isnot &quot;married&quot;&gt;&gt;
+&lt;&lt;if _headerEventActive&gt;&gt;
+/* Header event active — suppress passage body until resolved */
+&lt;&lt;elseif $agenum gte 16 and $seekingDecision is 0 and $relationship isnot &quot;married&quot;&gt;&gt;
 &lt;&lt;marriage-market&gt;&gt;
 &lt;&lt;elseif ($socio is &quot;day labourers&quot; or $socio is &quot;artisans&quot; or $socio is &quot;merchants&quot;) and $agenum gte 14 and $agenum lte 21 and $relationship is &quot;single&quot; and $seekingMarriage is 0 and $seekingDecision isnot 2&gt;&gt;
 &lt;&lt;apprenticeship-market&gt;&gt;
@@ -6693,8 +6697,8 @@ To reduce your expenses, you release &lt;&lt;if _rsRemovedNames.length eq 1&gt;&
   &lt;br&gt;&lt;br&gt;
   &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#nobleChildService&quot;&gt;&gt;
   &lt;&lt;if $NPCs[_ncsIdx].health is &quot;safe from harm&quot;&gt;&gt;&lt;&lt;set $NPCs[_ncsIdx].health to &quot;healthy&quot;&gt;&gt;&lt;&lt;set $NPCs[_ncsIdx].location to $location&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $NPCsExtended.push($NPCs[_ncsIdx])&gt;&gt;&lt;&lt;set $NPCs.splice(_ncsIdx, 1)&gt;&gt;&lt;&lt;NPCpronouns&gt;&gt;
-You hate to send any of your family away, but you &lt;&lt;if $hoh is 4&gt;&gt;and your husband&lt;&lt;elseif $hoh is 2&gt;&gt;and your family&lt;&lt;/if&gt;&gt; believe that _ncsRel, _ncsName, will be well cared for as a ward of a relative and that will mean one less mouth to feed at home.&lt;br&gt;&lt;br&gt;
-  &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#nobleChildService&quot;&gt;&gt;Life is hard, but you &lt;&lt;if $hoh is 4&gt;&gt;and your husband&lt;&lt;elseif $hoh is 2&gt;&gt;and your family&lt;&lt;/if&gt;&gt; agree that sending _ncsRel, _ncsName, away is not the answer. You will find another way to make ends meet.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
+You hate to send any of your family away, but you &lt;&lt;if $hoh is 4&gt;&gt;and your husband&lt;&lt;elseif $hoh is 2&gt;&gt;and your family&lt;&lt;/if&gt;&gt; believe that _ncsRel, _ncsName, will be well cared for as a ward of a relative and that will mean one less mouth to feed at home. &lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;
+  &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#nobleChildService&quot;&gt;&gt;Life is hard, but you &lt;&lt;if $hoh is 4&gt;&gt;and your husband&lt;&lt;elseif $hoh is 2&gt;&gt;and your family&lt;&lt;/if&gt;&gt; agree that sending _ncsRel, _ncsName, away is not the answer. You will find &lt;&lt;storyline-return &quot;another way to make ends meet.&quot; 0&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;
   &lt;/span&gt;
 
 &lt;&lt;/if&gt;&gt;
