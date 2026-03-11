@@ -4487,8 +4487,8 @@ and New Media</tw-passagedata><tw-passagedata pid="72" name="storyMenu" tags="" 
   &lt;&lt;else&gt;&gt;
     &lt;&lt;set $income to 0&gt;&gt;
   &lt;&lt;/if&gt;&gt;
-  /* NPC adult income — only if NOT living in master&#39;s household, or if household sent away ($fled 5) so caretaker retains full income */
-  &lt;&lt;if ($hoh isnot 3 and $hoh isnot 0) or $fled is 5&gt;&gt;
+  /* NPC adult income — only if NOT living in master&#39;s household */
+  &lt;&lt;if $hoh isnot 3 and $hoh isnot 0&gt;&gt;
     &lt;&lt;for _ii = 0; _ii &lt; $NPCs.length; _ii++&gt;&gt;
       &lt;&lt;if $NPCs[_ii].health isnot &quot;deceased&quot; and $NPCs[_ii].health isnot &quot;deceased-pq&quot; and !$NPCs[_ii].relationship.startsWith(&quot;landlord&quot;)&gt;&gt;
         &lt;&lt;if $NPCs[_ii].age is &quot;young adult&quot; or $NPCs[_ii].age is &quot;middle-aged adult&quot; or $NPCs[_ii].age is &quot;elderly adult&quot;&gt;&gt;
