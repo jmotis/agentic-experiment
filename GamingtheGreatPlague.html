@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.86" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.87" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -4330,6 +4330,12 @@ and New Media</tw-passagedata><tw-passagedata pid="72" name="storyMenu" tags="" 
 &lt;tr&gt;&lt;td&gt;Survived&lt;/td&gt;&lt;td&gt;&lt;&lt;print _totalSurvived&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;&lt;if _totalFled gt 0&gt;&gt;&lt;tr&gt;&lt;td&gt;Fled London&lt;/td&gt;&lt;td&gt;&lt;&lt;print _totalFled&gt;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;&lt;/if&gt;&gt;
 &lt;/table&gt;
+&lt;ul style=&quot;margin-top: 0.5em; font-style: italic;&quot;&gt;
+&lt;&lt;group-mortality-line &quot;Your immediate family&quot; &quot;$NPCs&quot; &quot;$FledFamily&quot;&gt;&gt;
+&lt;&lt;group-mortality-line &quot;Your servants&quot; &quot;$NPCsServants&quot; &quot;$FledServants&quot;&gt;&gt;
+&lt;&lt;group-mortality-line &quot;Your master&#39;s household&quot; &quot;$NPCsMaster&quot;&gt;&gt;
+&lt;&lt;group-mortality-line &quot;Your extended family&quot; &quot;$NPCsExtended&quot;&gt;&gt;
+&lt;/ul&gt;
 &lt;&lt;if _totalDead gt 0&gt;&gt;
 &lt;p&gt;&lt;i&gt;Your household lost &lt;&lt;print Math.round((_totalDead / _totalStart) * 100)&gt;&gt;% of its members. Historically, households struck by plague often lost 30-50% of their members, and some were wiped out entirely.&lt;/i&gt;&lt;/p&gt;
 &lt;&lt;else&gt;&gt;
@@ -6795,6 +6801,32 @@ You hate to send any of your family away, but you &lt;&lt;if $hoh is 4&gt;&gt;an
 &lt;&lt;set _stripOffice to (typeof _args[0] !== &#39;undefined&#39;) ? _args[0] : true&gt;&gt;
 &lt;&lt;set _refusedVolunteer to (_args.length gt 1 and _args[1] is &quot;refused&quot;)&gt;&gt;
 &lt;&lt;if _stripOffice and $office isnot &quot;&quot;&gt;&gt;Because of this disgrace, the vestry of $parish removes you from your position as $office. &lt;&lt;set $office to &quot;&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $inDebtorsPrison to 1&gt;&gt;&lt;&lt;set $debtorPrisonMonths to 0&gt;&gt;&lt;&lt;set $debtorPrisonCount += 1&gt;&gt;&lt;&lt;set $plagueInfection to random(0,1)&gt;&gt;&lt;&lt;if $socio isnot &quot;nobles&quot; and $gender is &quot;male&quot; and $agenum gte 15 and $agenum lte 55 and random(1,2) is 1&gt;&gt;&lt;&lt;set $inDebtorsPrison to 0&gt;&gt;&lt;&lt;set $impressed += 1&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Impressed from debtor&#39;s prison into the Navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;However, you have barely arrived when a Navy recruiter comes through looking for able-bodied men. &lt;&lt;if _refusedVolunteer&gt;&gt;Despite having just refused to volunteer, you have no choice in the matter. &lt;&lt;/if&gt;&gt;Your debts remain, but you are no longer in the Fleet — you have been [[impressed into His Majesty&#39;s Navy-&gt;impressed]].&lt;&lt;else&gt;&gt;You are forced to reside there until you reduce your debts. &lt;&lt;storyline-return &quot;You hope it won&#39;t take long.&quot; 1 0 -2&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* group-mortality-line — outputs one &lt;li&gt; summarizing mortality for a group.
+   _args[0] = display label (e.g. &quot;Your immediate family&quot;)
+   _args[1] = variable name string for primary array (e.g. &quot;$NPCs&quot;)
+   _args[2] = variable name string for secondary array (optional, e.g. &quot;$FledFamily&quot;)
+   Only renders if the combined array has at least one member.
+   Non-zero categories are joined with commas. */
+&lt;&lt;widget &quot;group-mortality-line&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _gmlArr to State.getVar(_args[1])&gt;&gt;
+&lt;&lt;if _args.length gt 2&gt;&gt;&lt;&lt;set _gmlArr to _gmlArr.concat(State.getVar(_args[2]))&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _gmlArr.length gt 0&gt;&gt;
+&lt;&lt;set _gmlPlague to 0&gt;&gt;&lt;&lt;set _gmlOther to 0&gt;&gt;&lt;&lt;set _gmlSurv to 0&gt;&gt;
+&lt;&lt;for _gi to 0; _gi lt _gmlArr.length; _gi++&gt;&gt;
+&lt;&lt;set _gh to _gmlArr[_gi].health&gt;&gt;
+&lt;&lt;if _gh is &quot;deceased-pq&quot; or (_gh isnot &quot;deceased&quot; and _gh.indexOf(&quot;deceased-pq&quot;) is 0)&gt;&gt;&lt;&lt;set _gmlPlague += 1&gt;&gt;
+&lt;&lt;elseif _gh is &quot;deceased&quot; or _gh.indexOf(&quot;deceased&quot;) is 0&gt;&gt;&lt;&lt;set _gmlOther += 1&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;set _gmlSurv += 1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set _gmlParts to []&gt;&gt;
+&lt;&lt;if _gmlSurv gt 0&gt;&gt;&lt;&lt;set _gmlParts.push(_gmlSurv + &quot; survived&quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _gmlPlague gt 0&gt;&gt;&lt;&lt;set _gmlParts.push(_gmlPlague + &quot; died of plague&quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _gmlOther gt 0&gt;&gt;&lt;&lt;set _gmlParts.push(_gmlOther + &quot; died of other causes&quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;li&gt;&lt;&lt;print _args[0]&gt;&gt;: &lt;&lt;print _gmlParts.join(&quot;, &quot;)&gt;&gt;&lt;/li&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 /* check-infected — scans one NPC array for infected members.
