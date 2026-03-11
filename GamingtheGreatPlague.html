@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.89" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.90" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -2330,7 +2330,7 @@ a proper funeral.&lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;
 //Peter Lely - &quot;James II&quot;, c. 1650-1675//
 &lt;/div&gt;
     You keep your ears open for news of the war. It takes almost a week, but news finally arrives of a great battle that killed many important men, especially on the ship of the &lt;&lt;defDukeOfYork &quot;Duke of York, James Stuart&quot;&gt;&gt;, the current heir to the throne—at least until the King and Queen manage to have children of their own. According to rumor, the battle came so close to killing the Duke that he was covered with blood and the head of a man named Mr. Boyle flew off and struck down the Duke. You happily repeat the rumors to anyone who will listen as bonfires break out in the street and people make merry, freely sharing their food and wine in celebration.
-&lt;&lt;if $agenum gte 16 and $agenum lte 59 and $gender isnot &quot;female&quot; and $socio isnot &quot;nobles&quot; and $socio isnot &quot;merchants&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to be there for the next battle?
+&lt;&lt;if $agenum gte 16 and $agenum lte 59 and $gender isnot &quot;female&quot; and $disability is 0 and $socio isnot &quot;nobles&quot; and $socio isnot &quot;merchants&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to be there for the next battle?
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;link &quot;Break your contract with your master and volunteer for the Navy&quot;&gt;&gt;&lt;&lt;record-decision &quot;Jun 1665: Broke contract and volunteered for the navy&quot; 0 -2&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jun 1665: Volunteered for the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/if&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jun 1665: Stayed out of the fighting&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
 &lt;br&gt;&lt;br&gt;&lt;&lt;linkappend &quot;That is the last good day of the month, though.&quot;&gt;&gt;&lt;&lt;june-1665-helper&gt;&gt;
@@ -2577,7 +2577,7 @@ The heat of the city is oppressive but the worst is not the heat but the wails o
 
 Those who remain in the city hear the sounds of another battle in the distance—but any battle that is close enough for you can hear the cannon fire is too close. 
 &lt;br&gt;&lt;br&gt;
-&lt;&lt;if $agenum gte 16 and $agenum lte 59 and $gender isnot &quot;female&quot; and $origin is &quot;London&quot; and $religion isnot &quot;Quaker&quot; and $socio isnot &quot;nobles&quot; and $socio isnot &quot;merchants&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to join the Navy and defend the city where you were born and raised?
+&lt;&lt;if $agenum gte 16 and $agenum lte 59 and $gender isnot &quot;female&quot; and $disability is 0 and $origin is &quot;London&quot; and $religion isnot &quot;Quaker&quot; and $socio isnot &quot;nobles&quot; and $socio isnot &quot;merchants&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to join the Navy and defend the city where you were born and raised?
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;&lt;&lt;link &quot;Break your contract with your master and volunteer for the Navy&quot;&gt;&gt;&lt;&lt;record-decision &quot;Jul 1666: Broke contract and volunteered for the navy&quot; 0 -2&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jul 1666: Volunteered for the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/if&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Jul 1666: Stayed out of the fighting&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You wonder if you will make it to [[August 1666]].
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
@@ -3348,8 +3348,8 @@ Do you:
 
 &lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;&lt;li&gt;&lt;&lt;storyline-return &quot;offer to wash the church linens and sweep clean your church&quot; 1 32 0&gt;&gt;&lt;&lt;plague-risk-check&gt;&gt;&lt;&lt;set $decisions.push({text: $timeline[$monthIndex] + &quot;: Washed church linens&quot;, money: 32, repDelta: 0, repBefore: $reputation, infectPct: _riskPct})&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 
-&lt;li&gt;&lt;&lt;if $religion isnot &quot;Quaker&quot; and $gender isnot &quot;female&quot;&gt;&gt;[[volunteer to join the Navy-&gt;navy-volunteer]]/*[set $decisions.push({text: &quot;Dec 1664: Volunteered for the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]*/
-&lt;&lt;elseif $religion isnot &quot;Quaker&quot; and $gender is &quot;female&quot;&gt;&gt;
+&lt;li&gt;&lt;&lt;if $disability is 0 and $religion isnot &quot;Quaker&quot; and $gender isnot &quot;female&quot;&gt;&gt;[[volunteer to join the Navy-&gt;navy-volunteer]]/*[set $decisions.push({text: &quot;Dec 1664: Volunteered for the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]*/
+&lt;&lt;elseif $disability is 0 and $religion isnot &quot;Quaker&quot; and $gender is &quot;female&quot;&gt;&gt;
 [[disguise yourself as a man and join the English Navy-&gt;navy-volunteer]]/*[set $decisions.push({text: &quot;Dec 1664: Disguised as a man to join the navy&quot;, money: 0, repDelta: 0, repBefore: $reputation, infectPct: null})]]*/&lt;&lt;/if&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;storyline-return &quot;hope that you can survive on the resources you have&quot;&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
