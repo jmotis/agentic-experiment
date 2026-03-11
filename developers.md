@@ -277,3 +277,170 @@ After clicking, the link text is gone — only the replacement content remains.
 | Single link swaps itself for result text | `<<linkreplace>>` |
 | Multiple links targeting the same area | `<<replace>>` with `<span id>` |
 | Mix of progression + inline choices in one passage | Manual `$textGroup` + `<<replace>>` |
+
+## Widget Decision Events
+
+Storyline passages can present one-time decision widgets that **temporarily replace** the normal monthly narrative. The player sees only the widget's content; once they resolve the decision, the passage re-renders and the regular storyline text appears. Two mechanisms exist depending on where the widget is called from.
+
+### Architecture overview
+
+Every storyline passage (May 1665 onward) has this structure:
+
+```
+<<nobr>><<random-events>><<corpse-work>><<if not _randomEventFired>>
+[monthly storyline content — narrative text + player choices]
+<</if>><</nobr>>
+```
+
+Meanwhile, `PassageHeader` (pid 11) fires before the passage body on every passage load:
+
+```
+<<set _headerEventActive to false>>
+<<if tags().includes("storyline") and visited() lte 1>>
+  <<debt-check>><<child-service-check>><<noble-child-service-check>><<debtor>>
+<</if>>
+```
+
+The `_randomEventFired` flag is the single gate that controls whether the monthly storyline content is visible. Any widget that needs to suppress the passage body must ensure `_randomEventFired` is `true`.
+
+### Mechanism 1: Passage-body widgets ("market" pattern)
+
+**Used by:** `<<marriage-market>>`, `<<preferment-market>>`, `<<apprenticeship-market>>`, `<<church-services>>`
+
+These widgets are called from **within the passage body**, either inside an `<<if>>/<<else>>` branch (market widgets in January 1665) or after `<<random-events>>` sets `_randomEventFired` (church-services).
+
+**How they suppress the passage body:**
+
+- **Market widgets** are placed inside an `<<if>>/<<else>>` in the passage body itself. When the widget fires, the `<<else>>` clause (which contains the regular monthly narrative) does not execute. The widget content is the *only* visible output.
+- **`<<church-services>>`** is called by `<<random-events>>` after it sets `_randomEventFired to true`. If the widget presents a choice (for non-Church of England members), it uses `<<replace>>` + `<<storyline-return 0>>` to stay on the same passage. On re-render, `$randomEventCompleted` is `true`, so `<<random-events>>` sets `_randomEventFired to false` and the passage body appears.
+
+**Flow for market widgets:**
+
+1. First visit → market widget condition is met → widget fires instead of passage body
+2. Player makes a choice → `<<replace>>` swaps the question for confirmation text + `<<storyline-return "..." 0>>`
+3. Player clicks the storyline-return link → passage re-renders (second visit)
+4. Second visit → market widget condition is no longer met (e.g., `$seekingDecision` was set) → falls through to `<<else>>` → regular passage body renders
+
+**Template for a new passage-body widget:**
+
+```
+/* In the storyline passage (passage body): */
+<<if [widget-should-fire condition]>>
+  <<my-decision-widget>>
+<<else>>
+  [regular monthly storyline content]
+<</if>>
+```
+
+```
+/* Widget definition: */
+<<widget "my-decision-widget">><<nobr>>
+[explanatory text]
+<span id="myDecision">Question text?
+<<link "Option A">><<replace "#myDecision">>
+  <<set [state changes]>>
+  You chose A. <<storyline-return "Continue." 0>>
+<</replace>><</link>> | <<link "Option B">><<replace "#myDecision">>
+  <<set [state changes]>>
+  You chose B. <<storyline-return "Continue." 0>>
+<</replace>><</link>>
+</span>
+<</nobr>><</widget>>
+```
+
+**Key points:**
+- The `<<if>>/<<else>>` in the passage body ensures the widget fires *instead of* the passage content, not alongside it.
+- `<<storyline-return "..." 0>>` keeps the player on the same passage (offset 0) and sets `$randomEventCompleted to true`, so on re-render the passage body will display.
+- The widget must set a state variable (e.g., `$seekingDecision`) so the `<<if>>` condition is no longer true on re-render. Otherwise the widget fires again in an infinite loop.
+
+### Mechanism 2: Header widgets ("header event" pattern)
+
+**Used by:** `<<child-service-check>>`, `<<noble-child-service-check>>`, `<<debtor>>` (via `<<prison>>`)
+
+These widgets are called from **PassageHeader**, which fires before the passage body. They cannot use the `<<if>>/<<else>>` technique because PassageHeader and the passage body are separate — there is no shared conditional structure.
+
+**How they suppress the passage body:**
+
+1. PassageHeader initializes `_headerEventActive to false`.
+2. When a header widget produces interactive content, it sets `_headerEventActive to true`.
+3. When the passage body calls `<<random-events>>`, the widget checks `_headerEventActive` first. If `true`, it sets `_randomEventFired to true` and skips all random-event logic. This suppresses the passage body via the existing `<<if not _randomEventFired>>` gate.
+4. The player sees only the header widget content.
+5. After the player resolves the decision via `<<storyline-return 0>>`, the passage re-renders:
+   - `visited() > 1` → PassageHeader skips the widget calls → `_headerEventActive` stays `false`
+   - `$randomEventCompleted` is `true` → `<<random-events>>` sets `_randomEventFired to false` and calls `<<church-services>>`
+   - The passage body renders normally.
+
+**Consequence:** When a header event fires, `<<random-events>>` is entirely skipped for that month — pregnancy tracking, NPC death rolls, servant dismissal/promotion, and random event checks do not run. This is consistent with how market widgets behave (they also prevent `<<random-events>>` from executing when they fire in January 1665).
+
+**Flow diagram:**
+
+```
+PassageHeader
+  │
+  ├─ _headerEventActive = false
+  ├─ <<debt-check>>            (informational — does NOT set flag)
+  ├─ <<child-service-check>>   (sets flag if interactive content produced)
+  ├─ <<noble-child-service-check>> (sets flag if interactive content produced)
+  └─ <<debtor>> → <<prison>>   (sets flag unconditionally when called)
+  │
+Passage Body
+  │
+  ├─ <<random-events>>
+  │    ├─ if _headerEventActive  → _randomEventFired = true  (SUPPRESS)
+  │    ├─ elif $randomEventCompleted → _randomEventFired = false (SHOW)
+  │    └─ else → normal event cascade
+  │
+  ├─ <<corpse-work>>
+  │
+  └─ <<if not _randomEventFired>>
+       [monthly storyline content]    ← hidden when flag is true
+     <</if>>
+```
+
+**Template for a new header widget:**
+
+```
+/* Widget definition: */
+<<widget "my-header-widget">><<nobr>>
+<<if [condition for this widget to fire]>>
+  <<set _headerEventActive to true>>
+
+  <span id="myHeaderDecision">[Question text]
+  <br><br>
+  <<link "Option A">><<replace "#myHeaderDecision">>
+    <<set [state changes]>>
+    You chose A. <<storyline-return "Continue." 0>>
+  <</replace>><</link>> | <<link "Option B">><<replace "#myHeaderDecision">>
+    <<set [state changes]>>
+    You chose B. <<storyline-return "Continue." 0>>
+  <</replace>><</link>>
+  </span>
+<</if>>
+<</nobr>><</widget>>
+```
+
+Then register the widget call in PassageHeader (pid 11), inside the `visited() lte 1` guard:
+
+```
+<<if tags().includes("storyline") and visited() lte 1>>
+  <<debt-check>><<child-service-check>><<noble-child-service-check>><<debtor>>
+  <<my-header-widget>>
+<</if>>
+```
+
+**Key points:**
+- Set `_headerEventActive to true` **only** when the widget actually produces interactive content (inside the guarding `<<if>>`). If the widget's conditions aren't met and it produces no output, the flag must stay `false`.
+- The widget's condition must ensure it does not fire on re-render. The `visited() lte 1` guard in PassageHeader handles this automatically — header widgets only fire on the first visit.
+- Use `<<storyline-return "..." 0>>` (offset 0) to re-render the same passage. Offset 1+ advances to the next month, which is also valid — the passage body simply never appears for that month.
+- Header widgets that produce only informational text (no interactive choices) should **not** set `_headerEventActive`. See `<<debt-check>>` for an example — it outputs a debt warning but has no links for the player to click.
+
+### Choosing between the two mechanisms
+
+| Criterion | Passage-body widget | Header widget |
+|-----------|-------------------|---------------|
+| Called from | Inside the passage body | PassageHeader (pid 11) |
+| Fires for | One specific passage (or a small set) | Any storyline passage meeting the condition |
+| Suppression mechanism | `<<if>>/<<else>>` in the passage | `_headerEventActive` → `_randomEventFired` |
+| Random events | May or may not run (depends on placement) | Entirely skipped for that month |
+| Re-render guard | Widget must set a state variable to prevent re-firing | `visited() lte 1` in PassageHeader handles it automatically |
+| Best for | One-off decisions tied to a specific month | Recurring system events (debt, child service) that can fire on any month |
