@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.100" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.101" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3024,6 +3024,14 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
         &lt;&lt;if _allInfected.length eq 1&gt;&gt;_allInfected[0].rel _allInfected[0].name is infected with the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;.&lt;br&gt;
         &lt;&lt;elseif _allInfected.length gte 2&gt;&gt;&lt;&lt;for _n, _inf range _allInfected&gt;&gt;&lt;&lt;if _n lt _allInfected.length - 1&gt;&gt;_inf.rel, _inf.name, &lt;&lt;else&gt;&gt;and _inf.rel, _inf.name, are infected with the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;.&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;br&gt;
         &lt;&lt;/if&gt;&gt;
+    &lt;&lt;if _infectedExtended.length gte 1&gt;&gt;&lt;br&gt;Word also reaches you that plague has struck your extended family. Your
+    &lt;&lt;for _n, _idx range _infectedExtended&gt;&gt;
+        &lt;&lt;if _infectedExtended.length eq 1&gt;&gt;
+    $NPCsExtended[_idx].relationship $NPCsExtended[_idx].name is infected with the &lt;&lt;defPlague &quot;plague&quot;&gt;&gt;.&lt;br&gt;
+    &lt;&lt;elseif _n &lt; _infectedExtended.length - 1&gt;&gt;$NPCsExtended[_idx].relationship, $NPCsExtended[_idx].name,&lt;&lt;else&gt;&gt; and $NPCsExtended[_idx].relationship, $NPCsExtended[_idx].name are infected with the plague.&lt;br&gt;
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/for&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
     &lt;br&gt;
     As a good Christian, it is your duty to look after the poor, sick, and needy. But as a good Christian, you also know it is a sin to needlessly risk your life. &lt;&lt;set-caretaker&gt;&gt;&lt;&lt;if $hoh is 1&gt;&gt;Do you&lt;&lt;elseif _authoritySick&gt;&gt;With your &lt;&lt;print $caretakerLabel&gt;&gt; too ill to &lt;&lt;if $hoh is 3&gt;&gt;give orders, the decision falls to you&lt;&lt;elseif $hoh is 4&gt;&gt;make decisions, you must decide for yourself&lt;&lt;else&gt;&gt;make decisions, the responsibility falls to you&lt;&lt;/if&gt;&gt;. Do you&lt;&lt;else&gt;&gt;Do you convince your &lt;&lt;if $hoh is 0&gt;&gt;household&lt;&lt;elseif $hoh is 2&gt;&gt;family&lt;&lt;else&gt;&gt;&lt;&lt;print $caretakerLabel&gt;&gt;&lt;&lt;/if&gt;&gt; to&lt;&lt;/if&gt;&gt;:&lt;ul&gt;
 &lt;li&gt;[[Quarantine with your household-&gt;Quarantine, Week 1][$reputation to Math.clamp($reputation + 3, 0, 10)]]&lt;/li&gt;
