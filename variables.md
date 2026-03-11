@@ -120,11 +120,19 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 
 ### `$disability`
 - **Type:** Integer or String
-- **Possible values:** `0` (no disability), `"hard of hearing"`, `"crooked back"`, `"weak legs"`, `"speech impediment"`, `"asthma"`, `"epilepsy"`, `"poor eyesight"`
+- **Possible values:** `0` (no disability), `"hard of hearing"`, `"crooked back"`, `"weak legs"`, `"speech impediment"`, `"asthma"`, `"epilepsy"`, `"poor eyesight"`, `"disfiguring scar"`, `"gangrenous leg"`, `"lost eye"`, `"lost arm"`, `"lost hand"` (naval injuries may append via `" and "` concatenation)
 - **Initial value:** `0` (set in `StoryInit`, pid 10)
 - **Set by:** Character generation in the `bio` passage (pid 1). Elderly adults (`$age is "elderly adult"`) have a 1-in-3 chance of receiving `"hard of hearing"`. All other characters (and non-hard-of-hearing elderly adults) have a 1-in-10 chance of receiving one of the six general disabilities chosen at random via `either()`.
-- **Used for:** Bio text variants (disabled beggars get a pity-themed intro; disabled merchants/artisans get a "despite your disability" clause). Disabled beggars receive 2× alms from all beggar-choice widget options. Also checked in `beggar-roles` (pid 54) and `navy-volunteer` (pid 102).
+- **Used for:** Bio text variants (disabled beggars get a pity-themed intro; disabled merchants/artisans get a "despite your disability" clause). Disabled beggars receive 2× alms from all beggar-choice widget options. Also checked in `beggar-roles` (pid 54), `navy-volunteer` (pid 102), and `debt-navy-npc-option` (pid 58, NPC disability guard). Naval injuries set both `$disability` and `$navyDismissed`.
 - **Dependencies:** `$age` (determines eligibility for `"hard of hearing"`), `$socio` (determines bio text variant and alms doubling for beggars)
+
+### `$navyDismissed`
+- **Type:** Boolean
+- **Possible values:** `false`, `true`
+- **Initial value:** `false` (set in `StoryInit`, pid 10)
+- **Set by:** `naval-experience` widget (pid 111) — set to `true` when the PC is injured in battle and discharged from the Navy due to their injuries.
+- **Used for:** In the `impressed` passage (pid 15), if `true`, the captain recognizes the PC's prior naval injuries and turns them away instead of putting them to work aboard HMS Royal Sovereign.
+- **Dependencies:** `$disability` (injuries that trigger discharge also set a disability)
 
 ---
 
