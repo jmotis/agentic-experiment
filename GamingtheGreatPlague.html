@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.79" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.80" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -5053,16 +5053,15 @@ As soon as the first rumors fly of the king&#39;s entrance into London, you&lt;&
 /* Skip past blank chunks for late fleers — $textGroup is auto-incremented by 1
    after render, so set it to (target_chunk - 1) to land on the first relevant chunk.
    Chunk thresholds: 2→lt7, 3→lt8, 4→lt9, 5→lt11, 6→lt12, 7→lt15, 8→lt18, 9→lt19, 10→lt20, 11→lt21 */
-&lt;&lt;if $fledFromIndex gte 21&gt;&gt;&lt;&lt;set $textGroup to 10&gt;&gt;
-&lt;&lt;elseif $fledFromIndex gte 20&gt;&gt;&lt;&lt;set $textGroup to 9&gt;&gt;
-&lt;&lt;elseif $fledFromIndex gte 19&gt;&gt;&lt;&lt;set $textGroup to 8&gt;&gt;
-&lt;&lt;elseif $fledFromIndex gte 18&gt;&gt;&lt;&lt;set $textGroup to 7&gt;&gt;
-&lt;&lt;elseif $fledFromIndex gte 15&gt;&gt;&lt;&lt;set $textGroup to 6&gt;&gt;
-&lt;&lt;elseif $fledFromIndex gte 12&gt;&gt;&lt;&lt;set $textGroup to 5&gt;&gt;
-&lt;&lt;elseif $fledFromIndex gte 11&gt;&gt;&lt;&lt;set $textGroup to 4&gt;&gt;
-&lt;&lt;elseif $fledFromIndex gte 9&gt;&gt;&lt;&lt;set $textGroup to 3&gt;&gt;
-&lt;&lt;elseif $fledFromIndex gte 8&gt;&gt;&lt;&lt;set $textGroup to 2&gt;&gt;
-&lt;&lt;elseif $fledFromIndex gte 7&gt;&gt;&lt;&lt;set $textGroup to 1&gt;&gt;
+&lt;&lt;if $fledFromIndex gte 20&gt;&gt;&lt;&lt;set $textGroup to 10&gt;&gt;
+&lt;&lt;elseif $fledFromIndex gte 19&gt;&gt;&lt;&lt;set $textGroup to 9&gt;&gt;
+&lt;&lt;elseif $fledFromIndex gte 18&gt;&gt;&lt;&lt;set $textGroup to 8&gt;&gt;
+&lt;&lt;elseif $fledFromIndex gte 15&gt;&gt;&lt;&lt;set $textGroup to 7&gt;&gt;
+&lt;&lt;elseif $fledFromIndex gte 12&gt;&gt;&lt;&lt;set $textGroup to 6&gt;&gt;
+&lt;&lt;elseif $fledFromIndex gte 11&gt;&gt;&lt;&lt;set $textGroup to 5&gt;&gt;
+&lt;&lt;elseif $fledFromIndex gte 9&gt;&gt;&lt;&lt;set $textGroup to 4&gt;&gt;
+&lt;&lt;elseif $fledFromIndex gte 8&gt;&gt;&lt;&lt;set $textGroup to 3&gt;&gt;
+&lt;&lt;elseif $fledFromIndex gte 7&gt;&gt;&lt;&lt;set $textGroup to 2&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;next &quot;Stay away&quot;&gt;&gt;
