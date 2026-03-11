@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.84" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.85" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1865,7 +1865,7 @@ John: 1500, Thomas: 1300, William: 1300, Richard: 620, Robert: 600, Henry: 500, 
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;if tags().includes(&quot;storyline&quot;)&gt;&gt;&lt;h2&gt;&lt;&lt;print passage()&gt;&gt;, $location&lt;/h2&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if tags().includes(&quot;quarantine&quot;)&gt;&gt;&lt;h2&gt;&lt;&lt;print passage()&gt;&gt;&lt;/h2&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if tags().includes(&quot;storyline&quot;) and visited() lte 1&gt;&gt;&lt;&lt;debt-check&gt;&gt;&lt;&lt;child-service-check&gt;&gt;&lt;&lt;noble-child-service-check&gt;&gt;&lt;&lt;debtor&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set _headerEventActive to false&gt;&gt;&lt;&lt;if tags().includes(&quot;storyline&quot;) and visited() lte 1&gt;&gt;&lt;&lt;debt-check&gt;&gt;&lt;&lt;child-service-check&gt;&gt;&lt;&lt;noble-child-service-check&gt;&gt;&lt;&lt;debtor&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if tags().includes(&quot;storyline&quot;) and visited() lte 1 and $inDebtorsPrison is 1&gt;&gt;&lt;&lt;debtor-prison-check&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if tags().includes(&quot;storyline&quot;) and $inDebtorsPrison is 1 and $plagueInfection isnot 1 and $plagueInfection isnot 2 and $playerPlagueStatus isnot &quot;recovered&quot;&gt;&gt;
 &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;set $debtorPrisonInfected to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3423,6 +3423,7 @@ You never have much money to spare, but things have gone more poorly than usual 
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;prison&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _headerEventActive to true&gt;&gt;
 /* Release half the servants for nobles/merchants/artisans to reduce expenses */
 &lt;&lt;removeServants&gt;&gt;
 /* Forced child service: remove children/adolescents/young adults lte 21 for qualifying classes */
@@ -5947,9 +5948,17 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 
 
 &lt;p&gt;&lt;i&gt;For comparison: St Mary Islington (a suburban parish) had only 58 plague deaths over the whole outbreak, while the deadliest parish was St Dunstan Stepney with 1,392 recorded plague deaths. Parishes inside the City walls were generally safer than the poorer suburbs, where plague arrived earlier and spread faster due to crowded housing.&lt;/i&gt;&lt;/p&gt;</tw-passagedata><tw-passagedata pid="113" name="random events widget" tags="widget" position="2100,50" size="100,100">&lt;&lt;widget &quot;random-events&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+/* Guard: if a header event (debtor/child-service) is active, suppress the
+   passage body so only the header event content is visible. The header event
+   uses &lt;&lt;storyline-return 0&gt;&gt; to re-render the passage; on re-render,
+   visited() &gt; 1 prevents the header widgets from firing and
+   $randomEventCompleted causes the normal monthly narrative to appear. */
+&lt;&lt;if _headerEventActive&gt;&gt;
+	&lt;&lt;set _randomEventFired to true&gt;&gt;
+	&lt;&lt;set $churchServiceDecision to false&gt;&gt;
 /* Guard: if returning from a random event, skip everything and let
    the storyline passage render its normal monthly narrative. */
-&lt;&lt;if $randomEventCompleted&gt;&gt;
+&lt;&lt;elseif $randomEventCompleted&gt;&gt;
 	&lt;&lt;set _randomEventFired to false&gt;&gt;
 	&lt;&lt;set $randomEventCompleted to false&gt;&gt;
 	&lt;&lt;church-services&gt;&gt;
@@ -6539,6 +6548,7 @@ To reduce your expenses, you release &lt;&lt;if _rsRemovedNames.length eq 1&gt;&
   /* PC is a child/adolescent — offer to send them as a ward */
   &lt;&lt;set $childServiceOffered to $monthIndex&gt;&gt;
   &lt;&lt;set-caretaker&gt;&gt;
+  &lt;&lt;set _headerEventActive to true&gt;&gt;
 
   &lt;span id=&quot;nobleChildService&quot;&gt;Your family is struggling with mounting debts and &lt;&lt;if $caretakerLabel isnot &quot;&quot;&gt;&gt;your $caretakerLabel suggests sending you to live as a ward with a relative.&lt;&lt;else&gt;&gt;you wonder if you might be better off living as a ward with a relative.&lt;&lt;/if&gt;&gt; Would you like to go?
   &lt;br&gt;&lt;br&gt;
@@ -6641,6 +6651,7 @@ To reduce your expenses, you release &lt;&lt;if _rsRemovedNames.length eq 1&gt;&
   &lt;&lt;set _ncsName to $NPCs[_ncsIdx].name&gt;&gt;
   &lt;&lt;set _ncsRel to $NPCs[_ncsIdx].relationship&gt;&gt;
   &lt;&lt;set $childServiceOffered to $monthIndex&gt;&gt;
+  &lt;&lt;set _headerEventActive to true&gt;&gt;
 
   &lt;span id=&quot;nobleChildService&quot;&gt;Your family is struggling with mounting debts and you &lt;&lt;if $hoh is 4&gt;&gt;and your husband&lt;&lt;elseif $hoh is 2&gt;&gt;and your family&lt;&lt;/if&gt;&gt; need to decide whether to send one of the children to live as a ward with a relative, where they would be better provided for.&lt;br&gt;&lt;br&gt;Do you send your _ncsRel, _ncsName, to live as a ward?
   &lt;br&gt;&lt;br&gt;
@@ -7090,6 +7101,7 @@ As much as you miss your child&lt;&lt;if _safeKids.length &gt; 1&gt;&gt;ren&lt;&
   /* PC is a child/adolescent — they may be put into service */
 &lt;&lt;set $childServiceOffered to $monthIndex&gt;&gt;
 &lt;&lt;set-caretaker&gt;&gt;
+&lt;&lt;set _headerEventActive to true&gt;&gt;
 
 &lt;span id=&quot;childService&quot;&gt;Your family is struggling to bring in enough money to feed everyone and &lt;&lt;if $caretakerLabel isnot &quot;&quot;&gt;&gt;your $caretakerLabel suggests sending you to be a servant in a nearby household.&lt;&lt;else&gt;&gt;you wonder if you might be better off finding a position as a servant.&lt;&lt;/if&gt;&gt; Would you like to go into service?
 &lt;br&gt;&lt;br&gt;
@@ -7105,6 +7117,7 @@ Your &lt;&lt;defParish &quot;Parish&quot;&gt;&gt; &lt;&lt;defOverseersOfThePoor 
   &lt;&lt;set _csName to $NPCs[_csIdx].name&gt;&gt;
   &lt;&lt;set _csRel to $NPCs[_csIdx].relationship&gt;&gt;
   &lt;&lt;set $childServiceOffered to $monthIndex&gt;&gt;
+  &lt;&lt;set _headerEventActive to true&gt;&gt;
 
   &lt;span id=&quot;childService&quot;&gt;Your family is struggling to bring in enough money to feed everyone and you &lt;&lt;if $hoh is 4&gt;&gt;and your husband&lt;&lt;elseif $hoh is 2&gt;&gt;and your family&lt;&lt;/if&gt;&gt; need to decide whether everyone would be better off if you put one of the children into service in a nearby household.&lt;br&gt;&lt;br&gt;Do you put your _csRel, _csName, into service?
   &lt;br&gt;&lt;br&gt;
