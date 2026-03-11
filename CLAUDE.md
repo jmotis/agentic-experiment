@@ -245,6 +245,11 @@ The file `variables.md` contains a comprehensive list of all global (`$`-prefixe
 
 **Maintenance rule:** If a future update creates a new global variable or changes how an existing variable is used, `variables.md` must be updated along with the game file.
 
+**StoryInit initialization rule:** Every global (`$`-prefixed) variable must be initialized in the `StoryInit` passage (pid 10). This includes variables that are later overwritten during character generation or gameplay — they still need a default value in `StoryInit` so that no global variable is ever undefined. When adding a new global variable, add its `<<set>>` initialization to `StoryInit` in addition to wherever it is set during gameplay. The only exceptions are:
+- Variables set by `<<initDeathData>>` (called from `StoryInit`): `$parishRate`, `$corpseBuried`, `$corpsePlague`
+- `$textGroup` — intentionally managed with `<<if ndef $textGroup>>` checks and `<<unset>>`
+- `$args` — SugarCube built-in widget argument variable
+
 ## Session Setup
 
 At the start of every session, set the following environment variable:
