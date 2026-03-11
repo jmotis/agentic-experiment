@@ -696,6 +696,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Used for:** Ensures the &minus;1 reputation penalty for skipping Church of England services only fires once (on the first skip). The 48d. monetary fine continues to apply every month the player skips.
 - **Dependencies:** Interacts with `$reputation`, `$skipServices`, and `$religion`.
 
+### `$churchServiceDecision`
+- **Type:** Boolean
+- **Possible values:** `true` (church service decision already made this month), `false` (not yet decided)
+- **Initial value:** `false` (set in `StoryInit`, pid 10)
+- **Set by:** The `church-services` widget (pid 127) sets to `true` when the player makes a church attendance decision or when debt-forced attendance is shown. The `random-events` widget (pid 113) resets to `false` on fresh passage entry.
+- **Used for:** Prevents the `church-services` widget from re-displaying its choice text when the passage reloads after a `<<storyline-return 0>>`. This allows the church service text to disappear after the player decides, so only the regular storyline content appears.
+- **Dependencies:** Interacts with `$randomEventCompleted` and `_randomEventFired`.
+
 ### `$billSubscribed`
 - **Type:** Integer (boolean-like)
 - **Possible values:** `0` (not subscribed), `1` (subscribed to Bills of Mortality)
