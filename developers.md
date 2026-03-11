@@ -2,6 +2,19 @@
 
 Coding instructions for human developers working on **Gaming the Great Plague**.
 
+## Global Variable Initialization
+
+**All global (`$`-prefixed) variables must be initialized in the `StoryInit` passage (pid 10).** This ensures no global variable is ever `undefined` when checked during gameplay. Even variables that are overwritten during character generation or later in the game need a default value in `StoryInit`.
+
+When adding a new global variable:
+1. Add a `<<set>>` line in `StoryInit` with an appropriate default (e.g., `0` for integers, `""` for strings, `false` for booleans, `[]` for arrays).
+2. Update `variables.md` with the variable's documentation.
+
+**Exceptions** (do not duplicate in `StoryInit`):
+- `$parishRate`, `$corpseBuried`, `$corpsePlague` — initialized by the `<<initDeathData>>` widget, which is called from `StoryInit`.
+- `$textGroup` — intentionally managed with `<<if ndef $textGroup>>` / `<<unset $textGroup>>` to support multi-step passage sequences.
+- `$args` — a SugarCube built-in for widget arguments, not a game variable.
+
 ## SugarCube 2 Link Syntax
 
 ### Wiki-style links do not process macros
