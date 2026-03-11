@@ -574,6 +574,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Trigger:** `$pregnant is 9` triggers birth. `$pregnant is 4` is an intermediate milestone.
 - **Dependency:** Only applicable when `$gender is "female"` and `$relationship is "married"`
 
+### `$pregnancyAnnounced`
+- **Type:** Boolean
+- **Possible values:** `true`, `false`
+- **Default:** `false` (set in StoryInit and January 1665)
+- **Set by:** Set to `true` by the `<<pregnant>>` widget when `$pregnant` reaches 4 and the player is informed of the pregnancy. Reset to `false` by the `<<miscarriage>>` widget, the `<<birth>>` widget, silent plague-infection pregnancy resets, and January 1665 initialization.
+- **Purpose:** Safeguard to prevent the miscarriage widget from displaying the "you have suffered a miscarriage" text to players who were never told they were pregnant. When `$pregnancyAnnounced` is `false`, the miscarriage widget uses the softer "you thought you might be pregnant" message instead.
+- **Dependency:** Only relevant when `$gender is "female"` and `$relationship is "married"`
+
 ### `$miscarriage`
 - **Type:** Integer (random event roll)
 - **Set by:** `random(1, 100)`
