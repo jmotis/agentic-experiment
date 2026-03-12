@@ -134,6 +134,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Used for:** In the `impressed` passage (pid 15), if `true`, the captain recognizes the PC's prior naval injuries and turns them away instead of putting them to work aboard HMS Royal Sovereign.
 - **Dependencies:** `$disability` (injuries that trigger discharge also set a disability)
 
+### `$impressedFromIndex`
+- **Type:** Integer
+- **Possible values:** `-1` (never impressed), `0`–`21` (index into `$timeline`)
+- **Initial value:** `-1` (set in `StoryInit`, pid 10)
+- **Set by:** The `impressed` passage (pid 15) and `navy-volunteer` passage (pid 102) — set to `$monthIndex` when the PC actually boards a ship (not when released due to age, gender, or prior dismissal).
+- **Used for:** In `stats-cumulative-risk` (pid 75) and `risk-visualization` (pid 114), parish plague risk is zeroed out for months the PC was aboard ship (similar to `$fledFromIndex` for fled characters).
+- **Dependencies:** `$monthIndex`, `$timeline`
+
 ---
 
 ## Economy / Money
