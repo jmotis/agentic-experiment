@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.111" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.112" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -5892,14 +5892,14 @@ Do you &lt;span id=&quot;decision&quot;&gt;
 &lt;&lt;else&gt;&gt;
     &lt;&lt;set $money -=6&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Childbirth: Threw a Party&quot;, money: -6, repDelta: 0, repBefore: $reputation, infectPct: _riskPct})&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-You have your new baby, $NPCs.last().name, baptized then celebrate with all your family, friends, and neighbors. You know such a gathering might be dangerous, in such a time of plague, but there is a good chance that $NPCs.last().name will not be one of the babies who survives their perilous first year of life and you want everyone to meet them.
+You have your new baby, &lt;&lt;= $NPCs.last().name&gt;&gt;, baptized then celebrate with all your family, friends, and neighbors. You know such a gathering might be dangerous, in such a time of plague, but there is a good chance that &lt;&lt;= $NPCs.last().name&gt;&gt; will not be one of the babies who survives their perilous first year of life and you want everyone to meet them.
 &lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;
 &lt;&lt;/replace&gt;&gt;
 &lt;&lt;/link&gt;&gt; |
 &lt;&lt;link &quot;have a quick baptism&quot;&gt;&gt;
 &lt;&lt;replace &quot;#decision&quot;&gt;&gt;
 &lt;&lt;set $decisions.push({text: &quot;Childbirth: Had a quick baptism&quot;, money: -6, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
-You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPCs.last().name will be one of the babies who survives their perilous first year of life.
+You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that &lt;&lt;= $NPCs.last().name&gt;&gt; will be one of the babies who survives their perilous first year of life.
 &lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;
 &lt;&lt;/replace&gt;&gt;
 &lt;&lt;/link&gt;&gt;
