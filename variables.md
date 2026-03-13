@@ -345,6 +345,13 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Dependency:** Depends on `$masterGender`; only meaningful when `$socio is "servants"`
 - **Used for:** Display term used in all narrative text that references the player's master/mistress (e.g., "Your $masterTitle decides to flee"). The NPC's `relationship` field remains `"master"` regardless of gender for code compatibility.
 
+### `$masterFled`
+- **Type:** Boolean
+- **Possible values:** `true`, `false`
+- **Set by:** `flee-choice` widget (pid 64) when a married/widowed servant is left behind by their fleeing master; cleared by `servant-reunion` widget (pid 114) in February 1666
+- **Dependency:** `$socio is "servants"` and `$hoh isnot 3`
+- **Used for:** Tracks that the PC was a servant left behind by a fleeing master. When true, the master's household NPCs remain in `$NPCsMaster` marked `"safe from harm"` with location `"the countryside"`. In February 1666, triggers the `<<servant-reunion>>` widget offering the PC a choice to rejoin the returned master's household or remain independent.
+
 ### `$caretakerLabel`
 - **Type:** String
 - **Possible values:** `""` (empty — player is hoh 1, no caretaker), `"husband"`, `"father"`, `"parent"`, `"master"`, `"mistress"`, or any NPC relationship string (e.g., `"step-father"`, `"mother"`, `"uncle"`, `"aunt"`, `"guardian"`)
