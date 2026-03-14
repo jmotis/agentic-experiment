@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v4.6" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v4.7" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -5080,7 +5080,7 @@ Total plague risk: &lt;b&gt;&lt;&lt;print _cumTotal&gt;&gt;%&lt;/b&gt;
     &lt;&lt;/if&gt;&gt;
   &lt;&lt;/for&gt;&gt;
   &lt;&lt;set $expenses to _baseExp + (_perFamily * _famCount) + (_perServant * _svCount)&gt;&gt;
-  /* nobles following Court pay double expenses via fled-cost widget, no extra surcharge here */
+  /* nobles following Court pay 1.5x expenses (+ 1.25x income) via fled-cost widget, no extra surcharge here */
   &lt;&lt;if $seekingPreferment is 1&gt;&gt;&lt;&lt;set $expenses += 2400&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
   /* Day labourer — 60d per household + 20d per person */
@@ -6025,8 +6025,9 @@ You know the plague will only worsen as the weather warms and &lt;&lt;storyline-
 
 &lt;&lt;widget &quot;fled-cost&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;income&gt;&gt;&lt;&lt;expenses&gt;&gt;
-&lt;&lt;if $followedCourt is 1&gt;&gt; /* costs 2x expenses to follow Court */
-	&lt;&lt;set $expenses to $expenses * 2&gt;&gt;
+&lt;&lt;if $followedCourt is 1&gt;&gt; /* court proximity: 1.25x income (patronage), 1.5x expenses (itinerant costs) */
+	&lt;&lt;set $income to Math.round($income * 1.25)&gt;&gt;
+	&lt;&lt;set $expenses to Math.round($expenses * 1.5)&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;disposable&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
