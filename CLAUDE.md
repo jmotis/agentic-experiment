@@ -186,6 +186,15 @@ Known limitations and pitfalls discovered during development:
 
 - **Don't reverse-engineer pre-clamp values with arithmetic.** After `<<set $reputation to Math.clamp($reputation - 2, 0, 10)>>`, writing `repBefore: $reputation + 2` assumes the clamp didn't fire. If `$reputation` was 0 before and stayed 0, the expression evaluates to 2 — a value it never was. Always capture the value *before* mutation with `<<set _repBefore to $reputation>>` or use the `<<record-decision>>` widget. See the "Recording Decisions" section for details.
 
+- **No string concatenation in `<<link>>` arguments.** SugarCube's `<<link>>` macro does not evaluate `+` as a concatenation operator in its arguments — it treats `+` as a passage name. Pre-compute dynamic link text with `<<set>>` and pass the variable:
+  ```
+  /* Wrong — SugarCube looks for a passage named "+" */
+  <<link "Go nurse your " + $masterTitle + "'s household" "Quarantine, Week 1">>
+  /* Correct — pre-compute, then pass the variable */
+  <<set _linkText to "Go nurse your " + $masterTitle + "'s household">>
+  <<link _linkText "Quarantine, Week 1">>
+  ```
+
 - **Don't confuse `<</macro>>` with `</htmltag>`.** SugarCube macros close with `<</ >>`. HTML tags close with `</ >`. Writing `<</span>>` produces a macro-not-found error.
 
 ## Recording Decisions (`$decisions.push`)
