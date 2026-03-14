@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v4.7" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v4.8" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -3652,13 +3652,10 @@ Word reaches you in prison that a distant _relType has died. To your astonishmen
 
 /* cancel subscriptions if in debt */
 &lt;&lt;widget &quot;debt-check&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $money lt 0 and $debtWarned is 0&gt;&gt;
+&lt;&lt;if $money lt 0 and $debtWarned is 0 and $skipServices is 1&gt;&gt;
 &lt;&lt;set $debtWarned to 1&gt;&gt;
-&lt;&lt;set _debtCancelled to []&gt;&gt;
-&lt;&lt;if $skipServices is 1&gt;&gt;
 &lt;&lt;set $skipServices to 0&gt;&gt;
 &lt;&lt;set $debtForcedAttend to 1&gt;&gt;
-&lt;&lt;/if&gt;&gt;
 You have fallen into debt and can no longer afford the monthly recusancy fines for skipping Church of England services. It&#39;s time for you to reconsider attending your parish church.
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;
