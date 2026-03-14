@@ -239,6 +239,29 @@ When reviewing or writing `$decisions.push()` calls:
 2. **Is `repDelta` the actual delta, not the intended delta?** Use `$reputation - _repBefore` or let the widget compute it. A hardcoded `repDelta: -2` is wrong if clamping reduced the actual change.
 3. **Could the widget be used instead?** If the push is inside a `<<link>>`, `<<replace>>`, or `<<set>>` block (not an inline `[[...]]` setter), prefer `<<record-decision>>`.
 
+## Decision-Gating Widgets (enforcing player choices)
+
+Some widgets present a decision that the player **must** resolve before seeing the main monthly storyline content. These widgets suppress the passage body until the player clicks through. Two sub-patterns exist; see `developers.md` → "Widget Decision Events" for full details, flow diagrams, and templates.
+
+### Sub-pattern A: `<<if>>/<<else>>` branching
+
+The passage body uses `<<if>>/<<else>>` to show EITHER the widget OR the storyline. When the widget's condition is met, the storyline branch does not execute.
+
+**Used by:** `<<marriage-market>>`, `<<preferment-market>>`, `<<apprenticeship-market>>`, `<<bill-subscribe>>`
+
+### Sub-pattern B: `_randomEventFired` flag-setting
+
+The widget is called before the `<<if not _randomEventFired>>` gate. When showing a decision, it sets `_randomEventFired to true` to suppress the storyline below. It also guards its own decision branch with `not _randomEventFired` to avoid overlapping with other active events.
+
+**Used by:** `<<church-services>>`, `<<servant-reunion>>`
+
+### Mandatory rules for new decision-gating widgets
+
+1. **Never display a decision alongside the main storyline.** The player must resolve the decision before seeing passage content. Use one of the two sub-patterns above.
+2. **Always end each choice with `<<storyline-return "Continue." 0>>`** so the player can click through to the main storyline after making their decision.
+3. **Ensure the widget does not re-fire on re-render.** Each choice must set a state variable (or clear a condition) so the widget skips on the second visit.
+4. **For sub-pattern B:** guard the decision branch with `not _randomEventFired` so it does not overlap with random events or other flag-setting widgets.
+
 ## Global Variables Reference
 
 The file `variables.md` contains a comprehensive list of all global (`$`-prefixed) game variables, including their types, possible values, dependencies, and usage notes. Consult this file when you need to understand what a variable does, what values it can hold, or how it relates to other variables.

@@ -316,25 +316,24 @@ Meanwhile, `PassageHeader` (pid 11) fires before the passage body on every passa
 
 The `_randomEventFired` flag is the single gate that controls whether the monthly storyline content is visible. Any widget that needs to suppress the passage body must ensure `_randomEventFired` is `true`.
 
-### Mechanism 1: Passage-body widgets ("market" pattern)
+### Mechanism 1: Passage-body widgets
 
-**Used by:** `<<marriage-market>>`, `<<preferment-market>>`, `<<apprenticeship-market>>`, `<<church-services>>`
+These widgets are called from **within the passage body** and suppress the monthly storyline content until the player resolves a decision. Two sub-patterns exist depending on how suppression is achieved.
 
-These widgets are called from **within the passage body**, either inside an `<<if>>/<<else>>` branch (market widgets in January 1665) or after `<<random-events>>` sets `_randomEventFired` (church-services).
+#### Sub-pattern A: `<<if>>/<<else>>` branching
 
-**How they suppress the passage body:**
+**Used by:** `<<marriage-market>>`, `<<preferment-market>>`, `<<apprenticeship-market>>`, `<<bill-subscribe>>`
 
-- **Market widgets** are placed inside an `<<if>>/<<else>>` in the passage body itself. When the widget fires, the `<<else>>` clause (which contains the regular monthly narrative) does not execute. The widget content is the *only* visible output.
-- **`<<church-services>>`** is called by `<<random-events>>` after it sets `_randomEventFired to true`. If the widget presents a choice (for non-Church of England members), it uses `<<replace>>` + `<<storyline-return 0>>` to stay on the same passage. On re-render, `$randomEventCompleted` is `true`, so `<<random-events>>` sets `_randomEventFired to false` and the passage body appears.
+The passage body wraps the widget call and the main storyline in an `<<if>>/<<else>>` branch. When the widget's condition is met, the widget fires *instead of* the monthly narrative — the `<<else>>` clause (containing the storyline) does not execute.
 
-**Flow for market widgets:**
+**Flow:**
 
-1. First visit → market widget condition is met → widget fires instead of passage body
+1. First visit → widget condition is met → widget fires instead of passage body
 2. Player makes a choice → `<<replace>>` swaps the question for confirmation text + `<<storyline-return "..." 0>>`
 3. Player clicks the storyline-return link → passage re-renders (second visit)
-4. Second visit → market widget condition is no longer met (e.g., `$seekingDecision` was set) → falls through to `<<else>>` → regular passage body renders
+4. Second visit → widget condition is no longer met (e.g., `$seekingDecision` was set) → falls through to `<<else>>` → regular passage body renders
 
-**Template for a new passage-body widget:**
+**Template:**
 
 ```
 /* In the storyline passage (passage body): */
@@ -365,6 +364,61 @@ These widgets are called from **within the passage body**, either inside an `<<i
 - The `<<if>>/<<else>>` in the passage body ensures the widget fires *instead of* the passage content, not alongside it.
 - `<<storyline-return "..." 0>>` keeps the player on the same passage (offset 0) and sets `$randomEventCompleted to true`, so on re-render the passage body will display.
 - The widget must set a state variable (e.g., `$seekingDecision`) so the `<<if>>` condition is no longer true on re-render. Otherwise the widget fires again in an infinite loop.
+
+#### Sub-pattern B: `_randomEventFired` flag-setting
+
+**Used by:** `<<church-services>>`, `<<servant-reunion>>`
+
+The widget is called **before** the `<<if not _randomEventFired>>` gate in the passage body. When the widget needs to show a decision, it sets `_randomEventFired to true`, which suppresses the main storyline content below. The widget also guards its own decision branch with `not _randomEventFired` to avoid overlapping with other active events (e.g., a random event already being displayed).
+
+**Flow:**
+
+1. First visit → widget condition is met and `_randomEventFired` is false → widget sets `_randomEventFired to true` and displays the decision
+2. Main storyline is hidden because `_randomEventFired` is true
+3. Player makes a choice → `<<replace>>` swaps the question for confirmation text + `<<storyline-return "Continue." 0>>`
+4. Player clicks the storyline-return link → passage re-renders with `$randomEventCompleted` set to true
+5. Second visit → widget condition is no longer met (e.g., `$masterFled` was set to false, or `$churchServiceDecision` was set) → widget skips → `_randomEventFired` stays false → main storyline renders
+
+**Template:**
+
+```
+/* In the storyline passage (passage body): */
+<<random-events>><<corpse-work>>
+<<my-flag-setting-widget>>
+<<if not _randomEventFired>>
+  [monthly storyline content]
+<</if>>
+```
+
+```
+/* Widget definition: */
+<<widget "my-flag-setting-widget">><<nobr>>
+<<if [outer condition — e.g. $masterFled is true]>>
+<<if [non-interactive branch — e.g. debtor's prison cleanup]>>
+  [silent state cleanup — no UI, no flag-setting]
+<<elseif not _randomEventFired>>
+  <<set _randomEventFired to true>>
+  [explanatory text]
+  <span id="myDecision">Question text?
+  <<link "Option A">><<replace "#myDecision">>
+    <<set [state changes that clear the outer condition]>>
+    You chose A. <<storyline-return "Continue." 0>>
+  <</replace>><</link>> | <<link "Option B">><<replace "#myDecision">>
+    <<set [state changes that clear the outer condition]>>
+    You chose B. <<storyline-return "Continue." 0>>
+  <</replace>><</link>>
+  </span>
+<</if>>
+<</if>>
+<</nobr>><</widget>>
+```
+
+**Key points:**
+- The widget sets `_randomEventFired to true` itself — unlike sub-pattern A, there is no `<<if>>/<<else>>` in the passage to gate the storyline.
+- The `not _randomEventFired` guard inside the widget prevents it from displaying when another event (random event, church services, etc.) is already active. The widget will fire on a subsequent re-render once the other event resolves.
+- Each choice must clear the widget's outer condition (e.g., set `$masterFled to false`) so the widget does not fire again on re-render.
+- Silent, non-interactive branches (like cleanup for debtor's prison) do not set `_randomEventFired` and do not need a `not _randomEventFired` guard — the main storyline renders normally alongside them.
+- `<<church-services>>` is called from within `<<random-events>>` (after `$randomEventCompleted` resets `_randomEventFired to false`). `<<servant-reunion>>` is called directly in the passage body before the `_randomEventFired` gate. Both use the same flag-setting mechanism.
 
 ### Mechanism 2: Header widgets ("header event" pattern)
 
