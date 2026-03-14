@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v4.5" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v4.6" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -6914,21 +6914,41 @@ You serve in the Navy through the war against the Dutch, leaving service in 1667
 &lt;&lt;/if&gt;&gt; /* end $randomEventCompleted guard */
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="114" name="Claude-widgets" tags="widget" position="700,875" size="100,100">/* all widgets generated via Claude or other AI should be temporarily placed here then manually moved to new locations as needed */
 
-/* household-marriage-moveout — when a character living with parents (hoh 2)
-   gets married, they move out and form their own household. Must be called
-   AFTER &lt;&lt;addPartnerNPC&gt;&gt; and BEFORE &lt;&lt;set-hoh&gt;&gt;.
+/* household-marriage-moveout — when a character living with parents gets
+   married, they move out and form their own household. Must be called
+   AFTER &lt;&lt;addPartnerNPC&gt;&gt; and &lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;.
+   Checks for living parents in $NPCs directly (same logic as set-hoh
+   uses for hoh 2) rather than relying on $hoh being current.
    - Original NPCs (parents, siblings, etc.) are moved to $NPCsExtended.
    - For servants in $NPCsServants: retain half (round down for odd numbers),
      move the rest to $NPCsExtended.
    - The new household contains just the spouse (and retained servants). */
 &lt;&lt;widget &quot;household-marriage-moveout&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $hoh is 2&gt;&gt;
+
+/* Detect living parents in $NPCs (mirrors set-hoh&#39;s hoh-2 logic) */
+&lt;&lt;set _hmHasParent to false&gt;&gt;
+&lt;&lt;if $gender is &quot;male&quot;&gt;&gt;
+  &lt;&lt;for _hmi to 0; _hmi lt $NPCs.length; _hmi++&gt;&gt;
+    &lt;&lt;if ($NPCs[_hmi].relationship is &quot;father&quot; or $NPCs[_hmi].relationship is &quot;step-father&quot;) and $NPCs[_hmi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set _hmHasParent to true&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+&lt;&lt;else&gt;&gt;
+  &lt;&lt;for _hmi to 0; _hmi lt $NPCs.length; _hmi++&gt;&gt;
+    &lt;&lt;if ($NPCs[_hmi].relationship is &quot;father&quot; or $NPCs[_hmi].relationship is &quot;step-father&quot; or $NPCs[_hmi].relationship is &quot;mother&quot; or $NPCs[_hmi].relationship is &quot;step-mother&quot;) and $NPCs[_hmi].health isnot &quot;deceased&quot;&gt;&gt;
+      &lt;&lt;set _hmHasParent to true&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+  &lt;&lt;/for&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+
+&lt;&lt;if _hmHasParent and $socio isnot &quot;servants&quot;&gt;&gt;
 
 /* Save the new spouse (last NPC added by addPartnerNPC) */
-&lt;&lt;set _newSpouse to $NPCs[$NPCs.length - 1]&gt;&gt;
+&lt;&lt;set _spouseIdx to $NPCs.length - 1&gt;&gt;
+&lt;&lt;set _newSpouse to $NPCs[_spouseIdx]&gt;&gt;
 
 /* Move all other living NPCs to extended household */
-&lt;&lt;for _hmi to 0; _hmi lt $NPCs.length - 1; _hmi++&gt;&gt;
+&lt;&lt;for _hmi to 0; _hmi lt _spouseIdx; _hmi++&gt;&gt;
   &lt;&lt;if $NPCs[_hmi].health isnot &quot;deceased&quot;&gt;&gt;
     &lt;&lt;set $NPCsExtended.push($NPCs[_hmi])&gt;&gt;
   &lt;&lt;/if&gt;&gt;
