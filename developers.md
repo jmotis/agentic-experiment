@@ -293,7 +293,7 @@ After clicking, the link text is gone — only the replacement content remains.
 
 ## Widget Decision Events
 
-Storyline passages can present one-time decision widgets that **temporarily replace** the normal monthly narrative. The player sees only the widget's content; once they resolve the decision, the passage re-renders and the regular storyline text appears. Two mechanisms exist depending on where the widget is called from.
+Storyline passages can present one-time decision widgets that **temporarily replace** the normal monthly narrative. The player sees only the widget's content; once they resolve the decision, the passage re-renders (or downstream content is revealed) and the regular storyline text appears. Two mechanisms exist depending on where the widget is called from, with three sub-patterns for passage-body widgets.
 
 ### Architecture overview
 
@@ -318,7 +318,7 @@ The `_randomEventFired` flag is the single gate that controls whether the monthl
 
 ### Mechanism 1: Passage-body widgets
 
-These widgets are called from **within the passage body** and suppress the monthly storyline content until the player resolves a decision. Two sub-patterns exist depending on how suppression is achieved.
+These widgets are called from **within the passage body** and suppress the monthly storyline content (or downstream continuation content) until the player resolves a decision. Three sub-patterns exist depending on how suppression is achieved.
 
 #### Sub-pattern A: `<<if>>/<<else>>` branching
 
@@ -420,6 +420,79 @@ The widget is called **before** the `<<if not _randomEventFired>>` gate in the p
 - Silent, non-interactive branches (like cleanup for debtor's prison) do not set `_randomEventFired` and do not need a `not _randomEventFired` guard — the main storyline renders normally alongside them.
 - `<<church-services>>` is called from within `<<random-events>>` (after `$randomEventCompleted` resets `_randomEventFired to false`). `<<servant-reunion>>` is called directly in the passage body before the `_randomEventFired` gate. Both use the same flag-setting mechanism.
 
+#### Sub-pattern C: jQuery `show()`/`hide()` gating
+
+**Used by:** `<<smuggle-children>>`, `<<return-children>>`, `<<funeral-choice>>` (when called inline via `_funeralInline`)
+
+Unlike sub-patterns A and B, which suppress the **entire** passage body, this pattern gates only the **downstream continuation content** that follows the widget. The widget is called inline within the passage body, immediately before a continuation element — a `<span id="...">` that wraps the content the player should not see until the decision is resolved.
+
+When the widget has a decision to present, it hides the continuation element using jQuery:
+```
+<<done>><<run $("#continuation-id").hide()>><</done>>
+```
+
+After the player makes their choice (via `<<replace>>`), the widget reveals the continuation:
+```
+<<done>><<run $("#continuation-id").show()>><</done>>
+```
+
+The `<<done>>` wrapper is required because the jQuery call must execute after SugarCube has rendered the DOM — without it, the target element may not exist yet.
+
+**Flow:**
+
+1. Passage renders → widget condition is met → widget hides the continuation `<span>` and displays the decision
+2. Player makes a choice → `<<replace>>` swaps the question for result text → `<<done>><<run $(...).show()>><</done>>` reveals the continuation
+3. The continuation content (which may include further widgets, links, or `<<storyline-return>>`) is now visible without a full passage re-render
+
+**Template:**
+
+```
+/* In the storyline passage (passage body): */
+<<my-inline-widget>>
+<span id="my-continue">[downstream content — may include further widgets or <<storyline-return>>]</span>
+```
+
+```
+/* Widget definition: */
+<<widget "my-inline-widget">><<nobr>>
+<<if [condition to present decision]>>
+<<done>><<run $("#my-continue").hide()>><</done>>
+<span id="myInlineDecision">Question text?
+<<link "Option A">><<replace "#myInlineDecision">>
+  <<set [state changes]>>
+  You chose A.
+  <<done>><<run $("#my-continue").show()>><</done>>
+<</replace>><</link>> | <<link "Option B">><<replace "#myInlineDecision">>
+  <<set [state changes]>>
+  You chose B.
+  <<done>><<run $("#my-continue").show()>><</done>>
+<</replace>><</link>>
+</span>
+<</if>>
+<</nobr>><</widget>>
+```
+
+**Key points:**
+- The continuation `<span id="...">` is defined in the **calling passage**, not inside the widget. The widget only controls visibility via `hide()`/`show()`.
+- This pattern does **not** set `_randomEventFired` and does **not** suppress unrelated passage content — it only gates what comes after the widget in the DOM.
+- No full passage re-render occurs. The decision resolution and continuation reveal happen in-place via DOM manipulation.
+- Multiple sub-pattern C widgets can be **chained sequentially** by nesting continuation spans. For example, `<<smuggle-children>>` hides `#smuggle-continue`, and inside that span `<<return-children>>` hides `#return-continue`. Each widget independently gates its own downstream content.
+- The widget's condition should be self-limiting (e.g., checking an array length) so it only fires when there are eligible targets. Unlike sub-patterns A and B, there is typically no need for a state variable to prevent re-firing, because the passage does not re-render.
+
+**Example — chained widgets in quarantine-end (pid 76):**
+
+```
+<<funeral-choice>>
+<span id="funeral-continue"><<orphan-check>>
+<<servant-master-death>>
+<<health-update>>
+<<return-children>>
+<span id="return-continue"><<catch-up>>
+<<storyline-return "You open your doors and reenter the outside world.">></span></span>
+```
+
+Here, `<<funeral-choice>>` hides `#funeral-continue` when there are dead NPCs needing funerals. After the player chooses a burial type, `#funeral-continue` is shown, revealing orphan checks, health updates, and the `<<return-children>>` widget. If there are smuggled children to bring home, `<<return-children>>` in turn hides `#return-continue` until that decision is resolved.
+
 ### Mechanism 2: Header widgets ("header event" pattern)
 
 **Used by:** `<<child-service-check>>`, `<<noble-child-service-check>>`, `<<debtor>>` (via `<<prison>>`)
@@ -501,13 +574,16 @@ Then register the widget call in PassageHeader (pid 11), inside the `visited() l
 - Use `<<storyline-return "..." 0>>` (offset 0) to re-render the same passage. Offset 1+ advances to the next month, which is also valid — the passage body simply never appears for that month.
 - Header widgets that produce only informational text (no interactive choices) should **not** set `_headerEventActive`. See `<<debt-check>>` for an example — it outputs a debt warning but has no links for the player to click.
 
-### Choosing between the two mechanisms
+### Choosing between the mechanisms
 
-| Criterion | Passage-body widget | Header widget |
-|-----------|-------------------|---------------|
-| Called from | Inside the passage body | PassageHeader (pid 11) |
-| Fires for | One specific passage (or a small set) | Any storyline passage meeting the condition |
-| Suppression mechanism | `<<if>>/<<else>>` in the passage | `_headerEventActive` → `_randomEventFired` |
-| Random events | May or may not run (depends on placement) | Entirely skipped for that month |
-| Re-render guard | Widget must set a state variable to prevent re-firing | `visited() lte 1` in PassageHeader handles it automatically |
-| Best for | One-off decisions tied to a specific month | Recurring system events (debt, child service) that can fire on any month |
+| Criterion | Sub-pattern A (`<<if>>/<<else>>`) | Sub-pattern B (`_randomEventFired`) | Sub-pattern C (jQuery `show`/`hide`) | Header widget |
+|-----------|----------------------------------|-------------------------------------|--------------------------------------|---------------|
+| Called from | Inside the passage body | Inside the passage body | Inside the passage body | PassageHeader (pid 11) |
+| Fires for | One specific passage (or a small set) | One specific passage (or a small set) | Any passage with an eligible condition | Any storyline passage meeting the condition |
+| Suppression mechanism | `<<if>>/<<else>>` in the passage | Sets `_randomEventFired to true` | jQuery `hide()`/`show()` on a continuation `<span>` | `_headerEventActive` → `_randomEventFired` |
+| Scope of suppression | Entire passage body | Entire passage body | Only downstream content after the widget | Entire passage body |
+| Random events | May or may not run (depends on placement) | May or may not run (depends on placement) | Unaffected — does not interact with `_randomEventFired` | Entirely skipped for that month |
+| Re-render guard | Widget must set a state variable to prevent re-firing | Widget must set a state variable to prevent re-firing | Typically self-limiting (condition based on data, e.g., array length); no re-render occurs | `visited() lte 1` in PassageHeader handles it automatically |
+| Re-renders passage? | Yes — `<<storyline-return>>` reloads passage | Yes — `<<storyline-return>>` reloads passage | No — resolution is in-place via DOM manipulation | Yes — `<<storyline-return>>` reloads passage |
+| Chainable? | No | No | Yes — continuation spans can be nested | No |
+| Best for | One-off decisions tied to a specific month | Decisions that must prevent other events from overlapping | Sequential inline decisions where later content depends on earlier choices | Recurring system events (debt, child service) that can fire on any month |
