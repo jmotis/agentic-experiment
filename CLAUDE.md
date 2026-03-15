@@ -250,7 +250,7 @@ When reviewing or writing `$decisions.push()` calls:
 
 ## Decision-Gating Widgets (enforcing player choices)
 
-Some widgets present a decision that the player **must** resolve before seeing the main monthly storyline content. These widgets suppress the passage body until the player clicks through. Two sub-patterns exist; see `developers.md` → "Widget Decision Events" for full details, flow diagrams, and templates.
+Some widgets present a decision that the player **must** resolve before seeing the main monthly storyline content. These widgets suppress the passage body (or downstream content) until the player clicks through. Three sub-patterns exist; see `developers.md` → "Widget Decision Events" for full details, flow diagrams, and templates.
 
 ### Sub-pattern A: `<<if>>/<<else>>` branching
 
@@ -264,12 +264,19 @@ The widget is called before the `<<if not _randomEventFired>>` gate. When showin
 
 **Used by:** `<<church-services>>`, `<<servant-reunion>>`
 
+### Sub-pattern C: jQuery `show()`/`hide()` gating
+
+The widget is called **inline** within the passage body, immediately before a continuation element (a `<span id="...">` wrapping downstream content). When the widget has a decision to present, it uses `<<done>><<run $("#continuation-id").hide()>><</done>>` to hide the continuation element. After the player resolves the decision (via `<<replace>>`), the widget calls `<<done>><<run $("#continuation-id").show()>><</done>>` to reveal the continuation and let the passage flow proceed. Unlike sub-patterns A and B, this pattern does **not** suppress the entire passage body or set `_randomEventFired` — it only gates the content that follows the widget.
+
+**Used by:** `<<smuggle-children>>`, `<<return-children>>`, `<<funeral-choice>>` (when called inline via `_funeralInline`)
+
 ### Mandatory rules for new decision-gating widgets
 
-1. **Never display a decision alongside the main storyline.** The player must resolve the decision before seeing passage content. Use one of the two sub-patterns above.
-2. **Always end each choice with `<<storyline-return "Continue." 0>>`** so the player can click through to the main storyline after making their decision.
+1. **Never display a decision alongside the main storyline.** The player must resolve the decision before seeing passage content. Use one of the three sub-patterns above.
+2. **Always end each choice with `<<storyline-return "Continue." 0>>`** so the player can click through to the main storyline after making their decision. **Exception for sub-pattern C:** choices reveal the continuation element via `show()` instead of using `<<storyline-return>>`, since the passage does not need to re-render.
 3. **Ensure the widget does not re-fire on re-render.** Each choice must set a state variable (or clear a condition) so the widget skips on the second visit.
 4. **For sub-pattern B:** guard the decision branch with `not _randomEventFired` so it does not overlap with random events or other flag-setting widgets.
+5. **For sub-pattern C:** the continuation `<span id="...">` must be defined in the **calling passage**, not inside the widget. The widget only controls visibility via `hide()`/`show()` on that element's `id`.
 
 ## Global Variables Reference
 
