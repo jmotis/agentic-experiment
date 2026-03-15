@@ -440,6 +440,12 @@ This document lists all global (story) variables used in **Gaming the Great Plag
   - `Generic` &mdash; "brimstone and saltpeter with a little myrrh" (cost: 24)
 - **Used for:** Purchased plague prevention items. Quantity tracks how many the player owns.
 
+### `$fumesLastUsed`
+- **Type:** String
+- **Default:** `""`
+- **Possible values:** `""`, `"Fancy"`, `"Generic"`, `"Purse"`, `"Incense"`
+- **Used for:** Tracks which fumigant type was consumed last month. Used by the `<<fumigant>>` widget to detect the first and last month of each fumigant type, so players only see odor messages on those months instead of every month.
+
 ### `$remedies`
 - **Type:** Object with named sub-objects
 - **Structure:** Each key maps to `{ name: String, quantity: Integer, cost: Integer }`
