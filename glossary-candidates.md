@@ -389,3 +389,151 @@ Terms found in *Gaming the Great Plague* that appear in user-facing game text an
 ### Comet (as portent)
 - **Context:** Comets seen as divine portents of plague/disaster in December 1664.
 - **Why it needs a definition:** The belief that comets predicted plague was widespread in 1665 London. This differs from modern scientific understanding of comets.
+
+---
+
+## 15. Food and Feasting
+
+### Syllabub
+- **Context:** Listed as a dessert option at Christmas and pre-Lent feasts: "you're excited about all the things on the menu but especially your favorite dessert <<listbox>>."
+- **Why it needs a definition:** A cold dessert drink of cream or milk curdled with wine or cider. Completely unfamiliar to modern readers.
+
+### Tansy
+- **Context:** Listed alongside syllabub, minced pie, sweetmeats, and currant cake as a feast dessert option in December 1664, December 1665, and February 1666.
+- **Why it needs a definition:** A bitter herb pudding or pancake flavored with tansy leaves, traditionally eaten at Easter. Obscure historical food.
+
+### Minced Pie
+- **Context:** Listed as a Christmas/pre-Lent feast dessert option in multiple feast passages.
+- **Why it needs a definition:** A sweet pastry filled with a mixture of dried fruits and spices (and historically, meat). While "mince pie" is known in British culture, American middle schoolers may not recognize it.
+
+### Sweetmeats
+- **Context:** Listed as a feast food option in December 1664 and December 1665.
+- **Why it needs a definition:** Candied or preserved fruits and confections served as treats or dessert. The term is archaic and may be confused with meat dishes.
+
+### Lamprey Pie
+- **Context:** Listed as a Christmas feast food option in December 1665.
+- **Why it needs a definition:** A pie made from lamprey, an eel-like parasitic fish. A traditional English delicacy that would strike modern readers as exotic or repulsive.
+
+### Hog's Pudding
+- **Context:** Listed as a Christmas feast food option in December 1665.
+- **Why it needs a definition:** A type of sausage made with pork offal and spices, common in 17th-century England. The word "pudding" here means sausage, not dessert.
+
+### Pigeon Pie
+- **Context:** Listed as a Christmas feast food option in December 1665.
+- **Why it needs a definition:** A savory pie made with pigeon meat, common in 17th-century English cooking. While somewhat self-explanatory, eating pigeon may surprise modern readers.
+
+### Parmezan (cheese)
+- **Context:** "You task a servant to dig holes in the yard to bury your wine, Parmezan cheese, and most expensive books" (September 1666, Great Fire).
+- **Why it needs a definition:** Parmesan cheese, here using a period spelling. The detail of burying cheese to save it from the fire comes from Samuel Pepys's diary and illustrates its high value in this period.
+
+---
+
+## 16. Medical Concepts (Period Beliefs)
+
+### Tokens (of plague)
+- **Context:** "A woman offers you a groat to say that her son died of spotted fever, despite the obvious tokens of plague on the poor boy's body"; "you are starting to have nightmares about seeing buboes and the tokens of plague on your neighbors."
+- **Why it needs a definition:** Dark spots or blotches on the skin that were a sign of plague infection, considered a death sentence. The word "tokens" in this specific medical sense is unfamiliar.
+
+### Humors / Humours
+- **Context:** "You avoid eating berries, cabbage, cucumbers, melons, and spinach to keep your humors well-balanced"; "a suppository of a fig filled with salt to help rebalance your humors."
+- **Why it needs a definition:** The four bodily fluids (blood, phlegm, yellow bile, black bile) whose balance was thought to determine health and illness in early modern medicine. A foundational concept of pre-modern medicine that most middle schoolers would not know.
+
+### Miasma / Miasmas
+- **Context:** "The Lord Mayor has ordered fires to be lit throughout the city, to fill the air with smoke and sweep away any miasmas that might be making the plague worse."
+- **Why it needs a definition:** "Bad air" believed to cause disease. The miasma theory of disease preceded germ theory and was the dominant explanation for plague in 1665.
+
+### Brimstone
+- **Context:** Appears as an ingredient in the cheap fumigant: "Fumigates your home with brimstone, saltpeter, and a little myrrh."
+- **Why it needs a definition:** Sulfur, burned as a fumigant to purify the air. The word appears in religious contexts ("fire and brimstone") but its practical use as a disinfectant is period-specific.
+
+### Saltpeter / Saltpetre
+- **Context:** Mixed with brimstone as a fumigant ingredient: "brimstone, saltpeter, and a little myrrh."
+- **Why it needs a definition:** Potassium nitrate, also used in gunpowder. Its use as a plague fumigant is very niche historical knowledge.
+
+### Myrrh
+- **Context:** "Brimstone, saltpeter, and a little myrrh. The myrrh does little to cover the sulfuric smell."
+- **Why it needs a definition:** A fragrant resin from trees, burned as incense and used in medicines. While some readers may know it from the Christmas nativity story, its practical use as a fumigant ingredient would be unfamiliar.
+
+### Gangrene / Gangrenous
+- **Context:** "With a gangrenous leg that will later need to be amputated" (naval combat injury).
+- **Why it needs a definition:** Tissue death due to infection or loss of blood supply. While the word may be known, its prevalence as a consequence of battle wounds in the age of sail is historically specific.
+
+---
+
+## 17. Economic and Trade Terms
+
+### Groat
+- **Context:** "A man offers you a groat to take his wife away without letting her corpse be examined"; appears four times in plague-work bribery scenarios (July 1665).
+- **Why it needs a definition:** A small English coin worth four pence. Important context for understanding how small these bribes are, and how desperate both parties must be.
+
+### Bequest
+- **Context:** "Word reaches you in prison that a distant [relative] has died. To your astonishment, the bequest is just enough to settle your debts."
+- **Why it needs a definition:** Money or property left to someone in a will. While used in modern English, it is a formal/legal term that middle schoolers may not know.
+
+### Clerkship
+- **Context:** "The Earl of Clarendon writes to inform you that a clerkship has come open. Like many such positions, you can hire someone to do the actual work while you retain the honor and the income of your new office."
+- **Why it needs a definition:** A paid administrative office, often purchased at court. The concept of buying an office and hiring someone else to do the work (a sinecure) is a key aspect of early modern patronage.
+
+### Steward (estate)
+- **Context:** "Zounds! The steward of your country estate has died and you must return home to manage affairs yourself."
+- **Why it needs a definition:** A trusted manager who oversees a nobleman's estate and household finances. While the word is still used, its specific role managing a noble family's country estate is historically specific.
+
+### Freeman
+- **Context:** "Once your apprenticeship is complete, you will become a freeman, have voting rights in city elections, and could be eligible for office yourself."
+- **Why it needs a definition:** A citizen with full legal rights in a city, including the right to vote and run a trade. Status was gained by completing an apprenticeship or by patrimony. Unfamiliar to modern readers.
+
+### Lodger
+- **Context:** The lodger-choice widget appears after the Great Fire displaces Londoners: players can take in displaced families for rent.
+- **Why it needs a definition:** A person who pays rent to live in someone else's house, usually renting a single room. While the word exists in modern English, the practice of taking in fire-displaced strangers is historically specific.
+
+### Mercer
+- **Context:** Listed as an apprenticeship trade option (£50 — the most expensive) alongside draper, goldsmith, and ironmonger.
+- **Why it needs a definition:** A dealer in fine textiles and fabrics, one of the most prestigious of London's livery companies. Completely unfamiliar to modern readers.
+
+### Draper
+- **Context:** Listed as an apprenticeship trade option (£15) in the apprenticeship passage.
+- **Why it needs a definition:** A dealer in cloth and dry goods. While the word exists as a surname, its meaning as a trade is archaic.
+
+---
+
+## 18. Court and Political Terms
+
+### Preferment
+- **Context:** "Do you wish to seek preferment at Court?"; "All your hard work in making friends at Court has paid off."
+- **Why it needs a definition:** Appointment or promotion to a desirable position, especially at court. A key aspiration for noble characters and a central concept of early modern patronage politics.
+
+### Earl of Clarendon
+- **Context:** "The Earl of Clarendon writes to inform you that a clerkship has come open."
+- **Why it needs a definition:** Edward Hyde, 1st Earl of Clarendon, Lord Chancellor of England and one of the most powerful men at Charles II's court. He fell from favor in 1667. A significant historical figure unfamiliar to most students.
+
+---
+
+## 19. Religious Terms (Additional)
+
+### Purgatory
+- **Context:** "As a God-fearing Catholic, you know you are destined to spend time in purgatory before you can ascend to heaven."
+- **Why it needs a definition:** In Catholic theology, a state after death where souls are purified before entering heaven. Contrasts with the Protestant belief in guaranteed salvation shown in the same passage.
+
+### Advent
+- **Context:** "As Advent begins, you look forward to actually being able to properly celebrate Christmas this year" (December 1666).
+- **Why it needs a definition:** The Christian season of four weeks leading up to Christmas, a time of preparation and anticipation. While known to some, many middle schoolers may not recognize the term.
+
+---
+
+## 20. Military and Naval Terms (Additional)
+
+### Hammock (naval burial)
+- **Context:** "Your body is wrapped in your hammock and dropped over board."
+- **Why it needs a definition:** A suspended canvas bed used by sailors aboard ships, also used as a burial shroud for sailors killed in battle. The dual use is historically specific.
+
+### Rigging
+- **Context:** "A cannon splits the mast of your ship and the falling rigging crushes you"; "your right arm, which was crushed by falling rigging."
+- **Why it needs a definition:** The ropes, chains, and cables that support a ship's masts and sails. While the word exists in modern English, its specific meaning on a warship may be unclear to younger readers.
+
+---
+
+## 21. Archaic Language
+
+### Zounds
+- **Context:** "Zounds! The steward of your country estate has died."
+- **Why it needs a definition:** A 17th-century exclamation, a minced oath derived from "God's wounds." Used in the game for period flavor.
