@@ -345,12 +345,8 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Dependency:** Depends on `$masterGender`; only meaningful when `$socio is "servants"`
 - **Used for:** Display term used in all narrative text that references the player's master/mistress (e.g., "Your $masterTitle decides to flee"). The NPC's `relationship` field remains `"master"` regardless of gender for code compatibility.
 
-### `$masterFled`
-- **Type:** Boolean
-- **Possible values:** `true`, `false`
-- **Set by:** `flee-choice` widget (pid 64) when a married/widowed servant is left behind by their fleeing master; cleared by `servant-reunion` widget (pid 114) in February 1666
-- **Dependency:** `$socio is "servants"` and `$hoh isnot 3`
-- **Used for:** Tracks that the PC was a servant left behind by a fleeing master. When true, the master's household NPCs remain in `$NPCsMaster` marked `"safe from harm"` with location `"the countryside"`. In February 1666, triggers the `<<servant-reunion>>` widget offering the PC a choice to rejoin the returned master's household or remain independent.
+### `$masterFled` *(removed)*
+- **Notes:** Previously tracked whether a servant's master had fled the city (set by `flee-choice` widget, cleared by `servant-reunion` widget). Removed in a subsequent code cleanup. The servant-reunion logic now uses other state to determine master return.
 
 ### `$caretakerLabel`
 - **Type:** String
@@ -891,6 +887,14 @@ This document lists all global (story) variables used in **Gaming the Great Plag
 - **Type:** Integer (count of servants)
 - **Set by:** `random(1, 3)` for merchants/artisans; `random(8, 12)` for nobles
 - **Used for:** Initial number of servant NPCs to generate for the household
+
+### `$shutUpHouse`
+- **Type:** Integer
+- **Possible values:** `0` (not guarding), `1` (currently guarding/nursing a shut-up house)
+- **Initial value:** `0` (set in StoryInit, pid 10)
+- **Set by:** `corpse-work` widget (pid 91) — set to `1` when a nurse or warder accepts a plague assignment; reset to `0` when the assignment ends (after 40 days) or if the player becomes infected
+- **Dependency:** `$role is "nurse"` or `$role is "warder"`, and `$corpsePlague[$parish]` has plague deaths
+- **Used for:** Tracks whether the player is currently assigned to guard or nurse at a shut-up (quarantined) house. When `1`, the next month displays a message about the quarantine ending and resets to `0`. Prevents new plague assignments while already on duty.
 
 ---
 
