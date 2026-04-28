@@ -166,6 +166,19 @@ Call sites (one per in-game month):
 
 The drain fires once per visit. Months where a random event (illness/death/injury/crime/encounter/weather/mutiny) fires currently skip both `<<earnings>>` and `<<familyexpenses>>` — the family is treated as having "missed" that pay-and-eat cycle. This matches the existing earnings semantics; if it should drain regardless, both widgets need to be hoisted above the event chain.
 
+## Proportional family drain for multi-month port stays
+
+`Time in Port` (pid 37):
+
+- Replaced the entry-time `<<familyexpenses>>` call (which would have over-counted vs the per-link drain) with a `$monthlyExpense` calculation block at the top of the passage. The same category-aware logic as `<<familyexpenses>>`:
+    - `"your wife"` → 360
+    - `"your parents"` → 480
+    - `"your children"` → 240 + (`$dependents` × 120)
+- Each "stay N months" link setter now drains the family pool proportionally: `$depmoney to Math.clamp($depmoney - N*$monthlyExpense, 0, Infinity)`. 24 link setters covered (1-month, 2-month, 3-month base + the 4/5/6/7/8/9-month staircase ranges).
+- `$monthlyExpense` is a global (initialized to 0 in StoryInit) rather than a temp `_var`, so it's reliably available in link setters at click time even after multiple `<<replace>>` operations have re-rendered the surrounding DOM.
+
+Players who pick "leave immediately" / "drink"/"theatre"/"food" / "robbed in the night" / "die of exposure" do not drain the family pool — those branches do not represent a multi-month port stay.
+
 ## Bugs not addressed (from the original audit)
 
 These were flagged in the review but remain open:
@@ -175,6 +188,5 @@ These were flagged in the review but remain open:
 - The `Sea Week 2` cook branch is no longer a soft-lock but its content is a placeholder (`NTS: add text here`) until the author writes prose for it.
 - `Equator` widget is a placeholder ("NEEDS WORK") and never invoked.
 - Song-definition widgets (`defladies`, `defcruelship`, `defgolden`, `defmermaid`, `defrogues`) are defined but never used.
-- `Time in Port`'s "stay 1–9 more months" link choices currently drain `$depmoney` only once (for the immediate decision month). Proportional multi-month drain via the link setters is a follow-up.
 - Family expenses are skipped on event-heavy sea months (matching the existing `<<earnings>>` semantics). If the design wants the family to eat *every* month, both widgets should be hoisted above the event chain.
 - No "family hardship" event fires when `$depmoney` reaches 0 — just clamped silently.
