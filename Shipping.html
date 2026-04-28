@@ -1618,6 +1618,7 @@ The &lt;&lt;defmaster &quot;shipping master&quot;&gt;&gt; asks that you report b
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="Sea Week 1" tags="storyline" position="375,325" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $location to &quot;at sea&quot;&gt;&gt;
 &lt;&lt;earnings&gt;&gt;
+&lt;&lt;familyexpenses&gt;&gt;
 The &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; steers the $shipName out of harbor. &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;You are assigned to stand &lt;&lt;defwatch &quot;watch&quot;&gt;&gt; for the wind to turn. When you feel the change, you call the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt;.&lt;&lt;elseif $role is &quot;ordinary seaman&quot;&gt;&gt;There is a flurry of activity as every hand moves about the deck to &lt;&lt;defheave &quot;heave anchor&quot;&gt;&gt; and make ready to sail.&lt;&lt;elseif $role is &quot;able seaman&quot;&gt;&gt;You are sent &lt;&lt;defaloft &quot;aloft&quot;&gt;&gt; to unfurl the sails as the wind stiffens.&lt;&lt;else&gt;&gt;You settle into your quarters.&lt;&lt;/if&gt;&gt; The &lt;&lt;defboatswain &quot;boatswain&quot;&gt;&gt; calls out hoarsely &quot;Aaalllll haaaands! Up anchor, ahooooy!&quot; &lt;&lt;if $role is &quot;idler&quot;&gt;&gt;but as an &lt;&lt;defidler &quot;idler&quot;&gt;&gt;, the work of a sailor is not yours.&lt;&lt;/if&gt;&gt;&lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;As a &lt;&lt;defgreenhand &quot;green hand&quot;&gt;&gt;, you know very little about the work and mostly try to stay out of the way. &lt;&lt;/if&gt;&gt;As you set out for sea, you are excited to be on the water &lt;&lt;if $role isnot &quot;green hand&quot;&gt;&gt;again&lt;&lt;/if&gt;&gt;. You know it will be a long journey, but are looking forward to earning your pay at the end.
 &lt;br&gt;&lt;br&gt;
 For the first day at sea, the activity is near constant. As a&lt;&lt;if $role is &quot;green hand&quot;&gt;&gt; &lt;&lt;defgreenhand &quot;green hand&quot;&gt;&gt;&lt;&lt;elseif $role is &quot;ordinary seaman&quot;&gt;&gt;n &lt;&lt;defordinaryseaman &quot;ordinary seaman&quot;&gt;&gt;&lt;&lt;elseif $role is &quot;able seaman&quot;&gt;&gt;&lt;&lt;defableseaman &quot;able seaman&quot;&gt;&gt;&lt;&lt;elseif $role is &quot;idler&quot;&gt;&gt;$idlertask&lt;&lt;else&gt;&gt; &lt;&lt;defmate &quot;mate&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;, you &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;are sent &lt;&lt;defaloft &quot;aloft&quot;&gt;&gt; into the &lt;&lt;defrig &quot;rigging&quot;&gt;&gt; to accustom yourself to the ship&#39;s movement. The rope is rough on your hands and you know you will come away with blisters.&lt;&lt;elseif $role is &quot;able seaman&quot; or $role is &quot;ordinary seaman&quot;&gt;&gt;set to work on repairing the &lt;&lt;defrig &quot;rigging&quot;&gt;&gt;.&lt;&lt;elseif $role is &quot;idler&quot;&gt;&gt;see to your own work.&lt;&lt;else&gt;&gt;inspect the ship.&lt;&lt;/if&gt;&gt;
@@ -1685,6 +1686,7 @@ How do you entertain yourself in the off hours?
 &lt;&lt;if $mutiny isnot 1 and random(1,10) is 2&gt;&gt;&lt;&lt;mutiny&gt;&gt;&lt;&lt;set $mutiny to 1&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;earnings&gt;&gt;
+&lt;&lt;familyexpenses&gt;&gt;
 &lt;&lt;if $role is &quot;idler&quot;&gt;&gt;
 As an &lt;&lt;defidler &quot;idler&quot;&gt;&gt;, you are not caught up in the normal movements of the sailors on board. Nevertheless, you fall into the rhythms of the sea. &lt;&lt;if $idlertask is &quot;cook&quot;&gt;&gt;NTS: add text here&lt;&lt;else&gt;&gt;You are kept busy repairing the ship from its many weather beatings and sailing injuries. You largely keep away from the rest of the crew.
 &lt;br&gt;&lt;br&gt;
@@ -1820,6 +1822,7 @@ Suddenly &lt;&lt;set _s to random(1,3)&gt;&gt;&lt;&lt;if _s is 1&gt;&gt;the wind
 &lt;&lt;if $mutiny isnot 1 and random(1,10) is 2&gt;&gt;&lt;&lt;mutiny&gt;&gt;&lt;&lt;set $mutiny to 1&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;earnings&gt;&gt;
+&lt;&lt;familyexpenses&gt;&gt;
 In your third month at sea, the boredom truly sets in. The ocean stretches on endlessly and though you know you&#39;re making progress in the voyage, the work of the ship is never done. Last week the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; ordered the crew to scrape, scrub, oil, and &lt;&lt;deftardeck &quot;tar the deck&quot;&gt;&gt;.&lt;&lt;if $role is &quot;idler&quot;&gt;&gt; As an &lt;&lt;defidler &quot;idler&quot;&gt;&gt;, you did not participate, but &lt;&lt;if $role isnot &quot;cook&quot;&gt;&gt;tried to stay out of their way.&lt;&lt;else&gt;&gt;prepared &lt;&lt;defduff &quot;duff&quot;&gt;&gt; to reward the sailors for their work.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt; Fortunately, the crew are from all over the world and you often sit &lt;&lt;if $role isnot &quot;idler&quot;&gt;&gt;while you are off &lt;&lt;defwatch &quot;watch&quot;&gt;&gt; &lt;&lt;/if&gt;&gt;to listen to stories from the others. Though you represent many places, the constant hard work has brought the crew together in at least companionship, though not all are friendly.&lt;br&gt;&lt;br&gt;
 &lt;span id=&quot;storytime&quot;&gt;What do you contribute?&lt;br&gt;
 &lt;ul&gt;
@@ -1916,6 +1919,7 @@ One day while on &lt;&lt;defwatch &quot;watch&quot;&gt;&gt; you notice what look
 &lt;&lt;if $mutiny isnot 1 and random(1,10) is 2&gt;&gt;&lt;&lt;mutiny&gt;&gt;&lt;&lt;set $mutiny to 1&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;earnings&gt;&gt;
+&lt;&lt;familyexpenses&gt;&gt;
 By the fourth month at sea, you feel you know the ship well. You have sweat and bled in more than one spot. &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;Since it is your first voyage, your first blood at sea was a moment like a coming of age. The other crew members came to see you as more capable and less a &lt;&lt;deflandsman &quot;landsman&quot;&gt;&gt;.&lt;&lt;/if&gt;&gt; The confines of the ship keep you limited but the activity is so constant that you are never bored&lt;&lt;if $role isnot &quot;idler&quot;&gt;&gt; while on &lt;&lt;defwatch &quot;watch&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;. The work is hard and dangerous and neverending, but this is the life you know. &lt;&lt;if $role is &quot;idler&quot;&gt;&gt;Fortunately, &lt;&lt;else&gt;&gt;Even while off &lt;&lt;defwatch &quot;watch&quot;&gt;&gt;, &lt;&lt;/if&gt;&gt;you now know the rest of the crew well enough to always have ready conversation.
 &lt;br&gt;&lt;br&gt;
 Though much of the work is routine, you least &lt;&lt;if $role is &quot;idler&quot;&gt;&gt;&lt;&lt;if $distance is 1&gt;&gt;[[enjoy it.-&gt;Arrive in Port]]&lt;&lt;else&gt;&gt;[[don&#39;t mind it.-&gt;Resupply]]&lt;&lt;/if&gt;&gt;
@@ -2024,6 +2028,7 @@ You realize equator[[????-&gt;return]]
 &lt;&lt;if $mutiny isnot 1 and random(1,10) is 2&gt;&gt;&lt;&lt;mutiny&gt;&gt;&lt;&lt;set $mutiny to 1&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;earnings&gt;&gt;
+&lt;&lt;familyexpenses&gt;&gt;
 By the fifth month at sea, you feel restless. Though you are used to the sea, it has been too long at sea and the crew are on edge. They want better food, new companions, entertainment, and their pay. You notice that the men who have fellow countrymen onboard are gravitating together to talk longingly of familiar lands. But not everyone does so. One Sunday you see a few crew members of different nations speaking tensely during the free time.&lt;br&gt;&lt;br&gt;
 &lt;span id =&quot;tense&quot;&gt;You:&lt;br&gt;&lt;br&gt;
 &lt;ul&gt;
@@ -2136,6 +2141,7 @@ At long last you are getting close to &lt;&lt;defport &quot;port&quot;&gt;&gt;. 
 &lt;/span&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;link &#39;No, I can stick it out until we make &lt;&lt;defport &quot;port&quot;&gt;&gt;&#39;&gt;&gt;&lt;&lt;replace &quot;#jump&quot;&gt;&gt;You do not join the few crewmen who jump ship one night. In the end, though the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; has grown cruel, you are glad to have stayed because you did not [[forfeit your wages.-&gt;Arrive in Port]]
 &lt;&lt;earnings&gt;&gt;
+&lt;&lt;familyexpenses&gt;&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;
@@ -2310,6 +2316,7 @@ The master explains that he needs more hands for an upcoming $distance month voy
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="Resupply" tags="storyline" position="375,450" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $location to &quot;in port&quot;&gt;&gt;
+&lt;&lt;familyexpenses&gt;&gt;
 After four months of your long journey, the $shipName must make &lt;&lt;defport &quot;port&quot;&gt;&gt; briefly to resupply its food, drinking water, and livestock.&lt;&lt;if $role is &quot;idler&quot;&gt;&gt; As a $idlertask you are also running low on the tools of your trade and must restock.&lt;&lt;/if&gt;&gt; The &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; guides the $shipType into harbor. 
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $role isnot &quot;idler&quot;&gt;&gt;
@@ -2388,8 +2395,19 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 
+&lt;&lt;widget &quot;familyexpenses&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $family is &quot;your wife&quot;&gt;&gt;&lt;&lt;set _expense to 360&gt;&gt;
+&lt;&lt;elseif $family is &quot;your parents&quot;&gt;&gt;&lt;&lt;set _expense to 480&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;set _expense to 240 + ($dependents * 120)&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;set $depmoney to Math.clamp($depmoney - _expense, 0, Infinity)&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
+
 
 </tw-passagedata><tw-passagedata pid="37" name="Time in Port" tags="storyline" position="375,700" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;familyexpenses&gt;&gt;
 Once in $location &lt;&lt;defport &quot;port&quot;&gt;&gt;, having received your wages from the &lt;&lt;defmaster &quot;shipping master&quot;&gt;&gt;, you find yourself at loose ends. With @@ #conversion; &lt;&lt;conversion&gt;&gt; @@ you have &lt;&lt;if $money lte 1440&gt;&gt;hardly any money and will need to find work soon.
 &lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
