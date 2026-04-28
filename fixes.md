@@ -125,13 +125,68 @@ Single-branch `random(1,2) is 1` / `random(1,5) lte 3` / `random(1,3) lte 2` tes
 3. Re-encoded entities and patched the modified passages back into `Shipping.html` by `pid`. `<tw-storydata>` attributes and unmodified passages were left byte-identical.
 4. Verified macro and HTML tag balance across all 40 passages, then confirmed all passages remained intact in the patched HTML.
 
+## `dependents` widget activated
+
+`Money-widgets` (pid 36):
+
+- `<<dependents>>` body changed from a commented-out no-op to `<<set $depmoney += $money>><<set $money to 0>>` — wages are now actually transferred to the family pool. `+=` (rather than the original commented-out `=`) is used so the family pool accumulates across multiple voyages instead of overwriting on each Recommission.
+- `<<conversion>>` widget now accepts an optional argument: `<<conversion>>` still formats `$money` (no-arg call sites unchanged), and `<<conversion $depmoney>>` formats any other amount in £/s/d.
+
+`storyMenu` (pid 7):
+
+- The previously-commented-out Dependents `<div>` is now active and uses `<<conversion $depmoney>>` to display the family pool in £/s/d, parallel to the player's Disposable Income display.
+
+`Arrive in Port` (pid 31, four "Yes, send to family" choices) and `Loading` (pid 38, the unload-pay flow):
+
+- Removed the redundant `<<set $money to 0>>` that ran *before* `<<dependents>>` in these call sites. Previously, `$money` was already 0 by the time the widget tried to capture it (which is one reason the widget had been disabled in the first place). Now `<<dependents>>` runs against the un-zeroed wages and the widget itself zeros `$money` after transferring.
+
+## Family pool monthly drain (Option B — category-aware)
+
+`Money-widgets` (pid 36) — added `<<familyexpenses>>` widget:
+
+```
+<<widget "familyexpenses">>
+  <<if $family is "your wife">><<set _expense to 360>>           /* £1 10s — solo woman */
+  <<elseif $family is "your parents">><<set _expense to 480>>    /* £2 — two adults */
+  <<else>><<set _expense to 240 + ($dependents * 120)>>          /* £1 base + 10s per child */
+  <</if>>
+  <<set $depmoney to Math.clamp($depmoney - _expense, 0, Infinity)>>
+<</widget>>
+```
+
+The pool is clamped at 0, so the family can't go into "negative savings"; downstream logic can later branch on `$depmoney is 0` if a hardship event chain is added.
+
+Call sites (one per in-game month):
+
+- `Sea Week 1` (pid 15) — top of passage, alongside `<<earnings>>`
+- `Sea Week 2/3/4/5` (pids 17, 19, 23, 26) — inside the deepest no-event `<<else>>` branch, alongside `<<earnings>>`
+- `Sea Week 6` (pid 30) — inside the "stick it out" `<<replace>>`, alongside `<<earnings>>`
+- `Resupply` (pid 35) — top of passage (the mid-voyage stop month)
+- `Time in Port` (pid 37) — top of passage (the immediate port month)
+
+The drain fires once per visit. Months where a random event (illness/death/injury/crime/encounter/weather/mutiny) fires currently skip both `<<earnings>>` and `<<familyexpenses>>` — the family is treated as having "missed" that pay-and-eat cycle. This matches the existing earnings semantics; if it should drain regardless, both widgets need to be hoisted above the event chain.
+
+## Proportional family drain for multi-month port stays
+
+`Time in Port` (pid 37):
+
+- Replaced the entry-time `<<familyexpenses>>` call (which would have over-counted vs the per-link drain) with a `$monthlyExpense` calculation block at the top of the passage. The same category-aware logic as `<<familyexpenses>>`:
+    - `"your wife"` → 360
+    - `"your parents"` → 480
+    - `"your children"` → 240 + (`$dependents` × 120)
+- Each "stay N months" link setter now drains the family pool proportionally: `$depmoney to Math.clamp($depmoney - N*$monthlyExpense, 0, Infinity)`. 24 link setters covered (1-month, 2-month, 3-month base + the 4/5/6/7/8/9-month staircase ranges).
+- `$monthlyExpense` is a global (initialized to 0 in StoryInit) rather than a temp `_var`, so it's reliably available in link setters at click time even after multiple `<<replace>>` operations have re-rendered the surrounding DOM.
+
+Players who pick "leave immediately" / "drink"/"theatre"/"food" / "robbed in the night" / "die of exposure" do not drain the family pool — those branches do not represent a multi-month port stay.
+
 ## Bugs not addressed (from the original audit)
 
 These were flagged in the review but remain open:
 
-- `dependents` widget body is fully commented out — wages are never actually sent home.
-- `disposable` widget doubles `$money` instead of computing disposable income.
+- `disposable` widget body is commented out with an explanatory note. It was unused and the implementation was buggy (would have doubled `$money` rather than computing disposable income). If a working version is needed later, it can be uncommented and rewritten.
 - `<<unset hasVisited>>` in `Arrive in Port` and `Recommission` tries to unset a built-in function.
 - The `Sea Week 2` cook branch is no longer a soft-lock but its content is a placeholder (`NTS: add text here`) until the author writes prose for it.
 - `Equator` widget is a placeholder ("NEEDS WORK") and never invoked.
 - Song-definition widgets (`defladies`, `defcruelship`, `defgolden`, `defmermaid`, `defrogues`) are defined but never used.
+- Family expenses are skipped on event-heavy sea months (matching the existing `<<earnings>>` semantics). If the design wants the family to eat *every* month, both widgets should be hoisted above the event chain.
+- No "family hardship" event fires when `$depmoney` reaches 0 — just clamped silently.
