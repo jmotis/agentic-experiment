@@ -125,13 +125,28 @@ Single-branch `random(1,2) is 1` / `random(1,5) lte 3` / `random(1,3) lte 2` tes
 3. Re-encoded entities and patched the modified passages back into `Shipping.html` by `pid`. `<tw-storydata>` attributes and unmodified passages were left byte-identical.
 4. Verified macro and HTML tag balance across all 40 passages, then confirmed all passages remained intact in the patched HTML.
 
+## `dependents` widget activated
+
+`Money-widgets` (pid 36):
+
+- `<<dependents>>` body changed from a commented-out no-op to `<<set $depmoney += $money>><<set $money to 0>>` — wages are now actually transferred to the family pool. `+=` (rather than the original commented-out `=`) is used so the family pool accumulates across multiple voyages instead of overwriting on each Recommission.
+- `<<conversion>>` widget now accepts an optional argument: `<<conversion>>` still formats `$money` (no-arg call sites unchanged), and `<<conversion $depmoney>>` formats any other amount in £/s/d.
+
+`storyMenu` (pid 7):
+
+- The previously-commented-out Dependents `<div>` is now active and uses `<<conversion $depmoney>>` to display the family pool in £/s/d, parallel to the player's Disposable Income display.
+
+`Arrive in Port` (pid 31, four "Yes, send to family" choices) and `Loading` (pid 38, the unload-pay flow):
+
+- Removed the redundant `<<set $money to 0>>` that ran *before* `<<dependents>>` in these call sites. Previously, `$money` was already 0 by the time the widget tried to capture it (which is one reason the widget had been disabled in the first place). Now `<<dependents>>` runs against the un-zeroed wages and the widget itself zeros `$money` after transferring.
+
 ## Bugs not addressed (from the original audit)
 
 These were flagged in the review but remain open:
 
-- `dependents` widget body is fully commented out — wages are never actually sent home.
-- `disposable` widget doubles `$money` instead of computing disposable income.
+- `disposable` widget doubles `$money` instead of computing disposable income (and is not currently called from anywhere).
 - `<<unset hasVisited>>` in `Arrive in Port` and `Recommission` tries to unset a built-in function.
 - The `Sea Week 2` cook branch is no longer a soft-lock but its content is a placeholder (`NTS: add text here`) until the author writes prose for it.
 - `Equator` widget is a placeholder ("NEEDS WORK") and never invoked.
 - Song-definition widgets (`defladies`, `defcruelship`, `defgolden`, `defmermaid`, `defrogues`) are defined but never used.
+- Family pool accumulates but never drains — there is no monthly living-expense deduction from `$depmoney`. See suggested design below.
