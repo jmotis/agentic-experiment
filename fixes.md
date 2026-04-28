@@ -4,13 +4,15 @@ Branch: `claude/debug-shipping-twine-kLIi3`
 
 ## Summary
 
-Fixed 24 coding errors in the Twine/SugarCube source for `Shipping.html` across multiple commits on this branch. The fixes fall into five groups:
+Fixed coding errors in the Twine/SugarCube source for `Shipping.html` across multiple commits on this branch. The fixes fall into seven groups:
 
 1. malformed macros that would throw at runtime,
 2. broken HTML tags / unbalanced structures,
 3. conditional expressions whose JavaScript semantics made them always-truthy,
 4. variable-name typos and double-applied side effects,
-5. text encoding (curly quotes) that broke HTML attributes.
+5. text encoding (curly quotes) that broke HTML attributes,
+6. probability skew from independent `random()` calls in if/elseif chains,
+7. uninitialized globals, missing widget args, nested-comment / nested-widget / nested-link string conflicts, and small text typos.
 
 ## Show-stopper macro / tag bugs
 
@@ -70,6 +72,52 @@ In SugarCube/JavaScript, `A or "literal"` evaluates as `A || "literal"`; a non-e
 | 27 | `Port Supply` (pid 14) | One choice ended with `</ul><</replace>><</link>></span></li>` (the `</span>` is misplaced after the macro closes). Reordered to the parallel form `</ul></span><</replace>><</link>></li>` |
 | 28 | `Definitions` (pid 40) | All curly quotes (U+2018, U+2019, U+201C, U+201D) replaced with straight `'` and `"`. In `data-def="…"` attributes, inner double-quoted phrases (`"Pretty Polly"`, `"port"`, `"quaranta"`, the Spanish Ladies lyric) were rewritten with single quotes (`'Pretty Polly'`, etc.) so the attribute itself stays cleanly delimited; the Three Jolly Rogues lyric in `defrogues` keeps its outer double quotes via the `&quot;` HTML entity because the lyric contains an apostrophe (`Arthur's`). The `deflarboard` widget also had an unterminated `data-def` (no closing `"` before `>`); the closing quote was added |
 
+## Probability skew (independent `random()` rolls)
+
+Each of the affected chains used a fresh `random()` call in every `<<elseif>>`, so the second branch only matched if the first had already missed *and* the new roll happened to land on its number, etc. Probabilities decayed geometrically. All such chains now capture the roll once into a temp (`_r`, or `_s` for nested chains) and the `<<elseif>>`s test that temp.
+
+| Passage | Chain |
+|---------|-------|
+| `Port Supply` (pid 14) | hawker outer 1,3 |
+| `Sea Week 1` (pid 15) | green-hand task 1,4 |
+| `Sea Week 2` (pid 17) | tongue/race/religion 1,3 |
+| `Death` (pid 18) | outer 1,3 + two inner 1,3 (`_r`/`_s`) |
+| `Injury` (pid 20) | outer 1,5 (`_r`) + inner 1,3 in the bystander branch (`_s`) |
+| `Illness` (pid 21) | outer 1,3 |
+| `Encounter` (pid 22) | outer 1,5 (`_r`) + four inner 1,3 chains (`_s`) |
+| `Weather` (pid 24) | outer 1,4 (`_r`) + inner 1,4 inside the storm branch (`_s`) |
+| `Sea Week 5` (pid 26) | inner 1,3 |
+| `Crime` (pid 27) | outer 1,3 |
+| `mutiny` (pid 28) | outer 1,5 (Asian-mutiny outcome), 1,3 (grievance source), 1,5 (strike outcome inside agree-to-join, `_s`), 1,5 (post-mutiny outcome), 1,3 (alert-the-mate outcome) |
+| `char-gen-widgets` (pid 33) | shipType 1,5 |
+| `Time in Port` (pid 37) | inner 1,3 (lives at sea / constellations / news) |
+
+Single-branch `random(1,2) is 1` / `random(1,5) lte 3` / `random(1,3) lte 2` tests (no `<<elseif>>` peer) do not have the skew problem and were left as-is.
+
+## Globals initialized in `StoryInit` (pid 5)
+
+`StoryInit` was an empty passage. Every `$`-prefixed variable used elsewhere in the game is now initialized there with a sensible default:
+
+- numeric → `0`: `$money`, `$reputation`, `$skill`, `$experience`, `$dependents`, `$depmoney`, `$mutiny`, `$mutinypay`, `$scurvy`, `$distance`, `$agenum`, `$hoh`, `$wife`, `$trade`, `$fate`, `$portperiod`, `$number`
+- numeric → `1`: `$citrus` — preserves prior behavior where the scurvy gate (`<<if $citrus is 0>>`) only fires when the cook explicitly picks a non-citrus supply
+- string → `""`: `$name`, `$aName`, `$oName`, `$location`, `$destination`, `$startport`, `$shipName`, `$shipType`, `$nation`, `$age`, `$gender`, `$race`, `$role`, `$family`, `$idlertask`, `$onation`, `$oshipName`, `$navyname`, `$privateername`, `$measure`, `$side`, `$which`, `$song`
+- array → `[]`: `$fumes`, `$remedies`
+
+`$args` is a SugarCube widget built-in and was not initialized.
+
+## Other fixes in this round
+
+| Passage | Fix |
+|---------|-----|
+| `storyMenu` (pid 7) | Removed the inner `/* … */` markers from the commented-out dependents `<div>` so the outer `/* … */` properly spans the whole block (SugarCube comments do not nest; the inner `*/` was closing the outer comment early and the trailing `*/` was rendering as literal text) |
+| `Sea Week 2` (pid 17) | Cook-idler's previously-empty `<<if $idlertask is "cook">>` branch now reads `NTS: add text here` so the cook has a forward path instead of soft-locking |
+| `Resupply` (pid 35) | Replaced the nested `<<defcareeningdock "<<defcareeningdock "careening dock">>">>` call with a single `<<defcareeningdock "careening dock">>` |
+| `Cargo` (pid 39) | `<<defmusk>>` (no argument) → `<<defmusk "musk">>` |
+| `Injury` (pid 20) | Typo `darning neeedles` → `darning needles` |
+| `Weather` (pid 24) | Missing space: `<<deffurl "furl">>the` → `<<deffurl "furl">> the` |
+| `Time in Port` (pid 37) | Typo "Do you see out more sailing work" → "Do you seek out more sailing work" |
+| Nested double-quote `<<link>>` strings | All four occurrences converted from `<<link "...<<def... "x">>...">>` to `<<link '...<<def... "x">>...'>>` (outer single quotes), in `Sea Week 2` (pid 17), `mutiny` (pid 28), and `Sea Week 6` (pid 30, two occurrences) |
+
 ## Workflow used
 
 1. Extracted all 40 `<tw-passagedata>` elements from `Shipping.html` into individual `.txt` files (with HTML entity decoding).
@@ -81,15 +129,9 @@ In SugarCube/JavaScript, `A or "literal"` evaluates as `A || "literal"`; a non-e
 
 These were flagged in the review but remain open:
 
-- Empty `StoryInit` passage — global variables (`$money`, `$reputation`, `$scurvy`, `$mutiny`, `$citrus`, …) are uninitialized at game start.
 - `dependents` widget body is fully commented out — wages are never actually sent home.
 - `disposable` widget doubles `$money` instead of computing disposable income.
 - `<<unset hasVisited>>` in `Arrive in Port` and `Recommission` tries to unset a built-in function.
-- Cook-idler branch in `Sea Week 2` has an empty `<<if>>` body and no forward link (soft-lock for the cook idler).
-- `<<defmusk>>` in `Cargo` is called without an argument.
-- `if random(1,N) is 1 / elseif random(1,N) is 2 / …` patterns still roll a fresh number for each branch, skewing probabilities; should capture into a temp first.
-- `<<defcareeningdock "<<defcareeningdock "careening dock">>">>` in `Resupply` (nested widget with conflicting quotes).
-- Several `<<link "…<<def… "…">>…">>` calls with nested double quotes — fragile compared to the outer-single / inner-double pattern.
+- The `Sea Week 2` cook branch is no longer a soft-lock but its content is a placeholder (`NTS: add text here`) until the author writes prose for it.
 - `Equator` widget is a placeholder ("NEEDS WORK") and never invoked.
 - Song-definition widgets (`defladies`, `defcruelship`, `defgolden`, `defmermaid`, `defrogues`) are defined but never used.
-- Typos: `neeedles` (`Injury`), "Do you see out more sailing work" (`Time in Port`).
