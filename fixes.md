@@ -183,7 +183,7 @@ Players who pick "leave immediately" / "drink"/"theatre"/"food" / "robbed in the
 
 These were flagged in the review but remain open:
 
-- `disposable` widget doubles `$money` instead of computing disposable income (and is not currently called from anywhere).
+- `disposable` widget body is commented out with an explanatory note. It was unused and the implementation was buggy (would have doubled `$money` rather than computing disposable income). If a working version is needed later, it can be uncommented and rewritten.
 - `<<unset hasVisited>>` in `Arrive in Port` and `Recommission` tries to unset a built-in function.
 - The `Sea Week 2` cook branch is no longer a soft-lock but its content is a placeholder (`NTS: add text here`) until the author writes prose for it.
 - `Equator` widget is a placeholder ("NEEDS WORK") and never invoked.

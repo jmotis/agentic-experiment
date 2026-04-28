@@ -2362,11 +2362,14 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;/span&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="Money widgets" tags="widget" position="150,625" size="100,100">&lt;&lt;widget &quot;disposable&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="Money widgets" tags="widget" position="150,625" size="100,100">/* disposable widget commented out — currently does not work
+   (the body doubles $money instead of computing disposable income).
+   Not called from anywhere in the game. */
+/*&lt;&lt;widget &quot;disposable&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
 &lt;&lt;set _disposable to ($money)&gt;&gt;
 &lt;&lt;set $money to Math.clamp($money + _disposable, 0, 10000000)&gt;&gt;
 &lt;&lt;/silently&gt;&gt;&lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;
+&lt;&lt;/widget&gt;&gt;*/
 
 &lt;&lt;widget &quot;conversion&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;
 &lt;&lt;set _amount to ((_args.length &gt; 0) ? _args[0] : $money)&gt;&gt;
