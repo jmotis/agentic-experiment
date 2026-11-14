@@ -46,6 +46,14 @@ copy sets the browser-tab title at runtime **and** the save-slot ID, so leave it
 changing it would orphan every player's saved games on each version bump. As a result the tab shows
 "Shipping" without the version; the version is visible in the story data (and in Twine's library).
 
+**Re-exporting from Twine rewrites it** to the current story name (e.g. `generateName("Shipping v1.25")`).
+After any Twine re-export, set it back to `generateName("Shipping")` (a direct HTML edit) before
+committing:
+
+```
+grep -o 'generateName("[^"]*")' Shipping.html
+```
+
 Read the current version before bumping:
 
 ```
