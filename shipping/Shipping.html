@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.21</title>
+<title>Shipping v1.22</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.21" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.22" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -3260,7 +3260,7 @@ The &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; and &lt;&lt;defmaster &quot;s
 &lt;&lt;if random(1,20) is 1&gt;&gt;
 One day after loading yet another pallet with crates, you stand in the close &lt;&lt;defhold &quot;hold&quot;&gt;&gt; and watch as the &lt;&lt;if $location is &quot;New York&quot; or $location is &quot;Charleston&quot; or $location is &quot;Boston&quot;&gt;&gt;&lt;&lt;deflongshoremen &quot;longshoremen&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;defstevedores &quot;stevedores&quot;&gt;&gt;&lt;&lt;/if&gt;&gt; hoist it high. Suddenly, one of the ropes snaps from the strain and the carefully stacked cargo slips, [[crushing you.-&gt;End]]
 &lt;&lt;else&gt;&gt;
-The process means long days standing in the close &lt;&lt;defhold &quot;hold&quot;&gt;&gt; without even the relief of sea breezes, lifting heavy crates, and listening to the foreign shouts of the &lt;&lt;if $location is &quot;New York&quot; or $location is &quot;Charleston&quot; or $location is &quot;Boston&quot;&gt;&gt;&lt;&lt;deflongshoremen &quot;longshoremen&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;defstevedores &quot;stevedores&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;. At long last the work &lt;&lt;if $hasfamily isnot 1&gt;&gt;[[is done.-&gt;Recommission]]&lt;&lt;else&gt;&gt;is done. &lt;span id=&quot;pay&quot;&gt;&lt;&lt;if $sendHome is &quot;yes&quot;&gt;&gt;As you arranged when you signed on, you send part of your wages home to $family. How much do you send?&lt;&lt;elseif $sendHome is &quot;no&quot;&gt;&gt;You told the captain to leave your wages with you. Do you send any money home to $family?&lt;&lt;else&gt;&gt;While you are here would you like to send money home to $family?&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
+The process means long days standing in the close &lt;&lt;defhold &quot;hold&quot;&gt;&gt; without even the relief of sea breezes, lifting heavy crates, and listening to the foreign shouts of the &lt;&lt;if $location is &quot;New York&quot; or $location is &quot;Charleston&quot; or $location is &quot;Boston&quot;&gt;&gt;&lt;&lt;deflongshoremen &quot;longshoremen&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;defstevedores &quot;stevedores&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;. At long last the work is done. &lt;&lt;if $hasfamily isnot 1&gt;&gt;The &lt;&lt;defmaster &quot;shipping master&quot;&gt;&gt; disburses your wages and you [[head into town.-&gt;Time in Port]]&lt;&lt;else&gt;&gt;&lt;span id=&quot;pay&quot;&gt;&lt;&lt;if $sendHome is &quot;yes&quot;&gt;&gt;As you arranged when you signed on, you send part of your wages home to $family. How much do you send?&lt;&lt;elseif $sendHome is &quot;no&quot;&gt;&gt;You told the captain to leave your wages with you. Do you send any money home to $family?&lt;&lt;else&gt;&gt;While you are here would you like to send money home to $family?&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
 &lt;ul&gt;
 &lt;&lt;if $sendHome isnot &quot;yes&quot;&gt;&gt;&lt;li&gt;&lt;&lt;link &quot;Keep everything&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#pay&quot;&gt;&gt;The &lt;&lt;defmaster &quot;shipping master&quot;&gt;&gt; disburses your wages and sends you [[on your way-&gt;Time in Port]]&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Kept all your wages&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;li&gt;&lt;&lt;link &quot;Half your wages&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#pay&quot;&gt;&gt;&lt;&lt;set _half to Math.floor($money/2)&gt;&gt;&lt;&lt;set $depmoney +=_half&gt;&gt;&lt;&lt;set $money -=_half&gt;&gt;You ask the &lt;&lt;defmaster &quot;shipping master&quot;&gt;&gt; to forward half your wages to $family through the company agent and to disburse the rest to you. He sends you [[on your way-&gt;Time in Port]]&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Sent half your wages home to &quot; + $family`&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
