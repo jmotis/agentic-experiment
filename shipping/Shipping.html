@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.28</title>
+<title>Shipping v1.29</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.28" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.29" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -1372,6 +1372,14 @@ setup.depPorts = function () {
 	return Object.keys(c).filter(function (k) { return c[k] > 0; });
 };
 
+/* The wife you say goodbye to when sailing (<<departure-funds>>), or null if there is no farewell prompt:
+   you have family, money in hand, and a wife living in the port you are sailing from. */
+setup.farewellWife = function () {
+	var v = State.variables;
+	if (v.hasfamily !== 1 || !(v.money > 0) || !Array.isArray(v.NPCs)) { return null; }
+	return v.NPCs.find(function (npc) { return npc.relationship === 'wife' && npc.location === v.startport; }) || null;
+};
+
 setup.decisionWhen = function () {
 	var v = State.variables, p = State.passage, n = v.voyage || 0, loc = v.location;
 	var week = /^Sea Week (\d+)$/.exec(p);
@@ -2135,7 +2143,7 @@ The &lt;&lt;defmaster &quot;shipping master&quot;&gt;&gt; asks that you report b
 &lt;&lt;set $location to &quot;at sea&quot;&gt;&gt;
 &lt;&lt;set $month to 1&gt;&gt;
 &lt;&lt;status&gt;&gt;
-&lt;&lt;departure-funds&gt;&gt;&lt;span id=&quot;departure-continue&quot;&gt;
+&lt;&lt;departure-funds&gt;&gt;&lt;span id=&quot;departure-continue&quot; @style=&quot;setup.farewellWife() ? &#39;display: none&#39; : &#39;&#39;&quot;&gt;
 &lt;&lt;set $distance -=1&gt;&gt;
 The &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; steers the $shipName out of harbor. &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;You are assigned to stand &lt;&lt;defwatch &quot;watch&quot;&gt;&gt; for the wind to turn. When you feel the change, you call the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt;.&lt;&lt;elseif $role is &quot;ordinary seaman&quot;&gt;&gt;There is a flurry of activity as every hand moves about the deck to &lt;&lt;defheave &quot;heave anchor&quot;&gt;&gt; and make ready to sail.&lt;&lt;elseif $role is &quot;able seaman&quot;&gt;&gt;You are sent &lt;&lt;defaloft &quot;aloft&quot;&gt;&gt; to unfurl the sails as the wind stiffens.&lt;&lt;else&gt;&gt;You settle into your quarters.&lt;&lt;/if&gt;&gt; The &lt;&lt;defboatswain &quot;boatswain&quot;&gt;&gt; calls out hoarsely &quot;Aaalllll haaaands! Up anchor, ahooooy!&quot; &lt;&lt;if $role is &quot;idler&quot;&gt;&gt;but as an &lt;&lt;defidler &quot;idler&quot;&gt;&gt;, the work of a sailor is not yours.&lt;&lt;/if&gt;&gt;&lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;As a &lt;&lt;defgreenhand &quot;green hand&quot;&gt;&gt;, you know very little about the work and mostly try to stay out of the way. &lt;&lt;/if&gt;&gt;As you set out for sea, you are excited to be on the water &lt;&lt;if $role isnot &quot;green hand&quot;&gt;&gt;again&lt;&lt;/if&gt;&gt;. You know it will be a long journey, but are looking forward to earning your pay at the end.
 &lt;br&gt;&lt;br&gt;&lt;img alt=&quot;&quot; src=&quot;https://nrs.harvard.edu/urn-3:HUAM:77849_dynmc:IMAGE/full/!3000,3000/0/default.jpg&quot; width=100%&gt;&lt;br&gt;//John Singer Sargent. Sketch of a Ship. 1889. Harvard Art Museums/Fogg Museum, Gift of Mrs. Francis Ormond.//&lt;br&gt;&lt;br&gt;
@@ -3286,10 +3294,11 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 /* DEPARTURE-FUNDS — decision gate (sub-pattern C) at the top of Sea Week 1. If a wife lives in the port
    you are sailing from and you have money, you may leave her nothing, half or all of it before you sail;
    the month&#39;s household expenses (&lt;&lt;depexpense&gt;&gt;) are charged after that choice. The calling passage wraps
-   the rest of its content in &lt;span id=&quot;departure-continue&quot;&gt;, hidden until the choice is made. */
+   the rest of its content in &lt;span id=&quot;departure-continue&quot;&gt;, which starts hidden (display:none) whenever
+   setup.farewellWife() finds a farewell to make, and is shown when the choice is made. */
 &lt;&lt;widget &quot;departure-funds&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;set _homeWife to $NPCs.find(function (npc) { return npc.relationship === &quot;wife&quot; &amp;&amp; npc.location === $startport; })&gt;&gt;
-&lt;&lt;if $hasfamily is 1 and _homeWife and $money gt 0&gt;&gt;
+&lt;&lt;set _homeWife to setup.farewellWife()&gt;&gt;
+&lt;&lt;if _homeWife&gt;&gt;
 &lt;span id=&quot;leavefunds&quot;&gt;Before the $shipName sails, you say goodbye to your wife &lt;&lt;print _homeWife.name&gt;&gt; in $startport. Do you leave her some of your money to live on while you are away?
 &lt;ul&gt;
 &lt;li&gt;&lt;&lt;link &quot;Leave her nothing&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#leavefunds&quot;&gt;&gt;You keep your money and promise to send more when you can.&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Left nothing with your wife before sailing from &quot; + $startport`&gt;&gt;&lt;&lt;depexpense&gt;&gt;&lt;&lt;run $(&quot;#departure-continue&quot;).show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
@@ -3297,7 +3306,6 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;li&gt;&lt;&lt;link &quot;Leave her all of it&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;dep-add $startport $money&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;replace &quot;#leavefunds&quot;&gt;&gt;You leave all of your money with your wife before you sail.&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Left all your money with your wife before sailing from &quot; + $startport`&gt;&gt;&lt;&lt;depexpense&gt;&gt;&lt;&lt;run $(&quot;#departure-continue&quot;).show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;
-&lt;&lt;done&gt;&gt;&lt;&lt;run $(&quot;#departure-continue&quot;).hide()&gt;&gt;&lt;&lt;/done&gt;&gt;
 &lt;&lt;else&gt;&gt;&lt;&lt;depexpense&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
