@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.29</title>
+<title>Shipping v1.30</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.29" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.30" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -1552,24 +1552,24 @@ You head down to the wharf, where you hope to encounter a &lt;&lt;defmaster &quo
 &lt;br&gt;&lt;br&gt;
 Will you:
 &lt;ul&gt;
-&lt;li&gt;[[Ask him for passage-&gt;Destination Select][setup.decisionStart(); $money to 0; $fate to 0; $getstopick to 1; setup.decisionEnd(&quot;Asked the shipping master for passage&quot;)]]&lt;/li&gt;
-&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;[[Ask him for work-&gt;Destination Select][setup.decisionStart(); $money to 0; $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;else&gt;&gt;[[Ask him for work-&gt;Commission][setup.decisionStart(); $money to 0; $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[Ask him where you might find a place to stay near the water while you search for work-&gt;Commission][setup.decisionStart(); $money to 0; $fate to 2; $getstopick to 0; setup.decisionEnd(&quot;Asked the shipping master where to find lodgings near the water&quot;)]]&lt;/li&gt;
+&lt;li&gt;[[Ask him for passage-&gt;Destination Select][setup.decisionStart(); $fate to 0; $getstopick to 1; setup.decisionEnd(&quot;Asked the shipping master for passage&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;[[Ask him for work-&gt;Destination Select][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;else&gt;&gt;[[Ask him for work-&gt;Commission][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;li&gt;[[Ask him where you might find a place to stay near the water while you search for work-&gt;Commission][setup.decisionStart(); $fate to 2; $getstopick to 0; setup.decisionEnd(&quot;Asked the shipping master where to find lodgings near the water&quot;)]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;have sailing experience&quot;&gt;&gt;&lt;&lt;replace &quot;#experience&quot;&gt;&gt;&lt;&lt;set $reputation to 6&gt;&gt;&lt;&lt;set $experience to 1&gt;&gt;&lt;&lt;set $skill to 6&gt;&gt;&lt;&lt;set $dunked to 1&gt;&gt;have sailing experience.
 &lt;br&gt;&lt;br&gt;
 Will you:
 &lt;ul&gt;
-&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;[[Ask him for work-&gt;Destination Select][setup.decisionStart(); $money to 0; $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;else&gt;&gt;[[Ask him for work-&gt;Commission][setup.decisionStart(); $money to 0; $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[Ask him where you might find a place to stay near the water while you search for work-&gt;Commission][setup.decisionStart(); $money to 0; $fate to 2; $getstopick to 0; setup.decisionEnd(&quot;Asked the shipping master where to find lodgings near the water&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;[[Ask him for work-&gt;Destination Select][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;else&gt;&gt;[[Ask him for work-&gt;Commission][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;li&gt;[[Ask him where you might find a place to stay near the water while you search for work-&gt;Commission][setup.decisionStart(); $fate to 2; $getstopick to 0; setup.decisionEnd(&quot;Asked the shipping master where to find lodgings near the water&quot;)]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;set $reputation to 4&gt;&gt;&lt;&lt;set $experience to 0&gt;&gt;&lt;&lt;set $skill to 0&gt;&gt;&lt;&lt;set $dunked to 0&gt;&gt;
 &lt;ul&gt;
-&lt;li&gt;[[Ask him for passage-&gt;Destination Select][setup.decisionStart(); $money to 0; $fate to 0; $getstopick to 1; setup.decisionEnd(&quot;Asked the shipping master for passage&quot;)]]&lt;/li&gt;
-&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;[[Ask him for work-&gt;Destination Select][setup.decisionStart(); $money to 0; $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;else&gt;&gt;[[Ask him for work-&gt;Commission][setup.decisionStart(); $money to 0; $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[Ask him where you might find a place to stay near the water while you search for work-&gt;Commission][setup.decisionStart(); $money to 0; $fate to 2; $getstopick to 0; setup.decisionEnd(&quot;Asked the shipping master where to find lodgings near the water&quot;)]]&lt;/li&gt;
+&lt;li&gt;[[Ask him for passage-&gt;Destination Select][setup.decisionStart(); $fate to 0; $getstopick to 1; setup.decisionEnd(&quot;Asked the shipping master for passage&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;[[Ask him for work-&gt;Destination Select][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;else&gt;&gt;[[Ask him for work-&gt;Commission][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;li&gt;[[Ask him where you might find a place to stay near the water while you search for work-&gt;Commission][setup.decisionStart(); $fate to 2; $getstopick to 0; setup.decisionEnd(&quot;Asked the shipping master where to find lodgings near the water&quot;)]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="Bio" tags="storyline" position="500,75" size="100,100">&lt;&lt;nobr&gt;&gt;
@@ -3389,7 +3389,7 @@ You wander the narrow streets of the port town in $location and &lt;&lt;if $expe
 &lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Took the lodgings your captain recommended&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;link &quot;Find my own lodgings&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#lodge1&quot;&gt;&gt;You wander the streets of $location in search of a place to stay. &lt;&lt;if random(1,2) is 1&gt;&gt;Unable to find a place, you are forced to sleep among the coils of rope on the docks under the open sky. You are not alone there and find yourself talking to men from the world over about &lt;&lt;set _r to random(1,3)&gt;&gt;&lt;&lt;if _r is 1&gt;&gt;their lives at sea.&lt;&lt;elseif _r is 2&gt;&gt;their stories behind the constellations.&lt;&lt;else&gt;&gt;the news from their most recent &lt;&lt;defport &quot;port&quot;&gt;&gt;.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt; &lt;&lt;if random(1,2) is 1&gt;&gt;One day you awaken to find that you were robbed in the night. &lt;&lt;set $money to 0&gt;&gt;Out of funds, you must seek out work quickly. &lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice4&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
-&lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice4&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1; $money to 0]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1; $money to 0]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice4&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;else&gt;&gt; Unfortunately, sleeping outside can be dangerous and one night you &lt;&lt;if random(1,2) is 1&gt;&gt;are murdered in your sleep [[for your coin.-&gt;End]]&lt;&lt;else&gt;&gt;die [[of exposure.-&gt;End]] &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3401,7 +3401,7 @@ You wander the narrow streets of the port town in $location and &lt;&lt;if $expe
 &lt;ul&gt;
 &lt;li&gt;&lt;&lt;link &quot;Yes, with other sailors&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#companion2&quot;&gt;&gt;You spend your time in saloons and at the docks drinking with fellow sailors from the world over. After time at sea you are unused to the company of anyone else and could not know how to comport yourself.  &lt;&lt;if random(1,2) is 1&gt;&gt;Unfortunately, keeping company with sailors can be violent business and you soon find yourself [[stabbed in a brawl-&gt;End]]&lt;&lt;else&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;Fortunately, you are able to steer clear of trouble and are able to live comfortably for $portperiod months. Eventually you run out of funds and must seek work.&lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice5&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
-&lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice5&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1; $money to 0]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1; $money to 0]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice5&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Kept company with other sailors in port&quot; 50&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
@@ -3416,7 +3416,7 @@ You wander the narrow streets of the port town in $location and &lt;&lt;if $expe
 &lt;/span&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Married a woman in &quot; + $location`&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;li&gt;&lt;&lt;link `$age is &quot;adolescent&quot; ? &quot;Enjoy their company&quot; : &quot;No&quot;`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#wife2&quot;&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;You enjoy their company, but you do not want to marry any of the women in $location. Fortunately, you are able to steer clear of trouble and are able to live comfortably for $portperiod months. Eventually you run out of funds and must seek work.&lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice7&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
-&lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice7&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1; $money to 0]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1; $money to 0]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice7&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `$age is &quot;adolescent&quot; ? &quot;Too young to marry&quot; : &quot;Chose not to marry&quot;`&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
@@ -3425,7 +3425,7 @@ You wander the narrow streets of the port town in $location and &lt;&lt;if $expe
 &lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Sought the company of women in port&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;link &quot;No, I prefer to wander alone&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#companion2&quot;&gt;&gt;Having spent time on a cramped ship with the same few dozen men for company you are glad to breathe more freely and spend some time alone with your thoughts. &lt;&lt;if random(1,2) is 1&gt;&gt;Unfortunately, wandering alone leaves you vulnerable to those with criminal intent and you soon find yourself [[stabbed in a brawl-&gt;End]]&lt;&lt;else&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;Fortunately, you are able to steer clear of trouble and are able to live comfortably for $portperiod months. Eventually you run out of funds and must seek work.&lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice8&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
-&lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice8&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1; $money to 0]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1; $money to 0]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice8&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Wandered the port alone&quot; 50&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
