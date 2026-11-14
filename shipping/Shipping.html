@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.20</title>
+<title>Shipping v1.21</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.20" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.21" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -2891,7 +2891,10 @@ As a &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;&lt;&lt;defgreenhand &quo
 &lt;&lt;widget &quot;addwifeNPC&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $wifelocation to $location&gt;&gt;
 &lt;&lt;if $nation is &quot;the United States&quot; or $nation is &quot;the United Kingdom&quot; or $nation is &quot;the Caribbean&quot;&gt;&gt;&lt;&lt;set $wname to [&quot;Mary&quot;, &quot;Elizabeth&quot;, &quot;Sarah&quot;, &quot;Nancy&quot;, &quot;Margaret&quot;, &quot;Rebecca&quot;, &quot;Jane&quot;, &quot;Susan&quot;, &quot;Ann&quot;, &quot;Martha&quot;, &quot;Lucy&quot;, &quot;Hannah&quot;]&gt;&gt;&lt;&lt;elseif $nation is &quot;the Italian Peninsula&quot;&gt;&gt;&lt;&lt;set $wname to [&quot;Francesca&quot;, &quot;Maria&quot;, &quot;Angela&quot;, &quot;Agata&quot;, &quot;Teresa&quot;, &quot;Rosa&quot;, &quot;Filomena&quot;, &quot;Carmela&quot;]&gt;&gt;&lt;&lt;elseif $nation is &quot;Barbary&quot; or $nation is &quot;the Ottoman Empire&quot;&gt;&gt;&lt;&lt;set $wname to [&quot;Fatima&quot;, &quot;Aisha&quot;, &quot;Oma&quot;, &quot;Mariyah&quot;, &quot;Layla&quot;, &quot;Safiya&quot;, &quot;Labna&quot;, &quot;Zaynab&quot;]&gt;&gt;&lt;&lt;elseif $nation is &quot;Brazil&quot;&gt;&gt;&lt;&lt;set $wname to [&quot;Maria&quot;, &quot;Isabel&quot;, &quot;Beatriz&quot;, &quot;Leonor&quot;]&gt;&gt;&lt;&lt;elseif $nation is &quot;China&quot;&gt;&gt;&lt;&lt;set $wname to [&quot;Xiulan&quot;, &quot;Guiying&quot;, &quot;Li&quot;, &quot;Xiuying&quot;, &quot;Min&quot;, &quot;Chen&quot;, &quot;Chuntao&quot;, &quot;Lifen&quot;]&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $wname to [&quot;Partha&quot;, &quot;Bhakti&quot;, &quot;Padma&quot;, &quot;Puja&quot;, &quot;Arya&quot;, &quot;Rasundari&quot;, &quot;Swarna&quot;]&gt;&gt;&lt;&lt;/if&gt;&gt;
-      &lt;&lt;set $NPCs.push({name: $wname.random(), relationship: &quot;wife&quot;, status: $wstatus, location: $wifelocation})&gt;&gt;
+      /* No two wives share a name unless every name in the list is already taken. */
+      &lt;&lt;set _usedNames to $NPCs.filter(function (npc) { return npc.relationship === &quot;wife&quot;; }).map(function (npc) { return npc.name; })&gt;&gt;
+      &lt;&lt;set _freeNames to $wname.filter(function (n) { return !_usedNames.includes(n); })&gt;&gt;
+      &lt;&lt;set $NPCs.push({name: (_freeNames.length &gt; 0 ? _freeNames : $wname).random(), relationship: &quot;wife&quot;, status: $wstatus, location: $wifelocation})&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;listNPCs&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
