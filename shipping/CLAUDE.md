@@ -35,6 +35,21 @@ changed.
   major story choice. Also record the "decline" side when the other option has an effect. Don't record
   links that only continue the story or show an outcome.
 
+## Family, pregnancy and news (story JavaScript)
+
+- **Clock:** `$monthsElapsed` (+1 per Sea Week, + months of a stay ashore) drives both the End-screen
+  funds chart and pregnancies (`setup.advanceMonths`). Stays are processed at `:passagestart` of
+  Recommission / Destination Select so their news can be shown there.
+- **Pregnancy** (plague-game odds) is tracked on each wife NPC (`agenum` 16–30, `pregnant` counter,
+  `announced`, `alive`). A wife conceives with 30% chance in each month you are in her port (stay months,
+  and the port call you sail from). Children are NPCs (`son`/`daughter`, `mother` = wife id).
+- **News reaches you only in port:** events post to `$mail`, addressed to your next port of call and
+  arriving after ⅔ of the cargo sailing time (`setup.distanceBetween`, from the `<<distance>>` widget), or
+  in person in her port. `<<read-mail>>` (Arrive in Port, Recommission) delivers it.
+- **What you pay for follows what you know:** `setup.recountDependents()` rebuilds `$depCount` from
+  `$depBase` (the starting family's non-NPC members), wives you believe alive (+1 once you know she is
+  expecting) and children you know of. Call it after changing any of those.
+
 ## Version number
 
 The version lives in the `<tw-storydata name="Shipping vX.Y">` attribute **and** the page
