@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.26</title>
+<title>Shipping v1.27</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.26" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.27" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -3253,7 +3253,7 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;table width=90%&gt;&lt;tr&gt;&lt;th width=60%&gt;&lt;/th&gt;&lt;th width=40%&gt;&lt;/th&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Voyages signed on for&lt;/td&gt;&lt;td&gt;&lt;&lt;print $voyage&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Money in hand&lt;/td&gt;&lt;td&gt;&lt;&lt;conversion&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;&lt;for _dpx range setup.depPorts()&gt;&gt;&lt;tr&gt;&lt;td&gt;&lt;&lt;print _dpx&gt;&gt; Dependents&lt;/td&gt;&lt;td&gt;&lt;&lt;depconversion `$depFunds[_dpx] || 0`&gt;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _dpx range setup.depPorts()&gt;&gt;&lt;tr&gt;&lt;td&gt;&lt;&lt;print _dpx&gt;&gt; Dependents (&lt;&lt;print $depCount[_dpx]&gt;&gt;)&lt;/td&gt;&lt;td&gt;&lt;&lt;depconversion `$depFunds[_dpx] || 0`&gt;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;&lt;/for&gt;&gt;
 &lt;tr&gt;&lt;td&gt;Reputation&lt;/td&gt;&lt;td&gt;&lt;&lt;print _repTier($reputation)&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Skill&lt;/td&gt;&lt;td&gt;&lt;&lt;print _skillTier($skill)&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Choices that risked your life&lt;/td&gt;&lt;td&gt;&lt;&lt;print _risky.length&gt;&gt;&lt;&lt;if _risky.length gt 0&gt;&gt; (combined &lt;&lt;print _cumRisk&gt;&gt;% chance of death)&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
