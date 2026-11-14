@@ -17,6 +17,11 @@ The version lives in the `<tw-storydata name="Shipping vX.Y">` attribute **and**
 `<title>Shipping vX.Y</title>`; update both together. The sidebar title shown to players comes from the
 `gameTitle` passage ("Learning the Ropes") and is not versioned.
 
+Twine also bakes the story name into the embedded SugarCube engine (`generateName("Shipping")`). That
+copy sets the browser-tab title at runtime **and** the save-slot ID, so leave it as `"Shipping"`:
+changing it would orphan every player's saved games on each version bump. As a result the tab shows
+"Shipping" without the version; the version is visible in the story data (and in Twine's library).
+
 Read the current version before bumping:
 
 ```
