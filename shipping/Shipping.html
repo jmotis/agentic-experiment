@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.23</title>
+<title>Shipping v1.24</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.23" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.24" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -882,6 +882,25 @@ ul.simple-inventory-list{margin:0 auto;padding:0}.simple-inventory-listing{list-
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+/* End-screen funds chart (setup.renderFundsChart). Single series; colours validated for each surface. */
+.funds-chart { --fc-line: #2a78d6; --fc-grid: #e6e5e0; --fc-axis: #8a8984; --fc-text: #52514e; --fc-ink: #111111; --fc-surface: #ffffff; margin: 0 0 1.5em; }
+html.dark .funds-chart { --fc-line: #3987e5; --fc-grid: #2c2c2a; --fc-axis: #7a7974; --fc-text: #c3c2b7; --fc-ink: #ffffff; --fc-surface: #000000; }
+.funds-chart .fc-wrap { position: relative; max-width: 640px; }
+.funds-chart svg { display: block; overflow: visible; font-family: "Montserrat", sans-serif; }
+.funds-chart svg:focus { outline: 2px solid var(--fc-line); outline-offset: 2px; }
+.funds-chart .fc-grid { stroke: var(--fc-grid); stroke-width: 1; }
+.funds-chart .fc-zero { stroke: var(--fc-axis); stroke-width: 1; }
+.funds-chart .fc-tick { fill: var(--fc-text); font-size: 11px; }
+.funds-chart .fc-axis-label { fill: var(--fc-text); font-size: 12px; }
+.funds-chart .fc-line { fill: none; stroke: var(--fc-line); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.funds-chart .fc-dot, .funds-chart .fc-hot { fill: var(--fc-line); stroke: var(--fc-surface); stroke-width: 2; }
+.funds-chart .fc-end-label { fill: var(--fc-ink); font-size: 12px; font-weight: bold; }
+.funds-chart .fc-cross { stroke: var(--fc-axis); stroke-width: 1; stroke-dasharray: 3 3; }
+.funds-chart .fc-tip { position: absolute; width: 200px; pointer-events: none; background: var(--fc-surface); color: var(--fc-ink); border: 1px solid var(--fc-axis); border-radius: 4px; padding: 6px 8px; font-size: 0.85em; line-height: 1.35; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+.funds-chart details { margin-top: 0.5em; }
+.funds-chart .fc-table { width: 100%; max-width: 640px; font-size: 0.9em; }
+.funds-chart .fc-table th { text-align: left; }
+
 /* Scrollable pop-up dialogs for Apothecary, Inventory, and Household */
 #ui-dialog-body.apothecary,
 #ui-dialog-body.inventory,
@@ -1238,6 +1257,110 @@ $(document).on(':passagerender', function () {
    change in money, reputation (clamped 0-10) and skill, so the game's existing
    effects stay as written. In widgets use <<decision-start>> / <<decision-end>>;
    in [[link][setter]] links call the functions directly in the setter. */
+/* FUNDS HISTORY — one point per month for the End-screen chart: total money (yours + dependents').
+   Each Sea Week is a month; a stay ashore adds the months it lasted ($portperiod). Re-rendering the same
+   week (events, Back) updates that month's point instead of adding one. */
+$(document).on(':passageend', function (ev) {
+	var v = State.variables, t = ev.passage.title;
+	if (!Array.isArray(v.fundsHistory)) { return; }
+	var h = v.fundsHistory, total = (v.money || 0) + (v.depmoney || 0);
+	var record = function (key, label, addMonths) {
+		var last = h[h.length - 1];
+		if (last && last.key === key) { last.total = total; return; }
+		v.monthsElapsed = (v.monthsElapsed || 0) + (addMonths || 0);
+		h.push({ key: key, month: v.monthsElapsed, label: label, total: total });
+	};
+	var week = /^Sea Week (\d+)$/.exec(t);
+	if (t === 'Commission' && h.length === 0) { record('start', 'Signing on for your first voyage', 0); }
+	else if (week) { record('v' + v.voyage + 'w' + week[1], 'Voyage ' + v.voyage + ', month ' + week[1] + ' at sea', 1); }
+	else if ((t === 'Recommission' || t === 'Destination Select') && v.portperiod > 0) {
+		var months = Math.round(v.portperiod); v.portperiod = 0;
+		record('port' + v.voyage + '-' + (v.monthsElapsed + months), 'After ' + months + ' month' + (months === 1 ? '' : 's') + ' ashore in ' + v.location, months);
+	}
+	else if (t === 'End') {
+		var lastPt = h[h.length - 1];
+		if (lastPt && lastPt.key !== 'end' && lastPt.month === (v.monthsElapsed || 0)) { lastPt.key = 'end'; lastPt.label += ' (end of your game)'; lastPt.total = total; }
+		else { record('end', 'End of your game', 0); }
+	}
+});
+
+/* Line chart of $fundsHistory, drawn as inline SVG into `el`. Colours come from CSS custom properties on
+   .funds-chart (story stylesheet), so the game's Dark Theme setting switches them. */
+setup.formatLSD = function (pence) {
+	var t = Math.round(pence), neg = t < 0; t = Math.abs(t);
+	return (neg ? '-' : '') + '£' + Math.floor(t / 240) + ', ' + Math.floor((t % 240) / 12) + ' s., ' + (t % 12) + ' p.';
+};
+setup.renderFundsChart = function (el, history) {
+	if (!el) { return; }
+	var pts = (history || []).map(function (d) { return { m: d.month, p: d.total / 240, label: d.label, total: d.total }; });
+	if (pts.length < 2) { el.textContent = 'Not enough time passed to chart your funds.'; return; }
+	var W = Math.max(320, Math.min(640, Math.round(el.clientWidth || 600))), H = 270, L = 58, R = 70, T = 14, B = 44, pw = W - L - R, ph = H - T - B;
+	var niceStep = function (raw) { var mag = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / mag; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * mag; };
+	var maxM = Math.max.apply(null, pts.map(function (d) { return d.m; })) || 1;
+	var hiP = Math.max(0, Math.max.apply(null, pts.map(function (d) { return d.p; })));
+	var loP = Math.min(0, Math.min.apply(null, pts.map(function (d) { return d.p; })));
+	var yStep = niceStep(Math.max((hiP - loP) / 4, 1)), yMax = Math.ceil(hiP / yStep) * yStep || yStep, yMin = Math.floor(loP / yStep) * yStep;
+	var xStep = Math.max(1, niceStep(maxM / 8));
+	var X = function (m) { return L + (m / maxM) * pw; }, Y = function (p) { return T + (yMax - p) / (yMax - yMin) * ph; };
+	var NS = 'http://www.w3.org/2000/svg';
+	var mk = function (tag, attrs, text) { var e = document.createElementNS(NS, tag); Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); }); if (text !== undefined) { e.textContent = text; } return e; };
+	el.textContent = '';
+	var first = pts[0], last = pts[pts.length - 1];
+	var svg = mk('svg', { viewBox: '0 0 ' + W + ' ' + H, width: '100%', role: 'img', tabindex: '0',
+		'aria-label': 'Line chart of your and your dependents\' combined funds over ' + maxM + ' months, from ' + setup.formatLSD(first.total) + ' to ' + setup.formatLSD(last.total) + ' Use the left and right arrow keys to read each month, or open the table below.' });
+	for (var y = yMin; y <= yMax + 1e-9; y += yStep) {
+		svg.appendChild(mk('line', { x1: L, x2: L + pw, y1: Y(y), y2: Y(y), class: Math.abs(y) < 1e-9 ? 'fc-zero' : 'fc-grid' }));
+		svg.appendChild(mk('text', { x: L - 8, y: Y(y) + 4, 'text-anchor': 'end', class: 'fc-tick' }, '£' + Math.round(y)));
+	}
+	for (var m = 0; m <= maxM + 1e-9; m += xStep) {
+		svg.appendChild(mk('text', { x: X(m), y: T + ph + 18, 'text-anchor': 'middle', class: 'fc-tick' }, String(Math.round(m))));
+	}
+	svg.appendChild(mk('text', { x: L + pw / 2, y: H - 4, 'text-anchor': 'middle', class: 'fc-axis-label' }, 'Months'));
+	svg.appendChild(mk('text', { x: 14, y: T + ph / 2, 'text-anchor': 'middle', class: 'fc-axis-label', transform: 'rotate(-90 14 ' + (T + ph / 2) + ')' }, 'Pounds (£)'));
+	svg.appendChild(mk('path', { d: pts.map(function (d, i) { return (i ? 'L' : 'M') + X(d.m).toFixed(1) + ' ' + Y(d.p).toFixed(1); }).join(' '), class: 'fc-line' }));
+	if (pts.length <= 30) { pts.forEach(function (d) { svg.appendChild(mk('circle', { cx: X(d.m), cy: Y(d.p), r: 4, class: 'fc-dot' })); }); }
+	svg.appendChild(mk('text', { x: X(last.m) + 8, y: Y(last.p) + 4, class: 'fc-end-label' }, '£' + Math.floor(last.total / 240)));
+	var cross = mk('line', { x1: 0, x2: 0, y1: T, y2: T + ph, class: 'fc-cross', visibility: 'hidden' });
+	var hot = mk('circle', { r: 5, class: 'fc-hot', visibility: 'hidden' });
+	svg.appendChild(cross); svg.appendChild(hot);
+	var hit = mk('rect', { x: L, y: T, width: pw, height: ph, fill: 'transparent' });
+	svg.appendChild(hit);
+	var wrap = document.createElement('div'); wrap.className = 'fc-wrap';
+	var tip = document.createElement('div'); tip.className = 'fc-tip'; tip.hidden = true;
+	wrap.appendChild(svg); wrap.appendChild(tip); el.appendChild(wrap);
+	var current = -1;
+	var show = function (i) {
+		current = i; var d = pts[i];
+		cross.setAttribute('x1', X(d.m)); cross.setAttribute('x2', X(d.m)); cross.setAttribute('visibility', 'visible');
+		hot.setAttribute('cx', X(d.m)); hot.setAttribute('cy', Y(d.p)); hot.setAttribute('visibility', 'visible');
+		tip.textContent = '';
+		var a = document.createElement('strong'); a.textContent = setup.formatLSD(d.total);
+		var b = document.createElement('div'); b.textContent = 'Month ' + d.m + ': ' + d.label;
+		tip.appendChild(a); tip.appendChild(b); tip.hidden = false;
+		var box = svg.getBoundingClientRect(), scale = box.width / W, left = X(d.m) * scale + 12;
+		if (left + 200 > box.width) { left = X(d.m) * scale - 212; }
+		tip.style.left = Math.max(0, left) + 'px'; tip.style.top = (T * scale) + 'px';
+	};
+	var hide = function () { cross.setAttribute('visibility', 'hidden'); hot.setAttribute('visibility', 'hidden'); tip.hidden = true; };
+	var nearest = function (clientX) {
+		var box = svg.getBoundingClientRect(), vx = (clientX - box.left) / box.width * W, best = 0, bd = Infinity;
+		pts.forEach(function (d, i) { var dd = Math.abs(X(d.m) - vx); if (dd <= bd) { bd = dd; best = i; } });
+		return best;
+	};
+	hit.addEventListener('pointermove', function (e) { show(nearest(e.clientX)); });
+	hit.addEventListener('pointerleave', hide);
+	svg.addEventListener('blur', hide);
+	svg.addEventListener('keydown', function (e) {
+		if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); show(Math.max(0, Math.min(pts.length - 1, (current < 0 ? 0 : current + (e.key === 'ArrowRight' ? 1 : -1))))); }
+		else if (e.key === 'Escape') { hide(); }
+	});
+	var det = document.createElement('details'), sum = document.createElement('summary'); sum.textContent = 'Show as a table'; det.appendChild(sum);
+	var tbl = document.createElement('table'); tbl.className = 'fc-table';
+	var hr = document.createElement('tr'); ['Month', 'When', 'Funds'].forEach(function (x) { var th = document.createElement('th'); th.textContent = x; hr.appendChild(th); }); tbl.appendChild(hr);
+	pts.forEach(function (d) { var tr = document.createElement('tr'); [String(d.m), d.label, setup.formatLSD(d.total)].forEach(function (x) { var td = document.createElement('td'); td.textContent = x; tr.appendChild(td); }); tbl.appendChild(tr); });
+	det.appendChild(tbl); el.appendChild(det);
+};
+
 setup.decisionWhen = function () {
 	var v = State.variables, p = State.passage, n = v.voyage || 0, loc = v.location;
 	var week = /^Sea Week (\d+)$/.exec(p);
@@ -1363,6 +1486,8 @@ As a &lt;&lt;set _age = [&quot;adolescent&quot;, &quot;young adult&quot;, &quot;
 &lt;&lt;set $voyage to 0&gt;&gt;
 &lt;&lt;set $sendHome to &quot;&quot;&gt;&gt;
 &lt;&lt;set $wages to 0&gt;&gt;
+&lt;&lt;set $fundsHistory to []&gt;&gt;
+&lt;&lt;set $monthsElapsed to 0&gt;&gt;
 
 
 </tw-passagedata><tw-passagedata pid="6" name="Status" tags="" position="25,125" size="100,100">Player stats:
@@ -2710,6 +2835,7 @@ As a &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;&lt;&lt;defgreenhand &quo
 &lt;br&gt;&lt;br&gt;&lt;img alt=&quot;&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/At_Dock_Street_wharf_-_Schell_%26_Hogan_%3B_JL%28%3F%29_sc._LCCN2015650268.jpg/1280px-At_Dock_Street_wharf_-_Schell_%26_Hogan_%3B_JL%28%3F%29_sc._LCCN2015650268.jpg&quot; width=100%&gt;&lt;br&gt;//James W. Louderbach. At Dock Street wharf. 1875. Marian S. Carson Collection (Library of Congress). Public Domain.//
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="End" tags="storyline" position="1425,250" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;h2&gt;How Did Your Decisions Impact Your Game?&lt;/h2&gt;
+&lt;&lt;funds-chart&gt;&gt;
 &lt;&lt;decision-report&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="char-gen-widgets" tags="widget" position="150,500" size="100,100">
 &lt;&lt;widget &quot;playerName&quot;&gt;&gt;
@@ -3142,6 +3268,15 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;&lt;done&gt;&gt;&lt;&lt;run $(&quot;#departure-continue&quot;).hide()&gt;&gt;&lt;&lt;/done&gt;&gt;
 &lt;&lt;else&gt;&gt;&lt;&lt;depexpense&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* FUNDS-CHART — line chart of your + your dependents&#39; money by month, drawn by setup.renderFundsChart
+   (story JavaScript) from $fundsHistory, which the :passageend handler fills in. Used on the End passage. */
+&lt;&lt;widget &quot;funds-chart&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;h3&gt;Your Funds Over Time&lt;/h3&gt;
+&lt;p&gt;Your money plus your dependents&#39; money, month by month. Hover over the chart, or use the arrow keys, to read each month.&lt;/p&gt;
+&lt;div class=&quot;funds-chart&quot; id=&quot;funds-chart&quot;&gt;&lt;/div&gt;
+&lt;&lt;done&gt;&gt;&lt;&lt;run setup.renderFundsChart(document.getElementById(&quot;funds-chart&quot;), $fundsHistory)&gt;&gt;&lt;&lt;/done&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 </tw-passagedata><tw-passagedata pid="36" name="Time in Port" tags="storyline" position="375,700" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;status&gt;&gt;
