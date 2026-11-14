@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.5</title>
+<title>Shipping v1.6</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.5" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.6" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -2126,7 +2126,7 @@ Do you bid?
 &lt;/ul&gt;&lt;/span&gt;
 &lt;&lt;else&gt;&gt;
 You&#39;ve been assigned to climb the &lt;&lt;defrig &quot;rigging&quot;&gt;&gt; to fit a strap around the maintop-mast head for the &lt;&lt;defringtail &quot;ringtail halyards&quot;&gt;&gt;. It&#39;s high work, and to do it you must carry all your materials around your neck to leave your hands free. You carry a &lt;&lt;defmarline &quot;marline-spike&quot;&gt;&gt;, the strap, and &lt;&lt;defringtail &quot;halyards&quot;&gt;&gt; &lt;&lt;defaloft &quot;aloft&quot;&gt;&gt; far above the ship. Looking down, the ship that carries your entire life looks small and the sea looks so great.&lt;br&gt;&lt;br&gt;
-Suddenly &lt;&lt;if random(1,3) is 1&gt;&gt;the wind changes and a sail snaps into you, knocking you clean off the &lt;&lt;defrig &quot;rigging&quot;&gt;&gt;&lt;&lt;elseif random(1,3) is 2&gt;&gt;you lose your footing and slip off the &lt;&lt;deffuttock &quot;futtock shrouds&quot;&gt;&gt;&lt;&lt;else&gt;&gt;you lean too far from the &lt;&lt;defrig &quot;rigging&quot;&gt;&gt; and the weight of the materials around your neck shifts, pulling you down&lt;&lt;/if&gt;&gt;. Fortunately, your fall is broken by the many ropes around you and you stop a few feet above the deck. &lt;br&gt;&lt;br&gt;
+Suddenly &lt;&lt;set _f to random(1,3)&gt;&gt;&lt;&lt;if _f is 1&gt;&gt;the wind changes and a sail snaps into you, knocking you clean off the &lt;&lt;defrig &quot;rigging&quot;&gt;&gt;&lt;&lt;elseif _f is 2&gt;&gt;you lose your footing and slip off the &lt;&lt;deffuttock &quot;futtock shrouds&quot;&gt;&gt;&lt;&lt;else&gt;&gt;you lean too far from the &lt;&lt;defrig &quot;rigging&quot;&gt;&gt; and the weight of the materials around your neck shifts, pulling you down&lt;&lt;/if&gt;&gt;. Fortunately, your fall is broken by the many ropes around you and you stop a few feet above the deck. &lt;br&gt;&lt;br&gt;
 &lt;span id=&quot;fall&quot;&gt;Do you ask for time off?
 &lt;ul&gt;
 &lt;li&gt;&lt;&lt;link &quot;Yes, you&#39;ve had a fright&quot;&gt;&gt;&lt;&lt;replace &quot;#fall&quot;&gt;&gt;Rattled, you request time to compose yourself and recover from your fall. The rest of the crew grumbles that you wish to cause them more work when you are clearly fine&lt;&lt;set $reputation -=3&gt;&gt; Your request is not approved and you [[return to work.-&gt;return]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
