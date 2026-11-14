@@ -11,6 +11,30 @@ repository-root `CLAUDE.md` apply here too, with these differences:
   new `def*` definition widgets go in `039-Definitions.txt`.
 - `variables.md` describes the plague game only; it does not cover this game's variables.
 
+## Recording decisions (`$decisions`)
+
+The End passage shows "The Impact of Your Decisions", built from `$decisions` by the `<<decision-report>>`
+widget (Money widgets, pid 35). This parallels the plague game's report, but works differently: instead of
+passing the effects to a widget, a recorded choice is **bracketed** and the record stores what actually
+changed.
+
+- In `<<link>>` / `<<replace>>` code, put `<<decision-start>>` before the choice's effects and
+  `<<decision-end "text" deathPct>>` after them (`deathPct` optional: the % chance the choice kills the
+  player). Text can be an expression: ``<<decision-end `"Married a woman in " + $location`>>``.
+- In `[[text->Passage][setter]]` links, call the functions in the setter:
+  `[[...][setup.decisionStart(); $money -= 30; setup.decisionEnd("Bought trousers at auction")]]`.
+- The record captures the real change in `$money`, `$depmoney` (shown as "Sent home"), `$reputation`
+  and `$skill` between the two calls, so the game's existing effects stay as written. Don't add the
+  amounts by hand.
+- Reputation is clamped to 0–10 by both calls and at every passage start (story JavaScript). Don't add
+  separate clamps.
+- The time label ("Voyage 2, month 3 at sea", "After voyage 1, in port at Boston", …) comes from
+  `setup.decisionWhen()` in the story JavaScript, using the passage name, `$voyage` (incremented at the
+  top of Commission and Recommission) and `$location`.
+- Record a new choice if it changes money, reputation, skill or `$depmoney`, carries a death risk, or is a
+  major story choice. Also record the "decline" side when the other option has an effect. Don't record
+  links that only continue the story or show an outcome.
+
 ## Version number
 
 The version lives in the `<tw-storydata name="Shipping vX.Y">` attribute **and** the page
