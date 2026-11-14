@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.9</title>
+<title>Shipping v1.10</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.9" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.10" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -1955,7 +1955,7 @@ Once accustomed to the rocking of the ship, you and the other &lt;&lt;defgreenha
 &lt;li&gt;[[Sailmaking-&gt;Sea Week 2][$skill +=1]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#learn&quot;&gt;&gt;&lt;&lt;if $reputation lte 3&gt;&gt;Hoping that staying out of the way will help your reputation, y&lt;&lt;else&gt;&gt;Y&lt;&lt;/if&gt;&gt;ou are content to continue your &lt;&lt;if $distance is 0&gt;&gt;[[current task.-&gt;Arrive in Port][$money +=600]]&lt;&lt;else&gt;&gt;[[current task.-&gt;Sea Week 2][$money +=600]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#learn&quot;&gt;&gt;&lt;&lt;if $reputation lte 3&gt;&gt;Hoping that staying out of the way will help your reputation, y&lt;&lt;else&gt;&gt;Y&lt;&lt;/if&gt;&gt;ou are content to continue your &lt;&lt;if $distance is 0&gt;&gt;[[current task.-&gt;Arrive in Port]]&lt;&lt;else&gt;&gt;[[current task.-&gt;Sea Week 2]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;elseif $role is &quot;idler&quot;&gt;&gt;
 Even though the ship has only just gotten under way, you nevertheless have a lot of work. &lt;&lt;if $idlertask is &quot;cook&quot;&gt;&gt;As the cook, you are responsible for feeding the entire crew dinner and supper, as well as doling out the tea and drink to those on &lt;&lt;defwatch &quot;watch&quot;&gt;&gt;. This is a demanding job which requires you to &lt;&lt;if $distance is 0&gt;&gt;[[cook all day.-&gt;Arrive in Port]]&lt;&lt;else&gt;&gt;[[cook all day.-&gt;Sea Week 2]]&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;The ship needs constant repairs and you must begin by assessing the state of the &lt;&lt;if $idlertask is &quot;carpenter&quot;&gt;&gt;ship&#39;s railings&lt;&lt;else&gt;&gt;ship&#39;s foresail&lt;&lt;/if&gt;&gt; and &lt;&lt;if $distance is 0&gt;&gt;[[its supplies.-&gt;Arrive in Port]]&lt;&lt;else&gt;&gt;[[its supplies.-&gt;Sea Week 2]]&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;
