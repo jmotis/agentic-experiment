@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.32</title>
+<title>Shipping v1.33</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.32" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.33" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -2947,6 +2947,7 @@ As a &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;&lt;&lt;defgreenhand &quo
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;set _all to [&quot;Macao&quot;,&quot;Singapore&quot;,&quot;Canton&quot;,&quot;Plymouth&quot;,&quot;London&quot;,&quot;Liverpool&quot;,&quot;Charleston&quot;,&quot;Boston&quot;,&quot;New York&quot;,&quot;Tripoli&quot;,&quot;Jeddah&quot;,&quot;Dacca&quot;,&quot;Bombay&quot;,&quot;Livorno&quot;,&quot;Rio de Janeiro&quot;,&quot;Grenada&quot;,&quot;King&#39;s Town&quot;,&quot;Veracruz&quot;]&gt;&gt;
 &lt;&lt;set _destination to _all.filter(function(p) { return p !== $location; })&gt;&gt;
+&lt;&lt;set _target to hasVisited(&quot;Commission&quot;) ? &quot;Recommission&quot; : &quot;Commission&quot;&gt;&gt;
 &lt;div class=&quot;map-container&quot;&gt;
   &lt;img alt=&quot;World map&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/3/36/The_world_on_Mercator%27s_projection%2C_LOC_78692118.jpg&quot; class=&quot;map-image&quot;&gt;
   &lt;&lt;for _p range _destination&gt;&gt;
@@ -2955,10 +2956,9 @@ As a &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;&lt;&lt;defgreenhand &quo
       &lt;&lt;set _style to &quot;left:&quot; + _coord.x + &quot;%; top:&quot; + _coord.y + &quot;%;&quot;&gt;&gt;
       &lt;&lt;set _labelHtml to &#39;&lt;span class=&quot;label&quot;&gt;&#39; + _p + &#39;&lt;/span&gt;&#39;&gt;&gt;
       &lt;span class=&quot;map-pin&quot; @style=&quot;_style&quot;&gt;
-        &lt;&lt;link _labelHtml&gt;&gt;
+        &lt;&lt;link _labelHtml _target&gt;&gt;
           &lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end `&quot;Looked for a ship bound for &quot; + _p`&gt;&gt;
           &lt;&lt;set $destination to _p&gt;&gt;
-          &lt;&lt;if hasVisited(&quot;Commission&quot;)&gt;&gt;&lt;&lt;goto &quot;Recommission&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;goto &quot;Commission&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
         &lt;&lt;/link&gt;&gt;
       &lt;/span&gt;
     &lt;&lt;/capture&gt;&gt;
