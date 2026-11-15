@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.37</title>
+<title>Shipping v1.38</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.37" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.38" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -3304,6 +3304,13 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;&lt;decision-when&gt;&gt;
 &lt;&lt;run $decisions.push({when: _when, text: _deText, money: $money - _deBefore.money, sentHome: $depmoney - _deBefore.depmoney, repBefore: _deBefore.reputation, repDelta: $reputation - _deBefore.reputation, skillBefore: _deBefore.skill, skillDelta: $skill - _deBefore.skill, deathPct: _dePct})&gt;&gt;
 &lt;&lt;set $decisionBefore to null&gt;&gt;
+&lt;&lt;refresh-status&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* REFRESH-STATUS — redraws the sidebar (storyMenu passage) so money, reputation and skill changed by a choice
+   on the current screen show at once; SugarCube itself only redraws it when you move to a new passage. */
+&lt;&lt;widget &quot;refresh-status&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $(&quot;.story-menu&quot;).length gt 0&gt;&gt;&lt;&lt;replace &quot;.story-menu&quot;&gt;&gt;&lt;&lt;include &quot;storyMenu&quot;&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 /* DECISION-WHEN — sets _when to the time label for a decision made in the current passage. */
