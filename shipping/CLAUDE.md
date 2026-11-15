@@ -47,7 +47,12 @@ The End passage shows "The Impact of Your Decisions", built from `$decisions` by
 - **Ageing (silent):** `<<age-month>>`, run each month by `<<advance-months>>`, gives the player (`$agenum`,
   `$birthMonth`; `$age` is re-banded) and every living wife and parent (`agenum`, `birthMonth`) a birthday
   once a year. Children have no `agenum`: their age is `($monthsElapsed - born) / 12`.
-- **Pregnancy** (plague-game odds) is per wife NPC (`agenum` 16–30, `pregnant` counter, `announced`,
+- **Starting family ages (Bio2):** the starting wife is 16-30 (young adult player), 26-40 (middle-aged) or
+  46-60 (elderly); wives married in port are 16-30. Starting children are aged 0 to (younger parent - 20)
+  and any aged 14+ are dropped silently.
+- **Children leave at 14** (into service or an apprenticeship): `<<age-month>>` sets `placed` and the
+  mother sends news (`<<send-news>>`, kind `placed`); once it arrives (`knownPlaced`) you stop paying.
+- **Pregnancy** (plague-game odds) is per wife NPC (`agenum`, `pregnant` counter, `announced`,
   `alive`), run month by month by `<<advance-months>>` → `<<pregnancy-month>>` (char-gen-widgets, pid 32).
   A wife conceives with 30% chance in each month you are in her port (stay months, and the port call you
   sail from: `<<port-call-together>>`). Children are NPCs (`son`/`daughter`, `mother` = wife id).

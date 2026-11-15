@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.41</title>
+<title>Shipping v1.42</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.41" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.42" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -1440,7 +1440,7 @@ As a &lt;&lt;set _age = [&quot;adolescent&quot;, &quot;young adult&quot;, &quot;
 &lt;li&gt;Location: $location&lt;/li&gt;
 &lt;li&gt;Mission: $destination&lt;/li&gt;
 &lt;&lt;set _kwives to $NPCs.filter(function (n) { return n.relationship === &quot;wife&quot; &amp;&amp; n.knownAlive !== false; })&gt;&gt;&lt;&lt;if _kwives.length gt 0&gt;&gt;&lt;li&gt;&lt;&lt;if _kwives.length gt 1&gt;&gt;Wives&lt;&lt;else&gt;&gt;Wife&lt;&lt;/if&gt;&gt;: &lt;&lt;listNPCs&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;set _kkids to $NPCs.filter(function (n) { return (n.relationship === &quot;son&quot; || n.relationship === &quot;daughter&quot;) &amp;&amp; n.known; })&gt;&gt;&lt;&lt;if _kkids.length gt 0&gt;&gt;&lt;li&gt;Children: &lt;&lt;print _kkids.map(function (c) { return c.name + &quot; (&quot; + c.relationship + &quot; of &quot; + c.motherName + &quot;, in &quot; + c.location + &quot;)&quot;; }).join(&quot;; &quot;)&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set _kkids to $NPCs.filter(function (n) { return (n.relationship === &quot;son&quot; || n.relationship === &quot;daughter&quot;) &amp;&amp; n.known; })&gt;&gt;&lt;&lt;if _kkids.length gt 0&gt;&gt;&lt;li&gt;Children: &lt;&lt;print _kkids.map(function (c) { return c.name + &quot; (&quot; + c.relationship + &quot; of &quot; + c.motherName + &quot;, in &quot; + c.location + (c.knownPlaced ? &quot;, has a position&quot; : &quot;&quot;) + &quot;)&quot;; }).join(&quot;; &quot;)&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;set _kpar to $NPCs.filter(function (n) { return (n.relationship === &quot;mother&quot; || n.relationship === &quot;father&quot;) &amp;&amp; n.knownAlive !== false; })&gt;&gt;&lt;&lt;if _kpar.length gt 0&gt;&gt;&lt;li&gt;Parents: &lt;&lt;print _kpar.map(function (p) { return p.relationship; }).join(&quot; and &quot;)&gt;&gt; (in &lt;&lt;print _kpar[0].location&gt;&gt;)&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $hasfamily is 1&gt;&gt;&lt;li&gt;Dependents: &lt;&lt;print Object.keys($depCount).filter(function (k) { return $depCount[k] &gt; 0; }).map(function (p) { return $depCount[p] + &quot; in &quot; + p; }).join(&quot;, &quot;)&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;/ul&gt;
@@ -1464,7 +1464,7 @@ As a &lt;&lt;set _age = [&quot;adolescent&quot;, &quot;young adult&quot;, &quot;
 &lt;&lt;set $startport to $location&gt;&gt;
 &lt;&lt;playerAge&gt;&gt;
 &lt;&lt;status&gt;&gt;
-&lt;&lt;if $hasfamily is 1&gt;&gt;&lt;&lt;if $family is &quot;your wife&quot;&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;set $dependents to 1&gt;&gt;&lt;&lt;set $married to 1&gt;&gt;&lt;&lt;elseif $family is &quot;your parents&quot;&gt;&gt;&lt;&lt;set $npcId += 1&gt;&gt;&lt;&lt;run $NPCs.push({id: $npcId, name: &quot;your mother&quot;, relationship: &quot;mother&quot;, location: $location, agenum: Math.min($agenum + random(20, 40), 100), birthMonth: random(0, 11), alive: true, knownAlive: true})&gt;&gt;&lt;&lt;set $npcId += 1&gt;&gt;&lt;&lt;run $NPCs.push({id: $npcId, name: &quot;your father&quot;, relationship: &quot;father&quot;, location: $location, agenum: Math.min($agenum + random(20, 60), 100), birthMonth: random(0, 11), alive: true, knownAlive: true})&gt;&gt;&lt;&lt;set $dependents to 2&gt;&gt;&lt;&lt;set $married to 0&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;set $dependents to random(2,6)&gt;&gt;&lt;&lt;set $married to 1&gt;&gt;&lt;&lt;set _startMother to $NPCs.filter(function (n) { return n.relationship === &quot;wife&quot;; }).last()&gt;&gt;&lt;&lt;for _sk to 1; _sk lt $dependents; _sk++&gt;&gt;&lt;&lt;set _skSex to random(1, 2) is 1 ? &quot;son&quot; : &quot;daughter&quot;&gt;&gt;&lt;&lt;child-name _skSex _startMother.id&gt;&gt;&lt;&lt;set _skAge to random(0, Math.max(0, Math.min($agenum, _startMother.agenum) - 20))&gt;&gt;&lt;&lt;set _skBorn to -(_skAge * 12 + random(0, 11))&gt;&gt;&lt;&lt;set $npcId += 1&gt;&gt;&lt;&lt;run $NPCs.push({id: $npcId, name: _childName, relationship: _skSex, mother: _startMother.id, motherName: _startMother.name, location: $location, born: _skBorn, alive: true, knownAlive: true, known: true})&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $hasfamily is 1&gt;&gt;&lt;&lt;if $family is &quot;your wife&quot;&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;set _startMother to $NPCs.filter(function (n) { return n.relationship === &quot;wife&quot;; }).last()&gt;&gt;&lt;&lt;if $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;set _startMother.agenum to random(26, 40)&gt;&gt;&lt;&lt;elseif $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set _startMother.agenum to random(46, 60)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $dependents to 1&gt;&gt;&lt;&lt;set $married to 1&gt;&gt;&lt;&lt;elseif $family is &quot;your parents&quot;&gt;&gt;&lt;&lt;set $npcId += 1&gt;&gt;&lt;&lt;run $NPCs.push({id: $npcId, name: &quot;your mother&quot;, relationship: &quot;mother&quot;, location: $location, agenum: Math.min($agenum + random(20, 40), 100), birthMonth: random(0, 11), alive: true, knownAlive: true})&gt;&gt;&lt;&lt;set $npcId += 1&gt;&gt;&lt;&lt;run $NPCs.push({id: $npcId, name: &quot;your father&quot;, relationship: &quot;father&quot;, location: $location, agenum: Math.min($agenum + random(20, 60), 100), birthMonth: random(0, 11), alive: true, knownAlive: true})&gt;&gt;&lt;&lt;set $dependents to 2&gt;&gt;&lt;&lt;set $married to 0&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;set $dependents to random(2,6)&gt;&gt;&lt;&lt;set $married to 1&gt;&gt;&lt;&lt;set _startMother to $NPCs.filter(function (n) { return n.relationship === &quot;wife&quot;; }).last()&gt;&gt;&lt;&lt;if $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;set _startMother.agenum to random(26, 40)&gt;&gt;&lt;&lt;elseif $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set _startMother.agenum to random(46, 60)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;for _sk to 1; _sk lt $dependents; _sk++&gt;&gt;&lt;&lt;set _skSex to random(1, 2) is 1 ? &quot;son&quot; : &quot;daughter&quot;&gt;&gt;&lt;&lt;child-name _skSex _startMother.id&gt;&gt;&lt;&lt;set _skAge to random(0, Math.max(0, Math.min($agenum, _startMother.agenum) - 20))&gt;&gt;&lt;&lt;set _skBorn to -(_skAge * 12 + random(0, 11))&gt;&gt;&lt;&lt;if _skAge lt 14&gt;&gt;&lt;&lt;set $npcId += 1&gt;&gt;&lt;&lt;run $NPCs.push({id: $npcId, name: _childName, relationship: _skSex, mother: _startMother.id, motherName: _startMother.name, location: $location, born: _skBorn, alive: true, knownAlive: true, known: true})&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set $dependents to $NPCs.length&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $dependents gt 0&gt;&gt;&lt;&lt;set $depBase to {}&gt;&gt;&lt;&lt;set $depBase[$location] to $dependents - $NPCs.length&gt;&gt;&lt;&lt;recount-dependents&gt;&gt;&lt;&lt;set $sendPort to $location&gt;&gt;&lt;&lt;/if&gt;&gt;
 The city is a bustling &lt;&lt;defport &quot;seaport&quot;&gt;&gt; where ships come and go all day carrying a variety of cargos. Sailors of every race and nation, including &lt;&lt;set _race = [&quot;Black&quot;, &quot;Irish&quot;, &quot;Chinese&quot;, &quot;Arabic&quot;, &quot;Indian&quot;, &quot;Florentine&quot;, &quot;English&quot;, &quot;Portuguese&quot;]&gt;&gt;&lt;&lt;listbox &quot;$race&quot;&gt;&gt;&lt;&lt;optionsfrom _race&gt;&gt;&lt;&lt;/listbox&gt;&gt; people like you fill the docks.
 &lt;br&gt;&lt;br&gt;
@@ -3004,13 +3004,22 @@ _list
 
 /* ADVANCE-MONTHS n from — n months pass, starting at month `from`; each living wife&#39;s pregnancy moves on. You
    are &quot;together&quot; in a month if you are in her port. */
-/* AGE-MONTH when — silent birthdays: in the month whose index mod 12 equals someone&#39;s birthMonth, the player
+/* AGE-MONTH when — silent birthdays (and children&#39;s placement at 14, below): in the month whose index mod 12 equals someone&#39;s birthMonth, the player
    ($agenum, $birthMonth; $age follows playerAge&#39;s bands) and every living wife and parent age a year.
    Children age from their `born` month instead. */
 &lt;&lt;widget &quot;age-month&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set _agM to _args[0] % 12&gt;&gt;
 &lt;&lt;if _agM is $birthMonth&gt;&gt;&lt;&lt;set $agenum += 1&gt;&gt;&lt;&lt;set $age to $agenum lt 16 ? &quot;adolescent&quot; : $agenum lt 30 ? &quot;young adult&quot; : $agenum lt 50 ? &quot;middle-aged adult&quot; : &quot;elderly adult&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;run $NPCs.forEach(function (n) { if (typeof n.agenum === &quot;number&quot; &amp;&amp; n.alive !== false &amp;&amp; _agM === (typeof n.birthMonth === &quot;number&quot; ? n.birthMonth : n.id % 12)) { n.agenum += 1; } })&gt;&gt;
+/* At 14 a child is placed in service or an apprenticeship; the mother writes with the news (&lt;&lt;send-news&gt;&gt;,
+   kind &quot;placed&quot;), and you stop paying for the child once you know (knownPlaced). */
+&lt;&lt;for _agI to 0; _agI lt $NPCs.length; _agI++&gt;&gt;
+&lt;&lt;set _agC to $NPCs[_agI]&gt;&gt;
+&lt;&lt;if (_agC.relationship is &quot;son&quot; or _agC.relationship is &quot;daughter&quot;) and _agC.alive isnot false and not _agC.placed and typeof _agC.born is &quot;number&quot; and _args[0] - _agC.born gte 168&gt;&gt;
+&lt;&lt;set _agC.placed to true&gt;&gt;&lt;&lt;set _agMum to $NPCs.find(function (n) { return n.id === _agC.mother; })&gt;&gt;
+&lt;&lt;if _agMum&gt;&gt;&lt;&lt;send-news _agMum _args[0] &quot;placed&quot; _agC&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set _agC.knownPlaced to true&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;advance-months&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
@@ -3122,14 +3131,14 @@ _list
 &lt;&lt;for _rdI to 0; _rdI lt $NPCs.length; _rdI++&gt;&gt;
 &lt;&lt;set _rdN to $NPCs[_rdI]&gt;&gt;
 &lt;&lt;if _rdN.relationship is &quot;wife&quot; and _rdN.knownAlive isnot false&gt;&gt;&lt;&lt;set _rdCount[_rdN.location] to (_rdCount[_rdN.location] || 0) + 1 + (_rdN.knownPregnant ? 1 : 0)&gt;&gt;
-&lt;&lt;elseif (_rdN.relationship is &quot;son&quot; or _rdN.relationship is &quot;daughter&quot;) and _rdN.known and _rdN.knownAlive isnot false&gt;&gt;&lt;&lt;set _rdCount[_rdN.location] to (_rdCount[_rdN.location] || 0) + 1&gt;&gt;
+&lt;&lt;elseif (_rdN.relationship is &quot;son&quot; or _rdN.relationship is &quot;daughter&quot;) and _rdN.known and _rdN.knownAlive isnot false and not _rdN.knownPlaced&gt;&gt;&lt;&lt;set _rdCount[_rdN.location] to (_rdCount[_rdN.location] || 0) + 1&gt;&gt;
 &lt;&lt;elseif (_rdN.relationship is &quot;mother&quot; or _rdN.relationship is &quot;father&quot;) and _rdN.knownAlive isnot false&gt;&gt;&lt;&lt;set _rdCount[_rdN.location] to (_rdCount[_rdN.location] || 0) + 1&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;set $depCount to _rdCount&gt;&gt;
 &lt;&lt;set $dependents to Object.values(_rdCount).reduce(function (sum, x) { return sum + x; }, 0)&gt;&gt;
 /* $family (&quot;your wife and children&quot;, &quot;your mother&quot;, ...) describes who you know you are supporting. */
-&lt;&lt;set _rdKnown to function (r) { return $NPCs.filter(function (n) { return r.includes(n.relationship) &amp;&amp; n.knownAlive !== false &amp;&amp; (n.relationship === &quot;wife&quot; || n.relationship === &quot;mother&quot; || n.relationship === &quot;father&quot; || n.known); }).length; }&gt;&gt;
+&lt;&lt;set _rdKnown to function (r) { return $NPCs.filter(function (n) { return r.includes(n.relationship) &amp;&amp; n.knownAlive !== false &amp;&amp; !n.knownPlaced &amp;&amp; (n.relationship === &quot;wife&quot; || n.relationship === &quot;mother&quot; || n.relationship === &quot;father&quot; || n.known); }).length; }&gt;&gt;
 &lt;&lt;set _rdWives to _rdKnown([&quot;wife&quot;])&gt;&gt;&lt;&lt;set _rdKids to _rdKnown([&quot;son&quot;, &quot;daughter&quot;])&gt;&gt;&lt;&lt;set _rdMum to _rdKnown([&quot;mother&quot;])&gt;&gt;&lt;&lt;set _rdDad to _rdKnown([&quot;father&quot;])&gt;&gt;
 &lt;&lt;set _rdParts to []&gt;&gt;
 &lt;&lt;if _rdWives gt 0&gt;&gt;&lt;&lt;run _rdParts.push(_rdWives gt 1 ? &quot;wives&quot; : &quot;wife&quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3474,6 +3483,9 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;&lt;elseif _rm.kind is &quot;birth&quot;&gt;&gt;&lt;&lt;if _rmWife&gt;&gt;&lt;&lt;set _rmWife.knownPregnant to false&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _rmChild&gt;&gt;&lt;&lt;set _rmChild.known to true&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;run _news.push(_rmFrom + &quot;: she has given birth to a healthy &quot; + _rm.sex + &quot;, &quot; + _rm.childName + &quot;.&quot;)&gt;&gt;
 &lt;&lt;elseif _rm.kind is &quot;death&quot;&gt;&gt;&lt;&lt;if _rmWife&gt;&gt;&lt;&lt;set _rmWife.knownAlive to false&gt;&gt;&lt;&lt;set _rmWife.knownPregnant to false&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;run _news.push(_rmInPerson ? &quot;When you reach &quot; + _rm.port + &quot;, you learn that &quot; + _rm.wifeName + &quot; died in childbirth.&quot; : &quot;A letter from &quot; + _rm.wifeName + &quot;&#39;s family in &quot; + _rm.port + &quot; awaits you here: &quot; + _rm.wifeName + &quot; died in childbirth.&quot;)&gt;&gt;
+&lt;&lt;elseif _rm.kind is &quot;placed&quot;&gt;&gt;&lt;&lt;if _rmChild&gt;&gt;&lt;&lt;set _rmChild.knownPlaced to true&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _rmWife and _rmWife.alive isnot false&gt;&gt;&lt;&lt;run _news.push(_rmFrom + &quot;: she has good news. She has found a position for &quot; + _rm.childName + &quot;.&quot;)&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;run _news.push(_rmInPerson ? &quot;In &quot; + _rm.port + &quot;, you learn that your family has found a position for &quot; + _rm.childName + &quot;.&quot; : &quot;A letter from your family in &quot; + _rm.port + &quot; awaits you here with good news: they have found a position for &quot; + _rm.childName + &quot;.&quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif _rm.kind is &quot;parent-death&quot;&gt;&gt;&lt;&lt;if _rmWife&gt;&gt;&lt;&lt;set _rmWife.knownAlive to false&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;run _news.push(_rmInPerson ? &quot;In &quot; + _rm.port + &quot;, you learn that &quot; + _rm.wifeName + &quot; has died of old age.&quot; : &quot;A letter from &quot; + _rm.port + &quot; awaits you here: &quot; + _rm.wifeName + &quot; has died of old age.&quot;)&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -3495,7 +3507,7 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;&lt;for _w range _fw&gt;&gt;
 &lt;li&gt;&lt;&lt;print _w.name&gt;&gt; of &lt;&lt;print _w.location&gt;&gt;&lt;&lt;if _w.knownAlive === false&gt;&gt; (died in childbirth)&lt;&lt;elseif _w.knownPregnant&gt;&gt; (expecting a child)&lt;&lt;/if&gt;&gt;
 &lt;&lt;set _kids to $NPCs.filter(function (c) { return (c.relationship === &quot;son&quot; || c.relationship === &quot;daughter&quot;) &amp;&amp; c.mother === _w.id &amp;&amp; c.known; })&gt;&gt;
-&lt;&lt;if _kids.length gt 0&gt;&gt;: &lt;&lt;print _kids.map(function (c) { return c.name + &quot; (&quot; + c.relationship + &quot;)&quot;; }).join(&quot;, &quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;&lt;if _kids.length gt 0&gt;&gt;: &lt;&lt;print _kids.map(function (c) { return c.name + &quot; (&quot; + c.relationship + (c.knownPlaced ? &quot;, placed in a position&quot; : &quot;&quot;) + &quot;)&quot;; }).join(&quot;, &quot;)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;/ul&gt;
 &lt;&lt;set _unknown to $mail.filter(function (m) { return !m.delivered; })&gt;&gt;
@@ -3503,7 +3515,7 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;&lt;if _unknown.length gt 0 or _secret.length gt 0&gt;&gt;
 &lt;p&gt;&lt;i&gt;What never reached you:&lt;/i&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;&lt;for _m range _unknown&gt;&gt;&lt;li&gt;&lt;&lt;if _m.kind is &quot;parent-death&quot;&gt;&gt;&lt;&lt;print _m.wifeName.toUpperFirst()&gt;&gt; of &lt;&lt;print _m.port&gt;&gt; died of old age&lt;&lt;else&gt;&gt;&lt;&lt;print _m.wifeName&gt;&gt; of &lt;&lt;print _m.port&gt;&gt; &lt;&lt;if _m.kind is &quot;pregnant&quot;&gt;&gt;was with child&lt;&lt;elseif _m.kind is &quot;miscarriage&quot;&gt;&gt;lost the child she was carrying&lt;&lt;elseif _m.kind is &quot;stillbirth&quot;&gt;&gt;bore a stillborn child&lt;&lt;elseif _m.kind is &quot;birth&quot;&gt;&gt;gave birth to a &lt;&lt;print _m.sex&gt;&gt;, &lt;&lt;print _m.childName&gt;&gt;&lt;&lt;else&gt;&gt;died in childbirth&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;; the news was on its way to &lt;&lt;print _m.dest&gt;&gt;.&lt;/li&gt;&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _m range _unknown&gt;&gt;&lt;li&gt;&lt;&lt;if _m.kind is &quot;parent-death&quot;&gt;&gt;&lt;&lt;print _m.wifeName.toUpperFirst()&gt;&gt; of &lt;&lt;print _m.port&gt;&gt; died of old age&lt;&lt;else&gt;&gt;&lt;&lt;print _m.wifeName&gt;&gt; of &lt;&lt;print _m.port&gt;&gt; &lt;&lt;if _m.kind is &quot;pregnant&quot;&gt;&gt;was with child&lt;&lt;elseif _m.kind is &quot;miscarriage&quot;&gt;&gt;lost the child she was carrying&lt;&lt;elseif _m.kind is &quot;stillbirth&quot;&gt;&gt;bore a stillborn child&lt;&lt;elseif _m.kind is &quot;birth&quot;&gt;&gt;gave birth to a &lt;&lt;print _m.sex&gt;&gt;, &lt;&lt;print _m.childName&gt;&gt;&lt;&lt;elseif _m.kind is &quot;placed&quot;&gt;&gt;found a position for &lt;&lt;print _m.childName&gt;&gt;&lt;&lt;else&gt;&gt;died in childbirth&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;; the news was on its way to &lt;&lt;print _m.dest&gt;&gt;.&lt;/li&gt;&lt;&lt;/for&gt;&gt;
 &lt;&lt;for _s range _secret&gt;&gt;&lt;li&gt;&lt;&lt;print _s.name&gt;&gt; of &lt;&lt;print _s.location&gt;&gt; was with child, though neither of you knew it yet.&lt;/li&gt;&lt;&lt;/for&gt;&gt;
 &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
