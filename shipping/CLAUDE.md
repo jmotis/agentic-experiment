@@ -44,6 +44,9 @@ The End passage shows "The Impact of Your Decisions", built from `$decisions` by
 - **Clock:** `$monthsElapsed` drives the funds chart and pregnancies. `<<sea-month>>` ends every Sea Week
   passage; `<<stay-months>>` starts Recommission and Destination Select (months of a stay ashore);
   `<<end-funds>>` starts End; Commission records the first point. All use `<<record-funds>>`.
+- **Ageing (silent):** `<<age-month>>`, run each month by `<<advance-months>>`, gives the player (`$agenum`,
+  `$birthMonth`; `$age` is re-banded) and every living wife and parent (`agenum`, `birthMonth`) a birthday
+  once a year. Children have no `agenum`: their age is `($monthsElapsed - born) / 12`.
 - **Pregnancy** (plague-game odds) is per wife NPC (`agenum` 16–30, `pregnant` counter, `announced`,
   `alive`), run month by month by `<<advance-months>>` → `<<pregnancy-month>>` (char-gen-widgets, pid 32).
   A wife conceives with 30% chance in each month you are in her port (stay months, and the port call you
@@ -52,7 +55,7 @@ The End passage shows "The Impact of Your Decisions", built from `$decisions` by
   she has used every name for that sex; different wives may reuse names, and the starting wife's
   children (Bio2) are named the same way.
 - **Parents** (starting family "your parents") are NPCs named "your mother" / "your father" (`relationship`
-  `mother`/`father`, `ageGap` +20-40 / +20-60 on `$agenum`, as in the plague game). `<<parent-month>>`
+  `mother`/`father`, `agenum` = your age +20-40 / +20-60, as in the plague game). `<<parent-month>>`
   (run by `<<advance-months>>`) applies the plague game's old-age rule: 60+ dies with 1 in 30 chance a
   month; the news goes by `<<send-news>>` (kind `parent-death`).
 - **News reaches you only in port:** `<<send-news>>` posts to `$mail`, addressed to your next port of call
