@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.33</title>
+<title>Shipping v1.34</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.33" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.34" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -1460,8 +1460,8 @@ As a &lt;&lt;set _age = [&quot;adolescent&quot;, &quot;young adult&quot;, &quot;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="storyAuthor" tags="" position="25,250" size="100,100">&lt;a href=&quot;https://rrchnm.org/&quot;&gt;RRCHNM&lt;/a&gt;</tw-passagedata><tw-passagedata pid="9" name="Bio2" tags="storyline" position="625,75" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $startport to $location&gt;&gt;
 &lt;&lt;status&gt;&gt;
-&lt;&lt;if $hasfamily is 1&gt;&gt;&lt;&lt;if $family is &quot;your wife&quot;&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;set $dependents to 1&gt;&gt;&lt;&lt;set $married to 1&gt;&gt;&lt;&lt;elseif $family is &quot;your parents&quot;&gt;&gt;&lt;&lt;set $dependents to 2&gt;&gt;&lt;&lt;set $married to 0&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;set $dependents to random(2,6)&gt;&gt;&lt;&lt;set $married to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $dependents gt 0&gt;&gt;&lt;&lt;set $depBase to {}&gt;&gt;&lt;&lt;set $depBase[$location] to $dependents - ($NPCs.some(function (n) { return n.relationship === &quot;wife&quot;; }) ? 1 : 0)&gt;&gt;&lt;&lt;recount-dependents&gt;&gt;&lt;&lt;set $sendPort to $location&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $hasfamily is 1&gt;&gt;&lt;&lt;if $family is &quot;your wife&quot;&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;set $dependents to 1&gt;&gt;&lt;&lt;set $married to 1&gt;&gt;&lt;&lt;elseif $family is &quot;your parents&quot;&gt;&gt;&lt;&lt;set $dependents to 2&gt;&gt;&lt;&lt;set $married to 0&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;set $dependents to random(2,6)&gt;&gt;&lt;&lt;set $married to 1&gt;&gt;&lt;&lt;set _startMother to $NPCs.filter(function (n) { return n.relationship === &quot;wife&quot;; }).last()&gt;&gt;&lt;&lt;for _sk to 1; _sk lt $dependents; _sk++&gt;&gt;&lt;&lt;set _skSex to random(1, 2) is 1 ? &quot;son&quot; : &quot;daughter&quot;&gt;&gt;&lt;&lt;child-name _skSex&gt;&gt;&lt;&lt;set $npcId += 1&gt;&gt;&lt;&lt;run $NPCs.push({id: $npcId, name: _childName, relationship: _skSex, mother: _startMother.id, motherName: _startMother.name, location: $location, born: null, alive: true, knownAlive: true, known: true})&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $dependents gt 0&gt;&gt;&lt;&lt;set $depBase to {}&gt;&gt;&lt;&lt;set $depBase[$location] to $dependents - $NPCs.length&gt;&gt;&lt;&lt;recount-dependents&gt;&gt;&lt;&lt;set $sendPort to $location&gt;&gt;&lt;&lt;/if&gt;&gt;
 The city is a bustling &lt;&lt;defport &quot;seaport&quot;&gt;&gt; where ships come and go all day carrying a variety of cargos. Sailors of every race and nation, including &lt;&lt;set _race = [&quot;Black&quot;, &quot;Irish&quot;, &quot;Chinese&quot;, &quot;Arabic&quot;, &quot;Indian&quot;, &quot;Florentine&quot;, &quot;English&quot;, &quot;Portuguese&quot;]&gt;&gt;&lt;&lt;listbox &quot;$race&quot;&gt;&gt;&lt;&lt;optionsfrom _race&gt;&gt;&lt;&lt;/listbox&gt;&gt; people like you fill the docks.
 &lt;br&gt;&lt;br&gt;
 You head down to the wharf, where you hope to encounter a &lt;&lt;defmaster &quot;shipping master&quot;&gt;&gt; whose ship will be leaving soon. You &lt;&lt;if $age isnot &quot;adolescent&quot;&gt;&gt;
@@ -3071,12 +3071,12 @@ _list
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 /* CHILD-NAME sex — sets _childName from setup.childNames (StoryInit) for the player&#39;s nation, avoiding names
-   already used by children of that sex unless all are taken. */
+   already used by children of that sex or by a wife, unless all are taken. */
 &lt;&lt;widget &quot;child-name&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set _cnSex to _args[0]&gt;&gt;
 &lt;&lt;set _cnKey to [&quot;the United States&quot;, &quot;the United Kingdom&quot;, &quot;the Caribbean&quot;].includes($nation) ? &quot;anglo&quot; : $nation is &quot;the Italian Peninsula&quot; ? &quot;italian&quot; : ($nation is &quot;Barbary&quot; or $nation is &quot;the Ottoman Empire&quot;) ? &quot;arabic&quot; : $nation is &quot;Brazil&quot; ? &quot;portuguese&quot; : $nation is &quot;China&quot; ? &quot;chinese&quot; : &quot;indian&quot;&gt;&gt;
 &lt;&lt;set _cnList to setup.childNames[_cnKey][_cnSex]&gt;&gt;
-&lt;&lt;set _cnUsed to $NPCs.filter(function (c) { return c.relationship === _cnSex; }).map(function (c) { return c.name; })&gt;&gt;
+&lt;&lt;set _cnUsed to $NPCs.filter(function (c) { return c.relationship === _cnSex || c.relationship === &quot;wife&quot;; }).map(function (c) { return c.name; })&gt;&gt;
 &lt;&lt;set _cnFree to _cnList.filter(function (x) { return !_cnUsed.includes(x); })&gt;&gt;
 &lt;&lt;set _childName to (_cnFree.length gt 0 ? _cnFree : _cnList).random()&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
