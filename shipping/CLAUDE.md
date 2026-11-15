@@ -11,42 +11,47 @@ repository-root `CLAUDE.md` apply here too, with these differences:
   new `def*` definition widgets go in `039-Definitions.txt`.
 - `variables.md` describes the plague game only; it does not cover this game's variables.
 
+## Where the game logic lives
+
+Game rules are written as **passage code (widgets)**, not story JavaScript. The story JavaScript holds only
+the original interface code, the map coordinates (`setup.portCoords`) and the End-screen chart renderer
+(`setup.renderFundsChart`, which needs the DOM). Keep it that way: put new rules in widgets.
+
+TwineScript gotcha: `to`, `is`, `not`, `and`, `or`, `eq`, `gt`, `lt`, etc. are operators, so never use
+them as object keys (`{to: x}` breaks; the letter record uses `dest`).
+
 ## Recording decisions (`$decisions`)
 
-The End passage shows "The Impact of Your Decisions", built from `$decisions` by the `<<decision-report>>`
-widget (Money widgets, pid 35). This parallels the plague game's report, but works differently: instead of
-passing the effects to a widget, a recorded choice is **bracketed** and the record stores what actually
-changed.
+The End passage shows "The Impact of Your Decisions", built from `$decisions` by `<<decision-report>>`
+(Money widgets, pid 35). A recorded choice is **bracketed** and the record stores what actually changed:
 
-- In `<<link>>` / `<<replace>>` code, put `<<decision-start>>` before the choice's effects and
-  `<<decision-end "text" deathPct>>` after them (`deathPct` optional: the % chance the choice kills the
-  player). Text can be an expression: ``<<decision-end `"Married a woman in " + $location`>>``.
-- In `[[text->Passage][setter]]` links, call the functions in the setter:
-  `[[...][setup.decisionStart(); $money -= 30; setup.decisionEnd("Bought trousers at auction")]]`.
-- The record captures the real change in `$money`, `$depmoney` (shown as "Sent home"), `$reputation`
-  and `$skill` between the two calls, so the game's existing effects stay as written. Don't add the
-  amounts by hand.
-- Reputation is clamped to 0–10 by both calls and at every passage start (story JavaScript). Don't add
-  separate clamps.
-- The time label ("Voyage 2, month 3 at sea", "After voyage 1, in port at Boston", …) comes from
-  `setup.decisionWhen()` in the story JavaScript, using the passage name, `$voyage` (incremented at the
-  top of Commission and Recommission) and `$location`.
-- Record a new choice if it changes money, reputation, skill or `$depmoney`, carries a death risk, or is a
-  major story choice. Also record the "decline" side when the other option has an effect. Don't record
-  links that only continue the story or show an outcome.
+- Put `<<decision-start>>` before the choice's effects and `<<decision-end "text" deathPct>>` after them,
+  inside a `<<link>>` (`deathPct` optional). Text can be an expression:
+  ``<<decision-end `"Married a woman in " + $location`>>``.
+- For a choice that also moves to a passage, use a `<<link>>` with a target, not `[[…][setter]]`:
+  `<<link "Yes, on trousers" `passage()`>><<decision-start>><<set $money -=30>><<decision-end "…">><</link>>`.
+- The record captures the real change in `$money`, `$depmoney` ("Sent home"), `$reputation` and `$skill`
+  between the two calls (via `$decisionBefore`), so existing effects stay as written.
+- Reputation is clamped to 0–10 by both calls and at the start of every passage (the PassageHeader
+  passage). A penalty applied while a passage renders, outside a decision, should clamp itself.
+- `<<decision-when>>` sets the time label ("Voyage 2, month 3 at sea", …) from the passage, `$voyage`
+  (incremented at the top of Commission and Recommission) and `$location`.
+- Record a choice if it changes money, reputation, skill or `$depmoney`, carries a death risk, or is a
+  major story choice; also the "decline" side when the other option has an effect.
 
-## Family, pregnancy and news (story JavaScript)
+## Month clock, family, pregnancy and news (widgets)
 
-- **Clock:** `$monthsElapsed` (+1 per Sea Week, + months of a stay ashore) drives both the End-screen
-  funds chart and pregnancies (`setup.advanceMonths`). Stays are processed at `:passagestart` of
-  Recommission / Destination Select so their news can be shown there.
-- **Pregnancy** (plague-game odds) is tracked on each wife NPC (`agenum` 16–30, `pregnant` counter,
-  `announced`, `alive`). A wife conceives with 30% chance in each month you are in her port (stay months,
-  and the port call you sail from). Children are NPCs (`son`/`daughter`, `mother` = wife id).
-- **News reaches you only in port:** events post to `$mail`, addressed to your next port of call and
-  arriving after ⅔ of the cargo sailing time (`setup.distanceBetween`, from the `<<distance>>` widget), or
+- **Clock:** `$monthsElapsed` drives the funds chart and pregnancies. `<<sea-month>>` ends every Sea Week
+  passage; `<<stay-months>>` starts Recommission and Destination Select (months of a stay ashore);
+  `<<end-funds>>` starts End; Commission records the first point. All use `<<record-funds>>`.
+- **Pregnancy** (plague-game odds) is per wife NPC (`agenum` 16–30, `pregnant` counter, `announced`,
+  `alive`), run month by month by `<<advance-months>>` → `<<pregnancy-month>>` (char-gen-widgets, pid 32).
+  A wife conceives with 30% chance in each month you are in her port (stay months, and the port call you
+  sail from: `<<port-call-together>>`). Children are NPCs (`son`/`daughter`, `mother` = wife id).
+- **News reaches you only in port:** `<<send-news>>` posts to `$mail`, addressed to your next port of call
+  and arriving after ⅔ of the cargo sailing time (`<<distance-between>>`, which uses `<<distance>>`), or
   in person in her port. `<<read-mail>>` (Arrive in Port, Recommission) delivers it.
-- **What you pay for follows what you know:** `setup.recountDependents()` rebuilds `$depCount` from
+- **What you pay for follows what you know:** `<<recount-dependents>>` rebuilds `$depCount` from
   `$depBase` (the starting family's non-NPC members), wives you believe alive (+1 once you know she is
   expecting) and children you know of. Call it after changing any of those.
 

@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.31</title>
+<title>Shipping v1.32</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.31" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.32" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -1237,198 +1237,7 @@ $(document).on(':passagestart', function (ev) {
 	if (!ev.passage.tags.includesAny('menu', 'noreturn')) {
 		State.variables.return = ev.passage.title;
 	}
-	/* Keep reputation on the sidebar's 0-10 scale between decisions too. */
-	if (typeof State.variables.reputation === 'number') {
-		State.variables.reputation = Math.clamp(State.variables.reputation, 0, 10);
-	}
 });
-
-/* ...and again after each passage renders, so changes made while a passage renders
-   (outside any decision, e.g. the dependents' expense penalty) can't leave it out of range. */
-$(document).on(':passagerender', function () {
-	if (typeof State.variables.reputation === 'number') {
-		State.variables.reputation = Math.clamp(State.variables.reputation, 0, 10);
-	}
-});
-
-/* DECISION TRACKING — parallels the plague game's $decisions / record-decision.
-   A recorded choice calls setup.decisionStart() before its effects and
-   setup.decisionEnd(text, deathPct) after them. The record stores the actual
-   change in money, reputation (clamped 0-10) and skill, so the game's existing
-   effects stay as written. In widgets use <<decision-start>> / <<decision-end>>;
-   in [[link][setter]] links call the functions directly in the setter. */
-/* FUNDS HISTORY — one point per month for the End-screen chart: total money (yours + dependents').
-   Each Sea Week is a month; a stay ashore adds the months it lasted ($portperiod). Re-rendering the same
-   week (events, Back) updates that month's point instead of adding one. The same month clock drives
-   pregnancies (setup.advanceMonths). Returns true when a new point was added. */
-setup.recordFunds = function (key, label, addMonths) {
-	var v = State.variables, h = v.fundsHistory, total = (v.money || 0) + (v.depmoney || 0);
-	var last = h[h.length - 1];
-	if (last && last.key === key) { last.total = total; return false; }
-	v.monthsElapsed = (v.monthsElapsed || 0) + (addMonths || 0);
-	h.push({ key: key, month: v.monthsElapsed, label: label, total: total });
-	return true;
-};
-/* Stays ashore are processed as the next passage starts, so news from the stay can be shown on it. */
-$(document).on(':passagestart', function (ev) {
-	var v = State.variables, t = ev.passage.title;
-	if (!Array.isArray(v.fundsHistory)) { return; }
-	if ((t === 'Recommission' || t === 'Destination Select') && v.portperiod > 0) {
-		var months = Math.round(v.portperiod), from = v.monthsElapsed || 0; v.portperiod = 0;
-		setup.advanceMonths(months, from);
-		setup.recordFunds('port' + v.voyage + '-' + (from + months), 'After ' + months + ' month' + (months === 1 ? '' : 's') + ' ashore in ' + v.location, months);
-	}
-});
-$(document).on(':passageend', function (ev) {
-	var v = State.variables, t = ev.passage.title, h = v.fundsHistory;
-	if (!Array.isArray(h)) { return; }
-	var week = /^Sea Week (\d+)$/.exec(t);
-	if (t === 'Commission' && h.length === 0) { setup.recordFunds('start', 'Signing on for your first voyage', 0); }
-	else if (week) {
-		var key = 'v' + v.voyage + 'w' + week[1], last = h[h.length - 1];
-		if (!(last && last.key === key)) {
-			if (week[1] === '1') { setup.portCallTogether(v.startport); }   /* the port call you are sailing from */
-			setup.advanceMonths(1, v.monthsElapsed || 0);
-		}
-		setup.recordFunds(key, 'Voyage ' + v.voyage + ', month ' + week[1] + ' at sea', 1);
-	}
-	else if (t === 'End') {
-		var lastPt = h[h.length - 1], total = (v.money || 0) + (v.depmoney || 0);
-		if (lastPt && lastPt.key !== 'end' && lastPt.month === (v.monthsElapsed || 0)) { lastPt.key = 'end'; lastPt.label += ' (end of your game)'; lastPt.total = total; }
-		else { setup.recordFunds('end', 'End of your game', 0); }
-	}
-});
-
-/* FAMILY & PREGNANCY — modelled on the plague game's pregnancy rules.
-   Wives carry: id, agenum (16-30), alive, knownAlive, pregnant (month counter, 0 = not), announced (she
-   knows), knownPregnant (you know). Children: id, relationship son/daughter, mother (wife id), location,
-   alive, known (you know of the birth).
-   Each month: a pregnant wife's counter rises; a miscarriage roll by her age (not in month 4, when she
-   finds out); at month 4 she knows and writes to you; at month 9 the birth: 1 in 30 she dies, else 1 in 4
-   stillborn, else a son or daughter. A wife who is not pregnant conceives with 30% chance in any month you
-   are in her port (a stay month, or the port call you sail from).
-   News reaches you only in port: by letter to your next port of call (packet = 2/3 of the cargo sailing
-   time, events dated to the start of their month), or in person in her port. What you PAY for follows what
-   you KNOW (setup.recountDependents): an expected baby from the moment you are told; the dead until told. */
-setup.miscarriageThreshold = function (age) {
-	return age <= 25 ? 10 : age <= 35 ? 15 : age === 36 ? 20 : age === 37 ? 25 : age === 38 ? 30 : age === 39 ? 35 : 40;
-};
-setup.nextNpcId = function () { var v = State.variables; v.npcId = (v.npcId || 0) + 1; return v.npcId; };
-setup.CHILD_NAMES = {
-	anglo:   { son: ['John', 'William', 'Thomas', 'James', 'George', 'Henry', 'Joseph', 'Samuel'], daughter: ['Mary', 'Elizabeth', 'Sarah', 'Ann', 'Hannah', 'Martha', 'Jane', 'Lucy'] },
-	italian: { son: ['Giovanni', 'Antonio', 'Francesco', 'Giuseppe', 'Pietro', 'Luigi'], daughter: ['Maria', 'Francesca', 'Teresa', 'Rosa', 'Angela', 'Agata'] },
-	arabic:  { son: ['Yusuf', 'Ibrahim', 'Hassan', 'Ali', 'Mehmed', 'Ahmad'], daughter: ['Fatima', 'Aisha', 'Layla', 'Safiya', 'Zaynab', 'Mariyah'] },
-	portuguese: { son: ['João', 'Antônio', 'Manuel', 'José'], daughter: ['Maria', 'Isabel', 'Beatriz', 'Leonor'] },
-	chinese: { son: ['Wei', 'Ming', 'Jun', 'Hao', 'Lei', 'Bo'], daughter: ['Xiulan', 'Guiying', 'Xiuying', 'Min', 'Chuntao', 'Lifen'] },
-	indian:  { son: ['Ravi', 'Arjun', 'Mohan', 'Gopal', 'Hari', 'Krishna'], daughter: ['Padma', 'Puja', 'Arya', 'Bhakti', 'Swarna', 'Partha'] }
-};
-setup.childName = function (sex) {
-	var v = State.variables, n = v.nation;
-	var key = (['the United States', 'the United Kingdom', 'the Caribbean'].includes(n)) ? 'anglo' : n === 'the Italian Peninsula' ? 'italian'
-		: (n === 'Barbary' || n === 'the Ottoman Empire') ? 'arabic' : n === 'Brazil' ? 'portuguese' : n === 'China' ? 'chinese' : 'indian';
-	var list = setup.CHILD_NAMES[key][sex];
-	var used = v.NPCs.filter(function (c) { return c.relationship === sex; }).map(function (c) { return c.name; });
-	var free = list.filter(function (x) { return !used.includes(x); });
-	return (free.length ? free : list).random();
-};
-setup.isAlive = function (npc) { return npc.alive !== false; };
-setup.knownAlive = function (npc) { return npc.knownAlive !== false; };
-/* Where your wife would write to: your next port of call if at sea or at Resupply, otherwise the port you are in. */
-setup.husbandHeading = function () {
-	var v = State.variables;
-	return (v.location === 'at sea' || v.location === 'in port') ? v.destination : v.location;
-};
-/* Sailing time in months between two ports, from the <<distance>> widget (one source of truth). */
-setup.distanceBetween = function (a, b) {
-	var v = State.variables, L = v.location, D = v.destination, X = v.distance;
-	v.location = a; v.destination = b; $.wiki('<<distance>>');
-	var d = v.distance; v.location = L; v.destination = D; v.distance = X;
-	return d;
-};
-setup.sendNews = function (wife, when, kind, child) {
-	var v = State.variables, to = setup.husbandHeading();
-	if (!Array.isArray(v.mail)) { v.mail = []; }
-	var travel = (!to || to === 'none' || to === wife.location) ? 0 : (2 / 3) * setup.distanceBetween(wife.location, to);
-	v.mail.push({ kind: kind, wife: wife.id, wifeName: wife.name, port: wife.location, child: child ? child.id : null,
-		childName: child ? child.name : null, sex: child ? child.relationship : null, to: to, sent: when, arrives: when + travel, delivered: false });
-};
-setup.portCallTogether = function (port) {
-	var v = State.variables;
-	if (!Array.isArray(v.NPCs) || !port) { return; }
-	v.NPCs.forEach(function (w) {
-		if (w.relationship === 'wife' && setup.isAlive(w) && w.location === port && !(w.pregnant > 0) && random(1, 100) <= 30) { w.pregnant = 1; }
-	});
-};
-setup.pregnancyMonth = function (w, when, together) {
-	var v = State.variables;
-	if (w.pregnant > 0) {
-		w.pregnant += 1;
-		if (w.pregnant !== 4 && random(1, 100) <= setup.miscarriageThreshold(w.agenum || 25)) {
-			var knew = w.announced; w.pregnant = 0; w.announced = false;
-			if (knew) { setup.sendNews(w, when, 'miscarriage'); }
-			return;
-		}
-		if (w.pregnant >= 9) {
-			w.pregnant = 0; w.announced = false;
-			if (random(1, 30) === 1) { w.alive = false; setup.sendNews(w, when, 'death'); }
-			else if (random(1, 4) === 1) { setup.sendNews(w, when, 'stillbirth'); }
-			else {
-				var sex = random(1, 2) === 1 ? 'son' : 'daughter';
-				var child = { id: setup.nextNpcId(), name: setup.childName(sex), relationship: sex, mother: w.id, motherName: w.name, location: w.location, born: when, alive: true, known: false };
-				v.NPCs.push(child); setup.sendNews(w, when, 'birth', child);
-			}
-			return;
-		}
-		if (w.pregnant >= 4 && !w.announced) { w.announced = true; setup.sendNews(w, when, 'pregnant'); }
-	}
-	else if (together && random(1, 100) <= 30) { w.pregnant = 1; }
-};
-setup.advanceMonths = function (n, from) {
-	var v = State.variables;
-	if (!Array.isArray(v.NPCs)) { return; }
-	for (var i = 0; i < n; i++) {
-		v.NPCs.filter(function (w) { return w.relationship === 'wife' && setup.isAlive(w); }).forEach(function (w) {
-			setup.pregnancyMonth(w, from + i, v.location === w.location);
-		});
-	}
-};
-/* Deliver news: letters addressed to this port that have arrived, and anything from a wife living here (in person). */
-setup.collectMail = function () {
-	var v = State.variables, port = v.location, now = v.monthsElapsed || 0, out = [];
-	if (!Array.isArray(v.mail)) { return out; }
-	v.mail.forEach(function (m) {
-		if (m.delivered) { return; }
-		var inPerson = (m.port === port), byLetter = (m.to === port && m.arrives <= now + 1e-9);
-		if (!inPerson && !byLetter) { return; }
-		m.delivered = true;
-		var w = v.NPCs.find(function (n) { return n.id === m.wife; }), c = v.NPCs.find(function (n) { return n.id === m.child; });
-		var from = inPerson ? 'In ' + m.port + ', ' + m.wifeName + ' tells you' : 'A letter from ' + m.wifeName + ' in ' + m.port + ' awaits you here';
-		if (m.kind === 'pregnant') { if (w) { w.knownPregnant = true; } out.push(from + ': she is with child.'); }
-		else if (m.kind === 'miscarriage') { if (w) { w.knownPregnant = false; } out.push(from + ': she has lost the child she was carrying.'); }
-		else if (m.kind === 'stillbirth') { if (w) { w.knownPregnant = false; } out.push(from + ': her baby was stillborn.'); }
-		else if (m.kind === 'birth') { if (w) { w.knownPregnant = false; } if (c) { c.known = true; } out.push(from + ': she has given birth to a healthy ' + m.sex + ', ' + m.childName + '.'); }
-		else if (m.kind === 'death') {
-			if (w) { w.knownAlive = false; w.knownPregnant = false; }
-			out.push(inPerson ? 'When you reach ' + m.port + ', you learn that ' + m.wifeName + ' died in childbirth.'
-				: 'A letter from ' + m.wifeName + '\'s family in ' + m.port + ' awaits you here: ' + m.wifeName + ' died in childbirth.');
-		}
-	});
-	if (out.length) { setup.recountDependents(); }
-	return out;
-};
-/* Dependents you pay for, by port, from what you KNOW: the family you started with ($depBase), wives you
-   believe alive (plus an expected baby once you have been told), and children you know were born. */
-setup.recountDependents = function () {
-	var v = State.variables, c = {}, base = v.depBase || {};
-	var add = function (p, k) { c[p] = (c[p] || 0) + k; };
-	Object.keys(base).forEach(function (p) { if (base[p] > 0) { add(p, base[p]); } });
-	(v.NPCs || []).forEach(function (n) {
-		if (n.relationship === 'wife' && setup.knownAlive(n)) { add(n.location, 1 + (n.knownPregnant ? 1 : 0)); }
-		else if ((n.relationship === 'son' || n.relationship === 'daughter') && n.known && setup.knownAlive(n)) { add(n.location, 1); }
-	});
-	v.depCount = c;
-	v.dependents = Object.keys(c).reduce(function (s, k) { return s + c[k]; }, 0);
-};
 
 /* Line chart of $fundsHistory, drawn as inline SVG into `el`. Colours come from CSS custom properties on
    .funds-chart (story stylesheet), so the game's Dark Theme setting switches them. */
@@ -1506,59 +1315,7 @@ setup.renderFundsChart = function (el, history) {
 	pts.forEach(function (d) { var tr = document.createElement('tr'); [String(d.m), d.label, setup.formatLSD(d.total)].forEach(function (x) { var td = document.createElement('td'); td.textContent = x; tr.appendChild(td); }); tbl.appendChild(tr); });
 	det.appendChild(tbl); el.appendChild(det);
 };
-
-/* DEPENDENTS BY PORT — $depFunds is {port: pence}, $depCount is {port: number of dependents}.
-   $depmoney is kept equal to the total (setup.depTotal) so older readers keep working. */
-setup.depTotal = function () {
-	var f = State.variables.depFunds || {};
-	return Object.keys(f).reduce(function (sum, k) { return sum + (f[k] || 0); }, 0);
-};
-setup.depPorts = function () {
-	var c = State.variables.depCount || {};
-	return Object.keys(c).filter(function (k) { return c[k] > 0; });
-};
-
-/* The wife you say goodbye to when sailing (<<departure-funds>>), or null if there is no farewell prompt:
-   you have family, money in hand, and a wife living in the port you are sailing from. */
-setup.farewellWife = function () {
-	var v = State.variables;
-	if (v.hasfamily !== 1 || !(v.money > 0) || !Array.isArray(v.NPCs)) { return null; }
-	return v.NPCs.find(function (npc) { return npc.relationship === 'wife' && npc.alive !== false && npc.location === v.startport; }) || null;
-};
-
-setup.decisionWhen = function () {
-	var v = State.variables, p = State.passage, n = v.voyage || 0, loc = v.location;
-	var week = /^Sea Week (\d+)$/.exec(p);
-	if (week) { return 'Voyage ' + n + ', month ' + week[1] + ' at sea'; }
-	if (p === 'Resupply') { return 'Voyage ' + n + ', resupplying in port'; }
-	if (n === 0) { return 'Before your first voyage, ' + loc; }
-	if (['Commission', 'Recommission', 'Port Supply'].includes(p)) { return 'Voyage ' + n + ', preparing to sail from ' + loc; }
-	return 'After voyage ' + n + ', in port at ' + loc;
-};
-setup.decisionStart = function () {
-	var v = State.variables;
-	v.reputation = Math.clamp(v.reputation, 0, 10);
-	setup._decisionBefore = { money: v.money, reputation: v.reputation, skill: v.skill, depmoney: v.depmoney };
-	return true;
-};
-setup.decisionEnd = function (text, deathPct) {
-	var v = State.variables;
-	var b = setup._decisionBefore || { money: v.money, reputation: v.reputation, skill: v.skill, depmoney: v.depmoney };
-	v.reputation = Math.clamp(v.reputation, 0, 10);
-	v.decisions.push({
-		when: setup.decisionWhen(),
-		text: text,
-		money: v.money - b.money,
-		sentHome: v.depmoney - b.depmoney,
-		repBefore: b.reputation,
-		repDelta: v.reputation - b.reputation,
-		skillBefore: b.skill,
-		skillDelta: v.skill - b.skill,
-		deathPct: (typeof deathPct === 'number') ? deathPct : null
-	});
-	setup._decisionBefore = null;
-	return true;
-};</script><tw-tag name="storyline" color="green"></tw-tag><tw-tag name="widget" color="yellow"></tw-tag><tw-passagedata pid="1" name="Start" tags="storyline" position="375,75" size="100,100">&lt;&lt;nobr&gt;&gt;
+</script><tw-tag name="storyline" color="green"></tw-tag><tw-tag name="widget" color="yellow"></tw-tag><tw-passagedata pid="1" name="Start" tags="storyline" position="375,75" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $destination to &quot;none&quot;&gt;&gt;
 &lt;&lt;status&gt;&gt;
 &lt;strong&gt;This is a text-based adventure game. Click the underlined text to advance in the game. Hover over the bold text for definitions. Best of luck!&lt;/strong&gt;&lt;br&gt;&lt;br&gt;
@@ -1659,6 +1416,16 @@ As a &lt;&lt;set _age = [&quot;adolescent&quot;, &quot;young adult&quot;, &quot;
 &lt;&lt;set $mail to []&gt;&gt;
 &lt;&lt;set $npcId to 0&gt;&gt;
 &lt;&lt;set $depBase to {}&gt;&gt;
+&lt;&lt;set $decisionBefore to null&gt;&gt;
+/* Names for children born during the game, by the player&#39;s nation (used by &lt;&lt;child-name&gt;&gt;). */
+&lt;&lt;set setup.childNames to {
+	anglo: {son: [&quot;John&quot;, &quot;William&quot;, &quot;Thomas&quot;, &quot;James&quot;, &quot;George&quot;, &quot;Henry&quot;, &quot;Joseph&quot;, &quot;Samuel&quot;], daughter: [&quot;Mary&quot;, &quot;Elizabeth&quot;, &quot;Sarah&quot;, &quot;Ann&quot;, &quot;Hannah&quot;, &quot;Martha&quot;, &quot;Jane&quot;, &quot;Lucy&quot;]},
+	italian: {son: [&quot;Giovanni&quot;, &quot;Antonio&quot;, &quot;Francesco&quot;, &quot;Giuseppe&quot;, &quot;Pietro&quot;, &quot;Luigi&quot;], daughter: [&quot;Maria&quot;, &quot;Francesca&quot;, &quot;Teresa&quot;, &quot;Rosa&quot;, &quot;Angela&quot;, &quot;Agata&quot;]},
+	arabic: {son: [&quot;Yusuf&quot;, &quot;Ibrahim&quot;, &quot;Hassan&quot;, &quot;Ali&quot;, &quot;Mehmed&quot;, &quot;Ahmad&quot;], daughter: [&quot;Fatima&quot;, &quot;Aisha&quot;, &quot;Layla&quot;, &quot;Safiya&quot;, &quot;Zaynab&quot;, &quot;Mariyah&quot;]},
+	portuguese: {son: [&quot;João&quot;, &quot;Antônio&quot;, &quot;Manuel&quot;, &quot;José&quot;], daughter: [&quot;Maria&quot;, &quot;Isabel&quot;, &quot;Beatriz&quot;, &quot;Leonor&quot;]},
+	chinese: {son: [&quot;Wei&quot;, &quot;Ming&quot;, &quot;Jun&quot;, &quot;Hao&quot;, &quot;Lei&quot;, &quot;Bo&quot;], daughter: [&quot;Xiulan&quot;, &quot;Guiying&quot;, &quot;Xiuying&quot;, &quot;Min&quot;, &quot;Chuntao&quot;, &quot;Lifen&quot;]},
+	indian: {son: [&quot;Ravi&quot;, &quot;Arjun&quot;, &quot;Mohan&quot;, &quot;Gopal&quot;, &quot;Hari&quot;, &quot;Krishna&quot;], daughter: [&quot;Padma&quot;, &quot;Puja&quot;, &quot;Arya&quot;, &quot;Bhakti&quot;, &quot;Swarna&quot;, &quot;Partha&quot;]}
+}&gt;&gt;
 &lt;&lt;set $fundsHistory to []&gt;&gt;
 &lt;&lt;set $monthsElapsed to 0&gt;&gt;
 
@@ -1672,7 +1439,7 @@ As a &lt;&lt;set _age = [&quot;adolescent&quot;, &quot;young adult&quot;, &quot;
 &lt;li&gt;Mission: $destination&lt;/li&gt;
 &lt;&lt;set _kwives to $NPCs.filter(function (n) { return n.relationship === &quot;wife&quot; &amp;&amp; n.knownAlive !== false; })&gt;&gt;&lt;&lt;if _kwives.length gt 0&gt;&gt;&lt;li&gt;&lt;&lt;if _kwives.length gt 1&gt;&gt;Wives&lt;&lt;else&gt;&gt;Wife&lt;&lt;/if&gt;&gt;: &lt;&lt;listNPCs&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;set _kkids to $NPCs.filter(function (n) { return (n.relationship === &quot;son&quot; || n.relationship === &quot;daughter&quot;) &amp;&amp; n.known; })&gt;&gt;&lt;&lt;if _kkids.length gt 0&gt;&gt;&lt;li&gt;Children: &lt;&lt;print _kkids.map(function (c) { return c.name + &quot; (&quot; + c.relationship + &quot; of &quot; + c.motherName + &quot;, in &quot; + c.location + &quot;)&quot;; }).join(&quot;; &quot;)&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $hasfamily is 1&gt;&gt;&lt;li&gt;Dependents: &lt;&lt;print setup.depPorts().map(function (p) { return $depCount[p] + &quot; in &quot; + p; }).join(&quot;, &quot;)&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $hasfamily is 1&gt;&gt;&lt;li&gt;Dependents: &lt;&lt;print Object.keys($depCount).filter(function (k) { return $depCount[k] &gt; 0; }).map(function (p) { return $depCount[p] + &quot; in &quot; + p; }).join(&quot;, &quot;)&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;/ul&gt;
 </tw-passagedata><tw-passagedata pid="7" name="storyMenu" tags="" position="150,125" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;if hasVisited(&quot;Commission&quot;)&gt;&gt;
 &lt;div class=&quot;status-box&quot;&gt;&lt;&lt;if $reputation gte 9&gt;&gt;&lt;div class=&quot;rep-best&quot;&gt;&#39;&#39;Reputation:&#39;&#39; &lt;br&gt;as salt as Neptune&lt;/div&gt;&lt;&lt;elseif $reputation gte 6 and $reputation lte 8&gt;&gt;&lt;div class=&quot;rep-good&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;&lt;&lt;defjack &quot;jack-tar&quot;&gt;&gt;&lt;/div&gt;&lt;&lt;elseif $reputation gte 3 and $reputation lte 5&gt;&gt;&lt;div class=&quot;rep-poor&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;&lt;&lt;deflandsman &quot;landsman&quot;&gt;&gt;&lt;/div&gt;&lt;&lt;else&gt;&gt;&lt;div class=&quot;rep-worst&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;a shiftless &lt;&lt;defsoger &quot;soger&quot;&gt;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;&lt;/div&gt;&lt;br&gt;
@@ -1681,7 +1448,7 @@ As a &lt;&lt;set _age = [&quot;adolescent&quot;, &quot;young adult&quot;, &quot;
 
 &lt;div class=&quot;status-box&quot;&gt;&lt;div class=&quot;income&quot;&gt;&lt;span class=&quot;def&quot; data-def=&quot;The amount of money you have left after paying your living expenses. Converted to pounds, shilling, and pence.&quot;&gt;Disposable Income&lt;/span&gt;:&lt;br&gt; /* @@#money; &lt;&lt;= $money&gt;&gt; @@ */ @@ #conversion; &lt;&lt;conversion&gt;&gt; @@&lt;/div&gt;&lt;/div&gt;&lt;br&gt;
 
-&lt;&lt;if $hasfamily is 1&gt;&gt;&lt;&lt;for _dl range setup.depPorts()&gt;&gt;&lt;div class=&quot;status-box&quot;&gt;&lt;div class=&quot;income&quot;&gt;&lt;span class=&quot;def&quot; data-def=&quot;The amount of money your dependents have left after paying their living expenses with what you send home.&quot;&gt;&lt;&lt;print _dl&gt;&gt; Dependents&lt;/span&gt;:&lt;br&gt;&lt;&lt;depconversion `$depFunds[_dl] || 0`&gt;&gt;&lt;/div&gt;&lt;/div&gt;&lt;br&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $hasfamily is 1&gt;&gt;&lt;&lt;for _dl range Object.keys($depCount).filter(function (k) { return $depCount[k] &gt; 0; })&gt;&gt;&lt;div class=&quot;status-box&quot;&gt;&lt;div class=&quot;income&quot;&gt;&lt;span class=&quot;def&quot; data-def=&quot;The amount of money your dependents have left after paying their living expenses with what you send home.&quot;&gt;&lt;&lt;print _dl&gt;&gt; Dependents&lt;/span&gt;:&lt;br&gt;&lt;&lt;depconversion `$depFunds[_dl] || 0`&gt;&gt;&lt;/div&gt;&lt;/div&gt;&lt;br&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;if $inventory is 1&gt;&gt;&lt;li&gt;&lt;&lt;link &quot;Inventory&quot;&gt;&gt;
     &lt;&lt;run Dialog.setup(&quot;Inventory&quot;, &quot;inventory&quot;); Dialog.wiki(Story.get(&quot;Inventory&quot;).text); Dialog.open()&gt;&gt;
@@ -1694,7 +1461,7 @@ As a &lt;&lt;set _age = [&quot;adolescent&quot;, &quot;young adult&quot;, &quot;
 &lt;&lt;set $startport to $location&gt;&gt;
 &lt;&lt;status&gt;&gt;
 &lt;&lt;if $hasfamily is 1&gt;&gt;&lt;&lt;if $family is &quot;your wife&quot;&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;set $dependents to 1&gt;&gt;&lt;&lt;set $married to 1&gt;&gt;&lt;&lt;elseif $family is &quot;your parents&quot;&gt;&gt;&lt;&lt;set $dependents to 2&gt;&gt;&lt;&lt;set $married to 0&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;set $dependents to random(2,6)&gt;&gt;&lt;&lt;set $married to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;if $dependents gt 0&gt;&gt;&lt;&lt;set $depBase to {}&gt;&gt;&lt;&lt;set $depBase[$location] to $dependents - ($NPCs.some(function (n) { return n.relationship === &quot;wife&quot;; }) ? 1 : 0)&gt;&gt;&lt;&lt;run setup.recountDependents()&gt;&gt;&lt;&lt;set $sendPort to $location&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $dependents gt 0&gt;&gt;&lt;&lt;set $depBase to {}&gt;&gt;&lt;&lt;set $depBase[$location] to $dependents - ($NPCs.some(function (n) { return n.relationship === &quot;wife&quot;; }) ? 1 : 0)&gt;&gt;&lt;&lt;recount-dependents&gt;&gt;&lt;&lt;set $sendPort to $location&gt;&gt;&lt;&lt;/if&gt;&gt;
 The city is a bustling &lt;&lt;defport &quot;seaport&quot;&gt;&gt; where ships come and go all day carrying a variety of cargos. Sailors of every race and nation, including &lt;&lt;set _race = [&quot;Black&quot;, &quot;Irish&quot;, &quot;Chinese&quot;, &quot;Arabic&quot;, &quot;Indian&quot;, &quot;Florentine&quot;, &quot;English&quot;, &quot;Portuguese&quot;]&gt;&gt;&lt;&lt;listbox &quot;$race&quot;&gt;&gt;&lt;&lt;optionsfrom _race&gt;&gt;&lt;&lt;/listbox&gt;&gt; people like you fill the docks.
 &lt;br&gt;&lt;br&gt;
 You head down to the wharf, where you hope to encounter a &lt;&lt;defmaster &quot;shipping master&quot;&gt;&gt; whose ship will be leaving soon. You &lt;&lt;if $age isnot &quot;adolescent&quot;&gt;&gt;
@@ -1702,24 +1469,24 @@ You head down to the wharf, where you hope to encounter a &lt;&lt;defmaster &quo
 &lt;br&gt;&lt;br&gt;
 Will you:
 &lt;ul&gt;
-&lt;li&gt;[[Ask him for passage-&gt;Destination Select][setup.decisionStart(); $fate to 0; $getstopick to 1; setup.decisionEnd(&quot;Asked the shipping master for passage&quot;)]]&lt;/li&gt;
-&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;[[Ask him for work-&gt;Destination Select][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;else&gt;&gt;[[Ask him for work-&gt;Commission][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[Ask him where you might find a place to stay near the water while you search for work-&gt;Commission][setup.decisionStart(); $fate to 2; $getstopick to 0; setup.decisionEnd(&quot;Asked the shipping master where to find lodgings near the water&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Ask him for passage&quot; &quot;Destination Select&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $fate to 0&gt;&gt;&lt;&lt;set $getstopick to 1&gt;&gt;&lt;&lt;decision-end &quot;Asked the shipping master for passage&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;&lt;&lt;link &quot;Ask him for work&quot; &quot;Destination Select&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $fate to 1&gt;&gt;&lt;&lt;decision-end &quot;Asked the shipping master for work&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;link &quot;Ask him for work&quot; &quot;Commission&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $fate to 1&gt;&gt;&lt;&lt;decision-end &quot;Asked the shipping master for work&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Ask him where you might find a place to stay near the water while you search for work&quot; &quot;Commission&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $fate to 2&gt;&gt;&lt;&lt;set $getstopick to 0&gt;&gt;&lt;&lt;decision-end &quot;Asked the shipping master where to find lodgings near the water&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;have sailing experience&quot;&gt;&gt;&lt;&lt;replace &quot;#experience&quot;&gt;&gt;&lt;&lt;set $reputation to 6&gt;&gt;&lt;&lt;set $experience to 1&gt;&gt;&lt;&lt;set $skill to 6&gt;&gt;&lt;&lt;set $dunked to 1&gt;&gt;have sailing experience.
 &lt;br&gt;&lt;br&gt;
 Will you:
 &lt;ul&gt;
-&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;[[Ask him for work-&gt;Destination Select][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;else&gt;&gt;[[Ask him for work-&gt;Commission][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[Ask him where you might find a place to stay near the water while you search for work-&gt;Commission][setup.decisionStart(); $fate to 2; $getstopick to 0; setup.decisionEnd(&quot;Asked the shipping master where to find lodgings near the water&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;&lt;&lt;link &quot;Ask him for work&quot; &quot;Destination Select&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $fate to 1&gt;&gt;&lt;&lt;decision-end &quot;Asked the shipping master for work&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;link &quot;Ask him for work&quot; &quot;Commission&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $fate to 1&gt;&gt;&lt;&lt;decision-end &quot;Asked the shipping master for work&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Ask him where you might find a place to stay near the water while you search for work&quot; &quot;Commission&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $fate to 2&gt;&gt;&lt;&lt;set $getstopick to 0&gt;&gt;&lt;&lt;decision-end &quot;Asked the shipping master where to find lodgings near the water&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;set $reputation to 4&gt;&gt;&lt;&lt;set $experience to 0&gt;&gt;&lt;&lt;set $skill to 0&gt;&gt;&lt;&lt;set $dunked to 0&gt;&gt;
 &lt;ul&gt;
-&lt;li&gt;[[Ask him for passage-&gt;Destination Select][setup.decisionStart(); $fate to 0; $getstopick to 1; setup.decisionEnd(&quot;Asked the shipping master for passage&quot;)]]&lt;/li&gt;
-&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;[[Ask him for work-&gt;Destination Select][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;else&gt;&gt;[[Ask him for work-&gt;Commission][setup.decisionStart(); $fate to 1; setup.decisionEnd(&quot;Asked the shipping master for work&quot;)]]&lt;&lt;/if&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[Ask him where you might find a place to stay near the water while you search for work-&gt;Commission][setup.decisionStart(); $fate to 2; $getstopick to 0; setup.decisionEnd(&quot;Asked the shipping master where to find lodgings near the water&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Ask him for passage&quot; &quot;Destination Select&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $fate to 0&gt;&gt;&lt;&lt;set $getstopick to 1&gt;&gt;&lt;&lt;decision-end &quot;Asked the shipping master for passage&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;if $getstopick is 1&gt;&gt;&lt;&lt;link &quot;Ask him for work&quot; &quot;Destination Select&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $fate to 1&gt;&gt;&lt;&lt;decision-end &quot;Asked the shipping master for work&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;link &quot;Ask him for work&quot; &quot;Commission&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $fate to 1&gt;&gt;&lt;&lt;decision-end &quot;Asked the shipping master for work&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Ask him where you might find a place to stay near the water while you search for work&quot; &quot;Commission&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $fate to 2&gt;&gt;&lt;&lt;set $getstopick to 0&gt;&gt;&lt;&lt;decision-end &quot;Asked the shipping master where to find lodgings near the water&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="Bio" tags="storyline" position="500,75" size="100,100">&lt;&lt;nobr&gt;&gt;
@@ -2184,6 +1951,7 @@ The master explains that he needs more hands for an upcoming $distance month voy
 &lt;li&gt;&lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#intro&quot;&gt;&gt;If that doesn&#39;t sound right, you can refresh the game and start again.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/span&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;if $fundsHistory.length is 0&gt;&gt;&lt;&lt;record-funds &quot;start&quot; &quot;Signing on for your first voyage&quot; 0&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="Port Supply" tags="storyline" position="500,200" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;status&gt;&gt;
 &lt;&lt;if $trader is 1&gt;&gt;&lt;&lt;personaltrade&gt;&gt;&lt;&lt;else&gt;&gt;
@@ -2211,9 +1979,9 @@ While the $shipType $shipName is &lt;&lt;if $startport is &quot;New York&quot; o
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;link &quot;Seek entertainment&quot;&gt;&gt;&lt;&lt;replace &quot;#time&quot;&gt;&gt;&lt;span id=&quot;spend&quot;&gt;What do you spend your money on?&lt;br&gt;&lt;br&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;&lt;link &quot;Drink&quot;&gt;&gt;&lt;&lt;replace &quot;#spend&quot;&gt;&gt;You go out drinking. The streets of $location ring with dozens of languages, smell of at least as many cuisines, and are full of people of all nations all going about their own business. After several days of drinking, you find that you have run out of money and must dry out until [[you are ready to sail.-&gt;Sea Week 1][setup.decisionStart(); $money to 0; setup.decisionEnd(&quot;Spent your shore leave drinking&quot;)]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;Theatre&quot;&gt;&gt;&lt;&lt;replace &quot;#spend&quot;&gt;&gt;You go out to the theatre. The streets of $location ring with dozens of languages, smell of at least as many cuisines, and are full of people of all nations all going about their own business. After several days of shows, you find that you have run out of money and must go bored until [[you are ready to sail.-&gt;Sea Week 1][setup.decisionStart(); $money to 0; setup.decisionEnd(&quot;Spent your shore leave at the theatre&quot;)]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;Food&quot;&gt;&gt;&lt;&lt;replace &quot;#spend&quot;&gt;&gt;You go out to the market. The streets of $location ring with dozens of languages, smell of at least as many cuisines, and are full of people of all nations all going about their own business. After several days of eating your way through town, you find that you have run out of money and must go hungry until [[you are ready to sail.-&gt;Sea Week 1][setup.decisionStart(); $money to 0; setup.decisionEnd(&quot;Spent your shore leave eating your way through town&quot;)]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Drink&quot;&gt;&gt;&lt;&lt;replace &quot;#spend&quot;&gt;&gt;You go out drinking. The streets of $location ring with dozens of languages, smell of at least as many cuisines, and are full of people of all nations all going about their own business. After several days of drinking, you find that you have run out of money and must dry out until &lt;&lt;link &quot;you are ready to sail.&quot; &quot;Sea Week 1&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;decision-end &quot;Spent your shore leave drinking&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Theatre&quot;&gt;&gt;&lt;&lt;replace &quot;#spend&quot;&gt;&gt;You go out to the theatre. The streets of $location ring with dozens of languages, smell of at least as many cuisines, and are full of people of all nations all going about their own business. After several days of shows, you find that you have run out of money and must go bored until &lt;&lt;link &quot;you are ready to sail.&quot; &quot;Sea Week 1&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;decision-end &quot;Spent your shore leave at the theatre&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Food&quot;&gt;&gt;&lt;&lt;replace &quot;#spend&quot;&gt;&gt;You go out to the market. The streets of $location ring with dozens of languages, smell of at least as many cuisines, and are full of people of all nations all going about their own business. After several days of eating your way through town, you find that you have run out of money and must go hungry until &lt;&lt;link &quot;you are ready to sail.&quot; &quot;Sea Week 1&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;decision-end &quot;Spent your shore leave eating your way through town&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -2293,7 +2061,7 @@ The &lt;&lt;defmaster &quot;shipping master&quot;&gt;&gt; asks that you report b
 &lt;&lt;set $location to &quot;at sea&quot;&gt;&gt;
 &lt;&lt;set $month to 1&gt;&gt;
 &lt;&lt;status&gt;&gt;
-&lt;&lt;departure-funds&gt;&gt;&lt;span id=&quot;departure-continue&quot; @style=&quot;setup.farewellWife() ? &#39;display: none&#39; : &#39;&#39;&quot;&gt;
+&lt;&lt;departure-funds&gt;&gt;&lt;span id=&quot;departure-continue&quot; @style=&quot;_farewellWife ? &#39;display: none&#39; : &#39;&#39;&quot;&gt;
 &lt;&lt;set $distance -=1&gt;&gt;
 The &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; steers the $shipName out of harbor. &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;You are assigned to stand &lt;&lt;defwatch &quot;watch&quot;&gt;&gt; for the wind to turn. When you feel the change, you call the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt;.&lt;&lt;elseif $role is &quot;ordinary seaman&quot;&gt;&gt;There is a flurry of activity as every hand moves about the deck to &lt;&lt;defheave &quot;heave anchor&quot;&gt;&gt; and make ready to sail.&lt;&lt;elseif $role is &quot;able seaman&quot;&gt;&gt;You are sent &lt;&lt;defaloft &quot;aloft&quot;&gt;&gt; to unfurl the sails as the wind stiffens.&lt;&lt;else&gt;&gt;You settle into your quarters.&lt;&lt;/if&gt;&gt; The &lt;&lt;defboatswain &quot;boatswain&quot;&gt;&gt; calls out hoarsely &quot;Aaalllll haaaands! Up anchor, ahooooy!&quot; &lt;&lt;if $role is &quot;idler&quot;&gt;&gt;but as an &lt;&lt;defidler &quot;idler&quot;&gt;&gt;, the work of a sailor is not yours.&lt;&lt;/if&gt;&gt;&lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;As a &lt;&lt;defgreenhand &quot;green hand&quot;&gt;&gt;, you know very little about the work and mostly try to stay out of the way. &lt;&lt;/if&gt;&gt;As you set out for sea, you are excited to be on the water &lt;&lt;if $role isnot &quot;green hand&quot;&gt;&gt;again&lt;&lt;/if&gt;&gt;. You know it will be a long journey, but are looking forward to earning your pay at the end.
 &lt;br&gt;&lt;br&gt;&lt;img alt=&quot;&quot; src=&quot;https://nrs.harvard.edu/urn-3:HUAM:77849_dynmc:IMAGE/full/!3000,3000/0/default.jpg&quot; width=100%&gt;&lt;br&gt;//John Singer Sargent. Sketch of a Ship. 1889. Harvard Art Museums/Fogg Museum, Gift of Mrs. Francis Ormond.//&lt;br&gt;&lt;br&gt;
@@ -2306,18 +2074,18 @@ Once accustomed to the rocking of the ship, you and the other &lt;&lt;defgreenha
 &lt;span id=&quot;learn&quot;&gt;Do you want to learn more? &lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;replace &quot;#learn&quot;&gt;&gt;&lt;&lt;if $reputation lte 3&gt;&gt;Hoping that advancing your skill will help your reputation, y&lt;&lt;else&gt;&gt;Y&lt;&lt;/if&gt;&gt;ou are eager to learn more. You approach a more experienced seaman and ask for instruction in:
 &lt;&lt;if $distance is 0&gt;&gt;
 &lt;ul&gt;
-&lt;li&gt;[[Rigging-&gt;Arrive in Port][setup.decisionStart(); $skill +=1; setup.decisionEnd(&quot;Asked for instruction in rigging&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Navigation-&gt;Arrive in Port][setup.decisionStart(); $skill +=1; setup.decisionEnd(&quot;Asked for instruction in navigation&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Sailmaking-&gt;Arrive in Port][setup.decisionStart(); $skill +=1; setup.decisionEnd(&quot;Asked for instruction in sailmaking&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Rigging&quot; &quot;Arrive in Port&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $skill +=1&gt;&gt;&lt;&lt;decision-end &quot;Asked for instruction in rigging&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Navigation&quot; &quot;Arrive in Port&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $skill +=1&gt;&gt;&lt;&lt;decision-end &quot;Asked for instruction in navigation&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Sailmaking&quot; &quot;Arrive in Port&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $skill +=1&gt;&gt;&lt;&lt;decision-end &quot;Asked for instruction in sailmaking&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;else&gt;&gt;
 &lt;ul&gt;
-&lt;li&gt;[[Rigging-&gt;Sea Week 2][setup.decisionStart(); $skill +=1; setup.decisionEnd(&quot;Asked for instruction in rigging&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Navigation-&gt;Sea Week 2][setup.decisionStart(); $skill +=1; setup.decisionEnd(&quot;Asked for instruction in navigation&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Sailmaking-&gt;Sea Week 2][setup.decisionStart(); $skill +=1; setup.decisionEnd(&quot;Asked for instruction in sailmaking&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Rigging&quot; &quot;Sea Week 2&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $skill +=1&gt;&gt;&lt;&lt;decision-end &quot;Asked for instruction in rigging&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Navigation&quot; &quot;Sea Week 2&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $skill +=1&gt;&gt;&lt;&lt;decision-end &quot;Asked for instruction in navigation&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Sailmaking&quot; &quot;Sea Week 2&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $skill +=1&gt;&gt;&lt;&lt;decision-end &quot;Asked for instruction in sailmaking&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#learn&quot;&gt;&gt;&lt;&lt;if $reputation lte 3&gt;&gt;Hoping that staying out of the way will help your reputation, y&lt;&lt;else&gt;&gt;Y&lt;&lt;/if&gt;&gt;ou are content to continue your &lt;&lt;if $distance is 0&gt;&gt;[[current task.-&gt;Arrive in Port][setup.decisionStart(); setup.decisionEnd(&quot;Declined extra instruction&quot;)]]&lt;&lt;else&gt;&gt;[[current task.-&gt;Sea Week 2][setup.decisionStart(); setup.decisionEnd(&quot;Declined extra instruction&quot;)]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#learn&quot;&gt;&gt;&lt;&lt;if $reputation lte 3&gt;&gt;Hoping that staying out of the way will help your reputation, y&lt;&lt;else&gt;&gt;Y&lt;&lt;/if&gt;&gt;ou are content to continue your &lt;&lt;if $distance is 0&gt;&gt;&lt;&lt;link &quot;current task.&quot; &quot;Arrive in Port&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Declined extra instruction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;link &quot;current task.&quot; &quot;Sea Week 2&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Declined extra instruction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;elseif $role is &quot;idler&quot;&gt;&gt;
 Even though the ship has only just gotten under way, you nevertheless have a lot of work. &lt;&lt;if $idlertask is &quot;cook&quot;&gt;&gt;As the cook, you are responsible for feeding the entire crew dinner and supper, as well as doling out the tea and drink to those on &lt;&lt;defwatch &quot;watch&quot;&gt;&gt;. This is a demanding job which requires you to &lt;&lt;if $distance is 0&gt;&gt;[[cook all day.-&gt;Arrive in Port]]&lt;&lt;else&gt;&gt;[[cook all day.-&gt;Sea Week 2]]&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;The ship needs constant repairs and you must begin by assessing the state of the &lt;&lt;if $idlertask is &quot;carpenter&quot;&gt;&gt;ship&#39;s railings&lt;&lt;else&gt;&gt;ship&#39;s foresail&lt;&lt;/if&gt;&gt; and &lt;&lt;if $distance is 0&gt;&gt;[[its supplies.-&gt;Arrive in Port]]&lt;&lt;else&gt;&gt;[[its supplies.-&gt;Sea Week 2]]&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -2326,20 +2094,23 @@ The &lt;&lt;defmate &quot;mate&quot;&gt;&gt;s agree on a &lt;&lt;defwatch &quot;
 How do you entertain yourself in the off hours?
 &lt;&lt;if $distance is 0&gt;&gt;
 &lt;ul&gt;
-&lt;li&gt;[[Practice knots-&gt;Arrive in Port][setup.decisionStart(); $skill +=1; setup.decisionEnd(&quot;Practised knots in your off hours&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Singing with your watch-&gt;Arrive in Port][setup.decisionStart(); $reputation +=1; setup.decisionEnd(&quot;Sang with your watch in your off hours&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Sitting below deck and resting-&gt;Arrive in Port][setup.decisionStart(); setup.decisionEnd(&quot;Rested below deck in your off hours&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Practice knots&quot; &quot;Arrive in Port&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $skill +=1&gt;&gt;&lt;&lt;decision-end &quot;Practised knots in your off hours&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Singing with your watch&quot; &quot;Arrive in Port&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $reputation +=1&gt;&gt;&lt;&lt;decision-end &quot;Sang with your watch in your off hours&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Sitting below deck and resting&quot; &quot;Arrive in Port&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Rested below deck in your off hours&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;else&gt;&gt;
 &lt;ul&gt;
-&lt;li&gt;[[Practice knots-&gt;Sea Week 2][setup.decisionStart(); $skill +=1; setup.decisionEnd(&quot;Practised knots in your off hours&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Singing with your watch-&gt;Sea Week 2][setup.decisionStart(); $reputation +=1; setup.decisionEnd(&quot;Sang with your watch in your off hours&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Sitting below deck and resting-&gt;Sea Week 2][setup.decisionStart(); setup.decisionEnd(&quot;Rested below deck in your off hours&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Practice knots&quot; &quot;Sea Week 2&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $skill +=1&gt;&gt;&lt;&lt;decision-end &quot;Practised knots in your off hours&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Singing with your watch&quot; &quot;Sea Week 2&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $reputation +=1&gt;&gt;&lt;&lt;decision-end &quot;Sang with your watch in your off hours&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Sitting below deck and resting&quot; &quot;Sea Week 2&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Rested below deck in your off hours&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;/span&gt;
+&lt;&lt;sea-month&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="PassageHeader" tags="" position="25,375" size="100,100">&lt;&lt;nobr&gt;&gt;
+/* Keep reputation on the sidebar&#39;s 0-10 scale: this passage runs at the start of every passage. */
+&lt;&lt;set $reputation to Math.clamp($reputation, 0, 10)&gt;&gt;
 /* DEPRECATED: this header is replaced by the &lt;&lt;status&gt;&gt; widget (char-gen-widgets), which every story passage calls at the top. Output is kept inside &lt;&lt;silently&gt;&gt; so nothing renders; left in place rather than deleted. */
 &lt;&lt;silently&gt;&gt;
 &lt;h2&gt;&lt;&lt;print passage()&gt;&gt;, $location&lt;/h2&gt;&lt;br&gt;&lt;br&gt;
@@ -2450,6 +2221,7 @@ Bolstered by having made friends on the ship, you try to engage more with the re
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;sea-month&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="17" name="Death" tags="widget" position="1050,250" size="100,100">&lt;&lt;widget &quot;death&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $role isnot &quot;idler&quot;&gt;&gt;
@@ -2465,10 +2237,10 @@ Suddenly, you hear a cry go up on deck. &quot;All hands, ahoy! Man overboard!&qu
 That evening, the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; holds an auction of the dead man&#39;s things. You know that a sailor never wears a dead man&#39;s clothes on the same journey.
 Do you bid?
 &lt;ul&gt;
-&lt;li&gt;[[Yes, on trousers-&gt;passage()][setup.decisionStart(); $money -=30; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s trousers at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on a waistcoat-&gt;passage()][setup.decisionStart(); $money -=45; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s waistcoat at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on a book-&gt;passage()][setup.decisionStart(); $money -=10; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s book at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on socks-&gt;passage()][setup.decisionStart(); $money -=5; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s socks at auction&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on trousers&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=30&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s trousers at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on a waistcoat&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=45&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s waistcoat at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on a book&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=10&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s book at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on socks&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=5&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s socks at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;[[No-&gt;passage()]]&lt;/li&gt;
 &lt;/ul&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Mourned a lost shipmate with the crew&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;link &quot;say that everyone should return to work as the man is surely lost&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice&quot;&gt;&gt;You speak up, suggesting that the &lt;&lt;defwatch &quot;watches&quot;&gt;&gt; return to their work. The suggestion is unpopular as everyone is sad to miss their dead fellow, whose loss will increase the load on the rest. But everyone agrees that there is no use mourning at sea and returns to work.&lt;&lt;set $reputation -=2&gt;&gt;
@@ -2476,8 +2248,8 @@ Do you bid?
 That evening, the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; holds an auction of the dead man&#39;s things. You know that a sailor never wears a dead man&#39;s clothes on the same journey.
 Do you bid?
 &lt;ul&gt;
-&lt;li&gt;[[Yes, on pants-&gt;passage()][setup.decisionStart(); $money -=10; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s pants at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on a jacket-&gt;passage()][setup.decisionStart(); $money -=15; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s jacket at auction&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on pants&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=10&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s pants at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on a jacket&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=15&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s jacket at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;[[No-&gt;passage()]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Urged the crew back to work after a man went overboard&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
@@ -2500,10 +2272,10 @@ Suddenly, you hear a cry go up on deck. &quot;All hands, ahoy! Man overboard!&qu
 That evening, the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; holds an auction of the dead man&#39;s things. You know that a sailor never wears a dead man&#39;s clothes on the same journey.
 Do you bid?
 &lt;ul&gt;
-&lt;li&gt;[[Yes, on trousers-&gt;passage()][setup.decisionStart(); $money -=30; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s trousers at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on a waistcoat-&gt;passage()][setup.decisionStart(); $money -=45; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s waistcoat at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on a book-&gt;passage()][setup.decisionStart(); $money -=10; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s book at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on socks-&gt;passage()][setup.decisionStart(); $money -=5; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s socks at auction&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on trousers&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=30&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s trousers at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on a waistcoat&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=45&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s waistcoat at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on a book&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=10&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s book at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on socks&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=5&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s socks at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;[[No-&gt;passage()]]&lt;/li&gt;
 &lt;/ul&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Mourned a lost shipmate with the crew&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;link &quot;say that everyone should return to work as the man is surely lost&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice&quot;&gt;&gt;You speak up, suggesting that the &lt;&lt;defwatch &quot;watches&quot;&gt;&gt; return to their work. The suggestion is unpopular as everyone is sad to miss their dead fellow, whose loss will increase the load on the rest. But everyone agrees that there is no use mourning at sea and returns to work.&lt;&lt;set $reputation -=2&gt;&gt;
@@ -2511,8 +2283,8 @@ Do you bid?
 That evening, the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; holds an auction of the dead man&#39;s things. You know that a sailor never wears a dead man&#39;s clothes on the same journey.
 Do you bid?
 &lt;ul&gt;
-&lt;li&gt;[[Yes, on pants-&gt;passage()][setup.decisionStart(); $money -=10; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s pants at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on a jacket-&gt;passage()][setup.decisionStart(); $money -=15; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s jacket at auction&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on pants&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=10&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s pants at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on a jacket&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=15&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s jacket at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;[[No-&gt;passage()]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Urged the crew back to work after a man went overboard&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
@@ -2566,6 +2338,7 @@ In your third month at sea, the boredom truly sets in. The ocean stretches on en
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;sea-month&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="19" name="Injury" tags="widget" position="1175,125" size="100,100">&lt;&lt;widget &quot;injury&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $role isnot &quot;idler&quot;&gt;&gt;
@@ -2717,6 +2490,7 @@ Though much of the work is routine, &lt;&lt;if $role is &quot;idler&quot;&gt;&gt
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;sea-month&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="23" name="Weather" tags="widget" position="1300,250" size="100,100">&lt;&lt;widget &quot;weather&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;set _r to random(1,4)&gt;&gt;
@@ -2730,10 +2504,10 @@ You can see the rest of the seamen occasionally glancing towards the &lt;&lt;set
 That evening, the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; holds an auction of the dead man&#39;s things. You know that a sailor never wears a dead man&#39;s clothes on the same journey.
 Do you bid?
 &lt;ul&gt;
-&lt;li&gt;[[Yes, on trousers-&gt;passage()][setup.decisionStart(); $money -=30; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s trousers at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on a waistcoat-&gt;passage()][setup.decisionStart(); $money -=45; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s waistcoat at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on a book-&gt;passage()][setup.decisionStart(); $money -=10; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s book at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on socks-&gt;passage()][setup.decisionStart(); $money -=5; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s socks at auction&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on trousers&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=30&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s trousers at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on a waistcoat&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=45&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s waistcoat at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on a book&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=10&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s book at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on socks&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=5&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s socks at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;[[No-&gt;passage()]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;elseif _s is 3&gt;&gt;
@@ -2743,10 +2517,10 @@ From &lt;&lt;defaloft &quot;aloft&quot;&gt;&gt;, you &lt;&lt;defwatch &quot;watc
 That evening, the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; holds an auction of the dead man&#39;s things. You know that a sailor never wears a dead man&#39;s clothes on the same journey.
 Do you bid?
 &lt;ul&gt;
-&lt;li&gt;[[Yes, on trousers-&gt;passage()][setup.decisionStart(); $money -=30; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s trousers at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on a waistcoat-&gt;passage()][setup.decisionStart(); $money -=45; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s waistcoat at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on a book-&gt;passage()][setup.decisionStart(); $money -=10; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s book at auction&quot;)]]&lt;/li&gt;
-&lt;li&gt;[[Yes, on socks-&gt;passage()][setup.decisionStart(); $money -=5; setup.decisionEnd(&quot;Bought a dead shipmate&#39;s socks at auction&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on trousers&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=30&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s trousers at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on a waistcoat&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=45&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s waistcoat at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on a book&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=10&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s book at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Yes, on socks&quot; `passage()`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set $money -=5&gt;&gt;&lt;&lt;decision-end &quot;Bought a dead shipmate&#39;s socks at auction&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;[[No-&gt;passage()]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
@@ -2839,6 +2613,7 @@ By the fifth month at sea, you feel restless. Though you are used to the sea, it
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;sea-month&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="Crime" tags="widget" position="1050,125" size="100,100">&lt;&lt;widget &quot;crime&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;set _r to random(1,3)&gt;&gt;
@@ -2873,7 +2648,7 @@ One day while on &lt;&lt;defwatch &quot;watch&quot;&gt;&gt; you notice a fellow 
 &lt;&lt;if $race is &quot;Chinese&quot; or $race is &quot;Indian&quot; or $race is &quot;Arabic&quot;&gt;&gt;
 You have made friends with the other $race men on board and in each passing conversation it becomes more apparent that the men of your race will be paid less despite doing the same work as the rest of the crew. Your mood grows darker with each day and you grumble to yourself and to the other sailors. Soon, you decide to call for a &lt;&lt;defmutiny &quot;mutiny&quot;&gt;&gt;. &lt;br&gt;&lt;br&gt;There are enough Chinese, Indian, and Arabic men on board to make the strike cripple the ship. 
 &lt;&lt;if random(1,2) is 1&gt;&gt;
-Fortunately, there are also enough sympathetic sailors that the captain is forced to reckon with your complaints. &lt;&lt;set _r to random(1,5)&gt;&gt;&lt;&lt;if _r is 1&gt;&gt;The strike grows violent and your fellows take the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; and &lt;&lt;defmate &quot;mates&quot;&gt;&gt; hostage, commandeering the ship. Having taken over control of the cargo and destination, you are now a member of [[a pirate crew.-&gt;End]]&lt;br&gt;&lt;br&gt;&lt;img alt=&quot;&quot; src=&quot;https://media.collections.yale.edu/thumbnail/ycba/b8cda939-b545-4e2e-b6c0-6b31c7b500a8&quot; width=100%&gt;&lt;br&gt;//John Massey Wright. Pirates. n.d. Yale Center for British Art.//&lt;&lt;elseif _r is 2&gt;&gt;The &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt;&lt;&lt;set $reputation -=3&gt;&gt; puts down the &lt;&lt;defmutiny &quot;mutiny&quot;&gt;&gt; and punishes the &lt;&lt;defmutiny &quot;mutiny&quot;&gt;&gt; leaders with the &lt;&lt;defcat &quot;cat o&#39; nine tails&quot;&gt;&gt;. You are let off easier and only made to &lt;&lt;defdevil &quot;pay the devil&quot;&gt;&gt;. Your grievance goes unresolved and it [[makes you bitter.-&gt;passage()]]&lt;br&gt;&lt;br&gt;&lt;img alt=&quot;&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/3/38/Mutiny_on_the_Bounty.jpg&quot; width=100%&gt;&lt;br&gt;//Hablot Knight Browne. Mutiny on the Bounty. The Chronicles of Crime; or, The New Newgate Calendar, Being a Series of Memoirs and Anecdotes of Notorious Characters Who Have Outraged the Laws of Great Britain From the Earliest Period to 1841.//&lt;&lt;else&gt;&gt;The &lt;&lt;defmutiny &quot;mutiny&quot;&gt;&gt; is easily put down when the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; and the &lt;&lt;defmate &quot;mate&quot;&gt;&gt;s work to avert the strike by announcing a pay increase &lt;&lt;set $mutinypay to 1&gt;&gt;for the crew. Your fellow countrymen and the other Asians on board celebrate the [[success of your stand.-&gt;passage()]]&lt;&lt;/if&gt;&gt;
+Fortunately, there are also enough sympathetic sailors that the captain is forced to reckon with your complaints. &lt;&lt;set _r to random(1,5)&gt;&gt;&lt;&lt;if _r is 1&gt;&gt;The strike grows violent and your fellows take the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; and &lt;&lt;defmate &quot;mates&quot;&gt;&gt; hostage, commandeering the ship. Having taken over control of the cargo and destination, you are now a member of [[a pirate crew.-&gt;End]]&lt;br&gt;&lt;br&gt;&lt;img alt=&quot;&quot; src=&quot;https://media.collections.yale.edu/thumbnail/ycba/b8cda939-b545-4e2e-b6c0-6b31c7b500a8&quot; width=100%&gt;&lt;br&gt;//John Massey Wright. Pirates. n.d. Yale Center for British Art.//&lt;&lt;elseif _r is 2&gt;&gt;The &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 3, 0, 10)&gt;&gt; puts down the &lt;&lt;defmutiny &quot;mutiny&quot;&gt;&gt; and punishes the &lt;&lt;defmutiny &quot;mutiny&quot;&gt;&gt; leaders with the &lt;&lt;defcat &quot;cat o&#39; nine tails&quot;&gt;&gt;. You are let off easier and only made to &lt;&lt;defdevil &quot;pay the devil&quot;&gt;&gt;. Your grievance goes unresolved and it [[makes you bitter.-&gt;passage()]]&lt;br&gt;&lt;br&gt;&lt;img alt=&quot;&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/3/38/Mutiny_on_the_Bounty.jpg&quot; width=100%&gt;&lt;br&gt;//Hablot Knight Browne. Mutiny on the Bounty. The Chronicles of Crime; or, The New Newgate Calendar, Being a Series of Memoirs and Anecdotes of Notorious Characters Who Have Outraged the Laws of Great Britain From the Earliest Period to 1841.//&lt;&lt;else&gt;&gt;The &lt;&lt;defmutiny &quot;mutiny&quot;&gt;&gt; is easily put down when the &lt;&lt;defcaptain &quot;captain&quot;&gt;&gt; and the &lt;&lt;defmate &quot;mate&quot;&gt;&gt;s work to avert the strike by announcing a pay increase &lt;&lt;set $mutinypay to 1&gt;&gt;for the crew. Your fellow countrymen and the other Asians on board celebrate the [[success of your stand.-&gt;passage()]]&lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;
 Unfortunately for you and the rest of the grumblers, the crew is composed of so many men from different nations, races, and creeds, that your differences soon overcome your grievances and the &lt;&lt;defmutiny &quot;mutiny&quot;&gt;&gt; falls apart before [[coming to fruition.-&gt;passage()]]
 &lt;&lt;/if&gt;&gt;
@@ -2955,6 +2730,7 @@ At long last you are getting close to &lt;&lt;defport &quot;port&quot;&gt;&gt;. 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;sea-month&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="Arrive in Port" tags="storyline" position="375,575" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;unset $mutiny&gt;&gt;
 &lt;&lt;unset $mutinypay&gt;&gt;
@@ -3014,6 +2790,7 @@ As a &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;&lt;&lt;defgreenhand &quo
 &lt;br&gt;&lt;br&gt;&lt;img alt=&quot;&quot; src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/At_Dock_Street_wharf_-_Schell_%26_Hogan_%3B_JL%28%3F%29_sc._LCCN2015650268.jpg/1280px-At_Dock_Street_wharf_-_Schell_%26_Hogan_%3B_JL%28%3F%29_sc._LCCN2015650268.jpg&quot; width=100%&gt;&lt;br&gt;//James W. Louderbach. At Dock Street wharf. 1875. Marian S. Carson Collection (Library of Congress). Public Domain.//
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="End" tags="storyline" position="1425,250" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;h2&gt;How Did Your Decisions Impact Your Game?&lt;/h2&gt;
+&lt;&lt;end-funds&gt;&gt;
 &lt;&lt;funds-chart&gt;&gt;
 &lt;&lt;family-report&gt;&gt;
 &lt;&lt;decision-report&gt;&gt;
@@ -3202,8 +2979,9 @@ As a &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;&lt;&lt;defgreenhand &quo
       /* No two wives share a name unless every name in the list is already taken. */
       &lt;&lt;set _usedNames to $NPCs.filter(function (npc) { return npc.relationship === &quot;wife&quot;; }).map(function (npc) { return npc.name; })&gt;&gt;
       &lt;&lt;set _freeNames to $wname.filter(function (n) { return !_usedNames.includes(n); })&gt;&gt;
-      &lt;&lt;set $NPCs.push({id: setup.nextNpcId(), name: (_freeNames.length &gt; 0 ? _freeNames : $wname).random(), relationship: &quot;wife&quot;, status: $wstatus, location: $wifelocation, agenum: random(16, 30), alive: true, knownAlive: true, pregnant: 0, announced: false, knownPregnant: false})&gt;&gt;
-      &lt;&lt;run setup.recountDependents()&gt;&gt;
+      &lt;&lt;set $npcId += 1&gt;&gt;
+      &lt;&lt;set $NPCs.push({id: $npcId, name: (_freeNames.length &gt; 0 ? _freeNames : $wname).random(), relationship: &quot;wife&quot;, status: $wstatus, location: $wifelocation, agenum: random(16, 30), alive: true, knownAlive: true, pregnant: 0, announced: false, knownPregnant: false})&gt;&gt;
+      &lt;&lt;recount-dependents&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;listNPCs&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
@@ -3211,7 +2989,115 @@ As a &lt;&lt;if $role is &quot;green hand&quot;&gt;&gt;&lt;&lt;defgreenhand &quo
 &lt;&lt;set _list to _wives.map(function (npc) { return npc.name + &quot; (&quot; + npc.status + &quot;, in &quot; + npc.location + (npc.knownPregnant ? &quot;, expecting a child&quot; : &quot;&quot;) + &quot;)&quot;; }).join(&quot;; &quot;)&gt;&gt;
 _list
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* FAMILY &amp; PREGNANCY — modelled on the plague game&#39;s pregnancy rules (passages 110/113 there).
+   Wives carry: id, agenum (16-30), alive, knownAlive, pregnant (month counter, 0 = not), announced (she
+   knows), knownPregnant (you know). Children: id, relationship son/daughter, mother (wife id), motherName,
+   location, alive, known (you know of the birth).
+   News reaches you only in port: each event posts a letter to $mail, addressed to your next port of call and
+   arriving after 2/3 of the cargo sailing time, or you hear it in person in her port (&lt;&lt;read-mail&gt;&gt;).
+   What you PAY for follows what you KNOW (&lt;&lt;recount-dependents&gt;&gt;). */
+
+/* ADVANCE-MONTHS n from — n months pass, starting at month `from`; each living wife&#39;s pregnancy moves on. You
+   are &quot;together&quot; in a month if you are in her port. */
+&lt;&lt;widget &quot;advance-months&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _amN to _args[0]&gt;&gt;&lt;&lt;set _amFrom to _args[1]&gt;&gt;
+&lt;&lt;for _amM to 0; _amM lt _amN; _amM++&gt;&gt;
+&lt;&lt;for _amI to 0; _amI lt $NPCs.length; _amI++&gt;&gt;
+&lt;&lt;set _amW to $NPCs[_amI]&gt;&gt;
+&lt;&lt;if _amW.relationship is &quot;wife&quot; and _amW.alive isnot false&gt;&gt;&lt;&lt;pregnancy-month _amW `_amFrom + _amM` `$location is _amW.location`&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* PREGNANCY-MONTH wife when together — one month for one wife. Pregnant: the counter rises; a miscarriage roll
+   by her age (not in month 4, when she finds out); at 9 the birth (1 in 30 she dies, else 1 in 4 stillborn,
+   else a son or daughter); at 4 she knows and writes. Not pregnant: 30% chance she conceives if together. */
+&lt;&lt;widget &quot;pregnancy-month&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _pmW to _args[0]&gt;&gt;&lt;&lt;set _pmWhen to _args[1]&gt;&gt;&lt;&lt;set _pmTogether to _args[2]&gt;&gt;
+&lt;&lt;if _pmW.pregnant gt 0&gt;&gt;
+&lt;&lt;set _pmW.pregnant += 1&gt;&gt;
+&lt;&lt;set _pmAge to _pmW.agenum || 25&gt;&gt;
+&lt;&lt;set _pmThreshold to _pmAge lte 25 ? 10 : _pmAge lte 35 ? 15 : _pmAge is 36 ? 20 : _pmAge is 37 ? 25 : _pmAge is 38 ? 30 : _pmAge is 39 ? 35 : 40&gt;&gt;
+&lt;&lt;if _pmW.pregnant isnot 4 and random(1, 100) lte _pmThreshold&gt;&gt;
+&lt;&lt;set _pmKnew to _pmW.announced&gt;&gt;&lt;&lt;set _pmW.pregnant to 0&gt;&gt;&lt;&lt;set _pmW.announced to false&gt;&gt;
+&lt;&lt;if _pmKnew&gt;&gt;&lt;&lt;send-news _pmW _pmWhen &quot;miscarriage&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _pmW.pregnant gte 9&gt;&gt;
+&lt;&lt;set _pmW.pregnant to 0&gt;&gt;&lt;&lt;set _pmW.announced to false&gt;&gt;
+&lt;&lt;if random(1, 30) is 1&gt;&gt;&lt;&lt;set _pmW.alive to false&gt;&gt;&lt;&lt;send-news _pmW _pmWhen &quot;death&quot;&gt;&gt;
+&lt;&lt;elseif random(1, 4) is 1&gt;&gt;&lt;&lt;send-news _pmW _pmWhen &quot;stillbirth&quot;&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;set _pmSex to random(1, 2) is 1 ? &quot;son&quot; : &quot;daughter&quot;&gt;&gt;&lt;&lt;child-name _pmSex&gt;&gt;
+&lt;&lt;set $npcId += 1&gt;&gt;
+&lt;&lt;set _pmChild to {id: $npcId, name: _childName, relationship: _pmSex, mother: _pmW.id, motherName: _pmW.name, location: _pmW.location, born: _pmWhen, alive: true, known: false}&gt;&gt;
+&lt;&lt;run $NPCs.push(_pmChild)&gt;&gt;
+&lt;&lt;send-news _pmW _pmWhen &quot;birth&quot; _pmChild&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _pmW.pregnant gte 4 and not _pmW.announced&gt;&gt;
+&lt;&lt;set _pmW.announced to true&gt;&gt;&lt;&lt;send-news _pmW _pmWhen &quot;pregnant&quot;&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif _pmTogether and random(1, 100) lte 30&gt;&gt;
+&lt;&lt;set _pmW.pregnant to 1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* PORT-CALL-TOGETHER port — the port call you sail from counts as a month together: each living wife in that
+   port who is not already pregnant conceives with 30% chance. */
+&lt;&lt;widget &quot;port-call-together&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _pcPort to _args[0]&gt;&gt;
+&lt;&lt;for _pcI to 0; _pcI lt $NPCs.length; _pcI++&gt;&gt;
+&lt;&lt;set _pcW to $NPCs[_pcI]&gt;&gt;
+&lt;&lt;if _pcW.relationship is &quot;wife&quot; and _pcW.alive isnot false and _pcW.location is _pcPort and not (_pcW.pregnant gt 0) and random(1, 100) lte 30&gt;&gt;&lt;&lt;set _pcW.pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* SEND-NEWS wife when kind [child] — posts a letter to your next port of call (or the port you are in),
+   arriving after 2/3 of the cargo sailing time from her port. */
+&lt;&lt;widget &quot;send-news&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _snW to _args[0]&gt;&gt;&lt;&lt;set _snWhen to _args[1]&gt;&gt;&lt;&lt;set _snKind to _args[2]&gt;&gt;&lt;&lt;set _snChild to _args[3] || null&gt;&gt;
+&lt;&lt;set _snTo to ($location is &quot;at sea&quot; or $location is &quot;in port&quot;) ? $destination : $location&gt;&gt;
+&lt;&lt;if not _snTo or _snTo is &quot;none&quot; or _snTo is _snW.location&gt;&gt;&lt;&lt;set _snTravel to 0&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;distance-between _snW.location _snTo&gt;&gt;&lt;&lt;set _snTravel to 2 / 3 * _distBetween&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;run $mail.push({kind: _snKind, wife: _snW.id, wifeName: _snW.name, port: _snW.location, child: _snChild ? _snChild.id : null, childName: _snChild ? _snChild.name : null, sex: _snChild ? _snChild.relationship : null, dest: _snTo, sent: _snWhen, arrives: _snWhen + _snTravel, delivered: false})&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* DISTANCE-BETWEEN from to — sets _distBetween to the cargo sailing time in months, using &lt;&lt;distance&gt;&gt;. */
+&lt;&lt;widget &quot;distance-between&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _dbFrom to _args[0]&gt;&gt;&lt;&lt;set _dbTo to _args[1]&gt;&gt;
+&lt;&lt;set _dbL to $location&gt;&gt;&lt;&lt;set _dbD to $destination&gt;&gt;&lt;&lt;set _dbX to $distance&gt;&gt;
+&lt;&lt;set $location to _dbFrom&gt;&gt;&lt;&lt;set $destination to _dbTo&gt;&gt;&lt;&lt;distance&gt;&gt;&lt;&lt;set _distBetween to $distance&gt;&gt;
+&lt;&lt;set $location to _dbL&gt;&gt;&lt;&lt;set $destination to _dbD&gt;&gt;&lt;&lt;set $distance to _dbX&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* CHILD-NAME sex — sets _childName from setup.childNames (StoryInit) for the player&#39;s nation, avoiding names
+   already used by children of that sex unless all are taken. */
+&lt;&lt;widget &quot;child-name&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _cnSex to _args[0]&gt;&gt;
+&lt;&lt;set _cnKey to [&quot;the United States&quot;, &quot;the United Kingdom&quot;, &quot;the Caribbean&quot;].includes($nation) ? &quot;anglo&quot; : $nation is &quot;the Italian Peninsula&quot; ? &quot;italian&quot; : ($nation is &quot;Barbary&quot; or $nation is &quot;the Ottoman Empire&quot;) ? &quot;arabic&quot; : $nation is &quot;Brazil&quot; ? &quot;portuguese&quot; : $nation is &quot;China&quot; ? &quot;chinese&quot; : &quot;indian&quot;&gt;&gt;
+&lt;&lt;set _cnList to setup.childNames[_cnKey][_cnSex]&gt;&gt;
+&lt;&lt;set _cnUsed to $NPCs.filter(function (c) { return c.relationship === _cnSex; }).map(function (c) { return c.name; })&gt;&gt;
+&lt;&lt;set _cnFree to _cnList.filter(function (x) { return !_cnUsed.includes(x); })&gt;&gt;
+&lt;&lt;set _childName to (_cnFree.length gt 0 ? _cnFree : _cnList).random()&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* RECOUNT-DEPENDENTS — rebuilds $depCount (per port) and $dependents from what you KNOW: the starting family&#39;s
+   members who are not NPCs ($depBase), wives you believe alive (+1 once you know she is expecting), and
+   children you know were born. Call after changing any of those. */
+&lt;&lt;widget &quot;recount-dependents&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _rdCount to {}&gt;&gt;
+&lt;&lt;for _rdPort range Object.keys($depBase)&gt;&gt;&lt;&lt;if $depBase[_rdPort] gt 0&gt;&gt;&lt;&lt;set _rdCount[_rdPort] to $depBase[_rdPort]&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _rdI to 0; _rdI lt $NPCs.length; _rdI++&gt;&gt;
+&lt;&lt;set _rdN to $NPCs[_rdI]&gt;&gt;
+&lt;&lt;if _rdN.relationship is &quot;wife&quot; and _rdN.knownAlive isnot false&gt;&gt;&lt;&lt;set _rdCount[_rdN.location] to (_rdCount[_rdN.location] || 0) + 1 + (_rdN.knownPregnant ? 1 : 0)&gt;&gt;
+&lt;&lt;elseif (_rdN.relationship is &quot;son&quot; or _rdN.relationship is &quot;daughter&quot;) and _rdN.known and _rdN.knownAlive isnot false&gt;&gt;&lt;&lt;set _rdCount[_rdN.location] to (_rdCount[_rdN.location] || 0) + 1&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;set $depCount to _rdCount&gt;&gt;
+&lt;&lt;set $dependents to Object.values(_rdCount).reduce(function (sum, x) { return sum + x; }, 0)&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 </tw-passagedata><tw-passagedata pid="33" name="Recommission" tags="storyline" position="500,700" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;stay-months&gt;&gt;
 &lt;&lt;set $voyage +=1&gt;&gt;
 &lt;&lt;set $sendHome to &quot;&quot;&gt;&gt;
 &lt;&lt;set $wages to 0&gt;&gt;
@@ -3385,23 +3271,43 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 /* Each port&#39;s dependents live on that port&#39;s funds: 40p a month per dependent. A wife is happy only if her
    port still has money; dependents in a port that runs dry send a letter (once per month, -2 reputation). */
 &lt;&lt;set _dryPorts to []&gt;&gt;
-&lt;&lt;for _dport range setup.depPorts()&gt;&gt;
+&lt;&lt;for _dport range Object.keys($depCount).filter(function (k) { return $depCount[k] &gt; 0; })&gt;&gt;
  &lt;&lt;set $depFunds[_dport] to ($depFunds[_dport] || 0) - 40 * $depCount[_dport]&gt;&gt;
  &lt;&lt;if $depFunds[_dport] lte 0&gt;&gt;&lt;&lt;run _dryPorts.push(_dport)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;set $depexpenses to 40 * $dependents&gt;&gt;
-&lt;&lt;set $depmoney to setup.depTotal()&gt;&gt;
+&lt;&lt;set $depmoney to Object.values($depFunds).reduce(function (sum, x) { return sum + (x || 0); }, 0)&gt;&gt;
 &lt;&lt;run $NPCs.forEach(function (npc) { if (npc.relationship === &quot;wife&quot; &amp;&amp; npc.alive !== false) { npc.status = (($depFunds[npc.location] || 0) &gt; 0) ? &quot;happy&quot; : &quot;angry&quot;; } })&gt;&gt;
 &lt;&lt;set $wstatus to (_dryPorts.length gt 0 ? &quot;angry&quot; : &quot;happy&quot;)&gt;&gt;
-&lt;&lt;if _dryPorts.length gt 0&gt;&gt;&lt;&lt;if $location isnot &quot;at sea&quot;&gt;&gt;&lt;&lt;set $reputation -=2&gt;&gt;You receive a letter from your dependents in &lt;&lt;print _dryPorts.join(&quot; and &quot;)&gt;&gt; complaining that you have left them penniless and begging you to send funds. Another sailor reads the note over your shoulder and says you ought to be ashamed. &lt;&lt;if $NPCs.some(function (npc) { return npc.relationship === &quot;wife&quot; &amp;&amp; _dryPorts.includes(npc.location); })&gt;&gt;He suggests that if you don&#39;t provide for her soon, your wife will leave you for another.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _dryPorts.length gt 0&gt;&gt;&lt;&lt;if $location isnot &quot;at sea&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;You receive a letter from your dependents in &lt;&lt;print _dryPorts.join(&quot; and &quot;)&gt;&gt; complaining that you have left them penniless and begging you to send funds. Another sailor reads the note over your shoulder and says you ought to be ashamed. &lt;&lt;if $NPCs.some(function (npc) { return npc.relationship === &quot;wife&quot; &amp;&amp; _dryPorts.includes(npc.location); })&gt;&gt;He suggests that if you don&#39;t provide for her soon, your wife will leave you for another.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
  &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
-/* DECISION TRACKING (see story JavaScript: setup.decisionStart / setup.decisionEnd).
+/* DECISION TRACKING.
    Put &lt;&lt;decision-start&gt;&gt; before a choice&#39;s effects and &lt;&lt;decision-end &quot;text&quot; deathPct&gt;&gt; after them.
    deathPct is optional: the % chance the choice gets the player killed. */
-&lt;&lt;widget &quot;decision-start&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;run setup.decisionStart()&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+&lt;&lt;widget &quot;decision-start&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set $reputation to Math.clamp($reputation, 0, 10)&gt;&gt;
+&lt;&lt;set $decisionBefore to {money: $money, reputation: $reputation, skill: $skill, depmoney: $depmoney}&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
-&lt;&lt;widget &quot;decision-end&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;&lt;run setup.decisionEnd(_args[0], _args[1])&gt;&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+&lt;&lt;widget &quot;decision-end&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _deText to _args[0]&gt;&gt;&lt;&lt;set _dePct to (typeof _args[1] === &quot;number&quot;) ? _args[1] : null&gt;&gt;
+&lt;&lt;set _deBefore to $decisionBefore or {money: $money, reputation: $reputation, skill: $skill, depmoney: $depmoney}&gt;&gt;
+&lt;&lt;set $reputation to Math.clamp($reputation, 0, 10)&gt;&gt;
+&lt;&lt;decision-when&gt;&gt;
+&lt;&lt;run $decisions.push({when: _when, text: _deText, money: $money - _deBefore.money, sentHome: $depmoney - _deBefore.depmoney, repBefore: _deBefore.reputation, repDelta: $reputation - _deBefore.reputation, skillBefore: _deBefore.skill, skillDelta: $skill - _deBefore.skill, deathPct: _dePct})&gt;&gt;
+&lt;&lt;set $decisionBefore to null&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* DECISION-WHEN — sets _when to the time label for a decision made in the current passage. */
+&lt;&lt;widget &quot;decision-when&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if passage().startsWith(&quot;Sea Week &quot;)&gt;&gt;&lt;&lt;set _when to &quot;Voyage &quot; + $voyage + &quot;, month &quot; + passage().slice(9) + &quot; at sea&quot;&gt;&gt;
+&lt;&lt;elseif passage() is &quot;Resupply&quot;&gt;&gt;&lt;&lt;set _when to &quot;Voyage &quot; + $voyage + &quot;, resupplying in port&quot;&gt;&gt;
+&lt;&lt;elseif not $voyage&gt;&gt;&lt;&lt;set _when to &quot;Before your first voyage, &quot; + $location&gt;&gt;
+&lt;&lt;elseif [&quot;Commission&quot;, &quot;Recommission&quot;, &quot;Port Supply&quot;].includes(passage())&gt;&gt;&lt;&lt;set _when to &quot;Voyage &quot; + $voyage + &quot;, preparing to sail from &quot; + $location&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;set _when to &quot;After voyage &quot; + $voyage + &quot;, in port at &quot; + $location&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 /* Final report shown on the End passage: summary, then every recorded decision grouped by when it happened. */
 &lt;&lt;widget &quot;decision-report&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
@@ -3419,7 +3325,7 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;table width=90%&gt;&lt;tr&gt;&lt;th width=60%&gt;&lt;/th&gt;&lt;th width=40%&gt;&lt;/th&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Voyages signed on for&lt;/td&gt;&lt;td&gt;&lt;&lt;print $voyage&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Money in hand&lt;/td&gt;&lt;td&gt;&lt;&lt;conversion&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;&lt;for _dpx range setup.depPorts()&gt;&gt;&lt;tr&gt;&lt;td&gt;&lt;&lt;print _dpx&gt;&gt; Dependents (&lt;&lt;print $depCount[_dpx]&gt;&gt;)&lt;/td&gt;&lt;td&gt;&lt;&lt;depconversion `$depFunds[_dpx] || 0`&gt;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _dpx range Object.keys($depCount).filter(function (k) { return $depCount[k] &gt; 0; })&gt;&gt;&lt;tr&gt;&lt;td&gt;&lt;&lt;print _dpx&gt;&gt; Dependents (&lt;&lt;print $depCount[_dpx]&gt;&gt;)&lt;/td&gt;&lt;td&gt;&lt;&lt;depconversion `$depFunds[_dpx] || 0`&gt;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;&lt;/for&gt;&gt;
 &lt;tr&gt;&lt;td&gt;Reputation&lt;/td&gt;&lt;td&gt;&lt;&lt;print _repTier($reputation)&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Skill&lt;/td&gt;&lt;td&gt;&lt;&lt;print _skillTier($skill)&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;Choices that risked your life&lt;/td&gt;&lt;td&gt;&lt;&lt;print _risky.length&gt;&gt;&lt;&lt;if _risky.length gt 0&gt;&gt; (combined &lt;&lt;print _cumRisk&gt;&gt;% chance of death)&lt;&lt;/if&gt;&gt;&lt;/td&gt;&lt;/tr&gt;
@@ -3449,9 +3355,9 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
    you are sailing from and you have money, you may leave her nothing, half or all of it before you sail;
    the month&#39;s household expenses (&lt;&lt;depexpense&gt;&gt;) are charged after that choice. The calling passage wraps
    the rest of its content in &lt;span id=&quot;departure-continue&quot;&gt;, which starts hidden (display:none) whenever
-   setup.farewellWife() finds a farewell to make, and is shown when the choice is made. */
+   &lt;&lt;farewell-wife&gt;&gt; finds a farewell to make, and is shown when the choice is made. */
 &lt;&lt;widget &quot;departure-funds&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;set _homeWife to setup.farewellWife()&gt;&gt;
+&lt;&lt;farewell-wife&gt;&gt;&lt;&lt;set _homeWife to _farewellWife&gt;&gt;
 &lt;&lt;if _homeWife&gt;&gt;
 &lt;span id=&quot;leavefunds&quot;&gt;Before the $shipName sails, you say goodbye to your wife &lt;&lt;print _homeWife.name&gt;&gt; in $startport. Do you leave her some of your money to live on while you are away?
 &lt;ul&gt;
@@ -3478,14 +3384,14 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;&lt;set _dp to _args[0]&gt;&gt;
 &lt;&lt;if typeof $depFunds[_dp] !== &quot;number&quot;&gt;&gt;&lt;&lt;set $depFunds[_dp] to 0&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;set $depFunds[_dp] += _args[1]&gt;&gt;
-&lt;&lt;set $depmoney to setup.depTotal()&gt;&gt;
+&lt;&lt;set $depmoney to Object.values($depFunds).reduce(function (sum, x) { return sum + (x || 0); }, 0)&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 /* SEND-PORT-PICKER — choose which port&#39;s dependents receive money you send home.
    &quot;signing&quot;: a dropdown whenever you have dependents in more than one port.
    &quot;pay&quot;: a dropdown only if no port has been chosen yet; otherwise just names the port. */
 &lt;&lt;widget &quot;send-port-picker&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;set _sp to setup.depPorts()&gt;&gt;
+&lt;&lt;set _sp to Object.keys($depCount).filter(function (k) { return $depCount[k] &gt; 0; })&gt;&gt;
 &lt;&lt;if _sp.length is 1&gt;&gt;&lt;&lt;set $sendPort to _sp[0]&gt;&gt;
 &lt;&lt;elseif _sp.length gt 1&gt;&gt;
 &lt;&lt;if not _sp.includes($sendPort)&gt;&gt;&lt;&lt;set $sendPort to _sp[0]&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3495,11 +3401,29 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
-/* READ-MAIL — news of your family that has reached you in this port (setup.collectMail): letters that have
+/* READ-MAIL — news of your family that has reached you in this port: letters that have
    arrived here, and anything a wife living in this port tells you in person. Updates what you pay for. */
 &lt;&lt;widget &quot;read-mail&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
-&lt;&lt;set _news to setup.collectMail()&gt;&gt;
-&lt;&lt;if _news.length gt 0&gt;&gt;&lt;div class=&quot;family-news&quot;&gt;&lt;&lt;for _nw range _news&gt;&gt;&lt;p&gt;&lt;&lt;print _nw&gt;&gt;&lt;/p&gt;&lt;&lt;/for&gt;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;set _news to []&gt;&gt;
+&lt;&lt;for _rmi to 0; _rmi lt $mail.length; _rmi++&gt;&gt;
+&lt;&lt;set _rm to $mail[_rmi]&gt;&gt;
+&lt;&lt;set _rmInPerson to (_rm.port is $location)&gt;&gt;
+&lt;&lt;set _rmByLetter to (_rm.dest is $location and _rm.arrives lte $monthsElapsed + 0.000001)&gt;&gt;
+&lt;&lt;if not _rm.delivered and (_rmInPerson or _rmByLetter)&gt;&gt;
+&lt;&lt;set _rm.delivered to true&gt;&gt;
+&lt;&lt;set _rmWife to $NPCs.find(function (n) { return n.id === _rm.wife; })&gt;&gt;
+&lt;&lt;set _rmChild to $NPCs.find(function (n) { return n.id === _rm.child; })&gt;&gt;
+&lt;&lt;set _rmFrom to _rmInPerson ? &quot;In &quot; + _rm.port + &quot;, &quot; + _rm.wifeName + &quot; tells you&quot; : &quot;A letter from &quot; + _rm.wifeName + &quot; in &quot; + _rm.port + &quot; awaits you here&quot;&gt;&gt;
+&lt;&lt;if _rm.kind is &quot;pregnant&quot;&gt;&gt;&lt;&lt;if _rmWife&gt;&gt;&lt;&lt;set _rmWife.knownPregnant to true&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;run _news.push(_rmFrom + &quot;: she is with child.&quot;)&gt;&gt;
+&lt;&lt;elseif _rm.kind is &quot;miscarriage&quot;&gt;&gt;&lt;&lt;if _rmWife&gt;&gt;&lt;&lt;set _rmWife.knownPregnant to false&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;run _news.push(_rmFrom + &quot;: she has lost the child she was carrying.&quot;)&gt;&gt;
+&lt;&lt;elseif _rm.kind is &quot;stillbirth&quot;&gt;&gt;&lt;&lt;if _rmWife&gt;&gt;&lt;&lt;set _rmWife.knownPregnant to false&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;run _news.push(_rmFrom + &quot;: her baby was stillborn.&quot;)&gt;&gt;
+&lt;&lt;elseif _rm.kind is &quot;birth&quot;&gt;&gt;&lt;&lt;if _rmWife&gt;&gt;&lt;&lt;set _rmWife.knownPregnant to false&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if _rmChild&gt;&gt;&lt;&lt;set _rmChild.known to true&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;run _news.push(_rmFrom + &quot;: she has given birth to a healthy &quot; + _rm.sex + &quot;, &quot; + _rm.childName + &quot;.&quot;)&gt;&gt;
+&lt;&lt;elseif _rm.kind is &quot;death&quot;&gt;&gt;&lt;&lt;if _rmWife&gt;&gt;&lt;&lt;set _rmWife.knownAlive to false&gt;&gt;&lt;&lt;set _rmWife.knownPregnant to false&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;run _news.push(_rmInPerson ? &quot;When you reach &quot; + _rm.port + &quot;, you learn that &quot; + _rm.wifeName + &quot; died in childbirth.&quot; : &quot;A letter from &quot; + _rm.wifeName + &quot;&#39;s family in &quot; + _rm.port + &quot; awaits you here: &quot; + _rm.wifeName + &quot; died in childbirth.&quot;)&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/for&gt;&gt;
+&lt;&lt;if _news.length gt 0&gt;&gt;&lt;&lt;recount-dependents&gt;&gt;&lt;div class=&quot;family-news&quot;&gt;&lt;&lt;for _nw range _news&gt;&gt;&lt;p&gt;&lt;&lt;print _nw&gt;&gt;&lt;/p&gt;&lt;&lt;/for&gt;&gt;&lt;/div&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 /* FAMILY-REPORT — End screen: your wives and children as you knew them, then what never reached you. */
@@ -3519,10 +3443,59 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;&lt;if _unknown.length gt 0 or _secret.length gt 0&gt;&gt;
 &lt;p&gt;&lt;i&gt;What never reached you:&lt;/i&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;&lt;for _m range _unknown&gt;&gt;&lt;li&gt;&lt;&lt;print _m.wifeName&gt;&gt; of &lt;&lt;print _m.port&gt;&gt; &lt;&lt;if _m.kind is &quot;pregnant&quot;&gt;&gt;was with child&lt;&lt;elseif _m.kind is &quot;miscarriage&quot;&gt;&gt;lost the child she was carrying&lt;&lt;elseif _m.kind is &quot;stillbirth&quot;&gt;&gt;bore a stillborn child&lt;&lt;elseif _m.kind is &quot;birth&quot;&gt;&gt;gave birth to a &lt;&lt;print _m.sex&gt;&gt;, &lt;&lt;print _m.childName&gt;&gt;&lt;&lt;else&gt;&gt;died in childbirth&lt;&lt;/if&gt;&gt;; the news was on its way to &lt;&lt;print _m.to&gt;&gt;.&lt;/li&gt;&lt;&lt;/for&gt;&gt;
+&lt;&lt;for _m range _unknown&gt;&gt;&lt;li&gt;&lt;&lt;print _m.wifeName&gt;&gt; of &lt;&lt;print _m.port&gt;&gt; &lt;&lt;if _m.kind is &quot;pregnant&quot;&gt;&gt;was with child&lt;&lt;elseif _m.kind is &quot;miscarriage&quot;&gt;&gt;lost the child she was carrying&lt;&lt;elseif _m.kind is &quot;stillbirth&quot;&gt;&gt;bore a stillborn child&lt;&lt;elseif _m.kind is &quot;birth&quot;&gt;&gt;gave birth to a &lt;&lt;print _m.sex&gt;&gt;, &lt;&lt;print _m.childName&gt;&gt;&lt;&lt;else&gt;&gt;died in childbirth&lt;&lt;/if&gt;&gt;; the news was on its way to &lt;&lt;print _m.dest&gt;&gt;.&lt;/li&gt;&lt;&lt;/for&gt;&gt;
 &lt;&lt;for _s range _secret&gt;&gt;&lt;li&gt;&lt;&lt;print _s.name&gt;&gt; of &lt;&lt;print _s.location&gt;&gt; was with child, though neither of you knew it yet.&lt;/li&gt;&lt;&lt;/for&gt;&gt;
 &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* FAREWELL-WIFE — sets _farewellWife to the wife you say goodbye to when sailing, or null: you have family,
+   money in hand, and a living wife in the port you are sailing from ($startport). */
+&lt;&lt;widget &quot;farewell-wife&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _farewellWife to null&gt;&gt;
+&lt;&lt;if $hasfamily is 1 and $money gt 0&gt;&gt;&lt;&lt;set _farewellWife to $NPCs.find(function (n) { return n.relationship === &quot;wife&quot; &amp;&amp; n.alive !== false &amp;&amp; n.location === $startport; }) || null&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* MONTH CLOCK — $monthsElapsed counts months (+1 per Sea Week, + the months of a stay ashore). It drives the
+   End-screen funds chart ($fundsHistory) and pregnancies (&lt;&lt;advance-months&gt;&gt;).
+   RECORD-FUNDS key label months: adds a chart point (advancing the clock by `months`), or, if the last point
+   has the same key (the same week shown again after an event or Back), just updates its total. Sets _rfNew. */
+&lt;&lt;widget &quot;record-funds&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _rfKey to _args[0]&gt;&gt;&lt;&lt;set _rfLabel to _args[1]&gt;&gt;&lt;&lt;set _rfMonths to _args[2]&gt;&gt;
+&lt;&lt;set _rfLast to $fundsHistory.length gt 0 ? $fundsHistory[$fundsHistory.length - 1] : null&gt;&gt;
+&lt;&lt;if _rfLast and _rfLast.key is _rfKey&gt;&gt;&lt;&lt;set _rfLast.total to $money + $depmoney&gt;&gt;&lt;&lt;set _rfNew to false&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;set $monthsElapsed += _rfMonths&gt;&gt;&lt;&lt;run $fundsHistory.push({key: _rfKey, month: $monthsElapsed, label: _rfLabel, total: $money + $depmoney})&gt;&gt;&lt;&lt;set _rfNew to true&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* SEA-MONTH — call at the end of each Sea Week passage: one month passes at sea. On the first month it also
+   counts the port call you sailed from as a month together with any wife living there. */
+&lt;&lt;widget &quot;sea-month&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _smKey to &quot;v&quot; + $voyage + &quot;w&quot; + $month&gt;&gt;
+&lt;&lt;set _smLast to $fundsHistory.length gt 0 ? $fundsHistory[$fundsHistory.length - 1] : null&gt;&gt;
+&lt;&lt;if not (_smLast and _smLast.key is _smKey)&gt;&gt;
+&lt;&lt;if $month is 1&gt;&gt;&lt;&lt;port-call-together $startport&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;advance-months 1 $monthsElapsed&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;record-funds _smKey `&quot;Voyage &quot; + $voyage + &quot;, month &quot; + $month + &quot; at sea&quot;` 1&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* STAY-MONTHS — call at the top of Recommission and Destination Select: the months of a stay ashore
+   ($portperiod, set in Time in Port) pass, so any news from the stay can be shown there. */
+&lt;&lt;widget &quot;stay-months&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $portperiod gt 0&gt;&gt;
+&lt;&lt;set _stMonths to Math.round($portperiod)&gt;&gt;&lt;&lt;set _stFrom to $monthsElapsed&gt;&gt;&lt;&lt;set $portperiod to 0&gt;&gt;
+&lt;&lt;advance-months _stMonths _stFrom&gt;&gt;
+&lt;&lt;record-funds `&quot;port&quot; + $voyage + &quot;-&quot; + (_stFrom + _stMonths)` `&quot;After &quot; + _stMonths + &quot; month&quot; + (_stMonths is 1 ? &quot;&quot; : &quot;s&quot;) + &quot; ashore in &quot; + $location` _stMonths&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
+
+/* END-FUNDS — call at the top of End: the final chart point, merged into the last month if it is the same one. */
+&lt;&lt;widget &quot;end-funds&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;&lt;set _efLast to $fundsHistory.length gt 0 ? $fundsHistory[$fundsHistory.length - 1] : null&gt;&gt;
+&lt;&lt;if _efLast and _efLast.key isnot &quot;end&quot; and _efLast.month is $monthsElapsed&gt;&gt;&lt;&lt;set _efLast.key to &quot;end&quot;&gt;&gt;&lt;&lt;set _efLast.label += &quot; (end of your game)&quot;&gt;&gt;&lt;&lt;set _efLast.total to $money + $depmoney&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;record-funds &quot;end&quot; &quot;End of your game&quot; 0&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 </tw-passagedata><tw-passagedata pid="36" name="Time in Port" tags="storyline" position="375,700" size="100,100">&lt;&lt;nobr&gt;&gt;
@@ -3534,7 +3507,7 @@ Once in $location &lt;&lt;defport &quot;port&quot;&gt;&gt;, having received your
 &lt;br&gt;&lt;br&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
 &lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice1&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;No, I am tired of the sea&quot; &quot;End&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Left the sea for good&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;
 &lt;&lt;else&gt;&gt;
@@ -3561,7 +3534,7 @@ You wander the narrow streets of the port town in $location and &lt;&lt;if $expe
 &lt;&lt;if $age isnot &quot;adolescent&quot;&gt;&gt;&lt;li&gt;&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#wife1&quot;&gt;&gt;&lt;&lt;set $hasfamily to 1&gt;&gt;&lt;&lt;set $wstatus to &quot;happy&quot;&gt;&gt;&lt;&lt;set $married +=1&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;if $family is &quot;your wife&quot;&gt;&gt;&lt;&lt;set $family to &quot;your wives&quot;&gt;&gt;&lt;&lt;elseif $family is &quot;your wife and children&quot;&gt;&gt;&lt;&lt;set $family to &quot;your wives and children&quot;&gt;&gt;&lt;&lt;elseif $family is &quot;your parents&quot;&gt;&gt;&lt;&lt;set $family to &quot;your wife and parents&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $family to &quot;your wife&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set _household to 480 + 40 * ($depCount[$location] || 1)&gt;&gt;&lt;&lt;set _stay to Math.floor($money / _household)&gt;&gt;&lt;&lt;set $money -= _stay * _household&gt;&gt;&lt;&lt;set $portperiod to _stay&gt;&gt;You take a wife. You will have to send her some of your wages to support herself. But that is a problem for another time. For now, you close your account with your landlady and move in with your wife. Keeping a household costs &lt;&lt;conversion _household&gt;&gt; a month for the two of you. &lt;&lt;if _stay gt 0&gt;&gt;After &lt;&lt;print _stay&gt;&gt; month&lt;&lt;if _stay gt 1&gt;&gt;s&lt;&lt;/if&gt;&gt; together your money runs low and you must find work.&lt;&lt;else&gt;&gt;That is more than you have, so you must find work at once.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice3&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
 &lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice3&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;No, I am tired of the sea&quot; &quot;End&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Left the sea for good&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Married a woman in &quot; + $location`&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;li&gt;&lt;&lt;link `$age is &quot;adolescent&quot; ? &quot;Enjoy their company&quot; : &quot;No&quot;`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#wife1&quot;&gt;&gt;You enjoy their company, but you do not want to marry any of the women in $location. Fortunately, you are able to steer clear of trouble and are able to live comfortably for &lt;&lt;set $portperiod = Math.round($money/480)&gt;&gt;$portperiod months. One day your landlady informs you that you have spent all you have and more. She has sold your debt to a ship captain embarking shortly and has a boy march you to the docks to [[meet your new master.-&gt;Recommission][$fate to 2; $money to 0; $getstopick to 0]] &lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `$age is &quot;adolescent&quot; ? &quot;Too young to marry&quot; : &quot;Chose not to marry&quot;`&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
@@ -3575,7 +3548,7 @@ You wander the narrow streets of the port town in $location and &lt;&lt;if $expe
 &lt;li&gt;&lt;&lt;link &quot;Find my own lodgings&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#lodge1&quot;&gt;&gt;You wander the streets of $location in search of a place to stay. &lt;&lt;if random(1,2) is 1&gt;&gt;Unable to find a place, you are forced to sleep among the coils of rope on the docks under the open sky. You are not alone there and find yourself talking to men from the world over about &lt;&lt;set _r to random(1,3)&gt;&gt;&lt;&lt;if _r is 1&gt;&gt;their lives at sea.&lt;&lt;elseif _r is 2&gt;&gt;their stories behind the constellations.&lt;&lt;else&gt;&gt;the news from their most recent &lt;&lt;defport &quot;port&quot;&gt;&gt;.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt; &lt;&lt;if random(1,2) is 1&gt;&gt;One day you awaken to find that you were robbed in the night. &lt;&lt;set $money to 0&gt;&gt;Out of funds, you must seek out work quickly. &lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice4&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
 &lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice4&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;No, I am tired of the sea&quot; &quot;End&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Left the sea for good&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;else&gt;&gt; Unfortunately, sleeping outside can be dangerous and one night you &lt;&lt;if random(1,2) is 1&gt;&gt;are murdered in your sleep [[for your coin.-&gt;End]]&lt;&lt;else&gt;&gt;die [[of exposure.-&gt;End]] &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 
@@ -3587,7 +3560,7 @@ You wander the narrow streets of the port town in $location and &lt;&lt;if $expe
 &lt;li&gt;&lt;&lt;link &quot;Yes, with other sailors&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#companion2&quot;&gt;&gt;You spend your time in saloons and at the docks drinking with fellow sailors from the world over. After time at sea you are unused to the company of anyone else and could not know how to comport yourself.  &lt;&lt;if random(1,2) is 1&gt;&gt;Unfortunately, keeping company with sailors can be violent business and you soon find yourself [[stabbed in a brawl-&gt;End]]&lt;&lt;else&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;Fortunately, you are able to steer clear of trouble and are able to live comfortably for $portperiod months. Eventually you run out of funds and must seek work.&lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice5&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
 &lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice5&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;No, I am tired of the sea&quot; &quot;End&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Left the sea for good&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Kept company with other sailors in port&quot; 50&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;li&gt;&lt;&lt;link &quot;Yes, with women&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#companion2&quot;&gt;&gt;After time spent only in the company of other sailors you are ready to spend some time with the people of $location. You meet women, including many who have come to $location from other cities. &lt;&lt;if $married gte 1&gt;&gt;Their attention makes you lonely for the company of your wife. &lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
@@ -3596,13 +3569,13 @@ You wander the narrow streets of the port town in $location and &lt;&lt;if $expe
 &lt;&lt;if $age isnot &quot;adolescent&quot;&gt;&gt;&lt;li&gt;&lt;&lt;link &quot;Yes&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#wife2&quot;&gt;&gt;&lt;&lt;set $hasfamily to 1&gt;&gt;&lt;&lt;set $wstatus to &quot;happy&quot;&gt;&gt;&lt;&lt;addwifeNPC&gt;&gt;&lt;&lt;set $married +=1&gt;&gt;&lt;&lt;if $family is &quot;your wife&quot;&gt;&gt;&lt;&lt;set $family to &quot;your wives&quot;&gt;&gt;&lt;&lt;elseif $family is &quot;your wife and children&quot;&gt;&gt;&lt;&lt;set $family to &quot;your wives and children&quot;&gt;&gt;&lt;&lt;elseif $family is &quot;your parents&quot;&gt;&gt;&lt;&lt;set $family to &quot;your wife and parents&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $family to &quot;your wife&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set _household to 480 + 40 * ($depCount[$location] || 1)&gt;&gt;&lt;&lt;set _stay to Math.floor($money / _household)&gt;&gt;&lt;&lt;set $money -= _stay * _household&gt;&gt;&lt;&lt;set $portperiod to _stay&gt;&gt;You take a wife. You will have to send her some of your wages to support herself. But that is a problem for another time. For now, you close your account with your landlady and move in with your wife. Keeping a household costs &lt;&lt;conversion _household&gt;&gt; a month for the two of you. &lt;&lt;if _stay gt 0&gt;&gt;After &lt;&lt;print _stay&gt;&gt; month&lt;&lt;if _stay gt 1&gt;&gt;s&lt;&lt;/if&gt;&gt; together your money runs low and you must find work.&lt;&lt;else&gt;&gt;That is more than you have, so you must find work at once.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice6&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
 &lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice6&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;No, I am tired of the sea&quot; &quot;End&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Left the sea for good&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Married a woman in &quot; + $location`&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;
 &lt;li&gt;&lt;&lt;link `$age is &quot;adolescent&quot; ? &quot;Enjoy their company&quot; : &quot;No&quot;`&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#wife2&quot;&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;You enjoy their company, but you do not want to marry any of the women in $location. Fortunately, you are able to steer clear of trouble and are able to live comfortably for $portperiod months. Eventually you run out of funds and must seek work.&lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice7&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
 &lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice7&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;No, I am tired of the sea&quot; &quot;End&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Left the sea for good&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `$age is &quot;adolescent&quot; ? &quot;Too young to marry&quot; : &quot;Chose not to marry&quot;`&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -3611,7 +3584,7 @@ You wander the narrow streets of the port town in $location and &lt;&lt;if $expe
 &lt;li&gt;&lt;&lt;link &quot;No, I prefer to wander alone&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#companion2&quot;&gt;&gt;Having spent time on a cramped ship with the same few dozen men for company you are glad to breathe more freely and spend some time alone with your thoughts. &lt;&lt;if random(1,2) is 1&gt;&gt;Unfortunately, wandering alone leaves you vulnerable to those with criminal intent and you soon find yourself [[stabbed in a brawl-&gt;End]]&lt;&lt;else&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;Fortunately, you are able to steer clear of trouble and are able to live comfortably for $portperiod months. Eventually you run out of funds and must seek work.&lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice8&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
 &lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice8&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;No, I am tired of the sea&quot; &quot;End&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Left the sea for good&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Wandered the port alone&quot; 50&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -3656,7 +3629,7 @@ The process means long days standing in the close &lt;&lt;defhold &quot;hold&quo
 &lt;&lt;if $sendHome isnot &quot;no&quot;&gt;&gt;&lt;li&gt;&lt;&lt;link &quot;All your wages&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#pay&quot;&gt;&gt;You ask the &lt;&lt;defmaster &quot;shipping master&quot;&gt;&gt; that he not disburse your wages and instead ask the company agent to forward them to $family. &lt;&lt;set _send to Math.max(0, Math.min($wages, $money))&gt;&gt;&lt;&lt;dep-add $sendPort _send&gt;&gt;&lt;&lt;set $money -=_send&gt;&gt;&lt;&lt;set $wages to 0&gt;&gt;&lt;&lt;if $money gt 0&gt;&gt; The rest of your money is your own, and he sends you [[on your way-&gt;Time in Port]]&lt;&lt;else&gt;&gt; With no money in hand, you must immediately seek employment.&lt;br&gt;&lt;br&gt;&lt;span id=&quot;choice&quot;&gt;Do you seek out more sailing work?
 &lt;br&gt;&lt;br&gt;
 &lt;ul&gt;&lt;li&gt;&lt;&lt;link &quot;Yes, it&#39;s what I&#39;m good at&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#choice&quot;&gt;&gt;In search of work, you head down to the wharf in search of another ship readying &lt;&lt;if $getstopick is 1&gt;&gt;[[to leave.-&gt;Destination Select][$fate to 1]]&lt;&lt;else&gt;&gt;[[to leave.-&gt;Recommission][$fate to 1]]&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end &quot;Looked for another ship&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;[[No, I am tired of the sea-&gt;End][setup.decisionStart(); setup.decisionEnd(&quot;Left the sea for good&quot;)]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;No, I am tired of the sea&quot; &quot;End&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;decision-end &quot;Left the sea for good&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Sent all your wages home to your dependents in &quot; + $sendPort`&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;&lt;/if&gt;&gt;&lt;/ul&gt;&lt;/span&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -3885,7 +3858,7 @@ The ship will also need to procure its standard &lt;&lt;deftar &quot;tar&quot;&g
 
 &lt;&lt;widget &quot;deffever&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;&lt;span class=&quot;def&quot; data-def=&quot;A viral disease with symptoms including fever, chills, nausea, muscle pain. It can cause liver damage, which yellows the skin. Most people recover from yellow fever within a few days, but it can be lethal. Those who have been exposed to yellow fever often develop immunity.&quot;&gt;$args[0]&lt;/span&gt;&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="40" name="Angry Wife" tags="widget" position="1050,625" size="100,100">&lt;&lt;widget &quot;angrywife&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
-&lt;&lt;set $wifeconflict to 1&gt;&gt;&lt;&lt;set $reputation -=3&gt;&gt;&lt;&lt;set $getstopick to 1&gt;&gt;One of your wives has found out about the other&lt;&lt;if $married gt 2&gt;&gt;s&lt;&lt;/if&gt;&gt;. If you ever end up back in that port you&#39;ll be in trouble. You will try to avoid ships sailing in that direction.&lt;br&gt;&lt;br&gt;
+&lt;&lt;set $wifeconflict to 1&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 3, 0, 10)&gt;&gt;&lt;&lt;set $getstopick to 1&gt;&gt;One of your wives has found out about the other&lt;&lt;if $married gt 2&gt;&gt;s&lt;&lt;/if&gt;&gt;. If you ever end up back in that port you&#39;ll be in trouble. You will try to avoid ships sailing in that direction.&lt;br&gt;&lt;br&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="Personal Trade" tags="widget" position="925,0" size="100,100">&lt;&lt;widget &quot;personaltrade&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
@@ -3920,6 +3893,7 @@ While you are in port will you buy or sell any small goods to carry for your per
 &lt;&lt;if passage() is &quot;Time in Port&quot;&gt;&gt;[[Continue-&gt;Time in Port]]&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="42" name="Destination Select" tags="storyline" position="750,75" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;stay-months&gt;&gt;
 &lt;&lt;status&gt;&gt;
 You overhear some sailors debating the merits of several ports. You stop to listen and decide you wish to find a ship sailing for: &lt;&lt;locationselect&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata></tw-storydata>
