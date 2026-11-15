@@ -51,12 +51,17 @@ The End passage shows "The Impact of Your Decisions", built from `$decisions` by
   `<<child-name sex motherId>>` names them: no two living children of one mother share a name until
   she has used every name for that sex; different wives may reuse names, and the starting wife's
   children (Bio2) are named the same way.
+- **Parents** (starting family "your parents") are NPCs named "your mother" / "your father" (`relationship`
+  `mother`/`father`, `ageGap` +20-40 / +20-60 on `$agenum`, as in the plague game). `<<parent-month>>`
+  (run by `<<advance-months>>`) applies the plague game's old-age rule: 60+ dies with 1 in 30 chance a
+  month; the news goes by `<<send-news>>` (kind `parent-death`).
 - **News reaches you only in port:** `<<send-news>>` posts to `$mail`, addressed to your next port of call
   and arriving after ⅔ of the cargo sailing time (`<<distance-between>>`, which uses `<<distance>>`), or
   in person in her port. `<<read-mail>>` (Arrive in Port, Recommission) delivers it.
 - **What you pay for follows what you know:** `<<recount-dependents>>` rebuilds `$depCount` from
   `$depBase` (the starting family's non-NPC members), wives you believe alive (+1 once you know she is
-  expecting) and children you know of. Call it after changing any of those.
+  expecting), children you know of and parents you believe alive. It also rebuilds `$family` ("your wife
+  and children", "your mother", …) and sets `$hasfamily` to 0 once nobody is left. Call it after changing any of those.
 
 ## Version number
 
