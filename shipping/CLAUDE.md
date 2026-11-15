@@ -48,6 +48,9 @@ The End passage shows "The Impact of Your Decisions", built from `$decisions` by
   `alive`), run month by month by `<<advance-months>>` → `<<pregnancy-month>>` (char-gen-widgets, pid 32).
   A wife conceives with 30% chance in each month you are in her port (stay months, and the port call you
   sail from: `<<port-call-together>>`). Children are NPCs (`son`/`daughter`, `mother` = wife id).
+  `<<child-name sex motherId>>` names them: no two living children of one mother share a name until
+  she has used every name for that sex; different wives may reuse names, and the starting wife's
+  children (Bio2) are named the same way.
 - **News reaches you only in port:** `<<send-news>>` posts to `$mail`, addressed to your next port of call
   and arriving after ⅔ of the cargo sailing time (`<<distance-between>>`, which uses `<<distance>>`), or
   in person in her port. `<<read-mail>>` (Arrive in Port, Recommission) delivers it.
