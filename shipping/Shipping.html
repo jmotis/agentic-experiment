@@ -2,7 +2,7 @@
 <html data-init="no-js">
 <head>
 <meta charset="UTF-8" />
-<title>Shipping v1.35</title>
+<title>Shipping v1.36</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="application-name" content="SugarCube" />
 <meta name="version" content="2.37.3" />
@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Shipping v1.35" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
+	<tw-storydata name="Shipping v1.36" startnode="1" creator="Twine" creator-version="2.12.0" format="SugarCube" format-version="2.37.3" ifid="6D8C162E-EB9A-4118-A493-74D22B38D6C5" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.map-container {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -3274,17 +3274,19 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 
 &lt;&lt;widget &quot;depexpense&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 /* Each port&#39;s dependents live on that port&#39;s funds: 40p a month per dependent. A wife is happy only if her
-   port still has money; dependents in a port that runs dry send a letter (once per month, -2 reputation). */
+   port still has money; dependents in a port that runs dry send a letter (once per call, -2 reputation).
+   Optional args: months (default 1) and a port to skip (dependents you are living with ashore). */
+&lt;&lt;set _deMonths to (typeof _args[0] === &quot;number&quot;) ? _args[0] : 1&gt;&gt;&lt;&lt;set _deSkip to _args[1]&gt;&gt;
 &lt;&lt;set _dryPorts to []&gt;&gt;
-&lt;&lt;for _dport range Object.keys($depCount).filter(function (k) { return $depCount[k] &gt; 0; })&gt;&gt;
- &lt;&lt;set $depFunds[_dport] to ($depFunds[_dport] || 0) - 40 * $depCount[_dport]&gt;&gt;
+&lt;&lt;for _dport range Object.keys($depCount).filter(function (k) { return $depCount[k] &gt; 0 &amp;&amp; k !== _deSkip; })&gt;&gt;
+ &lt;&lt;set $depFunds[_dport] to ($depFunds[_dport] || 0) - 40 * $depCount[_dport] * _deMonths&gt;&gt;
  &lt;&lt;if $depFunds[_dport] lte 0&gt;&gt;&lt;&lt;run _dryPorts.push(_dport)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 &lt;&lt;set $depexpenses to 40 * $dependents&gt;&gt;
 &lt;&lt;set $depmoney to Object.values($depFunds).reduce(function (sum, x) { return sum + (x || 0); }, 0)&gt;&gt;
 &lt;&lt;run $NPCs.forEach(function (npc) { if (npc.relationship === &quot;wife&quot; &amp;&amp; npc.alive !== false) { npc.status = (($depFunds[npc.location] || 0) &gt; 0) ? &quot;happy&quot; : &quot;angry&quot;; } })&gt;&gt;
 &lt;&lt;set $wstatus to (_dryPorts.length gt 0 ? &quot;angry&quot; : &quot;happy&quot;)&gt;&gt;
-&lt;&lt;if _dryPorts.length gt 0&gt;&gt;&lt;&lt;if $location isnot &quot;at sea&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;You receive a letter from your dependents in &lt;&lt;print _dryPorts.join(&quot; and &quot;)&gt;&gt; complaining that you have left them penniless and begging you to send funds. Another sailor reads the note over your shoulder and says you ought to be ashamed. &lt;&lt;if $NPCs.some(function (npc) { return npc.relationship === &quot;wife&quot; &amp;&amp; _dryPorts.includes(npc.location); })&gt;&gt;He suggests that if you don&#39;t provide for her soon, your wife will leave you for another.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _dryPorts.length gt 0&gt;&gt;&lt;&lt;if $location isnot &quot;at sea&quot;&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation - 2, 0, 10)&gt;&gt;You receive a letter from your dependents in &lt;&lt;print _dryPorts.join(&quot; and &quot;)&gt;&gt; complaining that you have left them penniless and begging you to send funds. Another sailor reads the note over your shoulder and says you ought to be ashamed. &lt;&lt;if $NPCs.some(function (npc) { return npc.relationship === &quot;wife&quot; &amp;&amp; _dryPorts.includes(npc.location); })&gt;&gt;He suggests that if you don&#39;t provide for her soon, your wife will leave you for another.&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;elseif _args.length is 0&gt;&gt;&lt;br&gt;&lt;br&gt;&lt;&lt;/if&gt;&gt;
  &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
 /* DECISION TRACKING.
@@ -3367,8 +3369,8 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;span id=&quot;leavefunds&quot;&gt;Before the $shipName sails, you say goodbye to your wife &lt;&lt;print _homeWife.name&gt;&gt; in $startport. Do you leave her some of your money to live on while you are away?
 &lt;ul&gt;
 &lt;li&gt;&lt;&lt;link &quot;Leave her nothing&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;replace &quot;#leavefunds&quot;&gt;&gt;You keep your money and promise to send more when you can.&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Left nothing with your wife before sailing from &quot; + $startport`&gt;&gt;&lt;&lt;depexpense&gt;&gt;&lt;&lt;run $(&quot;#departure-continue&quot;).show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;Leave her half&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set _half to Math.floor($money/2)&gt;&gt;&lt;&lt;dep-add $startport _half&gt;&gt;&lt;&lt;set $money -= _half&gt;&gt;&lt;&lt;replace &quot;#leavefunds&quot;&gt;&gt;You leave half of your money with your wife before you sail.&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Left half your money with your wife before sailing from &quot; + $startport`&gt;&gt;&lt;&lt;depexpense&gt;&gt;&lt;&lt;run $(&quot;#departure-continue&quot;).show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-&lt;li&gt;&lt;&lt;link &quot;Leave her all of it&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;dep-add $startport $money&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;replace &quot;#leavefunds&quot;&gt;&gt;You leave all of your money with your wife before you sail.&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Left all your money with your wife before sailing from &quot; + $startport`&gt;&gt;&lt;&lt;depexpense&gt;&gt;&lt;&lt;run $(&quot;#departure-continue&quot;).show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Leave her half&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;set _half to Math.floor($money/2)&gt;&gt;&lt;&lt;dep-add $startport _half&gt;&gt;&lt;&lt;set $money -= _half&gt;&gt;&lt;&lt;set $wages to Math.max(0, $wages - _half)&gt;&gt;&lt;&lt;replace &quot;#leavefunds&quot;&gt;&gt;You leave half of your money with your wife before you sail.&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Left half your money with your wife before sailing from &quot; + $startport`&gt;&gt;&lt;&lt;depexpense&gt;&gt;&lt;&lt;run $(&quot;#departure-continue&quot;).show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;&lt;link &quot;Leave her all of it&quot;&gt;&gt;&lt;&lt;decision-start&gt;&gt;&lt;&lt;dep-add $startport $money&gt;&gt;&lt;&lt;set $wages to Math.max(0, $wages - $money)&gt;&gt;&lt;&lt;set $money to 0&gt;&gt;&lt;&lt;replace &quot;#leavefunds&quot;&gt;&gt;You leave all of your money with your wife before you sail.&lt;br&gt;&lt;br&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;decision-end `&quot;Left all your money with your wife before sailing from &quot; + $startport`&gt;&gt;&lt;&lt;depexpense&gt;&gt;&lt;&lt;run $(&quot;#departure-continue&quot;).show()&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/span&gt;
 &lt;&lt;else&gt;&gt;&lt;&lt;depexpense&gt;&gt;
@@ -3492,6 +3494,12 @@ As a $idlertask, you must resupply yourself for the rest of the journey.
 &lt;&lt;if $portperiod gt 0&gt;&gt;
 &lt;&lt;set _stMonths to Math.round($portperiod)&gt;&gt;&lt;&lt;set _stFrom to $monthsElapsed&gt;&gt;&lt;&lt;set $portperiod to 0&gt;&gt;
 &lt;&lt;advance-months _stMonths _stFrom&gt;&gt;
+&lt;&lt;if $hasfamily is 1 and _stMonths gt 1&gt;&gt;
+/* Time in Port charged the first month; charge the rest. Dependents in this port are fed by your household
+   spending while you live with your wife here. */
+&lt;&lt;set _stSkip to $NPCs.some(function (n) { return n.relationship === &quot;wife&quot; &amp;&amp; n.alive !== false &amp;&amp; n.location === $location; }) ? $location : undefined&gt;&gt;
+&lt;&lt;depexpense `_stMonths - 1` _stSkip&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;record-funds `&quot;port&quot; + $voyage + &quot;-&quot; + (_stFrom + _stMonths)` `&quot;After &quot; + _stMonths + &quot; month&quot; + (_stMonths is 1 ? &quot;&quot; : &quot;s&quot;) + &quot; ashore in &quot; + $location` _stMonths&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
